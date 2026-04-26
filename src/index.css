@@ -1,0 +1,63 @@
+:root {
+  font-family:
+    "Plus Jakarta Sans", "Segoe UI", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #4a342e;
+  background:
+    radial-gradient(circle at top left, #f4e3dc 0%, transparent 30%),
+    radial-gradient(circle at top right, #efe1d9 0%, transparent 26%),
+    linear-gradient(180deg, #fcf8f5 0%, #f6efea 44%, #fffdfb 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --heading: #40251f;
+  --text: #61443d;
+  --text-soft: #8b6f67;
+  --accent-strong: #d62027;
+  --accent-soft: #a45d4e;
+  --surface-tint: #f8f1ec;
+  --font-display:
+    "Cormorant Garamond", "Times New Roman", serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.18) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 72%);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}
