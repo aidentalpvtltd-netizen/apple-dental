@@ -3,25 +3,25 @@
     "Plus Jakarta Sans", "Segoe UI", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #3b3f43;
+  color: #262b30;
   background:
-    radial-gradient(circle at top left, rgba(255, 2, 1, 0.08) 0%, transparent 26%),
-    radial-gradient(circle at top right, rgba(255, 2, 1, 0.05) 0%, transparent 24%),
-    linear-gradient(180deg, #ffffff 0%, #fffefe 48%, #ffffff 100%);
+    radial-gradient(circle at top left, rgba(255, 2, 1, 0.1) 0%, transparent 26%),
+    radial-gradient(circle at top right, rgba(19, 31, 45, 0.07) 0%, transparent 25%),
+    linear-gradient(180deg, #fffdfb 0%, #f8fafc 46%, #ffffff 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --heading: #202326;
-  --text: #3f4448;
-  --text-soft: #667077;
-  --accent-strong: #FF0201;
+  --heading: #15191d;
+  --text: #2f363d;
+  --text-soft: #56626b;
+  --accent-strong: #d71920;
   --accent-soft: #FF0201;
-  --surface-tint: #fff3f1;
+  --surface-tint: #fff0ed;
   --surface: #ffffff;
-  --line-soft: rgba(214, 32, 39, 0.12);
-  --shadow-soft: 0 18px 48px rgba(214, 32, 39, 0.08);
-  --shadow-strong: 0 28px 76px rgba(214, 32, 39, 0.14);
+  --line-soft: rgba(119, 30, 35, 0.18);
+  --shadow-soft: 0 18px 42px rgba(36, 45, 54, 0.11);
+  --shadow-strong: 0 30px 80px rgba(30, 38, 46, 0.2);
   --font-display:
     "Cormorant Garamond", "Times New Roman", serif;
 }
@@ -46,10 +46,10 @@ body::before {
   inset: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255, 2, 1, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 2, 1, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(215, 25, 32, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 25, 29, 0.028) 1px, transparent 1px);
   background-size: 72px 72px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 72%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.48), transparent 70%);
 }
 
 button,

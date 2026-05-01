@@ -241,6 +241,17 @@ const appointmentSlots = [
   '07:00 PM',
 ]
 
+const adminStatuses = [
+  'Booked',
+  'Confirmed',
+  'Walk-in',
+  'Website',
+  'In Treatment',
+  'Treatment Completed',
+  'Cancelled',
+  'No Show',
+]
+
 const branchAvailability = Object.fromEntries(
   branches.map((branch) => [
     branch,
@@ -431,6 +442,7 @@ const initialFormState = {
 
 const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
 const bookingLockKey = 'appleInternationalDentalBookingRequest'
+const adminSessionKey = 'appleInternationalDentalAdminSession'
 const bookingLockDuration = 24 * 60 * 60 * 1000
 const loaderMinimumDuration = 1400
 const loaderMaximumDuration = 5200
@@ -732,7 +744,822 @@ const submitBookingToSheets = async ({ formState, treatmentName, branchName }) =
   return result
 }
 
-function App() {
+const postBookingEndpoint = async (payload) => {
+  if (!bookingEndpoint) {
+    throw new Error('Booking endpoint is not configured.')
+  }
+
+  const response = await fetch(bookingEndpoint, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  })
+  const result = await response.json().catch(() => null)
+
+  if (!response.ok || result?.ok === false) {
+    throw new Error(result?.message ?? 'Unable to reach the booking system.')
+  }
+
+  return result
+}
+
+const getStoredAdminSession = () => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  try {
+    const savedSession = JSON.parse(window.localStorage.getItem(adminSessionKey))
+
+    if (!savedSession?.token || Number(savedSession.expiresAt) <= Date.now()) {
+      window.localStorage.removeItem(adminSessionKey)
+      return null
+    }
+
+    return savedSession
+  } catch {
+    window.localStorage.removeItem(adminSessionKey)
+    return null
+  }
+}
+
+const getDefaultAdminFilters = () => {
+  const today = getTodayDateValue()
+  const endDate = new Date()
+
+  endDate.setDate(endDate.getDate() + 14)
+
+  return {
+    startDate: today,
+    endDate: formatDateValue(endDate),
+    branch: '',
+    treatment: '',
+    status: '',
+  }
+}
+
+const initialAdminBookingForm = {
+  treatment: treatments[0].name,
+  branch: branches[0],
+  name: '',
+  phone: '',
+  email: '',
+  referredBy: '',
+  date: getTodayDateValue(),
+  timeSlot: appointmentSlots[0],
+  concern: '',
+  status: 'Booked',
+  source: 'Manual Walkin',
+}
+
+function AdminDashboard() {
+  const [session, setSession] = useState(getStoredAdminSession)
+  const [password, setPassword] = useState('')
+  const [activeAdminTab, setActiveAdminTab] = useState('bookings')
+  const [filters, setFilters] = useState(getDefaultAdminFilters)
+  const [adminBookingForm, setAdminBookingForm] = useState(initialAdminBookingForm)
+  const [bookings, setBookings] = useState([])
+  const [patients, setPatients] = useState([])
+  const [history, setHistory] = useState([])
+  const [adminSearch, setAdminSearch] = useState({
+    bookings: '',
+    patients: '',
+    history: '',
+  })
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [adminNotice, setAdminNotice] = useState('')
+
+  const activeBookings = bookings.filter((booking) =>
+    ['', 'booked', 'confirmed', 'walk-in', 'website', 'in treatment'].includes(
+      booking.status.toLowerCase(),
+    ),
+  )
+  const todayBookings = activeBookings.filter((booking) => booking.date === getTodayDateValue())
+  const websiteBookings = bookings.filter((booking) =>
+    booking.source.toLowerCase().includes('website'),
+  )
+  const manualBookings = bookings.filter((booking) => !booking.source.toLowerCase().includes('website'))
+  const bookingSearchTerm = adminSearch.bookings.trim().toLowerCase()
+  const patientSearchTerm = adminSearch.patients.trim().toLowerCase()
+  const historySearchTerm = adminSearch.history.trim().toLowerCase()
+  const visibleBookings = bookingSearchTerm
+    ? bookings.filter((booking) =>
+        [booking.patientName, booking.phone, booking.email, booking.bookingId, booking.patientId]
+          .join(' ')
+          .toLowerCase()
+          .includes(bookingSearchTerm),
+      )
+    : bookings
+  const visiblePatients = patientSearchTerm
+    ? patients.filter((patient) =>
+        [patient.patientName, patient.phone, patient.email, patient.patientId]
+          .join(' ')
+          .toLowerCase()
+          .includes(patientSearchTerm),
+      )
+    : patients
+  const visibleHistory = historySearchTerm
+    ? history.filter((item) =>
+        [item.patientName, item.phone, item.patientId, item.bookingId, item.historyId]
+          .join(' ')
+          .toLowerCase()
+          .includes(historySearchTerm),
+      )
+    : history
+
+  const fetchAdminBookings = async (adminSession = session, nextFilters = filters) => {
+    if (!adminSession?.token) {
+      return
+    }
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const result = await postBookingEndpoint({
+        action: 'admin-bookings',
+        token: adminSession.token,
+        ...nextFilters,
+      })
+
+      setBookings(Array.isArray(result.bookings) ? result.bookings : [])
+    } catch (fetchError) {
+      setError(fetchError.message)
+
+      if (fetchError.message.toLowerCase().includes('session')) {
+        window.localStorage.removeItem(adminSessionKey)
+        setSession(null)
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const fetchAdminPatients = async (adminSession = session) => {
+    if (!adminSession?.token) {
+      return
+    }
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const result = await postBookingEndpoint({
+        action: 'admin-patients',
+        token: adminSession.token,
+      })
+
+      setPatients(Array.isArray(result.patients) ? result.patients : [])
+    } catch (fetchError) {
+      setError(fetchError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const fetchAdminHistory = async (adminSession = session) => {
+    if (!adminSession?.token) {
+      return
+    }
+
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const result = await postBookingEndpoint({
+        action: 'admin-history',
+        token: adminSession.token,
+      })
+
+      setHistory(Array.isArray(result.history) ? result.history : [])
+    } catch (fetchError) {
+      setError(fetchError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    const refreshTimeout = window.setTimeout(() => {
+      fetchAdminBookings()
+    }, 0)
+
+    return () => window.clearTimeout(refreshTimeout)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session])
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const result = await postBookingEndpoint({
+        action: 'admin-login',
+        password,
+      })
+      const nextSession = {
+        token: result.token,
+        expiresAt: result.expiresAt,
+      }
+
+      window.localStorage.setItem(adminSessionKey, JSON.stringify(nextSession))
+      setSession(nextSession)
+      setPassword('')
+      await fetchAdminBookings(nextSession)
+    } catch (loginError) {
+      setError(loginError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleFilterChange = ({ target: { name, value } }) => {
+    setFilters((current) => ({
+      ...current,
+      [name]: value,
+    }))
+  }
+
+  const handleFilterSubmit = (event) => {
+    event.preventDefault()
+    fetchAdminBookings(session, filters)
+  }
+
+  const handleAdminTabChange = (tab) => {
+    setActiveAdminTab(tab)
+    setError('')
+    setAdminNotice('')
+
+    if (tab === 'patients') {
+      fetchAdminPatients()
+    }
+
+    if (tab === 'history') {
+      fetchAdminHistory()
+    }
+  }
+
+  const handleLogout = () => {
+    window.localStorage.removeItem(adminSessionKey)
+    setSession(null)
+    setBookings([])
+    setPatients([])
+    setHistory([])
+    setPassword('')
+  }
+
+  const handleAdminBookingChange = ({ target: { name, value } }) => {
+    const nextValue = name === 'phone' ? value.replace(/\D/g, '').slice(0, 10) : value
+
+    setAdminBookingForm((current) => ({
+      ...current,
+      [name]: nextValue,
+    }))
+    setError('')
+    setAdminNotice('')
+  }
+
+  const handleAdminSearchChange = (tab, value) => {
+    setAdminSearch((current) => ({
+      ...current,
+      [tab]: value,
+    }))
+  }
+
+  const handleAdminCreateBooking = async (event) => {
+    event.preventDefault()
+    setIsLoading(true)
+    setError('')
+    setAdminNotice('')
+
+    try {
+      const result = await postBookingEndpoint({
+        action: 'admin-create-booking',
+        token: session.token,
+        ...adminBookingForm,
+        treatmentName: adminBookingForm.treatment,
+      })
+
+      setAdminNotice(`Booking created: ${result.bookingId}`)
+      setAdminBookingForm((current) => ({
+        ...initialAdminBookingForm,
+        branch: current.branch,
+        date: current.date,
+        treatment: current.treatment,
+      }))
+      await fetchAdminBookings(session, filters)
+      await fetchAdminPatients(session)
+    } catch (createError) {
+      setError(createError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleBookingStatusChange = async (booking, status) => {
+    setIsLoading(true)
+    setError('')
+
+    try {
+      await postBookingEndpoint({
+        action: 'admin-update-booking',
+        token: session.token,
+        bookingId: booking.bookingId,
+        status,
+      })
+      await fetchAdminBookings(session, filters)
+      await fetchAdminPatients(session)
+      await fetchAdminHistory(session)
+    } catch (statusError) {
+      setError(statusError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  if (!session) {
+    return (
+      <main className="admin-page">
+        <section className="admin-login-card">
+          <img src="/logo.png" alt="Apple International Dental" />
+          <p className="eyebrow">Admin login</p>
+          <h1>Appointment dashboard</h1>
+          <p>Sign in to view clinic bookings, walk-ins, patient details, and upcoming slots.</p>
+          <form onSubmit={handleLogin}>
+            <label>
+              Password
+              <input
+                required
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Enter admin password"
+              />
+            </label>
+            <button className="submit-button" type="submit" disabled={isLoading}>
+              {isLoading ? 'Checking...' : 'Sign in'}
+            </button>
+          </form>
+          {error && <p className="admin-error">{error}</p>}
+        </section>
+      </main>
+    )
+  }
+
+  return (
+    <main className="admin-page admin-dashboard">
+      <header className="admin-topbar">
+        <div className="admin-brand-heading">
+          <div>
+            <strong>Apple International Dental</strong>
+            <p className="eyebrow">Admin dashboard</p>
+            <h1>Appointment bookings</h1>
+          </div>
+        </div>
+        <div className="admin-topbar-actions">
+          <a href="/">View website</a>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div>
+      </header>
+
+      <aside className="doctor-login-card" aria-label="Doctor login preview">
+        <div className="doctor-login-symbol" aria-hidden="true">
+          <img src="/logo.png" alt="" />
+        </div>
+        <p className="eyebrow">Doctor portal</p>
+        <strong>Doctor login</strong>
+        <p>Quick access preview for assigned doctors and treatment follow-ups.</p>
+        <label>
+          Username
+          <input type="text" placeholder="doctor ID" />
+        </label>
+        <label>
+          Password
+          <input type="password" placeholder="password" />
+        </label>
+        <button type="button">Sign in</button>
+      </aside>
+
+      <div className="admin-main-column">
+      <section className="admin-summary-grid" aria-label="Booking summary">
+        <article>
+          <span>{activeBookings.length}</span>
+          <p>active bookings</p>
+        </article>
+        <article>
+          <span>{todayBookings.length}</span>
+          <p>today</p>
+        </article>
+        <article>
+          <span>{websiteBookings.length}</span>
+          <p>website</p>
+        </article>
+        <article>
+          <span>{manualBookings.length}</span>
+          <p>manual / clinic</p>
+        </article>
+      </section>
+
+      <nav className="admin-tabs" aria-label="Admin dashboard sections">
+        {[
+          ['new-booking', 'New Walk-in'],
+          ['bookings', 'Bookings'],
+          ['patients', 'Patients'],
+          ['history', 'Treatment History'],
+        ].map(([tab, label]) => (
+          <button
+            className={activeAdminTab === tab ? 'active' : ''}
+            key={tab}
+            type="button"
+            onClick={() => handleAdminTabChange(tab)}
+          >
+            {label}
+          </button>
+        ))}
+      </nav>
+
+      {error && <p className="admin-error">{error}</p>}
+      {adminNotice && <p className="admin-notice">{adminNotice}</p>}
+
+      {activeAdminTab === 'bookings' && (
+        <>
+          <form className="admin-filters" onSubmit={handleFilterSubmit}>
+            <label>
+              From
+              <input name="startDate" type="date" value={filters.startDate} onChange={handleFilterChange} />
+            </label>
+            <label>
+              To
+              <input name="endDate" type="date" value={filters.endDate} onChange={handleFilterChange} />
+            </label>
+            <label>
+              Branch
+              <select name="branch" value={filters.branch} onChange={handleFilterChange}>
+                <option value="">All branches</option>
+                {branches.map((branch) => (
+                  <option key={branch} value={branch}>
+                    {branch}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Treatment
+              <select name="treatment" value={filters.treatment} onChange={handleFilterChange}>
+                <option value="">All treatments</option>
+                {treatments.map((treatment) => (
+                  <option key={treatment.id} value={treatment.name}>
+                    {treatment.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Status
+              <select name="status" value={filters.status} onChange={handleFilterChange}>
+                <option value="">All statuses</option>
+                {adminStatuses.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button className="submit-button" type="submit" disabled={isLoading}>
+              {isLoading ? 'Loading...' : 'Refresh'}
+            </button>
+          </form>
+
+          <section className="admin-table-panel">
+            <div className="admin-table-heading">
+              <h2>Bookings</h2>
+              <div className="admin-table-tools">
+                <label>
+                  <span>Search patient</span>
+                  <input
+                    value={adminSearch.bookings}
+                    onChange={(event) => handleAdminSearchChange('bookings', event.target.value)}
+                    placeholder="Name, phone, email, ID"
+                  />
+                </label>
+                <span>{visibleBookings.length} rows</span>
+              </div>
+            </div>
+            <div className="admin-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Slot</th>
+                    <th>Patient</th>
+                    <th>Phone</th>
+                    <th>Treatment</th>
+                    <th>Branch</th>
+                    <th>Status</th>
+                    <th>Source</th>
+                    <th>Patient ID</th>
+                    <th>Booking ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {visibleBookings.map((booking) => (
+                    <tr key={`${booking.bookingId}-${booking.date}-${booking.timeSlot}`}>
+                      <td>{booking.date}</td>
+                      <td>{booking.timeSlot}</td>
+                      <td>
+                        <strong>{booking.patientName || 'Not added'}</strong>
+                        {booking.email && <small>{booking.email}</small>}
+                      </td>
+                      <td>{booking.phone || '-'}</td>
+                      <td>{booking.treatment || '-'}</td>
+                      <td>{getBranchArea(booking.branch)}</td>
+                      <td>
+                        <select
+                          className={`admin-status-select status-${booking.status
+                            .toLowerCase()
+                            .replace(/\s+/g, '-')}`}
+                          value={booking.status}
+                          onChange={(event) => handleBookingStatusChange(booking, event.target.value)}
+                          disabled={isLoading || !booking.bookingId}
+                        >
+                          {adminStatuses.map((status) => (
+                            <option key={status} value={status}>
+                              {status}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                      <td>{booking.source || '-'}</td>
+                      <td>{booking.patientId || '-'}</td>
+                      <td>{booking.bookingId || '-'}</td>
+                    </tr>
+                  ))}
+                  {!visibleBookings.length && (
+                    <tr>
+                      <td colSpan="10">No bookings found for these filters or search.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </>
+      )}
+
+      {activeAdminTab === 'new-booking' && (
+        <section className="admin-form-panel">
+          <div className="admin-table-heading">
+            <h2>New walk-in / manual booking</h2>
+            <span>Writes to Google Sheets</span>
+          </div>
+          <form className="admin-create-form" onSubmit={handleAdminCreateBooking}>
+            <label>
+              Patient name
+              <input
+                required
+                name="name"
+                value={adminBookingForm.name}
+                onChange={handleAdminBookingChange}
+                placeholder="Patient full name"
+              />
+            </label>
+            <label>
+              Phone
+              <input
+                required
+                name="phone"
+                inputMode="numeric"
+                pattern="[0-9]{10}"
+                maxLength="10"
+                value={adminBookingForm.phone}
+                onChange={handleAdminBookingChange}
+                placeholder="10 digit phone"
+              />
+            </label>
+            <label>
+              Email
+              <input
+                name="email"
+                type="email"
+                value={adminBookingForm.email}
+                onChange={handleAdminBookingChange}
+                placeholder="Optional"
+              />
+            </label>
+            <label>
+              Referred by
+              <input
+                name="referredBy"
+                value={adminBookingForm.referredBy}
+                onChange={handleAdminBookingChange}
+                placeholder="Optional"
+              />
+            </label>
+            <label>
+              Treatment
+              <select name="treatment" value={adminBookingForm.treatment} onChange={handleAdminBookingChange}>
+                {treatments.map((treatment) => (
+                  <option key={treatment.id} value={treatment.name}>
+                    {treatment.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Branch
+              <select name="branch" value={adminBookingForm.branch} onChange={handleAdminBookingChange}>
+                {branches.map((branch) => (
+                  <option key={branch} value={branch}>
+                    {branch}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Date
+              <input
+                required
+                name="date"
+                type="date"
+                value={adminBookingForm.date}
+                onChange={handleAdminBookingChange}
+              />
+            </label>
+            <label>
+              Time slot
+              <select name="timeSlot" value={adminBookingForm.timeSlot} onChange={handleAdminBookingChange}>
+                {appointmentSlots.map((slot) => (
+                  <option key={slot} value={slot}>
+                    {slot}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Source
+              <select name="source" value={adminBookingForm.source} onChange={handleAdminBookingChange}>
+                {['Manual Walkin', 'Phone Booking', 'Reception Booking'].map((source) => (
+                  <option key={source} value={source}>
+                    {source}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Status
+              <select name="status" value={adminBookingForm.status} onChange={handleAdminBookingChange}>
+                {adminStatuses.map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="admin-form-wide">
+              Notes / concern
+              <textarea
+                name="concern"
+                rows="4"
+                value={adminBookingForm.concern}
+                onChange={handleAdminBookingChange}
+                placeholder="Short clinical or reception note"
+              />
+            </label>
+            <button className="submit-button admin-form-wide" type="submit" disabled={isLoading}>
+              {isLoading ? 'Saving...' : 'Create booking'}
+            </button>
+          </form>
+        </section>
+      )}
+
+      {activeAdminTab === 'patients' && (
+        <section className="admin-table-panel">
+          <div className="admin-table-heading">
+            <h2>Patients</h2>
+            <div className="admin-table-tools">
+              <label>
+                <span>Search patient</span>
+                <input
+                  value={adminSearch.patients}
+                  onChange={(event) => handleAdminSearchChange('patients', event.target.value)}
+                  placeholder="Name, phone, email, ID"
+                />
+              </label>
+              <span>{visiblePatients.length} records</span>
+            </div>
+          </div>
+          <div className="admin-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>First visit</th>
+                  <th>Last visit</th>
+                  <th>Total visits</th>
+                  <th>Active treatment</th>
+                  <th>Status</th>
+                  <th>Last branch</th>
+                  <th>Patient ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visiblePatients.map((patient) => (
+                  <tr key={patient.patientId}>
+                    <td>
+                      <strong>{patient.patientName || 'Not added'}</strong>
+                      {patient.notes && <small>{patient.notes}</small>}
+                    </td>
+                    <td>{patient.phone || '-'}</td>
+                    <td>{patient.email || '-'}</td>
+                    <td>{patient.firstVisitDate || '-'}</td>
+                    <td>{patient.lastVisitDate || '-'}</td>
+                    <td>{patient.totalVisits || 0}</td>
+                    <td>{patient.activeTreatment || '-'}</td>
+                    <td>{patient.currentStatus || '-'}</td>
+                    <td>{patient.lastBranch ? getBranchArea(patient.lastBranch) : '-'}</td>
+                    <td>{patient.patientId}</td>
+                  </tr>
+                ))}
+                {!visiblePatients.length && (
+                  <tr>
+                    <td colSpan="10">No patient records found for this search.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+
+      {activeAdminTab === 'history' && (
+        <section className="admin-table-panel">
+          <div className="admin-table-heading">
+            <h2>Treatment history</h2>
+            <div className="admin-table-tools">
+              <label>
+                <span>Search patient</span>
+                <input
+                  value={adminSearch.history}
+                  onChange={(event) => handleAdminSearchChange('history', event.target.value)}
+                  placeholder="Name, phone, patient ID"
+                />
+              </label>
+              <span>{visibleHistory.length} completed</span>
+            </div>
+          </div>
+          <div className="admin-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Completed</th>
+                  <th>Patient</th>
+                  <th>Phone</th>
+                  <th>Treatment</th>
+                  <th>Appointment</th>
+                  <th>Branch</th>
+                  <th>Notes</th>
+                  <th>Patient ID</th>
+                  <th>Booking ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visibleHistory.map((item) => (
+                  <tr key={item.historyId}>
+                    <td>{item.completedDate || '-'}</td>
+                    <td>{item.patientName || '-'}</td>
+                    <td>{item.phone || '-'}</td>
+                    <td>{item.treatment || '-'}</td>
+                    <td>
+                      <strong>{item.date || '-'}</strong>
+                      <small>{item.timeSlot || '-'}</small>
+                    </td>
+                    <td>{item.branch ? getBranchArea(item.branch) : '-'}</td>
+                    <td>{item.finalNotes || '-'}</td>
+                    <td>{item.patientId || '-'}</td>
+                    <td>{item.bookingId || '-'}</td>
+                  </tr>
+                ))}
+                {!visibleHistory.length && (
+                  <tr>
+                    <td colSpan="9">No completed treatment history found for this search.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
+      </div>
+    </main>
+  )
+}
+
+function WebsiteApp() {
   const [isLoading, setIsLoading] = useState(true)
   const [formState, setFormState] = useState(initialFormState)
   const [submittedFor, setSubmittedFor] = useState('')
@@ -1991,6 +2818,13 @@ function App() {
       </details>
     </main>
   )
+}
+
+function App() {
+  const isAdminPath =
+    typeof window !== 'undefined' && window.location.pathname.replace(/\/$/, '') === '/admin'
+
+  return isAdminPath ? <AdminDashboard /> : <WebsiteApp />
 }
 
 export default App
