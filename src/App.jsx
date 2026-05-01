@@ -797,6 +797,24 @@ const getDefaultAdminFilters = () => {
   }
 }
 
+const getCompletedDateParts = (value) => {
+  if (!value) {
+    return { date: '-', time: '' }
+  }
+
+  const normalizedValue = String(value).trim()
+  const match = normalizedValue.match(/^(\d{4}-\d{2}-\d{2})[ T]?(.+)?$/)
+
+  if (!match) {
+    return { date: normalizedValue, time: '' }
+  }
+
+  return {
+    date: match[1],
+    time: match[2]?.trim() ?? '',
+  }
+}
+
 const initialAdminBookingForm = {
   treatment: treatments[0].name,
   branch: branches[0],
@@ -1528,9 +1546,15 @@ function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {visibleHistory.map((item) => (
+                {visibleHistory.map((item) => {
+                  const completedDate = getCompletedDateParts(item.completedDate)
+
+                  return (
                   <tr key={item.historyId}>
-                    <td>{item.completedDate || '-'}</td>
+                    <td>
+                      <strong>{completedDate.date}</strong>
+                      {completedDate.time && <small>{completedDate.time}</small>}
+                    </td>
                     <td>{item.patientName || '-'}</td>
                     <td>{item.phone || '-'}</td>
                     <td>{item.treatment || '-'}</td>
@@ -1543,7 +1567,8 @@ function AdminDashboard() {
                     <td>{item.patientId || '-'}</td>
                     <td>{item.bookingId || '-'}</td>
                   </tr>
-                ))}
+                  )
+                })}
                 {!visibleHistory.length && (
                   <tr>
                     <td colSpan="9">No completed treatment history found for this search.</td>
