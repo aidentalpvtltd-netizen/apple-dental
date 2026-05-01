@@ -1,154 +1,284 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 const treatments = [
   {
-    id: 'smile-design',
-    name: 'Smile Design',
-    icon: null,
-    duration: '90 min consultation',
-    blurb: 'Veneers, contouring, whitening, and facially balanced smile planning.',
-    highlight: 'Cosmetic care',
+    id: 'root-canal-treatment',
+    name: 'Root Canal Treatment',
+    image: '/services/Rootcanal.png',
+    video: '/treatment-videos/Rootcanal.mp4',
+    duration: '75 min diagnosis',
+    blurb: 'Relieve tooth pain and save infected teeth with precise root canal care.',
+    highlight: 'Pain relief',
     details:
-      'A cosmetic planning session focused on shape, symmetry, shade, and confidence-building smile refinement.',
+      'A focused endodontic visit for tooth infection, deep decay, and sensitivity, planned to preserve your natural tooth comfortably.',
   },
   {
-    id: 'implants',
-    name: 'Dental Implants',
-    icon: null,
-    duration: '120 min assessment',
-    blurb: 'Replace missing teeth with guided implant planning and lasting bite support.',
+    id: 'wisdom-tooth-removal',
+    name: 'Wisdom Tooth Removal',
+    image: '/services/Wisdom Tooth.png',
+    gif: '/treatment-gifs/wisdom-teeth.gif',
+    duration: '45 min surgical consult',
+    blurb: 'Careful evaluation and removal for painful, impacted, or crowded wisdom teeth.',
+    highlight: 'Oral surgery',
+    details:
+      'A surgical consultation for wisdom teeth, swelling, pain, and impacted teeth with clear aftercare guidance.',
+  },
+  {
+    id: 'laser-dentistry',
+    name: 'Laser Dentistry',
+    image: '/services/Laser Dentistry.png',
+    duration: '40 min consultation',
+    blurb: 'Minimally invasive laser care for soft-tissue treatments and gum comfort.',
+    highlight: 'Modern care',
+    details:
+      'Laser-assisted dental treatment for selected gum, soft-tissue, and comfort-focused procedures with precise planning.',
+  },
+  {
+    id: 'teeth-whitening',
+    name: 'Teeth Whitening',
+    image: '/services/Teeth Whitening.png',
+    video: '/treatment-videos/Teeth%20Whitening.mp4',
+    duration: '45 min cosmetic consult',
+    blurb: 'Brighten stains and refresh your smile with dentist-guided whitening care.',
+    highlight: 'Smile brightening',
+    details:
+      'A cosmetic dental visit for surface stains, dullness, and smile brightness with guidance on safe whitening options.',
+  },
+  {
+    id: 'dental-fillings',
+    name: 'Dental Fillings',
+    image: '/services/Dental Fillings.png',
+    video: '/treatment-videos/Dental%20Fillings.mp4',
+    duration: '35 min visit',
+    blurb: 'Repair cavities and minor tooth damage with natural-looking dental fillings.',
+    highlight: 'Tooth repair',
+    details:
+      'A restorative visit for cavities, chipped teeth, and tooth-colored fillings designed to protect healthy structure.',
+  },
+  {
+    id: 'dental-crown',
+    name: 'Dental Crown',
+    image: '/services/Dental Crown.png',
+    gif: '/treatment-gifs/dental%20crown.gif',
+    duration: '60 min restorative visit',
+    blurb: 'Restore weakened or broken teeth with durable, shade-matched crowns.',
     highlight: 'Restorative care',
     details:
-      'Ideal for single or multiple missing teeth with digital planning, natural-looking crowns, and stable function.',
+      'A crown consultation for cracked, root-canal-treated, or worn teeth needing long-term strength and natural appearance.',
   },
   {
-    id: 'aligners',
-    name: 'Clear Aligners',
-    icon: null,
-    duration: '60 min scan',
-    blurb: 'Discreet teeth straightening with scan-led planning and progress reviews.',
+    id: 'dental-implants',
+    name: 'Dental Implants',
+    image: '/services/Dental implants.png',
+    video: '/treatment-videos/Dental%20Implants.mp4',
+    duration: '120 min implant assessment',
+    blurb: 'Replace missing teeth with stable, natural-looking implant treatment planning.',
+    highlight: 'Implant care',
+    details:
+      'An implant consultation for single or multiple missing teeth with digital planning, bite assessment, and long-term restoration options.',
+  },
+  {
+    id: 'dental-braces',
+    name: 'Dental Braces',
+    image: '/services/Dental Braces.png',
+    gif: '/treatment-gifs/Dental%20braces.gif',
+    duration: '60 min orthodontic consult',
+    blurb: 'Plan reliable teeth alignment with braces for crowding, spacing, and bite correction.',
     highlight: 'Orthodontics',
     details:
-      'Great for crowding, spacing, and mild bite correction using transparent staged aligners.',
+      'An orthodontic consultation to assess alignment, bite, jaw growth, and treatment options with fixed braces.',
+  },
+  {
+    id: 'clear-aligners',
+    name: 'Clear Aligners',
+    image: '/services/Clear Aligners.png',
+    video: '/treatment-videos/Clear%20Aligners.mp4',
+    duration: '60 min scan',
+    blurb: 'Straighten teeth discreetly with scan-led clear aligner treatment planning.',
+    highlight: 'Invisible braces',
+    details:
+      'A clear aligner assessment for mild to moderate crowding, spacing, and bite refinement with removable trays.',
+  },
+  {
+    id: 'advanced-gum-treatment',
+    name: 'Advanced Gum Treatment',
+    image: '/services/Advanced Gum Treatment.png',
+    duration: '50 min periodontal exam',
+    blurb: 'Treat bleeding gums, inflammation, and periodontal concerns with focused care.',
+    highlight: 'Gum health',
+    details:
+      'A periodontal visit for gum bleeding, deep cleaning needs, gum infection, and long-term tooth stability.',
   },
   {
     id: 'kids-dentistry',
     name: 'Kids Dentistry',
-    icon: null,
+    image: '/services/Kids Dentistry.png',
     duration: '45 min visit',
-    blurb: 'Friendly visits, preventive checkups, sealants, and early habit coaching.',
-    highlight: 'Family care',
+    blurb: 'Gentle checkups, preventive care, sealants, and friendly guidance for children.',
+    highlight: 'Child dental care',
     details:
-      'A gentle approach for children with preventive care and reassuring communication for parents.',
-  },
-  {
-    id: 'root-canal',
-    name: 'Root Canal Therapy',
-    icon: null,
-    duration: '75 min diagnosis',
-    blurb: 'Target infection early and preserve the natural tooth comfortably.',
-    highlight: 'Pain relief',
-    details:
-      'Microscope-assisted endodontic care designed to reduce discomfort and protect healthy tooth structure.',
-  },
-  {
-    id: 'whitening',
-    name: 'Teeth Whitening',
-    icon: null,
-    duration: '40 min session',
-    blurb: 'In-clinic brightening for photo-ready smiles with sensitivity-aware protocols.',
-    highlight: 'Smile boost',
-    details:
-      'A fast cosmetic option for patients preparing for events, weddings, or a cleaner brighter finish.',
-  },
-  {
-    id: 'veneers',
-    name: 'Porcelain Veneers',
-    icon: null,
-    duration: '75 min design consult',
-    blurb: 'Refine tooth shape, color, and alignment with natural-looking veneer planning.',
-    highlight: 'Aesthetic care',
-    details:
-      'Designed for patients seeking dramatic yet polished smile enhancement with precise cosmetic planning.',
-  },
-  {
-    id: 'crowns-bridges',
-    name: 'Crowns & Bridges',
-    icon: null,
-    duration: '60 min restorative visit',
-    blurb: 'Restore damaged or missing teeth with strong, shade-matched ceramic options.',
-    highlight: 'Tooth repair',
-    details:
-      'A restorative treatment for fractured teeth, worn bites, and fixed replacement solutions.',
-  },
-  {
-    id: 'gum-care',
-    name: 'Gum Care',
-    icon: null,
-    duration: '50 min periodontal exam',
-    blurb: 'Address bleeding gums, inflammation, and long-term periodontal maintenance early.',
-    highlight: 'Preventive care',
-    details:
-      'Focused on periodontal health, deep cleaning pathways, and protecting tooth stability over time.',
-  },
-  {
-    id: 'extractions',
-    name: 'Tooth Extractions',
-    icon: null,
-    duration: '45 min surgical consult',
-    blurb: 'Safe extractions for damaged, infected, or impacted teeth with aftercare guidance.',
-    highlight: 'Oral surgery',
-    details:
-      'Appropriate for severe decay, non-restorable teeth, and wisdom tooth evaluation when needed.',
+      'A child-friendly dental visit for checkups, cavities, habits, preventive care, and parent guidance.',
   },
   {
     id: 'dentures',
     name: 'Dentures',
-    icon: null,
+    image: '/services/Dentures.png',
+    gif: '/treatment-gifs/Dentures.gif',
     duration: '70 min prosthetic consult',
-    blurb: 'Comfort-focused removable tooth replacement designed for fit, stability, and confidence.',
+    blurb: 'Restore missing teeth with comfortable full or partial denture planning.',
     highlight: 'Smile restoration',
     details:
-      'Includes planning for full or partial dentures with functional bite and appearance in mind.',
+      'A prosthetic consultation for removable full or partial dentures designed around fit, bite, and appearance.',
   },
   {
-    id: 'emergency',
-    name: 'Emergency Dentistry',
-    icon: null,
-    duration: 'Urgent same-day triage',
-    blurb: 'Fast help for pain, swelling, broken teeth, trauma, and sudden dental infections.',
-    highlight: 'Urgent care',
+    id: 'mouth-ulcers',
+    name: 'Mouth Ulcers',
+    image: '/services/mouth ulcers.png',
+    duration: '30 min oral exam',
+    blurb: 'Get recurring or painful mouth ulcers checked with careful oral examination.',
+    highlight: 'Oral medicine',
     details:
-      'Built for immediate attention, pain relief, and next-step treatment planning during dental emergencies.',
+      'An oral health consultation for painful, recurring, or non-healing ulcers with diagnosis and treatment guidance.',
   },
 ]
 
+const treatmentInsights = {
+  'root-canal-treatment': {
+    benefits: ['Relieves deep tooth pain', 'Helps save the natural tooth', 'Stops infection from spreading'],
+    whoNeedsIt: ['Patients with severe sensitivity', 'Deep cavities or tooth infection', 'Pain while chewing'],
+  },
+  'wisdom-tooth-removal': {
+    benefits: ['Reduces pain and swelling', 'Prevents crowding and infection', 'Protects nearby teeth'],
+    whoNeedsIt: ['Impacted wisdom teeth', 'Jaw pain or gum swelling', 'Repeated food trapping at the back teeth'],
+  },
+  'laser-dentistry': {
+    benefits: ['Precise soft-tissue care', 'Less bleeding in suitable cases', 'Comfort-focused treatment'],
+    whoNeedsIt: ['Gum reshaping needs', 'Selected soft-tissue concerns', 'Patients looking for minimally invasive care'],
+  },
+  'teeth-whitening': {
+    benefits: ['Refreshes smile brightness', 'Targets common surface stains', 'Guided by dental professionals'],
+    whoNeedsIt: ['Tea, coffee, or food staining', 'Dull-looking teeth', 'Patients preparing for events or photos'],
+  },
+  'dental-fillings': {
+    benefits: ['Repairs cavities early', 'Restores bite comfort', 'Uses natural-looking tooth repair'],
+    whoNeedsIt: ['Small to moderate cavities', 'Chipped teeth', 'Food lodgement or sensitivity'],
+  },
+  'dental-crown': {
+    benefits: ['Strengthens weak teeth', 'Restores shape and chewing', 'Improves long-term protection'],
+    whoNeedsIt: ['Cracked or worn teeth', 'Root-canal-treated teeth', 'Large fillings needing coverage'],
+  },
+  'dental-implants': {
+    benefits: ['Stable missing-tooth replacement', 'Natural chewing support', 'Preserves smile confidence'],
+    whoNeedsIt: ['Single missing tooth', 'Multiple missing teeth', 'Patients seeking fixed replacement options'],
+  },
+  'dental-braces': {
+    benefits: ['Corrects alignment and bite', 'Improves smile balance', 'Supports long-term oral hygiene'],
+    whoNeedsIt: ['Crowded teeth', 'Spacing between teeth', 'Bite correction needs'],
+  },
+  'clear-aligners': {
+    benefits: ['Discreet teeth straightening', 'Removable trays', 'Scan-led treatment planning'],
+    whoNeedsIt: ['Mild to moderate crowding', 'Spacing concerns', 'Adults and teens wanting subtle orthodontics'],
+  },
+  'advanced-gum-treatment': {
+    benefits: ['Controls gum inflammation', 'Supports tooth stability', 'Reduces bleeding and infection risk'],
+    whoNeedsIt: ['Bleeding gums', 'Loose teeth concerns', 'Deep cleaning or periodontal care needs'],
+  },
+  'kids-dentistry': {
+    benefits: ['Gentle child-friendly visits', 'Early cavity prevention', 'Healthy habit guidance for parents'],
+    whoNeedsIt: ['Children needing checkups', 'Cavities or tooth pain', 'Preventive sealants and fluoride care'],
+  },
+  dentures: {
+    benefits: ['Restores missing teeth', 'Improves speech and chewing', 'Supports facial appearance'],
+    whoNeedsIt: ['Full or partial tooth loss', 'Loose old dentures', 'Patients needing removable replacement options'],
+  },
+  'mouth-ulcers': {
+    benefits: ['Checks recurring ulcers', 'Identifies possible triggers', 'Guides treatment and relief'],
+    whoNeedsIt: ['Painful mouth ulcers', 'Ulcers lasting more than two weeks', 'Repeated oral sores'],
+  },
+}
+
+const branches = [
+  'Apple International Dental, Krishna Lanka, Vijayawada',
+  'Apple International Dental, Suryaraopet, Vijayawada',
+  'Apple International Dental, 1 Town, Vijayawada',
+  'Apple International Dental, Mangalgiri',
+  'Apple International Dental, Bangalore HSR Layout',
+  'Apple International Dental, Srikakulam',
+  'Apple International Dental, Eluru',
+  'Apple International Dental, Anantapur',
+  'Apple International Dental, Tirupati',
+  'Apple International Dental, Rajamundry',
+  'Apple International Dental, Madanapalli',
+  'Apple International Dental, Nellore',
+  'Apple International Dental, Vizag',
+  'Apple International Dental, Ongole',
+  'Apple International Dental, Bobbili',
+  'Apple International Dental, Vizianagaram',
+  'Apple International Dental, Guntur',
+  'Apple International Dental, Hyderabad',
+]
+
+const clinicPhoneDisplay = '+91 98490 24567'
+const clinicPhoneHref = '+919849024567'
+const defaultWhatsappNumber = '919849024567'
+const getBranchArea = (branch) => branch.replace(/^Apple International Dental,\s*/, '')
+
+const branchContacts = branches.map((branch) => ({
+  branch,
+  area: getBranchArea(branch),
+  whatsappNumber: defaultWhatsappNumber,
+}))
+
+const appointmentSlots = [
+  '09:30 AM',
+  '10:30 AM',
+  '11:30 AM',
+  '12:30 PM',
+  '04:00 PM',
+  '05:00 PM',
+  '06:00 PM',
+  '07:00 PM',
+]
+
+const branchAvailability = Object.fromEntries(
+  branches.map((branch) => [
+    branch,
+    {
+      closedWeekdays: [0],
+    },
+  ]),
+)
+
 const kpis = [
-  { value: '25+', label: 'years serving families in Hyderabad' },
-  { value: '8k+', label: 'patients treated across routine and advanced care' },
+  { value: '22 years+', label: 'serving patients' },
+  { value: '33 lakh+', label: 'patients treated across routine and advanced care' },
   { value: '7 days', label: 'consultations and emergency visits available' },
-  { value: '12', label: 'core treatments under one roof' },
+  { value: '13', label: 'core treatments under one roof' },
 ]
 
 const services = [
   {
     title: 'Preventive Dentistry',
+    image: '/service-gifs/Preventive Dentistry.gif',
     text:
       'Routine checkups, digital x-rays, ultrasonic scaling, fluoride care, and gum-health reviews for long-term prevention.',
   },
   {
     title: 'Cosmetic Dentistry',
+    image: '/service-gifs/Cosemtic Dentistry.gif',
     text:
       'Smile design, veneers, whitening, and enamel reshaping for patients looking for a brighter, more balanced smile.',
   },
   {
     title: 'Restorative Dentistry',
+    image: '/service-gifs/Restorative Dentistry.gif',
     text:
       'Tooth-colored fillings, crowns, bridges, implants, and root canal care that restore strength, comfort, and function.',
   },
   {
     title: 'Children & Orthodontic Care',
+    image: '/service-gifs/Children and Orthodontic Care.gif',
     text:
       'Kids checkups, habit guidance, sealants, and clear aligner treatment planned around comfort and predictable results.',
   },
@@ -205,55 +335,883 @@ const instagramPosts = [
   },
 ]
 
+const instagramProfileUrl = 'https://www.instagram.com/appleinternational_dental/'
+const instagramFeedEndpoint = import.meta.env.VITE_INSTAGRAM_FEED_ENDPOINT
+const bookingEndpoint = import.meta.env.VITE_BOOKING_ENDPOINT
+
+const heroImage = '/hero/dental-hero-smile-exam.jpg'
+
+const whyChooseUs = [
+  {
+    title: 'World Class Treatment',
+    icon: '🌐',
+    points: [
+      'Only Asian member of the Royal Society of Medicine, UK',
+      'Globally certified partners',
+      'Premium materials and cutting-edge tools',
+      'Advanced tech: laser dentistry and 3D intraoral scanning',
+    ],
+  },
+  {
+    title: 'Doctor-Led Patient Care',
+    icon: '⚕',
+    points: [
+      'Helpline managed by 50+ dentists',
+      '1300+ doctors delivering consistent care',
+      'Treatments reviewed for quality assurance',
+      'Structured post-treatment follow-up plans',
+    ],
+  },
+  {
+    title: '22 Years Of Experience',
+    icon: '✹',
+    points: [
+      '1300+ experienced dental specialists',
+      '31 lakh+ successful root canal treatments',
+      '50,000+ implants placed with precision',
+      '20,000+ completed orthodontic treatments',
+    ],
+  },
+  {
+    title: 'Unmatched Safety Standards',
+    icon: '⬟',
+    points: [
+      '10X safety protocols across all clinics',
+      'AI-powered sterilization (AIPS from USA)',
+      '4-step process ensuring deep sterilization',
+      'Spotless, safe, and hygienic environment',
+    ],
+  },
+]
+
+const faqs = [
+  {
+    question: 'Will my dental treatment be painful?',
+    answer:
+      'Most treatments are planned with comfort in mind. The dentist will explain the procedure, use suitable numbing where needed, and guide you through aftercare before you leave.',
+  },
+  {
+    question: 'Can I get a cost estimate before starting treatment?',
+    answer:
+      'Yes. After examining your concern, the team will explain the recommended treatment options, expected visits, and an estimated cost before you decide.',
+  },
+  {
+    question: 'How quickly can I get an appointment?',
+    answer:
+      'You can request a consultation through the form, and the reception team will contact you to confirm the nearest available slot. Urgent pain or swelling can be prioritized when possible.',
+  },
+  {
+    question: 'Do you treat children?',
+    answer:
+      'Yes. Kids Dentistry includes checkups, cavity care, preventive guidance, fluoride or sealant advice, and a gentle approach for nervous children.',
+  },
+  {
+    question: 'Should I choose braces or clear aligners?',
+    answer:
+      'That depends on your teeth alignment, bite, lifestyle, and treatment goals. The orthodontic consultation helps decide whether braces or clear aligners are more suitable.',
+  },
+  {
+    question: 'I am scared of root canal treatment. What should I expect?',
+    answer:
+      'Root canal treatment is meant to relieve infection-related pain and save the tooth. The doctor will numb the area, explain each step, and share recovery instructions after the visit.',
+  },
+]
+
 const initialFormState = {
   treatment: treatments[0].id,
+  branch: branches[0],
   name: '',
   phone: '',
   email: '',
+  referredBy: '',
   date: '',
+  timeSlot: '',
   concern: '',
 }
 
+const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
+const bookingLockKey = 'appleInternationalDentalBookingRequest'
+const bookingLockDuration = 24 * 60 * 60 * 1000
+const loaderMinimumDuration = 1400
+const loaderMaximumDuration = 5200
+const concernWordLimit = 100
+const availabilityRefreshMs = 30 * 1000
+
+const getWords = (value) => value.trim().split(/\s+/).filter(Boolean)
+
+const getWhatsappLink = (branch) => {
+  const branchContact =
+    branchContacts.find((contact) => contact.branch === branch) ?? branchContacts[0]
+  const message = `Hello Apple International Dental, I would like to enquire about an appointment at ${branch}.`
+
+  return `https://wa.me/${branchContact.whatsappNumber}?text=${encodeURIComponent(message)}`
+}
+
+const limitWords = (value, wordLimit) => {
+  const words = getWords(value)
+
+  if (words.length <= wordLimit) {
+    return value
+  }
+
+  return words.slice(0, wordLimit).join(' ')
+}
+
+const preloadImage = (src) =>
+  new Promise((resolve) => {
+    const image = new Image()
+    const timeout = window.setTimeout(resolve, loaderMaximumDuration)
+
+    image.onload = () => {
+      window.clearTimeout(timeout)
+      resolve()
+    }
+
+    image.onerror = () => {
+      window.clearTimeout(timeout)
+      resolve()
+    }
+
+    image.src = src
+  })
+
+const getPreloadImages = () =>
+  [
+    '/logo.png',
+    '/loading/dentistry.gif',
+    heroImage,
+    ...treatments.map((treatment) => treatment.image),
+    ...services.map((service) => service.image),
+    ...dentists.map((dentist) => dentist.image),
+    ...instagramPosts.map((post) => post.image),
+  ].filter(Boolean)
+
+const getActiveBookingLock = () => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  const savedRequest = window.localStorage.getItem(bookingLockKey)
+
+  if (!savedRequest) {
+    return null
+  }
+
+  try {
+    const bookingLock = JSON.parse(savedRequest)
+    const submittedAt = Number(bookingLock.submittedAt)
+
+    if (!submittedAt || Date.now() - submittedAt > bookingLockDuration) {
+      window.localStorage.removeItem(bookingLockKey)
+      return null
+    }
+
+    return bookingLock
+  } catch {
+    window.localStorage.removeItem(bookingLockKey)
+    return null
+  }
+}
+
+const formatBookingCooldown = (submittedAt) => {
+  const remainingMs = bookingLockDuration - (Date.now() - submittedAt)
+  const remainingHours = Math.max(1, Math.ceil(remainingMs / (60 * 60 * 1000)))
+
+  return `${remainingHours} hour${remainingHours === 1 ? '' : 's'}`
+}
+
+const formatDateValue = (date) => {
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+
+  return `${year}-${month}-${day}`
+}
+
+const getTodayDateValue = () => formatDateValue(new Date())
+
+const parseDateValue = (dateValue) => {
+  if (!dateValue) {
+    return null
+  }
+
+  const [year, month, day] = dateValue.split('-').map(Number)
+
+  return new Date(year, month - 1, day)
+}
+
+const isPastDate = (dateValue) => {
+  const selectedDate = parseDateValue(dateValue)
+  const today = parseDateValue(getTodayDateValue())
+
+  return Boolean(selectedDate && today && selectedDate < today)
+}
+
+const getAvailabilityKey = (branch, dateValue) => `${branch}::${dateValue}`
+
+const normalizeBookedSlots = (slots) =>
+  Array.isArray(slots) ? slots.filter((slot) => appointmentSlots.includes(slot)) : []
+
+const getRemoteAvailability = (availabilityByDate, branch, dateValue) =>
+  availabilityByDate[getAvailabilityKey(branch, dateValue)]
+
+const getDateAvailability = (branch, dateValue, availabilityByDate = {}) => {
+  const date = parseDateValue(dateValue)
+  const rule = branchAvailability[branch]
+
+  if (!date || !rule) {
+    return {
+      availableSlots: [],
+      bookedSlots: appointmentSlots,
+      isClosed: false,
+      isFullyBooked: false,
+      isPast: false,
+    }
+  }
+
+  const weekday = date.getDay()
+  const isClosed = rule.closedWeekdays.includes(weekday)
+  const isPast = isPastDate(dateValue)
+  const remoteAvailability = getRemoteAvailability(availabilityByDate, branch, dateValue)
+  const remoteBookedSlots = normalizeBookedSlots(remoteAvailability?.bookedSlots)
+  const bookedSlots =
+    isClosed || isPast
+      ? appointmentSlots
+      : remoteBookedSlots
+  const availableSlots = appointmentSlots.filter((slot) => !bookedSlots.includes(slot))
+
+  return {
+    availableSlots,
+    bookedSlots,
+    isClosed,
+    isFullyBooked: availableSlots.length === 0,
+    isPast,
+  }
+}
+
+const getDateSuggestions = (branch, availabilityByDate = {}) =>
+  Array.from({ length: 8 }, (_, index) => {
+    const date = new Date()
+    date.setDate(date.getDate() + index)
+
+    const value = formatDateValue(date)
+    const availability = getDateAvailability(branch, value, availabilityByDate)
+
+    return {
+      value,
+      label: date.toLocaleDateString('en-IN', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+      }),
+      isUnavailable: availability.isClosed || availability.isFullyBooked || availability.isPast,
+    }
+  })
+
+const fetchBookingAvailability = async ({ branch, date }) => {
+  if (!bookingEndpoint || !branch || !date) {
+    return null
+  }
+
+  const url = new URL(bookingEndpoint)
+  url.searchParams.set('action', 'availability')
+  url.searchParams.set('branch', branch)
+  url.searchParams.set('date', date)
+
+  const response = await fetch(url.toString(), {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error('Unable to refresh appointment slots right now.')
+  }
+
+  const result = await response.json()
+
+  return {
+    bookedSlots: normalizeBookedSlots(result.bookedSlots),
+    updatedAt: Date.now(),
+  }
+}
+
+const fetchBookingAvailabilityRange = async ({ branch, startDate, days }) => {
+  if (!bookingEndpoint || !branch || !startDate) {
+    return []
+  }
+
+  const url = new URL(bookingEndpoint)
+  url.searchParams.set('action', 'availability-range')
+  url.searchParams.set('branch', branch)
+  url.searchParams.set('startDate', startDate)
+  url.searchParams.set('days', String(days))
+
+  const response = await fetch(url.toString(), {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error('Unable to refresh appointment slots right now.')
+  }
+
+  const result = await response.json()
+  const daysAvailability = Array.isArray(result.days) ? result.days : []
+
+  return daysAvailability.map((day) => ({
+    date: day.date,
+    bookedSlots: normalizeBookedSlots(day.bookedSlots),
+    updatedAt: Date.now(),
+  }))
+}
+
+const submitFormToFormspree = async ({ form, formName, metadata = {} }) => {
+  if (!formspreeEndpoint) {
+    throw new Error('Formspree endpoint is not configured.')
+  }
+
+  const formData = new FormData(form)
+
+  formData.set('form_name', formName)
+
+  Object.entries(metadata).forEach(([key, value]) => {
+    formData.set(key, value)
+  })
+
+  const response = await fetch(formspreeEndpoint, {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Accept: 'application/json',
+    },
+  })
+
+  if (!response.ok) {
+    const result = await response.json().catch(() => null)
+    const message =
+      result?.errors?.map((error) => error.message).join(' ') ??
+      'Unable to submit the form right now.'
+
+    throw new Error(message)
+  }
+}
+
+const submitBookingToSheets = async ({ formState, treatmentName, branchName }) => {
+  if (!bookingEndpoint) {
+    throw new Error('Booking endpoint is not configured.')
+  }
+
+  const response = await fetch(bookingEndpoint, {
+    method: 'POST',
+    body: JSON.stringify({
+      action: 'create-booking',
+      source: 'Apple International Dental website',
+      treatment: formState.treatment,
+      treatmentName,
+      branch: branchName,
+      name: formState.name,
+      phone: formState.phone,
+      email: formState.email,
+      referredBy: formState.referredBy,
+      date: formState.date,
+      timeSlot: formState.timeSlot,
+      concern: formState.concern,
+    }),
+  })
+
+  const result = await response.json().catch(() => null)
+
+  if (!response.ok || result?.ok === false) {
+    throw new Error(result?.message ?? 'Unable to submit the booking right now.')
+  }
+
+  return result
+}
+
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
   const [formState, setFormState] = useState(initialFormState)
   const [submittedFor, setSubmittedFor] = useState('')
+  const [submitError, setSubmitError] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [bookingLock, setBookingLock] = useState(getActiveBookingLock)
+  const [activeTreatmentId, setActiveTreatmentId] = useState('')
+  const [liveInstagramPosts, setLiveInstagramPosts] = useState([])
+  const [isWhatsappHintVisible, setIsWhatsappHintVisible] = useState(false)
+  const [bookingAvailability, setBookingAvailability] = useState({})
+  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false)
+  const [availabilityError, setAvailabilityError] = useState('')
 
   const selectedTreatment =
     treatments.find((treatment) => treatment.id === formState.treatment) ?? treatments[0]
+  const activeTreatment = treatments.find((treatment) => treatment.id === activeTreatmentId)
+  const activeTreatmentInsight = activeTreatment ? treatmentInsights[activeTreatment.id] : null
+  const confirmationTreatment = submittedFor || bookingLock?.treatmentName
+  const isBookingLocked = Boolean(bookingLock)
+  const isFormDisabled = isSubmitting || isBookingLocked
+  const bookingCooldown = bookingLock ? formatBookingCooldown(bookingLock.submittedAt) : ''
+  const todayDateValue = getTodayDateValue()
+  const selectedDateAvailability = getDateAvailability(
+    formState.branch,
+    formState.date,
+    bookingAvailability,
+  )
+  const suggestedDates = getDateSuggestions(formState.branch, bookingAvailability)
+  const hasAvailableSelectedDate =
+    Boolean(formState.date) &&
+    !selectedDateAvailability.isPast &&
+    !selectedDateAvailability.isClosed &&
+    !selectedDateAvailability.isFullyBooked
+  const requiresSlotSelection = !isBookingLocked && (!hasAvailableSelectedDate || !formState.timeSlot)
+  const appointmentStatusMessage = formState.date
+    ? isAvailabilityLoading
+      ? 'Checking the latest appointment slots...'
+      : selectedDateAvailability.isPast
+      ? 'Past dates are unavailable. Please choose today or a future date.'
+      : selectedDateAvailability.isClosed
+        ? 'This branch is closed on the selected date.'
+        : selectedDateAvailability.isFullyBooked
+          ? 'All slots are booked for this branch on the selected date.'
+          : `${selectedDateAvailability.availableSlots.length} slots available for this branch.`
+    : 'Select a date to view available time slots.'
+  const displayedInstagramPosts = liveInstagramPosts.length ? liveInstagramPosts : instagramPosts
+
+  useEffect(() => {
+    let isMounted = true
+
+    const minimumLoader = new Promise((resolve) => {
+      window.setTimeout(resolve, loaderMinimumDuration)
+    })
+
+    const maximumLoader = new Promise((resolve) => {
+      window.setTimeout(resolve, loaderMaximumDuration)
+    })
+
+    const imagePreload = Promise.allSettled(getPreloadImages().map(preloadImage))
+
+    Promise.race([Promise.all([minimumLoader, imagePreload]), maximumLoader]).then(() => {
+      if (isMounted) {
+        setIsLoading(false)
+      }
+    })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!instagramFeedEndpoint) {
+      return undefined
+    }
+
+    let isMounted = true
+
+    fetch(instagramFeedEndpoint)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Instagram feed unavailable.')
+        }
+
+        return response.json()
+      })
+      .then((posts) => {
+        if (!isMounted || !Array.isArray(posts)) {
+          return
+        }
+
+        setLiveInstagramPosts(
+          posts
+            .map((post) => ({
+              image: post.image ?? post.media_url ?? post.thumbnail_url,
+              title: post.title ?? 'Instagram post',
+              caption: post.caption ?? '',
+              permalink: post.permalink ?? instagramProfileUrl,
+            }))
+            .filter((post) => post.image)
+            .slice(0, 8),
+        )
+      })
+      .catch(() => {
+        if (isMounted) {
+          setLiveInstagramPosts([])
+        }
+      })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!bookingEndpoint || !formState.branch) {
+      return undefined
+    }
+
+    let isMounted = true
+
+    const refreshAvailability = () => {
+      setIsAvailabilityLoading(true)
+      setAvailabilityError('')
+
+      fetchBookingAvailabilityRange({
+        branch: formState.branch,
+        startDate: todayDateValue,
+        days: 8,
+      })
+        .then((daysAvailability) => {
+          if (!isMounted) {
+            return
+          }
+
+          setBookingAvailability((current) => {
+            const nextAvailability = { ...current }
+
+            daysAvailability.forEach((day) => {
+              if (day.date) {
+                nextAvailability[getAvailabilityKey(formState.branch, day.date)] = day
+              }
+            })
+
+            return nextAvailability
+          })
+        })
+        .catch(() => {
+          if (isMounted) {
+            setAvailabilityError('Live slot sync is temporarily unavailable. Please try again.')
+          }
+        })
+        .finally(() => {
+          if (isMounted) {
+            setIsAvailabilityLoading(false)
+          }
+        })
+    }
+
+    refreshAvailability()
+    const refreshInterval = window.setInterval(refreshAvailability, availabilityRefreshMs)
+
+    return () => {
+      isMounted = false
+      window.clearInterval(refreshInterval)
+    }
+  }, [formState.branch, todayDateValue])
+
+  useEffect(() => {
+    if (!bookingEndpoint || !formState.branch || !formState.date) {
+      return undefined
+    }
+
+    let isMounted = true
+
+    const refreshSelectedDateAvailability = () => {
+      setIsAvailabilityLoading(true)
+      setAvailabilityError('')
+
+      fetchBookingAvailability({
+        branch: formState.branch,
+        date: formState.date,
+      })
+        .then((dateAvailability) => {
+          if (!isMounted || !dateAvailability) {
+            return
+          }
+
+          setBookingAvailability((current) => ({
+            ...current,
+            [getAvailabilityKey(formState.branch, formState.date)]: dateAvailability,
+          }))
+        })
+        .catch(() => {
+          if (isMounted) {
+            setAvailabilityError('Live slot sync is temporarily unavailable. Please try again.')
+          }
+        })
+        .finally(() => {
+          if (isMounted) {
+            setIsAvailabilityLoading(false)
+          }
+        })
+    }
+
+    refreshSelectedDateAvailability()
+
+    return () => {
+      isMounted = false
+    }
+  }, [formState.branch, formState.date])
+
+  useEffect(() => {
+    const revealElements = document.querySelectorAll('.reveal-section')
+
+    if (!('IntersectionObserver' in window)) {
+      revealElements.forEach((element) => element.classList.add('visible'))
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12 },
+    )
+
+    revealElements.forEach((element) => observer.observe(element))
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!activeTreatmentId) {
+      document.body.style.overflow = ''
+      return undefined
+    }
+
+    document.body.style.overflow = 'hidden'
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setActiveTreatmentId('')
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', handleEscape)
+    }
+  }, [activeTreatmentId])
+
+  useEffect(() => {
+    if (isLoading) {
+      return undefined
+    }
+
+    let hintTimeout
+    const showHint = () => {
+      const isWhatsappOpen = document.querySelector('.whatsapp-launcher')?.hasAttribute('open')
+
+      if (!isWhatsappOpen) {
+        setIsWhatsappHintVisible(true)
+        window.setTimeout(() => setIsWhatsappHintVisible(false), 1500)
+      }
+    }
+
+    hintTimeout = window.setTimeout(showHint, 6000)
+    const hintInterval = window.setInterval(showHint, 6000)
+
+    return () => {
+      window.clearTimeout(hintTimeout)
+      window.clearInterval(hintInterval)
+    }
+  }, [isLoading])
 
   const handleChange = ({ target: { name, value } }) => {
+    const nextValue =
+      name === 'phone'
+        ? value.replace(/\D/g, '').slice(0, 10)
+        : name === 'referredBy'
+          ? value.replace(/[^A-Za-z ]/g, '')
+          : name === 'email'
+            ? value.trim()
+          : name === 'concern'
+            ? limitWords(value, concernWordLimit)
+          : value
+
     setFormState((current) => ({
       ...current,
-      [name]: value,
+      [name]: nextValue,
+      ...(name === 'branch' || name === 'date' ? { timeSlot: '' } : {}),
     }))
+    setSubmitError('')
+  }
+
+  const handleDateSuggestion = (dateValue) => {
+    setFormState((current) => ({
+      ...current,
+      date: dateValue,
+      timeSlot: '',
+    }))
+    setSubmitError('')
+  }
+
+  const handleTimeSlotSelect = (timeSlot) => {
+    setFormState((current) => ({
+      ...current,
+      timeSlot,
+    }))
+    setSubmitError('')
   }
 
   const handleBookTreatment = (treatmentId) => {
-    setFormState((current) => ({
-      ...current,
-      treatment: treatmentId,
-    }))
-    setSubmittedFor('')
+    if (!isBookingLocked) {
+      setFormState((current) => ({
+        ...current,
+        treatment: treatmentId,
+      }))
+      setSubmittedFor('')
+      setSubmitError('')
+    }
+
     document.getElementById('booking-form')?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     })
   }
 
-  const handleSubmit = (event) => {
+  const handleTreatmentKeyDown = (event, treatmentId) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      setActiveTreatmentId(treatmentId)
+    }
+  }
+
+  const handleModalBooking = (treatmentId) => {
+    setActiveTreatmentId('')
+    setTimeout(() => handleBookTreatment(treatmentId), 0)
+  }
+
+  const handleDateFieldClick = (event) => {
+    const dateInput = event.currentTarget.querySelector('input[type="date"]')
+
+    dateInput?.focus()
+    dateInput?.showPicker?.()
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    setSubmittedFor(selectedTreatment.name)
-    setFormState(initialFormState)
+
+    if (isBookingLocked) {
+      return
+    }
+
+    const treatmentName = selectedTreatment.name
+    const branchName = formState.branch
+
+    if (requiresSlotSelection) {
+      setSubmitError('Please choose an available date and time slot before sending the request.')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmittedFor('')
+    setSubmitError('')
+
+    try {
+      if (bookingEndpoint) {
+        const latestAvailability = await fetchBookingAvailability({
+          branch: branchName,
+          date: formState.date,
+        })
+
+        if (latestAvailability) {
+          setBookingAvailability((current) => ({
+            ...current,
+            [getAvailabilityKey(branchName, formState.date)]: latestAvailability,
+          }))
+
+          if (latestAvailability.bookedSlots.includes(formState.timeSlot)) {
+            setSubmitError('That slot was just booked. Please choose another available time.')
+            return
+          }
+        }
+
+        await submitBookingToSheets({
+          formState,
+          treatmentName,
+          branchName,
+        })
+
+        setBookingAvailability((current) => {
+          const key = getAvailabilityKey(branchName, formState.date)
+          const currentBookedSlots = normalizeBookedSlots(current[key]?.bookedSlots)
+
+          return {
+            ...current,
+            [key]: {
+              bookedSlots: [...new Set([...currentBookedSlots, formState.timeSlot])],
+              updatedAt: Date.now(),
+            },
+          }
+        })
+
+        if (formspreeEndpoint) {
+          submitFormToFormspree({
+            form: event.currentTarget,
+            formName: 'Consultation request',
+            metadata: {
+              treatment_name: treatmentName,
+              branch_name: branchName,
+              appointment_time: formState.timeSlot,
+              source: 'Apple International Dental website',
+            },
+          }).catch(() => {})
+        }
+      } else {
+        await submitFormToFormspree({
+          form: event.currentTarget,
+          formName: 'Consultation request',
+          metadata: {
+            treatment_name: treatmentName,
+            branch_name: branchName,
+            appointment_time: formState.timeSlot,
+            source: 'Apple International Dental website',
+          },
+        })
+      }
+
+      const nextBookingLock = {
+        treatmentName,
+        branchName,
+        submittedAt: Date.now(),
+      }
+
+      window.localStorage.setItem(bookingLockKey, JSON.stringify(nextBookingLock))
+      setBookingLock(nextBookingLock)
+      setSubmittedFor(treatmentName)
+      setFormState(initialFormState)
+    } catch (error) {
+      setSubmitError(error.message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <main className="page-shell" id="top">
+      {isLoading && (
+        <div className="site-loader" role="status" aria-live="polite">
+          <div className="site-loader-card">
+            <img className="site-loader-logo" src="/logo.png" alt="Apple International Dental" />
+            <img
+              className="site-loader-gif"
+              src="/loading/dentistry.gif"
+              alt=""
+              aria-hidden="true"
+            />
+            <p>Preparing your smile care experience...</p>
+          </div>
+        </div>
+      )}
+
       <header className="site-header">
         <div className="site-header-inner">
           <a className="site-brand" href="#top">
-            <span className="site-brand-mark">LD</span>
+            <span className="site-brand-mark">
+              <img src="/logo.png" alt="" aria-hidden="true" />
+            </span>
             <span className="site-brand-copy">
-              <strong>Jubilee Dental Care</strong>
+              <strong>Apple International Dental</strong>
               <small>Family, cosmetic, implant, and preventive dentistry</small>
             </span>
           </a>
@@ -266,21 +1224,26 @@ function App() {
             <a href="#contact">Contact</a>
           </nav>
 
-          <a className="site-cta" href="#booking">
-            Book now
-          </a>
+          <div className="site-actions">
+            <a className="site-call" href={`tel:${clinicPhoneHref}`}>
+              Call now
+            </a>
+            <a className="site-cta" href="#booking">
+              Book now
+            </a>
+          </div>
         </div>
       </header>
 
-      <section className="hero-section">
+      <section className="hero-section reveal-section">
         <div className="hero-image-card">
           <div className="hero-overlay">
             <div className="hero-copy">
-              <p className="eyebrow">Jubilee Hills family, cosmetic, and restorative dentistry</p>
-              <h1>Trusted dental care, advanced treatment, and lasting smiles for over 25 years.</h1>
+              <p className="eyebrow">Apple International Dental</p>
+              <h1>Trusted dental care in Vijayawada for healthy smiles and advanced treatment.</h1>
               <p className="hero-text">
                 From routine cleanings and kids checkups to aligners, implants, and emergency
-                dentistry, our clinic offers complete care in one comfortable setting.
+                dentistry, our Vijayawada dental clinic offers complete care in one comfortable setting.
               </p>
 
               <div className="hero-actions">
@@ -313,18 +1276,11 @@ function App() {
             </div>
           </div>
 
-          <div className="hero-floating-card">
-            <span className="hero-badge">Since 1999</span>
-            <div className="hero-image-copy">
-              <p>Comfort-first visits</p>
-              <strong>Gentle dental care with clear treatment plans and a welcoming clinic team.</strong>
-            </div>
-          </div>
         </div>
       </section>
 
       <div className="content-shell">
-        <section className="kpi-section" aria-label="Clinic performance highlights">
+        <section className="kpi-section reveal-section" aria-label="Clinic performance highlights">
           {kpis.map((item) => (
             <article className="kpi-card" key={item.label}>
               <strong>{item.value}</strong>
@@ -333,15 +1289,15 @@ function App() {
           ))}
         </section>
 
-        <section className="services-overview" id="services">
+        <section className="services-overview reveal-section" id="services">
           <div className="section-heading compact">
             <div>
               <p className="eyebrow">Complete dental care</p>
-              <h2>Comprehensive dental services</h2>
+              <h2>Comprehensive dental services in Vijayawada</h2>
             </div>
             <p className="section-text">
-              Explore preventive, cosmetic, restorative, and orthodontic services tailored
-              to children, adults, and long-term oral health needs.
+              Explore preventive, cosmetic, restorative, implant, and orthodontic dental services
+              tailored to children, adults, and long-term oral health needs.
             </p>
           </div>
 
@@ -349,6 +1305,9 @@ function App() {
             <div className="services-grid">
               {services.map((service) => (
                 <article className="service-card" key={service.title}>
+                  <div className="service-visual" aria-hidden="true">
+                    <img src={service.image} alt="" loading="lazy" />
+                  </div>
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
                 </article>
@@ -376,11 +1335,11 @@ function App() {
           </div>
         </section>
 
-        <section className="treatment-section" id="treatments">
+        <section className="treatment-section reveal-section" id="treatments">
           <div className="section-heading compact">
             <div>
               <p className="eyebrow">Popular treatments</p>
-              <h2>Explore our most requested treatments</h2>
+              <h2>Explore our most requested dental treatments</h2>
             </div>
             <p className="section-text">
               Choose a treatment to request a consultation with the right focus from the
@@ -396,19 +1355,42 @@ function App() {
                 <article
                   key={treatment.id}
                   className={`treatment-card${isActive ? ' active' : ''}`}
+                  role="button"
+                  tabIndex="0"
+                  onClick={() => setActiveTreatmentId(treatment.id)}
+                  onKeyDown={(event) => handleTreatmentKeyDown(event, treatment.id)}
                 >
+                  {treatment.image && (
+                    <div className="treatment-image-wrap">
+                      {treatment.isVideoPreview ? (
+                        <video
+                          className="treatment-image"
+                          src={treatment.image}
+                          muted
+                          playsInline
+                          autoPlay
+                          loop
+                          preload="metadata"
+                          aria-label={`${treatment.name} preview`}
+                        />
+                      ) : (
+                        <img
+                          className="treatment-image"
+                          src={treatment.image}
+                          alt={treatment.name}
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                  )}
                   <div className="treatment-card-top">
-                    {treatment.icon ? (
-                      <img className="treatment-icon" src={treatment.icon} alt="" aria-hidden="true" />
-                    ) : (
-                      <span className="treatment-icon treatment-icon-fallback" aria-hidden="true">
-                        {treatment.name
-                          .split(' ')
-                          .slice(0, 2)
-                          .map((part) => part[0])
-                          .join('')}
-                      </span>
-                    )}
+                    <span className="treatment-icon treatment-icon-fallback" aria-hidden="true">
+                      {treatment.name
+                        .split(' ')
+                        .slice(0, 2)
+                        .map((part) => part[0])
+                        .join('')}
+                    </span>
                     <span className="treatment-tag">{treatment.highlight}</span>
                   </div>
                   <h3>{treatment.name}</h3>
@@ -418,9 +1400,12 @@ function App() {
                     <button
                       type="button"
                       className="treatment-book-button"
-                      onClick={() => handleBookTreatment(treatment.id)}
+                      onClick={(event) => {
+                        event.stopPropagation()
+                        setActiveTreatmentId(treatment.id)
+                      }}
                     >
-                      Book now
+                      Learn more
                     </button>
                   </div>
                 </article>
@@ -429,11 +1414,11 @@ function App() {
           </div>
         </section>
 
-        <section className="booking-section" id="booking-form">
+        <section className="booking-section reveal-section" id="booking-form">
             <div className="section-heading compact">
             <div>
               <p className="eyebrow">Contact us</p>
-              <h2>Schedule your consultation</h2>
+              <h2>Schedule your dental consultation</h2>
             </div>
             <p className="section-text">
               Tell us what you need help with and our front desk team will confirm the
@@ -448,112 +1433,347 @@ function App() {
               <p>{selectedTreatment.details}</p>
             </div>
 
-            <form className="booking-form booking-form-grid" onSubmit={handleSubmit}>
-              <label>
-                Treatment
-                <select
-                  required
-                  name="treatment"
-                  value={formState.treatment}
-                  onChange={handleChange}
-                >
-                  {treatments.map((treatment) => (
-                    <option key={treatment.id} value={treatment.id}>
-                      {treatment.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
+            <form
+              className="booking-form booking-form-grid"
+              name="consultation"
+              action={formspreeEndpoint}
+              method="POST"
+              onSubmit={handleSubmit}
+            >
+              <input type="hidden" name="form_type" value="consultation" />
+              <input type="hidden" name="_subject" value="New dental consultation request" />
+              <input type="hidden" name="treatment_name" value={selectedTreatment.name} />
+              <input type="hidden" name="branch_name" value={formState.branch} />
+              <input type="hidden" name="timeSlot" value={formState.timeSlot} />
 
-              <label>
-                Full name
-                <input
-                  required
-                  name="name"
-                  type="text"
-                  placeholder="Your name"
-                  value={formState.name}
-                  onChange={handleChange}
-                />
-              </label>
+              <fieldset disabled={isFormDisabled}>
+                <label className="select-label">
+                  Treatment
+                  <span className="select-control">
+                    <select
+                      required
+                      name="treatment"
+                      value={formState.treatment}
+                      onChange={handleChange}
+                    >
+                      {treatments.map((treatment) => (
+                        <option key={treatment.id} value={treatment.id}>
+                          {treatment.name}
+                        </option>
+                      ))}
+                    </select>
+                  </span>
+                </label>
 
-              <label>
-                Phone number
-                <input
-                  required
-                  name="phone"
-                  type="tel"
-                  placeholder="+91 98765 43210"
-                  value={formState.phone}
-                  onChange={handleChange}
-                />
-              </label>
+                <label className="select-label">
+                  Branch
+                  <span className="select-control">
+                    <select
+                      required
+                      name="branch"
+                      value={formState.branch}
+                      onChange={handleChange}
+                    >
+                      {branches.map((branch) => (
+                        <option key={branch} value={branch}>
+                          {branch}
+                        </option>
+                      ))}
+                    </select>
+                  </span>
+                </label>
 
-              <label>
-                Email address
-                <input
-                  required
-                  name="email"
-                  type="email"
-                  placeholder="hello@patient.com"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-              </label>
+                <label>
+                  Full name
+                  <input
+                    required
+                    name="name"
+                    type="text"
+                    placeholder="Your name"
+                    value={formState.name}
+                    onChange={handleChange}
+                  />
+                </label>
 
-              <label>
-                Preferred date
-                <input
-                  required
-                  name="date"
-                  type="date"
-                  value={formState.date}
-                  onChange={handleChange}
-                />
-              </label>
+                <label>
+                  Phone number
+                  <input
+                    required
+                    name="phone"
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]{10}"
+                    maxLength="10"
+                    title="Enter a 10 digit phone number"
+                    placeholder="9876543210"
+                    value={formState.phone}
+                    onChange={handleChange}
+                  />
+                </label>
 
-              <label className="booking-form-wide">
-                What would you like help with?
-                <textarea
-                  required
-                  name="concern"
-                  rows="4"
-                  placeholder="Tell us about your smile goals or dental concern."
-                  value={formState.concern}
-                  onChange={handleChange}
-                />
-              </label>
+                <label>
+                  Email address
+                  <input
+                    required
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    title="Enter a valid email address"
+                    placeholder="yourname@gmail.com"
+                    value={formState.email}
+                    onChange={handleChange}
+                  />
+                </label>
 
-              <button className="submit-button booking-form-wide" type="submit">
-                Request appointment
+                <label>
+                  Reffered by
+                  <input
+                    name="referredBy"
+                    type="text"
+                    pattern="[A-Za-z ]*"
+                    title="Use alphabets and spaces only"
+                    placeholder="Doctor, friend, family, or online"
+                    value={formState.referredBy}
+                    onChange={handleChange}
+                  />
+                </label>
+
+                <label onClick={handleDateFieldClick}>
+                  Preferred date
+                  <input
+                    required
+                    name="date"
+                    type="date"
+                    min={todayDateValue}
+                    value={formState.date}
+                    onChange={handleChange}
+                  />
+                </label>
+
+                <div className="booking-availability booking-form-wide">
+                  <div className="date-suggestions" aria-label="Available appointment dates">
+                    {suggestedDates.map((date) => (
+                      <button
+                        className={`date-chip${formState.date === date.value ? ' selected' : ''}`}
+                        disabled={date.isUnavailable}
+                        key={date.value}
+                        type="button"
+                        onClick={() => handleDateSuggestion(date.value)}
+                      >
+                        <span>{date.label}</span>
+                        <small>{date.isUnavailable ? 'Full' : 'Open'}</small>
+                      </button>
+                    ))}
+                  </div>
+
+                  <p
+                    className={`availability-note${
+                      hasAvailableSelectedDate ? ' available' : formState.date ? ' unavailable' : ''
+                    }`}
+                  >
+                    {appointmentStatusMessage}
+                  </p>
+                  {availabilityError && (
+                    <p className="availability-note unavailable">{availabilityError}</p>
+                  )}
+
+                  {formState.date && (
+                    <div className="time-slot-grid" aria-label="Available appointment time slots">
+                      {appointmentSlots.map((slot) => {
+                        const isUnavailable = !selectedDateAvailability.availableSlots.includes(slot)
+
+                        return (
+                          <button
+                            className={`time-slot${
+                              formState.timeSlot === slot ? ' selected' : ''
+                            }`}
+                            disabled={isUnavailable}
+                            key={slot}
+                            type="button"
+                            onClick={() => handleTimeSlotSelect(slot)}
+                          >
+                            {slot}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <label className="booking-form-wide">
+                  <span className="field-label-row">
+                    <span>What would you like help with?</span>
+                    <span>{getWords(formState.concern).length}/{concernWordLimit} words</span>
+                  </span>
+                  <textarea
+                    required
+                    name="concern"
+                    rows="4"
+                    placeholder="Tell us about your smile goals or dental concern."
+                    value={formState.concern}
+                    onChange={handleChange}
+                  />
+                </label>
+              </fieldset>
+
+              <button
+                className={`submit-button booking-form-wide${isSubmitting ? ' submitting' : ''}`}
+                type="submit"
+                disabled={isFormDisabled || requiresSlotSelection}
+              >
+                {isSubmitting && <span className="submit-spinner" aria-hidden="true" />}
+                <span>
+                  {isSubmitting
+                    ? 'Sending request...'
+                    : isBookingLocked
+                    ? 'Request already received'
+                    : requiresSlotSelection
+                      ? 'Select date and time'
+                    : 'Request appointment'}
+                </span>
               </button>
             </form>
 
-              <div className={`confirmation-card${submittedFor ? ' visible' : ''}`}>
-                <strong>Consultation request ready</strong>
+              <div
+                className={`confirmation-card${
+                  submitError ? ' visible error' : confirmationTreatment ? ' visible success' : ''
+                }`}
+                role="status"
+                aria-live="polite"
+              >
+                {confirmationTreatment && !submitError && (
+                  <span className="confirmation-icon" aria-hidden="true" />
+                )}
+                <strong>
+                  {submitError
+                    ? 'Request not sent'
+                    : confirmationTreatment
+                    ? 'Appointment request received'
+                    : 'Consultation request ready'}
+                </strong>
                 <p>
-                  {submittedFor
-                    ? `${submittedFor} request submitted. Our reception team will contact you shortly to confirm your appointment.`
+                  {submitError
+                    ? submitError
+                    : confirmationTreatment
+                    ? `Thank you. Your ${confirmationTreatment} request has been sent to our reception team. We will contact you shortly to confirm your appointment. To avoid duplicate requests, this form is paused on this device for about ${bookingCooldown}.`
                     : 'Select a treatment from the dropdown or use the treatment cards above to begin.'}
                 </p>
               </div>
           </aside>
         </section>
 
-        <section className="instagram-section" id="instagram">
-          <div className="section-heading compact">
-            <div>
-              <p className="eyebrow">Instagram feed</p>
-              <h2>Inside our clinic</h2>
+        {activeTreatment && activeTreatmentInsight && (
+          <div
+            className="treatment-modal-backdrop"
+            role="presentation"
+            onClick={() => setActiveTreatmentId('')}
+          >
+            <section
+              className="treatment-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="treatment-modal-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button
+                className="treatment-modal-close"
+                type="button"
+                aria-label="Close treatment details"
+                onClick={() => setActiveTreatmentId('')}
+              >
+                x
+              </button>
+
+              <div className="treatment-modal-media">
+                {activeTreatment.video ? (
+                  <video
+                    src={activeTreatment.video}
+                    muted
+                    playsInline
+                    preload="metadata"
+                    autoPlay
+                    loop
+                    aria-label={`${activeTreatment.name} treatment video`}
+                  />
+                ) : activeTreatment.gif ? (
+                  <img src={activeTreatment.gif} alt={`${activeTreatment.name} animated preview`} />
+                ) : (
+                  <img src={activeTreatment.image} alt={activeTreatment.name} />
+                )}
+              </div>
+
+              <div className="treatment-modal-copy">
+                <p className="eyebrow">{activeTreatment.highlight}</p>
+                <h3 id="treatment-modal-title">{activeTreatment.name}</h3>
+                <p>{activeTreatment.details}</p>
+
+                <div className="treatment-modal-grid">
+                  <div>
+                    <strong>Benefits</strong>
+                    <ul>
+                      {activeTreatmentInsight.benefits.map((benefit) => (
+                        <li key={benefit}>{benefit}</li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <strong>Who needs it</strong>
+                    <ul>
+                      {activeTreatmentInsight.whoNeedsIt.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="treatment-modal-footer">
+                  <span>
+                    <small>Approx. duration</small>
+                    <strong>{activeTreatment.duration}</strong>
+                  </span>
+                  <button
+                    className="submit-button treatment-modal-cta"
+                    type="button"
+                    onClick={() => handleModalBooking(activeTreatment.id)}
+                  >
+                    Book this treatment
+                  </button>
+                </div>
+              </div>
+            </section>
+          </div>
+        )}
+
+        <section className="instagram-section reveal-section" id="instagram">
+          <div className="instagram-heading">
+            <div className="section-heading compact">
+              <div>
+                <p className="eyebrow">Instagram feed</p>
+                <h2>@appleinternational_dental</h2>
+              </div>
+              <p className="section-text">
+                Follow clinic updates, treatment moments, patient education, and smile care posts
+                from Apple International Dental.
+              </p>
             </div>
-            <p className="section-text">
-              Use this strip for clinic interiors, treatment moments, and smile results.
-            </p>
+
+            <a className="instagram-follow-button" href={instagramProfileUrl} target="_blank" rel="noreferrer">
+              <span aria-hidden="true">+</span>
+              Follow
+            </a>
           </div>
 
           <div className="instagram-grid">
-            {instagramPosts.map((post) => (
-              <article className="instagram-card" key={post.title}>
+            {displayedInstagramPosts.map((post) => (
+              <a
+                className="instagram-card"
+                href={post.permalink ?? instagramProfileUrl}
+                key={`${post.title}-${post.image}`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <div
                   className="instagram-image"
                   style={{ backgroundImage: `url(${post.image})` }}
@@ -563,16 +1783,16 @@ function App() {
                   <h3>{post.title}</h3>
                   <p>{post.caption}</p>
                 </div>
-              </article>
+              </a>
             ))}
           </div>
         </section>
 
-        <section className="dentists-section" id="dentists">
+        <section className="dentists-section reveal-section" id="dentists">
           <div className="section-heading compact">
             <div>
               <p className="eyebrow">Meet the dentists</p>
-              <h2>Meet the doctors behind your care</h2>
+              <h2>Meet the dentists behind your care</h2>
             </div>
             <p className="section-text">
               Add specialist bios, credentials, and areas of focus to build confidence.
@@ -595,11 +1815,62 @@ function App() {
           </div>
         </section>
 
-        <section className="contact-section" id="contact">
+        <section className="why-section reveal-section" id="why-apple-dental">
+          <div className="section-heading compact">
+            <div>
+              <p className="eyebrow">Why choose us</p>
+              <h2>Why Apple International Dental</h2>
+            </div>
+            <p className="section-text">
+              Comprehensive dental care backed by experienced doctors, advanced technology,
+              international standards, and a strong safety-first clinic culture.
+            </p>
+          </div>
+
+          <div className="why-grid">
+            {whyChooseUs.map((item) => (
+              <article className="why-card" key={item.title}>
+                <span className="why-card-icon" aria-hidden="true">
+                  {item.icon}
+                </span>
+                <h3>{item.title}</h3>
+                <ul>
+                  {item.points.map((point) => (
+                    <li key={point}>{point}</li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="faq-section reveal-section" id="faq">
+          <div className="section-heading compact">
+            <div>
+              <p className="eyebrow">Questions patients ask</p>
+              <h2>Helpful answers before your visit</h2>
+            </div>
+            <p className="section-text">
+              Clear answers around comfort, costs, timing, kids visits, orthodontic choices,
+              and root canal treatment.
+            </p>
+          </div>
+
+          <div className="faq-list">
+            {faqs.map((faq) => (
+              <details className="faq-item" key={faq.question}>
+                <summary>{faq.question}</summary>
+                <p>{faq.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section className="contact-section reveal-section" id="contact">
           <div className="contact-card">
             <div className="contact-copy">
               <p className="eyebrow">Visit the clinic</p>
-              <h2>Visit our clinic for family dentistry, specialist care, and urgent appointments.</h2>
+              <h2>Visit our Vijayawada dental clinic for family dentistry, specialist care, and urgent appointments.</h2>
               <p className="section-text">
                 We welcome routine appointments, second opinions, urgent visits, and family
                 consultations throughout the week.
@@ -609,20 +1880,29 @@ function App() {
             <div className="contact-grid">
               <article className="contact-item">
                 <span>Address</span>
-                <strong>Road No. 36, Jubilee Hills, Hyderabad 500033</strong>
+                <strong>Suryaraopeta, Governor Peta, Vijayawada, Andhra Pradesh 520002</strong>
               </article>
               <article className="contact-item">
                 <span>Phone</span>
-                <strong>+91 98490 24567</strong>
+                <strong>{clinicPhoneDisplay}</strong>
               </article>
               <article className="contact-item">
                 <span>Email</span>
-                <strong>care@jubileedental.in</strong>
+                <strong>info@appleinternational.in</strong>
               </article>
               <article className="contact-item">
                 <span>Hours</span>
                 <strong>Mon-Sat, 9:00 AM - 8:00 PM</strong>
               </article>
+            </div>
+
+            <div className="contact-map" aria-label="Google map location for Apple International Dental">
+              <iframe
+                title="Apple International Dental location map"
+                src="https://www.google.com/maps?q=Suryaraopeta%2C%20Governor%20Peta%2C%20Vijayawada%2C%20Andhra%20Pradesh%20520002&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </section>
@@ -631,8 +1911,8 @@ function App() {
       <footer className="site-footer">
         <div className="site-footer-inner">
           <div>
-            <strong>Jubilee Dental Care</strong>
-            <p>Serving Jubilee Hills and surrounding Hyderabad neighborhoods with family dentistry, smile makeovers, implants, aligners, and emergency care.</p>
+            <strong>Apple International Dental</strong>
+            <p>Serving patients across our clinic network with family dentistry, smile makeovers, implants, aligners, and emergency care.</p>
           </div>
           <div className="footer-links">
             <a href="#services">Services</a>
@@ -640,8 +1920,75 @@ function App() {
             <a href="#dentists">Doctors</a>
             <a href="#contact">Contact</a>
           </div>
+          <div className="footer-social-links" aria-label="Social media links">
+            <a href={instagramProfileUrl} target="_blank" rel="noreferrer" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M7.8 2h8.4A5.8 5.8 0 0 1 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8A5.8 5.8 0 0 1 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm8.7 2.3a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4ZM12 7.2a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6Zm0 2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z" />
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noreferrer" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M13.7 22v-8.2h2.8l.4-3.2h-3.2V8.5c0-.9.3-1.6 1.6-1.6H17V4.1c-.3 0-1.4-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.5v3.2h2.8V22h3.4Z" />
+              </svg>
+            </a>
+            <a href="https://x.com/" target="_blank" rel="noreferrer" aria-label="X">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M13.9 10.6 21.3 2h-1.8l-6.4 7.4L8 2H2l7.8 11.3L2 22h1.8l6.8-7.8 5.4 7.8h6l-8.1-11.4Zm-2.4 2.8-.8-1.1L4.4 3.3h2.7l5 7.1.8 1.1 6.6 9.4h-2.7l-5.3-7.5Z" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M6.9 8.8H3.5V22h3.4V8.8ZM5.2 2.4a2 2 0 1 0 0 4.1 2 2 0 0 0 0-4.1ZM22 14.4c0-3.5-1.9-5.8-4.9-5.8-2 0-3.1 1.1-3.6 1.9V8.8h-3.3V22h3.4v-6.5c0-1.7.3-3.4 2.5-3.4 2.1 0 2.1 2 2.1 3.5V22H22v-7.6Z" />
+              </svg>
+            </a>
+          </div>
         </div>
       </footer>
+
+      <details className={`whatsapp-launcher${isWhatsappHintVisible ? ' hint-visible' : ''}`}>
+        <summary aria-label="Open WhatsApp branch options">
+          <span className="whatsapp-hint-arrow" aria-hidden="true">
+            Chat with us
+            <span>→</span>
+          </span>
+          <span className="whatsapp-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+              <path d="M16.02 4.5C9.64 4.5 4.5 9.54 4.5 15.78c0 2.12.6 4.1 1.64 5.8L4.5 27.5l6.12-1.56a11.7 11.7 0 0 0 5.4 1.34c6.36 0 11.48-5.04 11.48-11.26S22.38 4.5 16.02 4.5Zm0 20.82c-1.78 0-3.44-.48-4.88-1.32l-.36-.22-3.62.92.96-3.42-.24-.36a9.22 9.22 0 0 1-1.44-4.94c0-5.14 4.3-9.34 9.58-9.34s9.56 4.2 9.56 9.34-4.28 9.34-9.56 9.34Zm5.24-6.98c-.28-.14-1.66-.8-1.92-.9-.26-.08-.44-.14-.64.14-.18.28-.74.9-.9 1.08-.16.18-.34.2-.62.06-.28-.14-1.2-.44-2.28-1.38-.84-.74-1.4-1.66-1.56-1.94-.16-.28-.02-.44.12-.58.12-.12.28-.32.42-.48.14-.16.18-.28.28-.46.1-.18.04-.34-.02-.48-.08-.14-.64-1.5-.88-2.06-.22-.54-.46-.46-.64-.46h-.54c-.18 0-.48.06-.74.34-.26.28-.98.94-.98 2.3 0 1.36 1 2.68 1.14 2.86.14.18 1.98 2.96 4.78 4.14.66.28 1.18.46 1.58.58.66.2 1.28.18 1.76.1.54-.08 1.66-.66 1.9-1.3.24-.64.24-1.18.16-1.3-.08-.12-.26-.18-.54-.32Z" />
+            </svg>
+          </span>
+        </summary>
+        <div className="whatsapp-menu" aria-label="Choose a branch to message on WhatsApp">
+          <div className="whatsapp-menu-header">
+            <div>
+              <span>Whatsapp us</span>
+              <strong>Choose a branch</strong>
+            </div>
+            <button
+              type="button"
+              aria-label="Close WhatsApp branch options"
+              onClick={(event) => {
+                event.currentTarget.closest('details')?.removeAttribute('open')
+              }}
+            >
+              x
+            </button>
+          </div>
+          {branchContacts.map((contact) => (
+            <a
+              href={getWhatsappLink(contact.branch)}
+              key={contact.branch}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span>
+                <strong>{contact.area}</strong>
+                <small>Apple International Dental</small>
+              </span>
+              <span aria-hidden="true">›</span>
+            </a>
+          ))}
+        </div>
+      </details>
     </main>
   )
 }

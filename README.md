@@ -1,5 +1,26 @@
 # React + Vite
 
+## Formspree setup
+
+Create a `.env.local` file and add your Formspree endpoint:
+
+```env
+VITE_FORMSPREE_ENDPOINT=https://formspree.io/f/mgorqdnz
+```
+
+Formspree is now an optional notification fallback for the consultation form.
+
+## Google Sheets booking setup
+
+To use Google Sheets as the temporary booking database, deploy the Apps Script in
+`docs/google-sheets-booking-apps-script.js` and add the web app URL:
+
+```env
+VITE_BOOKING_ENDPOINT=https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec
+```
+
+Setup details are in `docs/GOOGLE_SHEETS_BOOKING.md`.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
