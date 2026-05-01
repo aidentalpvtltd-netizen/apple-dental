@@ -2358,6 +2358,10 @@ video.treatment-image {
   table-layout: fixed;
 }
 
+.admin-table-wrap .admin-history-table {
+  min-width: 1120px;
+}
+
 .admin-table-wrap th,
 .admin-table-wrap td {
   padding: 13px 14px;
@@ -2441,6 +2445,52 @@ video.treatment-image {
 .admin-table-wrap td small {
   margin-top: 3px;
   color: var(--text-soft);
+}
+
+.admin-history-table th:nth-child(1),
+.admin-history-table td:nth-child(1) {
+  width: 172px;
+  white-space: nowrap;
+}
+
+.admin-history-table th:nth-child(2),
+.admin-history-table td:nth-child(2) {
+  width: 150px;
+}
+
+.admin-history-table th:nth-child(3),
+.admin-history-table td:nth-child(3) {
+  width: 130px;
+  white-space: nowrap;
+}
+
+.admin-history-table th:nth-child(4),
+.admin-history-table td:nth-child(4) {
+  width: 150px;
+}
+
+.admin-history-table th:nth-child(5),
+.admin-history-table td:nth-child(5) {
+  width: 130px;
+}
+
+.admin-history-table th:nth-child(6),
+.admin-history-table td:nth-child(6) {
+  width: 140px;
+}
+
+.admin-history-table th:nth-child(7),
+.admin-history-table td:nth-child(7) {
+  width: 170px;
+}
+
+.admin-history-table th:nth-child(8),
+.admin-history-table td:nth-child(8),
+.admin-history-table th:nth-child(9),
+.admin-history-table td:nth-child(9) {
+  width: 120px;
+  font-size: 0.8rem;
+  overflow-wrap: break-word;
 }
 
 .admin-status-pill,

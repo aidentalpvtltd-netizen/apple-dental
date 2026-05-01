@@ -1513,7 +1513,7 @@ function AdminDashboard() {
             </div>
           </div>
           <div className="admin-table-wrap">
-            <table>
+            <table className="admin-history-table">
               <thead>
                 <tr>
                   <th>Completed</th>
