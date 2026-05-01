@@ -797,6 +797,31 @@ const getDefaultAdminFilters = () => {
   }
 }
 
+const formatTimeWithMeridiem = (value) => {
+  if (!value) {
+    return ''
+  }
+
+  const normalizedValue = String(value).trim()
+  const match = normalizedValue.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/)
+
+  if (!match) {
+    return normalizedValue
+  }
+
+  const hours = Number(match[1])
+
+  if (Number.isNaN(hours) || hours > 23) {
+    return normalizedValue
+  }
+
+  const meridiem = hours >= 12 ? 'PM' : 'AM'
+  const hour12 = hours % 12 || 12
+  const seconds = match[3] ? `:${match[3]}` : ''
+
+  return `${hour12}:${match[2]}${seconds} ${meridiem}`
+}
+
 const getCompletedDateParts = (value) => {
   if (!value) {
     return { date: '-', time: '' }
@@ -811,7 +836,7 @@ const getCompletedDateParts = (value) => {
 
   return {
     date: match[1],
-    time: match[2]?.trim() ?? '',
+    time: formatTimeWithMeridiem(match[2]),
   }
 }
 
