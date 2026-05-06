@@ -198,37 +198,204 @@ const treatmentInsights = {
   },
 }
 
-const branches = [
-  'Apple International Dental, Krishna Lanka, Vijayawada',
-  'Apple International Dental, Suryaraopet, Vijayawada',
-  'Apple International Dental, 1 Town, Vijayawada',
-  'Apple International Dental, Mangalgiri',
-  'Apple International Dental, Bangalore HSR Layout',
-  'Apple International Dental, Srikakulam',
-  'Apple International Dental, Eluru',
-  'Apple International Dental, Anantapur',
-  'Apple International Dental, Tirupati',
-  'Apple International Dental, Rajamundry',
-  'Apple International Dental, Madanapalli',
-  'Apple International Dental, Nellore',
-  'Apple International Dental, Vizag',
-  'Apple International Dental, Ongole',
-  'Apple International Dental, Bobbili',
-  'Apple International Dental, Vizianagaram',
-  'Apple International Dental, Guntur',
-  'Apple International Dental, Hyderabad',
+const clinicBranches = [
+  {
+    branch: 'Apple International Dental, Ongole',
+    area: 'Ongole',
+    address:
+      '32-54-645, Opp Aravind Super specialty Hospital, Below Vijaya Sri blood bank, Beside Aaha Kitchen, 1st Cross, 7th Cross Rd, Ongole, Andhra Pradesh 523002',
+    phone: '7386080969',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/ongole.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Nellore',
+    area: 'Nellore',
+    address:
+      '2nd Floor, Pabolu Plaza, D. No.16-4-140, behind Venkataramana Hotel, Pogathota, Nellore, Andhra Pradesh 524001',
+    phone: '7382379710',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/nellore.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Gajuwaka, Visakhapatnam',
+    area: 'Gajuwaka, Visakhapatnam',
+    address:
+      'Main Rd, opp. laxmikanth theatre, New Gajuwaka, Pedagantyada, Visakhapatnam, Gajuwaka, Andhra Pradesh 530026',
+    phone: '6300722549',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/gajuwaka-visakhapatnam.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Madanapalle',
+    area: 'Madanapalle',
+    address:
+      '153-1, BHAVANI AGRO AGENCIES BUILDING, DOOR No. 111, CTM Rd, opp. GANESH HOTEL, Madanapalle, Andhra Pradesh 517325',
+    phone: '9988163456',
+    email: 'appledentalmpl@gmail.com',
+    image: '/branches/madanapalle.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Nakkal Road, Vijayawada',
+    area: 'Nakkal Road, Vijayawada',
+    address: '29-6-24/1, Nakkala Rd, opp. DBS Bank, Near Vijaya Talkies, Suryaraopeta, Governor Peta',
+    phone: '8058059879',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/nakkal-road-vijayawada.jpg',
+  },
+  {
+    branch: 'Apple International Dental, One Town (Panja), Vijayawada',
+    area: 'One Town (Panja), Vijayawada',
+    address:
+      '1st floor, D, : 11-1-18, Babu Rajendra Prasad Rd, beside Amma Hotel, 1 Town, Vijayawada, Andhra Pradesh 520001',
+    phone: '9281094967',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/one-town-panja-vijayawada.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Srikakulam',
+    area: 'Srikakulam',
+    address:
+      'Below A Convention Hotel, Government Arts College Rd, near R.T.C COMPLEX, Shanti Nagar Colony, Balaga, Srikakulam, Andhra Pradesh 532001',
+    phone: '9390406989',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/srikakulam.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Guntur',
+    area: 'Guntur',
+    address: '13-7-72 2/6 Lane Opp.RTC Busstand, Gunturvari Thota, Guntur, Andhra Pradesh 522001',
+    phone: '7382787569',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/guntur.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Dwaraka Nagar, Visakhapatnam',
+    area: 'Dwaraka Nagar, Visakhapatnam',
+    address:
+      '47, 9-26, 3rd Ln, opp. Bajaj Capital, Sagar Nagar, Dwaraka Nagar, Visakhapatnam, Andhra Pradesh 530016',
+    phone: '8179142424',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/dwaraka-nagar-visakhapatnam.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Tirupati',
+    area: 'Tirupati',
+    address:
+      "10-1-756, Tilak Rd, beside Keerthy Medical Stores, Reddy & Reddy's Colony, Reddy and Reddy's Colony, Tirupati, Andhra Pradesh 517501",
+    phone: '8019994774',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/tirupati.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Anantapur',
+    area: 'Anantapur',
+    address:
+      "Syed Jaffer Hussain's House, Revenue Ward, 13, Rtc Bus Stand Rd, beside Kavya Regency, opp. to Yatri Nivas, Anantapur, Andhra Pradesh 515005",
+    phone: '7013891670',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/anantapur.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Rajamundry',
+    area: 'Rajamundry',
+    address:
+      '46-20-1/10, FIRST FLOOR, Alankar Residency, near CHINA ANJANEYASWAMY TEMPLE, Danavai Peta, Rajamahendravaram, Andhra Pradesh 533103',
+    phone: '9059556059',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/rajamundry.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Mangalagiri',
+    area: 'Mangalagiri',
+    address: 'above Jawed Habib Hair & Beauty Salon, Mangalagiri, Andhra Pradesh 522503',
+    phone: '9493346026',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/mangalagiri.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Krishna Lanka, Vijayawada',
+    area: 'Krishna Lanka, Vijayawada',
+    address:
+      '41-2-70, Old Post Office Rd, Biyyam Kotla Bazar, Krishnalanka, Vijayawada, Andhra Pradesh 520013',
+    phone: '7997593891',
+    email: 'appledentalvij@gmail.com',
+    image: '/branches/krishna-lanka-vijayawada.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Gachibowli, Hyderabad',
+    area: 'Gachibowli, Hyderabad',
+    address:
+      'Survey No 93, Plot No 3, Third Floor, MMN Plaza, beside Himagiri Hospital, Gachibowli, Hyderabad, Telangana',
+    phone: '8639945819',
+    email: 'appledentalgachibowli@gmail.com',
+    image: '/branches/gachibowli-hyderabad.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Habsiguda, Hyderabad',
+    area: 'Habsiguda, Hyderabad',
+    address:
+      'Second Floor, 1-4-56/2, Captain Veera Raja Reddy Marg, Vijayanagar Colony, Margh, Habsiguda, Hyderabad, Telangana',
+    phone: '9705540005',
+    email: 'appledentalhabsiguda@gmail.com',
+    image: '/branches/habsiguda-hyderabad.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Vanasthalipuram, Hyderabad',
+    area: 'Vanasthalipuram, Hyderabad',
+    address:
+      'Plot no 72, 3rd Floor, septa Heights, Beisde Subbaya Gari Hotel, Hakeemabad Colony, Vanasthalipuram, Hyderabad, Telangana',
+    phone: '8688657477',
+    email: 'appledentalvanasthalipuram@gmail.com',
+    image: '/branches/vanasthalipuram-hyderabad.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Kondapur, Hyderabad',
+    area: 'Kondapur, Hyderabad',
+    address:
+      'Plot number 51&54, Kondapur, New Hafeezpet, Gopal Reddy Nagar, Gachibowli, Hyderabad, Telangana',
+    phone: '9281094975',
+    email: 'appledentalkondapur@gmail.com',
+    image: '/branches/kondapur-hyderabad.jpg',
+  },
+  {
+    branch: 'Apple International Dental, Champapet, Hyderabad',
+    area: 'Champapet, Hyderabad',
+    address:
+      'Door number:- 9, 6 - 1/2, 3RD Floor, Rohini Hospital, Sagar Road, beside HP petrol bunk, Champapet, Hyderabad, Telangana',
+    phone: '9676669695',
+    email: 'appleinternationaldentalhyd@gmail.com',
+    image: '/branches/champapet-hyderabad.jpg',
+  },
+  {
+    branch: 'Apple International Dental, HSR Layout, Bengaluru',
+    area: 'HSR Layout, Bengaluru',
+    address: '2 nd floor, 14th Main Rd, opposite BDA Complex, Sector 4, HSR Layout, Bengaluru, Karnataka',
+    phone: '9611042424',
+    email: '',
+    image: '/branches/hsr-layout-bengaluru.jpg',
+  },
 ]
+
+const branches = clinicBranches.map((branch) => branch.branch)
 
 const clinicPhoneDisplay = '+91 98490 24567'
 const clinicPhoneHref = '+919849024567'
-const defaultWhatsappNumber = '919849024567'
-const getBranchArea = (branch) => branch.replace(/^Apple International Dental,\s*/, '')
+const getBranchArea = (branch) =>
+  clinicBranches.find((clinicBranch) => clinicBranch.branch === branch)?.area ??
+  branch.replace(/^Apple International Dental,\s*/, '')
 
-const branchContacts = branches.map((branch) => ({
-  branch,
-  area: getBranchArea(branch),
-  whatsappNumber: defaultWhatsappNumber,
+const branchContacts = clinicBranches.map((branch) => ({
+  branch: branch.branch,
+  area: branch.area,
+  whatsappNumber: `91${branch.phone}`,
 }))
+
+const formatPhoneDisplay = (phone) =>
+  phone ? `+91 ${phone.slice(0, 5)} ${phone.slice(5)}` : clinicPhoneDisplay
+
+const getGoogleMapsUrl = (address) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
 
 const appointmentSlots = [
   '09:30 AM',
@@ -1824,11 +1991,13 @@ function WebsiteApp() {
   const [bookingAvailability, setBookingAvailability] = useState({})
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false)
   const [availabilityError, setAvailabilityError] = useState('')
+  const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
 
   const selectedTreatment =
     treatments.find((treatment) => treatment.id === formState.treatment) ?? treatments[0]
   const activeTreatment = treatments.find((treatment) => treatment.id === activeTreatmentId)
   const activeTreatmentInsight = activeTreatment ? treatmentInsights[activeTreatment.id] : null
+  const selectedClinic = clinicBranches[selectedClinicIndex] ?? clinicBranches[0]
   const confirmationTreatment = submittedFor || bookingLock?.treatmentName
   const isBookingLocked = Boolean(bookingLock)
   const isFormDisabled = isSubmitting || isBookingLocked
@@ -1856,6 +2025,12 @@ function WebsiteApp() {
         : 'All consultation slots are currently open for appointment requests.'
     : 'Select a date to view available time slots.'
   const displayedInstagramPosts = liveInstagramPosts.length ? liveInstagramPosts : instagramPosts
+
+  const handleClinicChange = (direction) => {
+    setSelectedClinicIndex((current) =>
+      (current + direction + clinicBranches.length) % clinicBranches.length,
+    )
+  }
 
   useEffect(() => {
     let isMounted = true
@@ -2945,39 +3120,73 @@ function WebsiteApp() {
           <div className="contact-card">
             <div className="contact-copy">
               <p className="eyebrow">Visit the clinic</p>
-              <h2>Visit our Vijayawada dental clinic for family dentistry, specialist care, and urgent appointments.</h2>
+              <h2>Find the Apple International Dental branch nearest to you.</h2>
               <p className="section-text">
-                We welcome routine appointments, second opinions, urgent visits, and family
-                consultations throughout the week.
+                Use the left and right arrows on the branch image to change the clinic details,
+                address, phone number, and email.
               </p>
+            </div>
+
+            <div className="clinic-carousel" aria-live="polite">
+              <div className="clinic-image-frame">
+                <img
+                  src={selectedClinic.image}
+                  alt={`${selectedClinic.area} branch`}
+                  onError={(event) => {
+                    event.currentTarget.src = heroImage
+                  }}
+                />
+                <button
+                  type="button"
+                  className="clinic-arrow clinic-arrow-left"
+                  aria-label="Show previous branch"
+                  onClick={() => handleClinicChange(-1)}
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  className="clinic-arrow clinic-arrow-right"
+                  aria-label="Show next branch"
+                  onClick={() => handleClinicChange(1)}
+                >
+                  ›
+                </button>
+                <div className="clinic-image-caption">
+                  <strong>{selectedClinic.area}</strong>
+                </div>
+              </div>
+              <p className="clinic-carousel-help">Click the arrows to view another clinic branch.</p>
             </div>
 
             <div className="contact-grid">
               <article className="contact-item">
                 <span>Address</span>
-                <strong>Suryaraopeta, Governor Peta, Vijayawada, Andhra Pradesh 520002</strong>
+                <a href={getGoogleMapsUrl(selectedClinic.address)} target="_blank" rel="noreferrer">
+                  <strong>{selectedClinic.address}</strong>
+                  <small>Open in Google Maps</small>
+                </a>
               </article>
               <article className="contact-item">
                 <span>Phone</span>
-                <strong>{clinicPhoneDisplay}</strong>
+                <a href={`tel:+91${selectedClinic.phone}`}>
+                  <strong>{formatPhoneDisplay(selectedClinic.phone)}</strong>
+                </a>
               </article>
               <article className="contact-item">
                 <span>Email</span>
-                <strong>info@appleinternational.in</strong>
+                {selectedClinic.email ? (
+                  <a href={`mailto:${selectedClinic.email}`}>
+                    <strong>{selectedClinic.email}</strong>
+                  </a>
+                ) : (
+                  <strong>Email will be updated soon</strong>
+                )}
               </article>
               <article className="contact-item">
                 <span>Hours</span>
                 <strong>Mon-Sat, 9:00 AM - 8:00 PM</strong>
               </article>
-            </div>
-
-            <div className="contact-map" aria-label="Google map location for Apple International Dental">
-              <iframe
-                title="Apple International Dental location map"
-                src="https://www.google.com/maps?q=Suryaraopeta%2C%20Governor%20Peta%2C%20Vijayawada%2C%20Andhra%20Pradesh%20520002&output=embed"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
             </div>
           </div>
         </section>
