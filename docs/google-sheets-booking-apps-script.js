@@ -8,7 +8,11 @@ const BOOKING_ROW_LIMIT = 1000
 const ADMIN_PASSWORD_PROPERTY = 'ADMIN_PASSWORD'
 const ADMIN_SESSION_TOKEN_PROPERTY = 'ADMIN_SESSION_TOKEN'
 const ADMIN_SESSION_EXPIRES_PROPERTY = 'ADMIN_SESSION_EXPIRES'
+const RAZORPAY_KEY_ID_PROPERTY = 'RAZORPAY_KEY_ID'
+const RAZORPAY_KEY_SECRET_PROPERTY = 'RAZORPAY_KEY_SECRET'
 const ADMIN_SESSION_DURATION_MS = 8 * 60 * 60 * 1000
+const CONSULTATION_FEE_AMOUNT = 300
+const CONSULTATION_FEE_SUBUNITS = CONSULTATION_FEE_AMOUNT * 100
 const HEADERS = [
   'Timestamp',
   'Source',
@@ -24,6 +28,11 @@ const HEADERS = [
   'Status',
   'Booking ID',
   'Patient ID',
+  'Payment Method',
+  'Payment Status',
+  'Payment Amount',
+  'Payment ID',
+  'Payment Order ID',
 ]
 const PATIENT_HEADERS = [
   'Patient ID',
@@ -199,6 +208,14 @@ function doPost(event) {
       return handleAdminUpdateBooking(payload)
     }
 
+    if (payload.action === 'create-payment-order') {
+      return handleCreatePaymentOrder(payload)
+    }
+
+    if (payload.action === 'verify-payment') {
+      return handleVerifyPayment(payload)
+    }
+
     const sheet = getBookingSheet()
     const branch = String(payload.branch || '').trim()
     const date = String(payload.date || '').trim()
@@ -206,16 +223,6 @@ function doPost(event) {
 
     if (!branch || !date || !timeSlot) {
       return jsonResponse({ ok: false, message: 'Branch, date, and time slot are required.' })
-    }
-
-    const bookings = getActiveBookings(sheet)
-    const isBooked = getBookedSlots(bookings, branch, date).includes(timeSlot)
-
-    if (isBooked) {
-      return jsonResponse({
-        ok: false,
-        message: 'That slot is already booked. Please choose another available time.',
-      })
     }
 
     const bookingId = `AID-${Date.now()}`
@@ -246,6 +253,11 @@ function doPost(event) {
       'Booked',
       bookingId,
       patientId,
+      payload.paymentMethod || 'Online payment',
+      payload.paymentStatus || 'Paid',
+      payload.paymentAmount || CONSULTATION_FEE_AMOUNT,
+      payload.paymentId || '',
+      payload.paymentOrderId || '',
     ])
     applyBookingSheetLayout(sheet)
 
@@ -316,6 +328,11 @@ function handleAdminBookings(payload) {
       status: String(row[11] || '').trim() || 'Booked',
       bookingId: String(row[12] || '').trim(),
       patientId: String(row[13] || '').trim(),
+      paymentMethod: String(row[14] || '').trim(),
+      paymentStatus: String(row[15] || '').trim(),
+      paymentAmount: String(row[16] || '').trim(),
+      paymentId: String(row[17] || '').trim(),
+      paymentOrderId: String(row[18] || '').trim(),
     }))
     .filter((booking) => booking.branch && booking.date && booking.timeSlot)
     .filter((booking) => !startDate || booking.date >= startDate)
@@ -383,6 +400,90 @@ function handleAdminHistory(payload) {
   return jsonResponse({ ok: true, history })
 }
 
+function handleCreatePaymentOrder(payload) {
+  const properties = PropertiesService.getScriptProperties()
+  const keyId = properties.getProperty(RAZORPAY_KEY_ID_PROPERTY)
+  const keySecret = properties.getProperty(RAZORPAY_KEY_SECRET_PROPERTY)
+
+  if (!keyId || !keySecret) {
+    return jsonResponse({
+      ok: false,
+      message: 'Razorpay keys are not configured in Apps Script properties.',
+    })
+  }
+
+  const amount = Number(payload.amount || CONSULTATION_FEE_SUBUNITS)
+
+  if (amount !== CONSULTATION_FEE_SUBUNITS) {
+    return jsonResponse({ ok: false, message: 'Invalid consultation fee amount.' })
+  }
+
+  const receipt = `AID-CONSULT-${Date.now()}`
+  const response = UrlFetchApp.fetch('https://api.razorpay.com/v1/orders', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      Authorization: `Basic ${Utilities.base64Encode(`${keyId}:${keySecret}`)}`,
+    },
+    payload: JSON.stringify({
+      amount,
+      currency: 'INR',
+      receipt,
+      notes: {
+        patient_name: payload.name || '',
+        phone: payload.phone || '',
+        branch: payload.branch || '',
+        source: payload.source || '',
+      },
+    }),
+    muteHttpExceptions: true,
+  })
+  const statusCode = response.getResponseCode()
+  const result = JSON.parse(response.getContentText() || '{}')
+
+  if (statusCode < 200 || statusCode >= 300) {
+    return jsonResponse({
+      ok: false,
+      message: result.error && result.error.description
+        ? result.error.description
+        : 'Unable to create payment order.',
+    })
+  }
+
+  return jsonResponse({
+    ok: true,
+    keyId,
+    orderId: result.id,
+    amount: result.amount,
+    currency: result.currency,
+  })
+}
+
+function handleVerifyPayment(payload) {
+  const keySecret = PropertiesService.getScriptProperties().getProperty(RAZORPAY_KEY_SECRET_PROPERTY)
+  const orderId = String(payload.orderId || '').trim()
+  const paymentId = String(payload.paymentId || '').trim()
+  const signature = String(payload.signature || '').trim()
+
+  if (!keySecret) {
+    return jsonResponse({ ok: false, message: 'Razorpay secret is not configured.' })
+  }
+
+  if (!orderId || !paymentId || !signature) {
+    return jsonResponse({ ok: false, message: 'Payment verification details are missing.' })
+  }
+
+  const expectedSignature = toHexSignature(
+    Utilities.computeHmacSha256Signature(`${orderId}|${paymentId}`, keySecret),
+  )
+
+  if (expectedSignature !== signature) {
+    return jsonResponse({ ok: false, message: 'Payment verification failed.' })
+  }
+
+  return jsonResponse({ ok: true })
+}
+
 function handleAdminCreateBooking(payload) {
   if (!isValidAdminToken(payload.token)) {
     return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
@@ -400,15 +501,6 @@ function handleAdminCreateBooking(payload) {
     return jsonResponse({
       ok: false,
       message: 'Patient name, phone, branch, date, and time slot are required.',
-    })
-  }
-
-  const bookings = getActiveBookings(sheet)
-
-  if (getBookedSlots(bookings, branch, date).includes(timeSlot)) {
-    return jsonResponse({
-      ok: false,
-      message: 'That slot is already booked. Please choose another available time.',
     })
   }
 
@@ -440,6 +532,11 @@ function handleAdminCreateBooking(payload) {
     payload.status || 'Booked',
     bookingId,
     patientId,
+    payload.paymentMethod || MANUAL_SOURCE,
+    payload.paymentStatus || 'Paid',
+    payload.paymentAmount || CONSULTATION_FEE_AMOUNT,
+    payload.paymentId || '',
+    payload.paymentOrderId || '',
   ])
   applyBookingSheetLayout(sheet)
 
@@ -641,6 +738,18 @@ function completeManualBookingRow(sheet, rowNumber) {
     sheet.getRange(rowNumber, 13).setValue(`AID-${Date.now()}`)
   }
 
+  if (!row[14]) {
+    sheet.getRange(rowNumber, 15).setValue('Cash received')
+  }
+
+  if (!row[15]) {
+    sheet.getRange(rowNumber, 16).setValue('Paid')
+  }
+
+  if (!row[16]) {
+    sheet.getRange(rowNumber, 17).setValue(CONSULTATION_FEE_AMOUNT)
+  }
+
   const latestRow = sheet.getRange(rowNumber, 1, 1, HEADERS.length).getValues()[0]
   const booking = getBookingFromRow(latestRow)
   const patientId = ensureBookingPatientId(sheet, rowNumber, booking)
@@ -763,6 +872,11 @@ function getBookingFromRow(row) {
     status: String(row[11] || '').trim() || 'Booked',
     bookingId: String(row[12] || '').trim(),
     patientId: String(row[13] || '').trim(),
+    paymentMethod: String(row[14] || '').trim(),
+    paymentStatus: String(row[15] || '').trim(),
+    paymentAmount: String(row[16] || '').trim(),
+    paymentId: String(row[17] || '').trim(),
+    paymentOrderId: String(row[18] || '').trim(),
   }
 }
 
@@ -899,6 +1013,16 @@ function formatSheetTimestamp(value) {
   }
 
   return String(value || '').trim()
+}
+
+function toHexSignature(bytes) {
+  return bytes
+    .map((byte) => {
+      const normalizedByte = byte < 0 ? byte + 256 : byte
+
+      return (`0${normalizedByte.toString(16)}`).slice(-2)
+    })
+    .join('')
 }
 
 function normalizePhone(value) {

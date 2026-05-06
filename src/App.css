@@ -1204,6 +1204,56 @@ video.treatment-image {
   color: var(--accent-strong);
 }
 
+.payment-summary,
+.admin-payment-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid rgba(119, 30, 35, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 248, 248, 0.82);
+  padding: 14px 16px;
+}
+
+.payment-summary div,
+.admin-payment-panel div {
+  display: grid;
+  gap: 3px;
+}
+
+.payment-summary strong,
+.admin-payment-panel strong {
+  color: var(--heading);
+  font-size: 0.96rem;
+}
+
+.payment-summary span,
+.admin-payment-panel span,
+.admin-payment-panel p {
+  color: #5f686f;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.payment-summary p {
+  margin: 0;
+  color: var(--accent-strong);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.admin-payment-panel {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 0.9fr);
+}
+
+.admin-payment-panel p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
 .time-slot-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2662,6 +2712,109 @@ video.treatment-image {
     align-items: start;
   }
 
+}
+
+@media (min-width: 761px) and (max-height: 820px) {
+  .site-header {
+    padding: 8px 12px 0;
+  }
+
+  .site-header-inner {
+    width: min(1180px, calc(100vw - 24px));
+    gap: 12px;
+    padding: 8px 12px;
+  }
+
+  .site-brand-mark {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    flex-basis: 48px;
+  }
+
+  .site-brand-copy strong {
+    font-size: 1rem;
+  }
+
+  .site-brand-copy small {
+    font-size: 0.78rem;
+  }
+
+  .site-nav {
+    gap: 2px;
+  }
+
+  .site-nav a {
+    padding: 8px 9px;
+    font-size: 0.88rem;
+  }
+
+  .site-call,
+  .site-cta {
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 0.88rem;
+  }
+
+  .hero-section {
+    padding: 10px 12px 14px;
+  }
+
+  .hero-image-card {
+    min-height: auto;
+    padding: clamp(210px, 30vh, 270px) 20px 20px;
+    border-radius: 28px;
+    background-position: center top;
+  }
+
+  .hero-overlay {
+    position: relative;
+    inset: auto;
+    grid-template-columns: minmax(0, 560px) minmax(280px, 320px);
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+  }
+
+  .hero-copy {
+    max-width: 560px;
+    padding: 22px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(2.35rem, 3vw, 3rem);
+  }
+
+  .hero-text {
+    max-width: 48ch;
+    margin-top: 12px;
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  .hero-actions {
+    margin-top: 16px;
+  }
+
+  .hero-info-grid {
+    width: min(320px, 100%);
+    gap: 10px;
+  }
+
+  .hero-info-card {
+    padding: 14px 16px;
+  }
+
+  .hero-info-card span {
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+  }
+
+  .hero-info-card strong {
+    font-size: 0.96rem;
+    line-height: 1.3;
+  }
 }
 
 @media (max-width: 760px) {

@@ -32,12 +32,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -64,4 +66,5 @@ a {
 
 #root {
   min-height: 100vh;
+  overflow-x: hidden;
 }

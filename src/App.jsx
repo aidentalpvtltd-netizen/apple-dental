@@ -428,6 +428,20 @@ const faqs = [
   },
 ]
 
+const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
+const bookingLockKey = 'appleInternationalDentalBookingRequest'
+const adminSessionKey = 'appleInternationalDentalAdminSession'
+const bookingLockDuration = 24 * 60 * 60 * 1000
+const bookingLockSubmissionLimit = 4
+const consultationFeeAmount = 300
+const consultationFeeSubunits = consultationFeeAmount * 100
+const loaderMinimumDuration = 1400
+const loaderMaximumDuration = 5200
+const concernWordLimit = 100
+const availabilityRefreshMs = 30 * 1000
+const onlinePaymentMethod = 'Online payment'
+const cashPaymentMethod = 'Cash received'
+
 const initialFormState = {
   treatment: treatments[0].id,
   branch: branches[0],
@@ -438,16 +452,13 @@ const initialFormState = {
   date: '',
   timeSlot: '',
   concern: '',
+  paymentMethod: onlinePaymentMethod,
+  paymentStatus: '',
+  paymentAmount: consultationFeeAmount,
+  paymentId: '',
+  paymentOrderId: '',
+  paymentSignature: '',
 }
-
-const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
-const bookingLockKey = 'appleInternationalDentalBookingRequest'
-const adminSessionKey = 'appleInternationalDentalAdminSession'
-const bookingLockDuration = 24 * 60 * 60 * 1000
-const loaderMinimumDuration = 1400
-const loaderMaximumDuration = 5200
-const concernWordLimit = 100
-const availabilityRefreshMs = 30 * 1000
 
 const getWords = (value) => value.trim().split(/\s+/).filter(Boolean)
 
@@ -512,17 +523,54 @@ const getActiveBookingLock = () => {
   try {
     const bookingLock = JSON.parse(savedRequest)
     const submittedAt = Number(bookingLock.submittedAt)
+    const submissionCount = Number(bookingLock.submissionCount || 1)
 
     if (!submittedAt || Date.now() - submittedAt > bookingLockDuration) {
       window.localStorage.removeItem(bookingLockKey)
       return null
     }
 
-    return bookingLock
+    if (submissionCount < bookingLockSubmissionLimit) {
+      return null
+    }
+
+    return {
+      ...bookingLock,
+      submissionCount,
+    }
   } catch {
     window.localStorage.removeItem(bookingLockKey)
     return null
   }
+}
+
+const recordBookingSubmission = ({ treatmentName, branchName }) => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  const currentRequest = (() => {
+    try {
+      return JSON.parse(window.localStorage.getItem(bookingLockKey)) || {}
+    } catch {
+      return {}
+    }
+  })()
+  const submittedAt = Number(currentRequest.submittedAt)
+  const isWithinLockWindow = submittedAt && Date.now() - submittedAt <= bookingLockDuration
+  const submissionCount = isWithinLockWindow
+    ? Number(currentRequest.submissionCount || 1) + 1
+    : 1
+  const nextBookingLock = {
+    treatmentName,
+    branchName,
+    submittedAt: Date.now(),
+    submissionCount,
+  }
+
+  window.localStorage.setItem(bookingLockKey, JSON.stringify(nextBookingLock))
+
+  return submissionCount >= bookingLockSubmissionLimit ? nextBookingLock : null
 }
 
 const formatBookingCooldown = (submittedAt) => {
@@ -586,17 +634,14 @@ const getDateAvailability = (branch, dateValue, availabilityByDate = {}) => {
   const isPast = isPastDate(dateValue)
   const remoteAvailability = getRemoteAvailability(availabilityByDate, branch, dateValue)
   const remoteBookedSlots = normalizeBookedSlots(remoteAvailability?.bookedSlots)
-  const bookedSlots =
-    isClosed || isPast
-      ? appointmentSlots
-      : remoteBookedSlots
-  const availableSlots = appointmentSlots.filter((slot) => !bookedSlots.includes(slot))
+  const bookedSlots = isClosed || isPast ? appointmentSlots : remoteBookedSlots
+  const availableSlots = isClosed || isPast ? [] : appointmentSlots
 
   return {
     availableSlots,
     bookedSlots,
     isClosed,
-    isFullyBooked: availableSlots.length === 0,
+    isFullyBooked: false,
     isPast,
   }
 }
@@ -732,6 +777,12 @@ const submitBookingToSheets = async ({ formState, treatmentName, branchName }) =
       date: formState.date,
       timeSlot: formState.timeSlot,
       concern: formState.concern,
+      paymentMethod: formState.paymentMethod || onlinePaymentMethod,
+      paymentStatus: formState.paymentStatus,
+      paymentAmount: formState.paymentAmount,
+      paymentId: formState.paymentId,
+      paymentOrderId: formState.paymentOrderId,
+      paymentSignature: formState.paymentSignature,
     }),
   })
 
@@ -760,6 +811,106 @@ const postBookingEndpoint = async (payload) => {
   }
 
   return result
+}
+
+const loadRazorpayCheckout = () =>
+  new Promise((resolve, reject) => {
+    if (typeof window === 'undefined') {
+      reject(new Error('Payment checkout is unavailable in this browser.'))
+      return
+    }
+
+    if (window.Razorpay) {
+      resolve()
+      return
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+    script.async = true
+    script.onload = resolve
+    script.onerror = () => reject(new Error('Unable to load the payment gateway. Please try again.'))
+    document.body.appendChild(script)
+  })
+
+const createConsultationPaymentOrder = async ({ name, phone, email, branch, source }) =>
+  postBookingEndpoint({
+    action: 'create-payment-order',
+    amount: consultationFeeSubunits,
+    currency: 'INR',
+    name,
+    phone,
+    email,
+    branch,
+    source,
+  })
+
+const verifyConsultationPayment = async ({ orderId, paymentId, signature }) =>
+  postBookingEndpoint({
+    action: 'verify-payment',
+    orderId,
+    paymentId,
+    signature,
+  })
+
+const collectConsultationPayment = async ({ name, phone, email, branch, source }) => {
+  const order = await createConsultationPaymentOrder({
+    name,
+    phone,
+    email,
+    branch,
+    source,
+  })
+
+  if (!order?.orderId || !order?.keyId) {
+    throw new Error('Payment gateway is not configured yet.')
+  }
+
+  await loadRazorpayCheckout()
+
+  const payment = await new Promise((resolve, reject) => {
+    const checkout = new window.Razorpay({
+      key: order.keyId,
+      amount: order.amount || consultationFeeSubunits,
+      currency: order.currency || 'INR',
+      name: 'Apple International Dental',
+      description: 'Consultation fee',
+      order_id: order.orderId,
+      prefill: {
+        name,
+        email,
+        contact: phone,
+      },
+      notes: {
+        branch,
+        source,
+      },
+      theme: {
+        color: '#FF0201',
+      },
+      handler: resolve,
+      modal: {
+        ondismiss: () => reject(new Error('Payment was cancelled before the consultation request was sent.')),
+      },
+    })
+
+    checkout.open()
+  })
+
+  await verifyConsultationPayment({
+    orderId: payment.razorpay_order_id,
+    paymentId: payment.razorpay_payment_id,
+    signature: payment.razorpay_signature,
+  })
+
+  return {
+    paymentMethod: onlinePaymentMethod,
+    paymentStatus: 'Paid',
+    paymentAmount: consultationFeeAmount,
+    paymentId: payment.razorpay_payment_id,
+    paymentOrderId: payment.razorpay_order_id,
+    paymentSignature: payment.razorpay_signature,
+  }
 }
 
 const getStoredAdminSession = () => {
@@ -852,6 +1003,12 @@ const initialAdminBookingForm = {
   concern: '',
   status: 'Booked',
   source: 'Manual Walkin',
+  paymentMethod: cashPaymentMethod,
+  paymentStatus: 'Paid',
+  paymentAmount: consultationFeeAmount,
+  paymentId: '',
+  paymentOrderId: '',
+  paymentSignature: '',
 }
 
 function AdminDashboard() {
@@ -1058,6 +1215,14 @@ function AdminDashboard() {
     setAdminBookingForm((current) => ({
       ...current,
       [name]: nextValue,
+      ...(name === 'paymentMethod'
+        ? {
+            paymentStatus: value === cashPaymentMethod ? 'Paid' : '',
+            paymentId: '',
+            paymentOrderId: '',
+            paymentSignature: '',
+          }
+        : {}),
     }))
     setError('')
     setAdminNotice('')
@@ -1077,14 +1242,29 @@ function AdminDashboard() {
     setAdminNotice('')
 
     try {
+      const paymentDetails =
+        adminBookingForm.paymentMethod === onlinePaymentMethod
+          ? await collectConsultationPayment({
+              name: adminBookingForm.name,
+              phone: adminBookingForm.phone,
+              email: adminBookingForm.email,
+              branch: adminBookingForm.branch,
+              source: 'Admin walk-in',
+            })
+          : {
+              paymentMethod: cashPaymentMethod,
+              paymentStatus: 'Paid',
+              paymentAmount: consultationFeeAmount,
+            }
       const result = await postBookingEndpoint({
         action: 'admin-create-booking',
         token: session.token,
         ...adminBookingForm,
+        ...paymentDetails,
         treatmentName: adminBookingForm.treatment,
       })
 
-      setAdminNotice(`Booking created: ${result.bookingId}`)
+      setAdminNotice(`Booking created: ${result.bookingId}. Consultation fee ${paymentDetails.paymentStatus.toLowerCase()} via ${paymentDetails.paymentMethod}.`)
       setAdminBookingForm((current) => ({
         ...initialAdminBookingForm,
         branch: current.branch,
@@ -1461,6 +1641,28 @@ function AdminDashboard() {
                 ))}
               </select>
             </label>
+            <div className="admin-payment-panel admin-form-wide">
+              <div>
+                <strong>Consultation fee</strong>
+                <span>₹{consultationFeeAmount}</span>
+              </div>
+              <label>
+                Payment mode
+                <select
+                  name="paymentMethod"
+                  value={adminBookingForm.paymentMethod}
+                  onChange={handleAdminBookingChange}
+                >
+                  <option value={cashPaymentMethod}>Received in cash</option>
+                  <option value={onlinePaymentMethod}>Collect online payment</option>
+                </select>
+              </label>
+              <p>
+                {adminBookingForm.paymentMethod === cashPaymentMethod
+                  ? 'Use this when the patient pays the consultation fee at reception.'
+                  : 'The Razorpay checkout opens before the walk-in booking is saved.'}
+              </p>
+            </div>
             <label className="admin-form-wide">
               Notes / concern
               <textarea
@@ -1651,9 +1853,7 @@ function WebsiteApp() {
       ? 'Past dates are unavailable. Please choose today or a future date.'
       : selectedDateAvailability.isClosed
         ? 'This branch is closed on the selected date.'
-        : selectedDateAvailability.isFullyBooked
-          ? 'All slots are booked for this branch on the selected date.'
-          : `${selectedDateAvailability.availableSlots.length} slots available for this branch.`
+        : 'All consultation slots are currently open for appointment requests.'
     : 'Select a date to view available time slots.'
   const displayedInstagramPosts = liveInstagramPosts.length ? liveInstagramPosts : instagramPosts
 
@@ -1985,41 +2185,28 @@ function WebsiteApp() {
     setSubmitError('')
 
     try {
+      let paymentDetails = {
+        paymentMethod: onlinePaymentMethod,
+        paymentStatus: 'Pending',
+        paymentAmount: consultationFeeAmount,
+      }
+
       if (bookingEndpoint) {
-        const latestAvailability = await fetchBookingAvailability({
+        paymentDetails = await collectConsultationPayment({
+          name: formState.name,
+          phone: formState.phone,
+          email: formState.email,
           branch: branchName,
-          date: formState.date,
+          source: 'Website consultation',
         })
-
-        if (latestAvailability) {
-          setBookingAvailability((current) => ({
-            ...current,
-            [getAvailabilityKey(branchName, formState.date)]: latestAvailability,
-          }))
-
-          if (latestAvailability.bookedSlots.includes(formState.timeSlot)) {
-            setSubmitError('That slot was just booked. Please choose another available time.')
-            return
-          }
-        }
 
         await submitBookingToSheets({
-          formState,
+          formState: {
+            ...formState,
+            ...paymentDetails,
+          },
           treatmentName,
           branchName,
-        })
-
-        setBookingAvailability((current) => {
-          const key = getAvailabilityKey(branchName, formState.date)
-          const currentBookedSlots = normalizeBookedSlots(current[key]?.bookedSlots)
-
-          return {
-            ...current,
-            [key]: {
-              bookedSlots: [...new Set([...currentBookedSlots, formState.timeSlot])],
-              updatedAt: Date.now(),
-            },
-          }
         })
 
         if (formspreeEndpoint) {
@@ -2031,6 +2218,9 @@ function WebsiteApp() {
               branch_name: branchName,
               appointment_time: formState.timeSlot,
               source: 'Apple International Dental website',
+              payment_status: paymentDetails.paymentStatus,
+              payment_amount: String(paymentDetails.paymentAmount),
+              payment_id: paymentDetails.paymentId || '',
             },
           }).catch(() => {})
         }
@@ -2043,17 +2233,17 @@ function WebsiteApp() {
             branch_name: branchName,
             appointment_time: formState.timeSlot,
             source: 'Apple International Dental website',
+            payment_status: paymentDetails.paymentStatus,
+            payment_amount: String(paymentDetails.paymentAmount),
           },
         })
       }
 
-      const nextBookingLock = {
+      const nextBookingLock = recordBookingSubmission({
         treatmentName,
         branchName,
-        submittedAt: Date.now(),
-      }
+      })
 
-      window.localStorage.setItem(bookingLockKey, JSON.stringify(nextBookingLock))
       setBookingLock(nextBookingLock)
       setSubmittedFor(treatmentName)
       setFormState(initialFormState)
@@ -2322,6 +2512,8 @@ function WebsiteApp() {
               <input type="hidden" name="treatment_name" value={selectedTreatment.name} />
               <input type="hidden" name="branch_name" value={formState.branch} />
               <input type="hidden" name="timeSlot" value={formState.timeSlot} />
+              <input type="hidden" name="payment_amount" value={consultationFeeAmount} />
+              <input type="hidden" name="payment_method" value={onlinePaymentMethod} />
 
               <fieldset disabled={isFormDisabled}>
                 <label className="select-label">
@@ -2439,7 +2631,7 @@ function WebsiteApp() {
                         onClick={() => handleDateSuggestion(date.value)}
                       >
                         <span>{date.label}</span>
-                        <small>{date.isUnavailable ? 'Full' : 'Open'}</small>
+                        <small>{date.isUnavailable ? 'Closed' : 'Open'}</small>
                       </button>
                     ))}
                   </div>
@@ -2457,25 +2649,29 @@ function WebsiteApp() {
 
                   {formState.date && (
                     <div className="time-slot-grid" aria-label="Available appointment time slots">
-                      {appointmentSlots.map((slot) => {
-                        const isUnavailable = !selectedDateAvailability.availableSlots.includes(slot)
-
-                        return (
+                      {appointmentSlots.map((slot) => (
                           <button
                             className={`time-slot${
                               formState.timeSlot === slot ? ' selected' : ''
                             }`}
-                            disabled={isUnavailable}
+                            disabled={!hasAvailableSelectedDate}
                             key={slot}
                             type="button"
                             onClick={() => handleTimeSlotSelect(slot)}
                           >
                             {slot}
                           </button>
-                        )
-                      })}
+                      ))}
                     </div>
                   )}
+                </div>
+
+                <div className="payment-summary booking-form-wide">
+                  <div>
+                    <strong>Consultation fee</strong>
+                    <span>Paid securely before the appointment request is sent.</span>
+                  </div>
+                  <p>₹{consultationFeeAmount}</p>
                 </div>
 
                 <label className="booking-form-wide">
@@ -2502,12 +2698,12 @@ function WebsiteApp() {
                 {isSubmitting && <span className="submit-spinner" aria-hidden="true" />}
                 <span>
                   {isSubmitting
-                    ? 'Sending request...'
+                    ? 'Opening payment...'
                     : isBookingLocked
-                    ? 'Request already received'
+                    ? 'Request limit reached'
                     : requiresSlotSelection
                       ? 'Select date and time'
-                    : 'Request appointment'}
+                    : `Pay ₹${consultationFeeAmount} & request appointment`}
                 </span>
               </button>
             </form>
@@ -2533,7 +2729,9 @@ function WebsiteApp() {
                   {submitError
                     ? submitError
                     : confirmationTreatment
-                    ? `Thank you. Your ${confirmationTreatment} request has been sent to our reception team. We will contact you shortly to confirm your appointment. To avoid duplicate requests, this form is paused on this device for about ${bookingCooldown}.`
+                    ? bookingLock
+                      ? `Thank you. Your ${confirmationTreatment} request has been sent to our reception team. This device has reached four requests, so the form is paused for about ${bookingCooldown}.`
+                      : `Thank you. Your ${confirmationTreatment} request and ₹${consultationFeeAmount} consultation fee have been received. We will contact you shortly to confirm your appointment.`
                     : 'Select a treatment from the dropdown or use the treatment cards above to begin.'}
                 </p>
               </div>
