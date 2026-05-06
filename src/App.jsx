@@ -1088,7 +1088,7 @@ const getStoredAdminSession = () => {
   try {
     const savedSession = JSON.parse(window.localStorage.getItem(adminSessionKey))
 
-    if (!savedSession?.token || Number(savedSession.expiresAt) <= Date.now()) {
+    if (!savedSession?.token || !savedSession?.branch || Number(savedSession.expiresAt) <= Date.now()) {
       window.localStorage.removeItem(adminSessionKey)
       return null
     }
@@ -1160,7 +1160,7 @@ const getCompletedDateParts = (value) => {
 
 const initialAdminBookingForm = {
   treatment: treatments[0].name,
-  branch: branches[0],
+  branch: '',
   name: '',
   phone: '',
   email: '',
@@ -1180,6 +1180,9 @@ const initialAdminBookingForm = {
 
 function AdminDashboard() {
   const [session, setSession] = useState(getStoredAdminSession)
+  const [selectedAdminBranch, setSelectedAdminBranch] = useState(
+    () => getStoredAdminSession()?.branch || branches[0],
+  )
   const [password, setPassword] = useState('')
   const [activeAdminTab, setActiveAdminTab] = useState('bookings')
   const [filters, setFilters] = useState(getDefaultAdminFilters)
@@ -1195,6 +1198,7 @@ function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [adminNotice, setAdminNotice] = useState('')
+  const sessionBranch = session?.branch || selectedAdminBranch
 
   const activeBookings = bookings.filter((booking) =>
     ['', 'booked', 'confirmed', 'walk-in', 'website', 'in treatment'].includes(
@@ -1247,6 +1251,7 @@ function AdminDashboard() {
         action: 'admin-bookings',
         token: adminSession.token,
         ...nextFilters,
+        branch: adminSession.branch,
       })
 
       setBookings(Array.isArray(result.bookings) ? result.bookings : [])
@@ -1274,6 +1279,7 @@ function AdminDashboard() {
       const result = await postBookingEndpoint({
         action: 'admin-patients',
         token: adminSession.token,
+        branch: adminSession.branch,
       })
 
       setPatients(Array.isArray(result.patients) ? result.patients : [])
@@ -1296,6 +1302,7 @@ function AdminDashboard() {
       const result = await postBookingEndpoint({
         action: 'admin-history',
         token: adminSession.token,
+        branch: adminSession.branch,
       })
 
       setHistory(Array.isArray(result.history) ? result.history : [])
@@ -1324,13 +1331,23 @@ function AdminDashboard() {
       const result = await postBookingEndpoint({
         action: 'admin-login',
         password,
+        branch: selectedAdminBranch,
       })
       const nextSession = {
         token: result.token,
         expiresAt: result.expiresAt,
+        branch: result.branch || selectedAdminBranch,
       }
 
       window.localStorage.setItem(adminSessionKey, JSON.stringify(nextSession))
+      setFilters((current) => ({
+        ...current,
+        branch: nextSession.branch,
+      }))
+      setAdminBookingForm((current) => ({
+        ...current,
+        branch: nextSession.branch,
+      }))
       setSession(nextSession)
       setPassword('')
       await fetchAdminBookings(nextSession)
@@ -1415,7 +1432,7 @@ function AdminDashboard() {
               name: adminBookingForm.name,
               phone: adminBookingForm.phone,
               email: adminBookingForm.email,
-              branch: adminBookingForm.branch,
+              branch: sessionBranch,
               source: 'Admin walk-in',
             })
           : {
@@ -1428,13 +1445,14 @@ function AdminDashboard() {
         token: session.token,
         ...adminBookingForm,
         ...paymentDetails,
+        branch: sessionBranch,
         treatmentName: adminBookingForm.treatment,
       })
 
       setAdminNotice(`Booking created: ${result.bookingId}. Consultation fee ${paymentDetails.paymentStatus.toLowerCase()} via ${paymentDetails.paymentMethod}.`)
       setAdminBookingForm((current) => ({
         ...initialAdminBookingForm,
-        branch: current.branch,
+        branch: sessionBranch,
         date: current.date,
         treatment: current.treatment,
       }))
@@ -1457,6 +1475,7 @@ function AdminDashboard() {
         token: session.token,
         bookingId: booking.bookingId,
         status,
+        branch: sessionBranch,
       })
       await fetchAdminBookings(session, filters)
       await fetchAdminPatients(session)
@@ -1474,9 +1493,23 @@ function AdminDashboard() {
         <section className="admin-login-card">
           <img src="/logo.png" alt="Apple International Dental" />
           <p className="eyebrow">Admin login</p>
-          <h1>Appointment dashboard</h1>
-          <p>Sign in to view clinic bookings, walk-ins, patient details, and upcoming slots.</p>
+          <h1>Choose branch dashboard</h1>
+          <p>Select the clinic branch first, then sign in to open only that branch dashboard.</p>
           <form onSubmit={handleLogin}>
+            <label>
+              Branch
+              <select
+                required
+                value={selectedAdminBranch}
+                onChange={(event) => setSelectedAdminBranch(event.target.value)}
+              >
+                {branches.map((branch) => (
+                  <option key={branch} value={branch}>
+                    {branch}
+                  </option>
+                ))}
+              </select>
+            </label>
             <label>
               Password
               <input
@@ -1488,7 +1521,7 @@ function AdminDashboard() {
               />
             </label>
             <button className="submit-button" type="submit" disabled={isLoading}>
-              {isLoading ? 'Checking...' : 'Sign in'}
+              {isLoading ? 'Checking...' : 'Open branch dashboard'}
             </button>
           </form>
           {error && <p className="admin-error">{error}</p>}
@@ -1504,7 +1537,7 @@ function AdminDashboard() {
           <div>
             <strong>Apple International Dental</strong>
             <p className="eyebrow">Admin dashboard</p>
-            <h1>Appointment bookings</h1>
+            <h1>{getBranchArea(sessionBranch)} bookings</h1>
           </div>
         </div>
         <div className="admin-topbar-actions">
@@ -1585,17 +1618,10 @@ function AdminDashboard() {
               To
               <input name="endDate" type="date" value={filters.endDate} onChange={handleFilterChange} />
             </label>
-            <label>
-              Branch
-              <select name="branch" value={filters.branch} onChange={handleFilterChange}>
-                <option value="">All branches</option>
-                {branches.map((branch) => (
-                  <option key={branch} value={branch}>
-                    {branch}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <div className="admin-branch-lock">
+              <span>Branch</span>
+              <strong>{getBranchArea(sessionBranch)}</strong>
+            </div>
             <label>
               Treatment
               <select name="treatment" value={filters.treatment} onChange={handleFilterChange}>
@@ -1760,13 +1786,7 @@ function AdminDashboard() {
             </label>
             <label>
               Branch
-              <select name="branch" value={adminBookingForm.branch} onChange={handleAdminBookingChange}>
-                {branches.map((branch) => (
-                  <option key={branch} value={branch}>
-                    {branch}
-                  </option>
-                ))}
-              </select>
+              <input value={getBranchArea(sessionBranch)} readOnly />
             </label>
             <label>
               Date

@@ -8,6 +8,7 @@ const BOOKING_ROW_LIMIT = 1000
 const ADMIN_PASSWORD_PROPERTY = 'ADMIN_PASSWORD'
 const ADMIN_SESSION_TOKEN_PROPERTY = 'ADMIN_SESSION_TOKEN'
 const ADMIN_SESSION_EXPIRES_PROPERTY = 'ADMIN_SESSION_EXPIRES'
+const ADMIN_SESSION_BRANCH_PROPERTY = 'ADMIN_SESSION_BRANCH'
 const RAZORPAY_KEY_ID_PROPERTY = 'RAZORPAY_KEY_ID'
 const RAZORPAY_KEY_SECRET_PROPERTY = 'RAZORPAY_KEY_SECRET'
 const ADMIN_SESSION_DURATION_MS = 8 * 60 * 60 * 1000
@@ -274,6 +275,7 @@ function handleAdminLogin(payload) {
     ADMIN_PASSWORD_PROPERTY,
   )
   const password = String(payload.password || '')
+  const branch = String(payload.branch || '').trim()
 
   if (!configuredPassword) {
     return jsonResponse({
@@ -286,17 +288,23 @@ function handleAdminLogin(payload) {
     return jsonResponse({ ok: false, message: 'Invalid admin password.' })
   }
 
+  if (!BRANCHES.includes(branch)) {
+    return jsonResponse({ ok: false, message: 'Select a valid branch before signing in.' })
+  }
+
   const token = Utilities.getUuid()
   const expiresAt = Date.now() + ADMIN_SESSION_DURATION_MS
   const properties = PropertiesService.getScriptProperties()
 
   properties.setProperty(ADMIN_SESSION_TOKEN_PROPERTY, token)
   properties.setProperty(ADMIN_SESSION_EXPIRES_PROPERTY, String(expiresAt))
+  properties.setProperty(ADMIN_SESSION_BRANCH_PROPERTY, branch)
 
   return jsonResponse({
     ok: true,
     token,
     expiresAt,
+    branch,
   })
 }
 
@@ -309,7 +317,7 @@ function handleAdminBookings(payload) {
   const values = sheet.getDataRange().getValues()
   const startDate = String(payload.startDate || '').trim()
   const endDate = String(payload.endDate || '').trim()
-  const branchFilter = String(payload.branch || '').trim()
+  const branchFilter = getAdminSessionBranch()
   const statusFilter = String(payload.status || '').trim().toLowerCase()
   const treatmentFilter = String(payload.treatment || '').trim()
 
@@ -352,6 +360,7 @@ function handleAdminPatients(payload) {
     return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
   }
 
+  const branchFilter = getAdminSessionBranch()
   const values = getPatientsSheet().getDataRange().getValues()
   const patients = values
     .slice(1)
@@ -369,6 +378,7 @@ function handleAdminPatients(payload) {
       notes: String(row[10] || '').trim(),
     }))
     .filter((patient) => patient.patientId && patient.phone)
+    .filter((patient) => !branchFilter || patient.lastBranch === branchFilter)
     .sort((a, b) => b.lastVisitDate.localeCompare(a.lastVisitDate))
 
   return jsonResponse({ ok: true, patients })
@@ -379,6 +389,7 @@ function handleAdminHistory(payload) {
     return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
   }
 
+  const branchFilter = getAdminSessionBranch()
   const values = getHistorySheet().getDataRange().getValues()
   const history = values
     .slice(1)
@@ -397,6 +408,7 @@ function handleAdminHistory(payload) {
       finalNotes: String(row[11] || '').trim(),
     }))
     .filter((item) => item.historyId)
+    .filter((item) => !branchFilter || item.branch === branchFilter)
     .sort((a, b) => b.completedDate.localeCompare(a.completedDate))
 
   return jsonResponse({ ok: true, history })
@@ -492,7 +504,7 @@ function handleAdminCreateBooking(payload) {
   }
 
   const sheet = getBookingSheet()
-  const branch = String(payload.branch || '').trim()
+  const branch = getAdminSessionBranch()
   const date = String(payload.date || '').trim()
   const timeSlot = String(payload.timeSlot || '').trim()
   const treatment = String(payload.treatmentName || payload.treatment || '').trim()
@@ -567,6 +579,13 @@ function handleAdminUpdateBooking(payload) {
   }
 
   const rowNumber = rowIndex + 1
+  const sessionBranch = getAdminSessionBranch()
+  const bookingBranch = String(values[rowIndex][2] || '').trim()
+
+  if (sessionBranch && bookingBranch !== sessionBranch) {
+    return jsonResponse({ ok: false, message: 'This booking belongs to another branch.' })
+  }
+
   sheet.getRange(rowNumber, 12).setValue(status)
 
   if (notes) {
@@ -601,8 +620,15 @@ function isValidAdminToken(token) {
   const properties = PropertiesService.getScriptProperties()
   const savedToken = properties.getProperty(ADMIN_SESSION_TOKEN_PROPERTY)
   const expiresAt = Number(properties.getProperty(ADMIN_SESSION_EXPIRES_PROPERTY) || 0)
+  const branch = String(properties.getProperty(ADMIN_SESSION_BRANCH_PROPERTY) || '').trim()
 
-  return Boolean(token && savedToken && token === savedToken && expiresAt > Date.now())
+  return Boolean(token && savedToken && branch && token === savedToken && expiresAt > Date.now())
+}
+
+function getAdminSessionBranch() {
+  return String(
+    PropertiesService.getScriptProperties().getProperty(ADMIN_SESSION_BRANCH_PROPERTY) || '',
+  ).trim()
 }
 
 function parsePayload(event) {
