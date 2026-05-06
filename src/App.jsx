@@ -391,6 +391,89 @@ const branchContacts = clinicBranches.map((branch) => ({
   whatsappNumber: `91${branch.phone}`,
 }))
 
+const schemePrograms = [
+  {
+    shortName: 'CGHS',
+    name: 'Central Government Health Scheme',
+    audience: 'Central Government employees, pensioners, and eligible dependents.',
+    carePath:
+      'Patients usually visit with a valid CGHS card and any referral or permission required for planned dental treatment.',
+    dentalFocus: 'Dental consultation, restorative care, gum treatment, root canal evaluation, and approved specialist procedures.',
+    documents: ['CGHS card', 'Government ID', 'Referral or permission slip if applicable', 'Previous prescriptions or x-rays'],
+    accent: 'Central government',
+  },
+  {
+    shortName: 'ECHS',
+    name: 'Ex-Servicemen Contributory Health Scheme',
+    audience: 'Ex-servicemen pensioners and eligible dependents.',
+    carePath:
+      'ECHS members can be guided through consultation, documentation, and referral-based treatment planning.',
+    dentalFocus: 'Dental assessment, pain relief, oral surgery evaluation, prosthetic planning, and approved follow-up care.',
+    documents: ['ECHS card', 'Service or pensioner ID', 'Referral from ECHS polyclinic if needed', 'Existing reports'],
+    accent: 'Defence families',
+  },
+  {
+    shortName: 'EHS',
+    name: 'Employees Health Scheme',
+    audience: 'Eligible Andhra Pradesh state government employees, pensioners, and dependent family members.',
+    carePath:
+      'The front desk can help verify scheme documents and guide patients on whether the planned dental care needs approval.',
+    dentalFocus: 'Cashless or approval-based dental treatment guidance for eligible employees and pensioners.',
+    documents: ['EHS health card', 'Aadhaar or government ID', 'Employee or pensioner details', 'Dental records'],
+    accent: 'AP employees',
+  },
+  {
+    shortName: 'CAPF',
+    name: 'Central Armed Police Forces',
+    audience: 'Eligible personnel and dependents from central armed police forces.',
+    carePath:
+      'Patients can visit with force ID and scheme papers so the branch team can guide the correct approval route.',
+    dentalFocus: 'Dental consultation, pain management, gum care, root canal evaluation, and oral surgery assessment.',
+    documents: ['CAPF or force ID', 'Health card or entitlement papers', 'Referral note if issued', 'Prior treatment file'],
+    accent: 'Armed police',
+  },
+  {
+    shortName: 'CRPF',
+    name: 'Central Reserve Police Force',
+    audience: 'Eligible CRPF personnel, families, and dependents under applicable cashless or referral systems.',
+    carePath:
+      'CRPF patients should carry identity and entitlement documents for branch-level verification before treatment planning.',
+    dentalFocus: 'Treatment planning for dental pain, infection, gum concerns, trauma, and approved specialist procedures.',
+    documents: ['CRPF ID', 'Health card or authorization', 'Referral or approval note', 'Previous reports'],
+    accent: 'CRPF care',
+  },
+  {
+    shortName: 'SCR',
+    name: 'South Central Railway',
+    audience: 'Railway employees, retired employees, and eligible railway beneficiaries.',
+    carePath:
+      'Railway beneficiaries can bring entitlement documents for guidance on approved dental care and referral requirements.',
+    dentalFocus: 'Extraction, scaling and gum treatment, root canal treatment, fillings, and major dental care when approved.',
+    documents: ['Railway medical card', 'Employee or pensioner ID', 'Referral note if applicable', 'Previous dental file'],
+    accent: 'Railway families',
+  },
+  {
+    shortName: 'ESIC',
+    name: "Employees' State Insurance Corporation",
+    audience: 'Insured employees and eligible family members covered under ESIC.',
+    carePath:
+      'ESIC patients can bring insurance documents so the team can help confirm the correct care and authorization pathway.',
+    dentalFocus: 'General dental evaluation, urgent dental concerns, specialist referral guidance, and treatment documentation.',
+    documents: ['ESIC card or Pehchan card', 'Aadhaar or ID proof', 'Employer or insurance details', 'Existing reports'],
+    accent: 'Insured employees',
+  },
+  {
+    shortName: 'ABS',
+    name: 'Aarogya Bhadratha Scheme',
+    audience: 'Eligible police personnel and dependent family members in Andhra Pradesh and Telangana.',
+    carePath:
+      'Police families can visit with scheme documents for help with dental consultation and cashless approval guidance.',
+    dentalFocus: 'Dental treatment planning, oral surgery assessment, trauma care guidance, and approved specialist treatment.',
+    documents: ['Aarogya Bhadratha card', 'Police ID', 'Dependency certificate if needed', 'Essentiality or referral certificate'],
+    accent: 'Police families',
+  },
+]
+
 const formatPhoneDisplay = (phone) =>
   phone ? `+91 ${phone.slice(0, 5)} ${phone.slice(5)}` : clinicPhoneDisplay
 
@@ -2481,6 +2564,7 @@ function WebsiteApp() {
           <nav className="site-nav" aria-label="Site">
             <a href="#services">Services</a>
             <a href="#treatments">Treatments</a>
+            <a href="/schemes">Schemes</a>
             <a href="#instagram">Gallery</a>
             <a href="#dentists">Doctors</a>
             <a href="#contact">Contact</a>
@@ -3221,6 +3305,7 @@ function WebsiteApp() {
           <div className="footer-links">
             <a href="#services">Services</a>
             <a href="#booking">Booking</a>
+            <a href="/schemes">Schemes</a>
             <a href="#dentists">Doctors</a>
             <a href="#contact">Contact</a>
           </div>
@@ -3297,11 +3382,168 @@ function WebsiteApp() {
   )
 }
 
+function SchemesPage() {
+  return (
+    <main className="page-shell schemes-page" id="top">
+      <header className="site-header">
+        <div className="site-header-inner">
+          <a className="site-brand" href="/">
+            <span className="site-brand-mark">
+              <img src="/logo.png" alt="" aria-hidden="true" />
+            </span>
+            <span className="site-brand-copy">
+              <strong>Apple International Dental</strong>
+              <small>Scheme-based dental care guidance</small>
+            </span>
+          </a>
+
+          <nav className="site-nav" aria-label="Site">
+            <a href="/">Home</a>
+            <a href="/#services">Services</a>
+            <a href="/#booking">Booking</a>
+            <a href="/#contact">Contact</a>
+          </nav>
+
+          <div className="site-actions">
+            <a className="site-call" href={`tel:${clinicPhoneHref}`}>
+              Call now
+            </a>
+            <a className="site-cta" href="/#booking">
+              Book now
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <section className="scheme-hero">
+        <div className="scheme-hero-copy">
+          <p className="eyebrow">Government and employee schemes</p>
+          <h1>Dental care support for eligible scheme card holders.</h1>
+          <p>
+            Apple International Dental helps patients understand the documents, approval route,
+            and branch coordination needed for scheme-linked dental visits.
+          </p>
+          <div className="scheme-hero-actions">
+            <a className="primary-action" href="#scheme-list">
+              View schemes
+            </a>
+            <a className="secondary-action" href="/#booking">
+              Request appointment
+            </a>
+          </div>
+        </div>
+        <div className="scheme-hero-media">
+          <img src={heroImage} alt="Dental consultation at Apple International Dental" />
+          <div>
+            <strong>{schemePrograms.length}</strong>
+            <span>scheme categories listed from the clinic sheet</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="scheme-intro">
+        <article>
+          <span>Before visit</span>
+          <strong>Bring your scheme card, ID proof, and any referral note.</strong>
+        </article>
+        <article>
+          <span>At reception</span>
+          <strong>The branch team checks documents and guides the approval path.</strong>
+        </article>
+        <article>
+          <span>Treatment plan</span>
+          <strong>The dentist explains what can proceed immediately and what needs approval.</strong>
+        </article>
+      </section>
+
+      <section className="scheme-section" id="scheme-list">
+        <div className="section-heading compact">
+          <div>
+            <p className="eyebrow">Schemes accepted or guided</p>
+            <h2>Choose your scheme and prepare for the branch visit.</h2>
+          </div>
+          <p className="section-text">
+            Coverage can vary by card type, referral status, branch empanelment, and the exact
+            dental procedure. Final approval is confirmed through the applicable scheme process.
+          </p>
+        </div>
+
+        <div className="scheme-grid">
+          {schemePrograms.map((scheme) => (
+            <article className="scheme-card" key={scheme.shortName}>
+              <div className="scheme-card-top">
+                <span>{scheme.shortName}</span>
+                <small>{scheme.accent}</small>
+              </div>
+              <h3>{scheme.name}</h3>
+              <p>{scheme.audience}</p>
+              <div className="scheme-card-detail">
+                <strong>How we help</strong>
+                <p>{scheme.carePath}</p>
+              </div>
+              <div className="scheme-card-detail">
+                <strong>Dental focus</strong>
+                <p>{scheme.dentalFocus}</p>
+              </div>
+              <div className="scheme-doc-list">
+                {scheme.documents.map((document) => (
+                  <span key={document}>{document}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="scheme-branch-cta">
+        <div>
+          <p className="eyebrow">Branch help desk</p>
+          <h2>Speak to the nearest branch before visiting.</h2>
+          <p>
+            Share your scheme name, branch preference, and dental concern so the front desk can
+            guide documents and appointment timing.
+          </p>
+        </div>
+        <div className="scheme-branch-links">
+          {branchContacts.slice(0, 6).map((contact) => (
+            <a href={getWhatsappLink(contact.branch)} target="_blank" rel="noreferrer" key={contact.branch}>
+              {contact.area}
+            </a>
+          ))}
+          <a className="scheme-all-branches" href="/#contact">
+            View all branches
+          </a>
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <div>
+            <strong>Apple International Dental</strong>
+            <p>Scheme-linked dental visits are coordinated through branch teams and the applicable approval process.</p>
+          </div>
+          <div className="footer-links">
+            <a href="/">Home</a>
+            <a href="/#booking">Booking</a>
+            <a href="/#contact">Contact</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  )
+}
+
 function App() {
   const isAdminPath =
     typeof window !== 'undefined' && window.location.pathname.replace(/\/$/, '') === '/admin'
+  const isSchemesPath =
+    typeof window !== 'undefined' && window.location.pathname.replace(/\/$/, '') === '/schemes'
 
-  return isAdminPath ? <AdminDashboard /> : <WebsiteApp />
+  if (isAdminPath) {
+    return <AdminDashboard />
+  }
+
+  return isSchemesPath ? <SchemesPage /> : <WebsiteApp />
 }
 
 export default App
