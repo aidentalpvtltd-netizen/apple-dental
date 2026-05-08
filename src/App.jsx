@@ -379,8 +379,8 @@ const clinicBranches = [
 
 const branches = clinicBranches.map((branch) => branch.branch)
 
-const clinicPhoneDisplay = '+91 98490 24567'
-const clinicPhoneHref = '+919849024567'
+const clinicPhoneDisplay = '1800 309 2334'
+const clinicPhoneHref = '18003092334'
 const getBranchArea = (branch) =>
   clinicBranches.find((clinicBranch) => clinicBranch.branch === branch)?.area ??
   branch.replace(/^Apple International Dental,\s*/, '')
@@ -395,6 +395,7 @@ const schemePrograms = [
   {
     shortName: 'CGHS',
     name: 'Central Government Health Scheme',
+    logo: '/schemes/cghs.jpg',
     audience: 'Central Government employees, pensioners, and eligible dependents.',
     carePath:
       'Patients usually visit with a valid CGHS card and any referral or permission required for planned dental treatment.',
@@ -405,6 +406,7 @@ const schemePrograms = [
   {
     shortName: 'ECHS',
     name: 'Ex-Servicemen Contributory Health Scheme',
+    logo: '/schemes/echs.jpg',
     audience: 'Ex-servicemen pensioners and eligible dependents.',
     carePath:
       'ECHS members can be guided through consultation, documentation, and referral-based treatment planning.',
@@ -415,6 +417,7 @@ const schemePrograms = [
   {
     shortName: 'EHS',
     name: 'Employees Health Scheme',
+    logo: '/schemes/ehs.png',
     audience: 'Eligible Andhra Pradesh state government employees, pensioners, and dependent family members.',
     carePath:
       'The front desk can help verify scheme documents and guide patients on whether the planned dental care needs approval.',
@@ -425,6 +428,7 @@ const schemePrograms = [
   {
     shortName: 'CAPF',
     name: 'Central Armed Police Forces',
+    logo: '/schemes/capf.jpg',
     audience: 'Eligible personnel and dependents from central armed police forces.',
     carePath:
       'Patients can visit with force ID and scheme papers so the branch team can guide the correct approval route.',
@@ -435,6 +439,7 @@ const schemePrograms = [
   {
     shortName: 'CRPF',
     name: 'Central Reserve Police Force',
+    logo: '/schemes/crpf.png',
     audience: 'Eligible CRPF personnel, families, and dependents under applicable cashless or referral systems.',
     carePath:
       'CRPF patients should carry identity and entitlement documents for branch-level verification before treatment planning.',
@@ -445,6 +450,7 @@ const schemePrograms = [
   {
     shortName: 'SCR',
     name: 'South Central Railway',
+    logo: '/schemes/south-central-railway.jpg',
     audience: 'Railway employees, retired employees, and eligible railway beneficiaries.',
     carePath:
       'Railway beneficiaries can bring entitlement documents for guidance on approved dental care and referral requirements.',
@@ -455,6 +461,7 @@ const schemePrograms = [
   {
     shortName: 'ESIC',
     name: "Employees' State Insurance Corporation",
+    logo: '/schemes/esic.png',
     audience: 'Insured employees and eligible family members covered under ESIC.',
     carePath:
       'ESIC patients can bring insurance documents so the team can help confirm the correct care and authorization pathway.',
@@ -465,6 +472,7 @@ const schemePrograms = [
   {
     shortName: 'ABS',
     name: 'Aarogya Bhadratha Scheme',
+    logo: '/schemes/aarogya-bhadratha.jpg',
     audience: 'Eligible police personnel and dependent family members in Andhra Pradesh and Telangana.',
     carePath:
       'Police families can visit with scheme documents for help with dental consultation and cashless approval guidance.',
@@ -474,11 +482,199 @@ const schemePrograms = [
   },
 ]
 
+const clinicBrands = [
+  {
+    name: 'Dentsply Sirona',
+    logo: '/brands/dentsply-sirona.png',
+    category: 'Digital dentistry',
+  },
+  {
+    name: 'Pioon Laser',
+    logo: '/brands/pioon-laser.png',
+    category: 'Laser dentistry',
+  },
+  {
+    name: 'Nobel Biocare',
+    logo: '/brands/nobel-biocare.png',
+    category: 'Implant systems',
+  },
+  {
+    name: '3M',
+    logo: '/brands/3m.png',
+    category: 'Restorative materials',
+  },
+  {
+    name: 'Carestream Dental',
+    logo: '/brands/carestream-dental.png',
+    category: 'Digital imaging',
+  },
+  {
+    name: 'Straumann',
+    logo: '/brands/straumann.png',
+    category: 'Premium implants',
+  },
+  {
+    name: 'Osstem Implant',
+    logo: '/brands/osstem-implant.png',
+    category: 'Implant dentistry',
+  },
+  {
+    name: 'Toothsi',
+    logo: '/brands/toothsi.jpg',
+    category: 'Aligners',
+    featured: true,
+  },
+]
+
+const videoTestimonials = [
+  {
+    id: 'testimonial-1',
+    video: '/testimonials/testimonial-1.mp4',
+    label: 'Patient testimonial 1',
+  },
+  {
+    id: 'testimonial-2',
+    video: '/testimonials/testimonial-2.mp4',
+    label: 'Patient testimonial 2',
+  },
+  {
+    id: 'testimonial-3',
+    video: '/testimonials/testimonial-3.mp4',
+    label: 'Patient testimonial 3',
+  },
+  {
+    id: 'testimonial-4',
+    video: '/testimonials/testimonial-4.mp4',
+    label: 'Patient testimonial 4',
+  },
+  {
+    id: 'testimonial-5',
+    video: '/testimonials/testimonial-5.mp4',
+    label: 'Patient testimonial 5',
+  },
+]
+
+const siteNavGroups = [
+  {
+    label: 'General Dentistry',
+    items: [
+      'Tooth Colored Fillings',
+      'Cleaning and polishing',
+      'Clips and Braces Treatment',
+      'Aligners',
+      'Crowns and Bridges',
+      'Root Canal Treatment',
+      'Complete Dentures',
+      'Tooth Extractions',
+      'Wisdom Molar Extraction',
+      'Gingival Flap Surgery',
+      'Frenectomy',
+      'Night Guard',
+      'Pit and Fissure Sealants',
+      'Partial Dentures',
+      'Over dentures',
+      'Kids Dentistry',
+    ],
+  },
+  {
+    label: 'Cosmetic Dentistry',
+    items: [
+      'Dental Veneers',
+      'Gingival Depigmentation',
+      'Teeth Whitening',
+      '3D Smile Designing',
+      'Smile Correction',
+    ],
+  },
+  {
+    label: 'Dental Implant Solutions',
+    items: [
+      'Single Tooth Implant',
+      'Multiple Implants',
+      'All on 4 implants',
+      'Full mouth Implants',
+      'Basal implants',
+      'Keyhole implants',
+      'Bone Grafting',
+      'Soft Tissue Grafting',
+    ],
+  },
+  {
+    label: 'Digital Dentistry',
+    items: [
+      'CAD CAM Solutions',
+      'Intra-Oral Scanning',
+      'Digital Smile Design',
+      'Digital Dental Implants',
+      'Digital OPG and CBCT',
+      'Central Digital Lab',
+    ],
+  },
+  {
+    label: 'Specialist Dentistry',
+    items: [
+      'Endodontics',
+      'Full mouth Rehabilitation',
+      'Periodontics',
+      'Orthodontics',
+      'Oral Surgery',
+      'Pedodontics',
+    ],
+  },
+]
+
 const formatPhoneDisplay = (phone) =>
   phone ? `+91 ${phone.slice(0, 5)} ${phone.slice(5)}` : clinicPhoneDisplay
 
 const getGoogleMapsUrl = (address) =>
   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
+
+function SiteNav({ homePrefix = '' }) {
+  return (
+    <nav className="site-nav" aria-label="Site">
+      {siteNavGroups.map((group) => (
+        <div className="site-nav-item" key={group.label}>
+          <button type="button" className="site-nav-trigger" aria-haspopup="true">
+            {group.label}
+          </button>
+          <div className="site-nav-menu" role="menu">
+            {group.items.map((item) => (
+              <a href={`${homePrefix}#booking`} key={item} role="menuitem">
+                {item}
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div className="site-nav-item">
+        <a className="site-nav-trigger site-nav-link-trigger" href={`${homePrefix}/schemes`}>
+          Schemes
+        </a>
+      </div>
+      <div className="site-nav-item">
+        <button type="button" className="site-nav-trigger">
+          Blog
+        </button>
+      </div>
+    </nav>
+  )
+}
+
+function SchemeLogoStrip({ schemes }) {
+  return (
+    <div className="hero-scheme-logos" aria-hidden="true">
+      {schemes.map((schemeName) => {
+        const scheme = schemePrograms.find((program) => program.shortName === schemeName)
+
+        return scheme ? (
+          <span key={scheme.shortName}>
+            <img src={scheme.logo} alt="" />
+          </span>
+        ) : null
+      })}
+    </div>
+  )
+}
 
 const appointmentSlots = [
   '09:30 AM',
@@ -601,6 +797,12 @@ const instagramFeedEndpoint = import.meta.env.VITE_INSTAGRAM_FEED_ENDPOINT
 const bookingEndpoint = import.meta.env.VITE_BOOKING_ENDPOINT
 
 const heroImage = '/hero/dental-hero-smile-exam.jpg'
+const heroImages = [
+  heroImage,
+  '/hero/hero-crown-decay-check.png',
+  '/hero/hero-dental-treatment.webp',
+]
+const heroCarouselImages = [...heroImages, heroImages[0]]
 
 const whyChooseUs = [
   {
@@ -752,7 +954,7 @@ const getPreloadImages = () =>
   [
     '/logo.png',
     '/loading/dentistry.gif',
-    heroImage,
+    ...heroImages,
     ...treatments.map((treatment) => treatment.image),
     ...services.map((service) => service.image),
     ...dentists.map((dentist) => dentist.image),
@@ -2081,6 +2283,50 @@ function AdminDashboard() {
   )
 }
 
+function WhatsappLauncher() {
+  return (
+    <details className="whatsapp-launcher">
+      <summary aria-label="Open WhatsApp branch options">
+        <span className="whatsapp-icon" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false">
+            <path d="M16.02 4.5C9.64 4.5 4.5 9.54 4.5 15.78c0 2.12.6 4.1 1.64 5.8L4.5 27.5l6.12-1.56a11.7 11.7 0 0 0 5.4 1.34c6.36 0 11.48-5.04 11.48-11.26S22.38 4.5 16.02 4.5Zm0 20.82c-1.78 0-3.44-.48-4.88-1.32l-.36-.22-3.62.92.96-3.42-.24-.36a9.22 9.22 0 0 1-1.44-4.94c0-5.14 4.3-9.34 9.58-9.34s9.56 4.2 9.56 9.34-4.28 9.34-9.56 9.34Zm5.24-6.98c-.28-.14-1.66-.8-1.92-.9-.26-.08-.44-.14-.64.14-.18.28-.74.9-.9 1.08-.16.18-.34.2-.62.06-.28-.14-1.2-.44-2.28-1.38-.84-.74-1.4-1.66-1.56-1.94-.16-.28-.02-.44.12-.58.12-.12.28-.32.42-.48.14-.16.18-.28.28-.46.1-.18.04-.34-.02-.48-.08-.14-.64-1.5-.88-2.06-.22-.54-.46-.46-.64-.46h-.54c-.18 0-.48.06-.74.34-.26.28-.98.94-.98 2.3 0 1.36 1 2.68 1.14 2.86.14.18 1.98 2.96 4.78 4.14.66.28 1.18.46 1.58.58.66.2 1.28.18 1.76.1.54-.08 1.66-.66 1.9-1.3.24-.64.24-1.18.16-1.3-.08-.12-.26-.18-.54-.32Z" />
+          </svg>
+        </span>
+      </summary>
+      <div className="whatsapp-menu" aria-label="Choose a branch to message on WhatsApp">
+        <div className="whatsapp-menu-header">
+          <div>
+            <span>Whatsapp us</span>
+            <strong>Choose a branch</strong>
+          </div>
+          <button
+            type="button"
+            aria-label="Close WhatsApp branch options"
+            onClick={(event) => {
+              event.currentTarget.closest('details')?.removeAttribute('open')
+            }}
+          >
+            x
+          </button>
+        </div>
+        {branchContacts.map((contact) => (
+          <a
+            href={getWhatsappLink(contact.branch)}
+            key={contact.branch}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span className="whatsapp-branch-label">
+              <strong>{contact.area}</strong>
+              <small>Apple International Dental</small>
+            </span>
+          </a>
+        ))}
+      </div>
+    </details>
+  )
+}
+
 function WebsiteApp() {
   const [isLoading, setIsLoading] = useState(true)
   const [formState, setFormState] = useState(initialFormState)
@@ -2090,11 +2336,15 @@ function WebsiteApp() {
   const [bookingLock, setBookingLock] = useState(getActiveBookingLock)
   const [activeTreatmentId, setActiveTreatmentId] = useState('')
   const [liveInstagramPosts, setLiveInstagramPosts] = useState([])
-  const [isWhatsappHintVisible, setIsWhatsappHintVisible] = useState(false)
   const [bookingAvailability, setBookingAvailability] = useState({})
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false)
   const [availabilityError, setAvailabilityError] = useState('')
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
+  const [testimonialSlideIndex, setTestimonialSlideIndex] = useState(0)
+  const [isTestimonialHovered, setIsTestimonialHovered] = useState(false)
+  const [testimonialMuted, setTestimonialMuted] = useState(() =>
+    Object.fromEntries(videoTestimonials.map((testimonial) => [testimonial.id, true])),
+  )
 
   const selectedTreatment =
     treatments.find((treatment) => treatment.id === formState.treatment) ?? treatments[0]
@@ -2128,11 +2378,19 @@ function WebsiteApp() {
         : 'All consultation slots are currently open for appointment requests.'
     : 'Select a date to view available time slots.'
   const displayedInstagramPosts = liveInstagramPosts.length ? liveInstagramPosts : instagramPosts
+  const carouselTestimonials = [...videoTestimonials, ...videoTestimonials.slice(0, 3)]
 
   const handleClinicChange = (direction) => {
     setSelectedClinicIndex((current) =>
       (current + direction + clinicBranches.length) % clinicBranches.length,
     )
+  }
+
+  const handleTestimonialMuteToggle = (testimonialId) => {
+    setTestimonialMuted((current) => ({
+      ...current,
+      [testimonialId]: !current[testimonialId],
+    }))
   }
 
   useEffect(() => {
@@ -2158,6 +2416,18 @@ function WebsiteApp() {
       isMounted = false
     }
   }, [])
+
+  useEffect(() => {
+    if (isTestimonialHovered) {
+      return undefined
+    }
+
+    const slideTimer = window.setInterval(() => {
+      setTestimonialSlideIndex((current) => (current + 1) % videoTestimonials.length)
+    }, 3600)
+
+    return () => window.clearInterval(slideTimer)
+  }, [isTestimonialHovered])
 
   useEffect(() => {
     if (!instagramFeedEndpoint) {
@@ -2346,30 +2616,6 @@ function WebsiteApp() {
       window.removeEventListener('keydown', handleEscape)
     }
   }, [activeTreatmentId])
-
-  useEffect(() => {
-    if (isLoading) {
-      return undefined
-    }
-
-    let hintTimeout
-    const showHint = () => {
-      const isWhatsappOpen = document.querySelector('.whatsapp-launcher')?.hasAttribute('open')
-
-      if (!isWhatsappOpen) {
-        setIsWhatsappHintVisible(true)
-        window.setTimeout(() => setIsWhatsappHintVisible(false), 1500)
-      }
-    }
-
-    hintTimeout = window.setTimeout(showHint, 6000)
-    const hintInterval = window.setInterval(showHint, 6000)
-
-    return () => {
-      window.clearTimeout(hintTimeout)
-      window.clearInterval(hintInterval)
-    }
-  }, [isLoading])
 
   const handleChange = ({ target: { name, value } }) => {
     const nextValue =
@@ -2561,18 +2807,11 @@ function WebsiteApp() {
             </span>
           </a>
 
-          <nav className="site-nav" aria-label="Site">
-            <a href="#services">Services</a>
-            <a href="#treatments">Treatments</a>
-            <a href="/schemes">Schemes</a>
-            <a href="#instagram">Gallery</a>
-            <a href="#dentists">Doctors</a>
-            <a href="#contact">Contact</a>
-          </nav>
+          <SiteNav />
 
           <div className="site-actions">
             <a className="site-call" href={`tel:${clinicPhoneHref}`}>
-              Call now
+              CALL {clinicPhoneDisplay}
             </a>
             <a className="site-cta" href="#booking">
               Book now
@@ -2583,19 +2822,30 @@ function WebsiteApp() {
 
       <section className="hero-section reveal-section">
         <div className="hero-image-card">
+          <div className="hero-slide-track" aria-hidden="true">
+            {heroCarouselImages.map((image, index) => (
+              <div
+                className="hero-slide"
+                key={`${image}-${index}`}
+                style={{ backgroundImage: `url('${image}')` }}
+              />
+            ))}
+          </div>
           <div className="hero-overlay">
             <div className="hero-copy">
               <p className="eyebrow">Apple International Dental</p>
-              <h1>Trusted dental care in Vijayawada for healthy smiles and advanced treatment.</h1>
+              <div className="hero-accreditation">
+                <img src="/badges/nabh-accredited-dental-hospital.png" alt="NABH Accredited" />
+                <span>NABH ACCREDITED DENTAL HOSPITAL</span>
+              </div>
+              <h1>No.1 Trusted Dental Care in South India.</h1>
               <p className="hero-text">
                 From routine cleanings and kids checkups to aligners, implants, and emergency
-                dentistry, our Vijayawada dental clinic offers complete care in one comfortable setting.
+                dentistry, our dental clinics in Andhra Pradesh, Telangana and Karnataka offers
+                complete care and services.
               </p>
 
               <div className="hero-actions">
-                <a className="primary-action" href="#booking">
-                  Book appointment
-                </a>
                 <a className="secondary-action" href="#services">
                   Our services
                 </a>
@@ -2605,20 +2855,23 @@ function WebsiteApp() {
             <div className="hero-info-grid">
               <article className="hero-info-card">
                 <span>Hours</span>
-                <strong>Mon-Sat 9:00 AM - 8:00 PM</strong>
+                <strong>Mon - Sun: 10:00 am to 8:00 pm</strong>
               </article>
-              <article className="hero-info-card">
-                <span>Consultations</span>
-                <strong>Same-day and weekend appointments available</strong>
-              </article>
-              <article className="hero-info-card">
-                <span>Technology</span>
-                <strong>Digital x-rays, aligners, implants, and microscope-assisted care</strong>
-              </article>
-              <article className="hero-info-card accent">
-                <span>New patients</span>
-                <strong>Call, WhatsApp, or request a visit online in under a minute</strong>
-              </article>
+              <a className="hero-info-card hero-scheme-card-link" href="/schemes?scroll=scheme-list">
+                <span>CGHS and ECHS</span>
+                <SchemeLogoStrip schemes={['CGHS', 'ECHS']} />
+                <strong>Dental care guidance for eligible government and ex-servicemen scheme patients</strong>
+              </a>
+              <a className="hero-info-card hero-scheme-card-link" href="/schemes?scroll=scheme-list">
+                <span>EHS and ESIC</span>
+                <SchemeLogoStrip schemes={['EHS', 'ESIC']} />
+                <strong>Scheme document support for employee health and insured patient dental visits</strong>
+              </a>
+              <a className="hero-info-card hero-scheme-card-link accent" href="/schemes?scroll=scheme-list">
+                <span>CAPF, CRPF, SCR, ABS</span>
+                <SchemeLogoStrip schemes={['CAPF', 'CRPF', 'SCR', 'ABS']} />
+                <strong>Branch help desk for defence, railway, and Aarogya Bhadratha dental approvals</strong>
+              </a>
             </div>
           </div>
 
@@ -2948,7 +3201,12 @@ function WebsiteApp() {
                 <div className="payment-summary booking-form-wide">
                   <div>
                     <strong>Consultation fee</strong>
-                    <span>Paid securely before the appointment request is sent.</span>
+                    <span>
+                      Paid securely before the appointment request is sent.
+                      <span className="razorpay-mark" aria-label="Powered by Razorpay">
+                        <img src="/payments/razorpay.svg" alt="" />
+                      </span>
+                    </span>
                   </div>
                   <p>₹{consultationFeeAmount}</p>
                 </div>
@@ -3099,6 +3357,90 @@ function WebsiteApp() {
             </section>
           </div>
         )}
+
+        <section className="brand-section reveal-section" aria-label="Dental technology and partner brands">
+          <div className="brand-panel">
+            <div className="brand-heading">
+              <div>
+                <p className="eyebrow">Technology and material partners</p>
+                <h2>Premium brands used across lasers, implants, aligners, and digital dentistry.</h2>
+              </div>
+              <p>
+                Our clinical teams work with globally recognized dental systems for precision
+                imaging, implant planning, restorative care, laser dentistry, and aligner workflows.
+              </p>
+            </div>
+
+            <div className="brand-logo-grid">
+              {clinicBrands.map((brand) => (
+                <article
+                  className={`brand-logo-card${brand.featured ? ' brand-logo-card-featured' : ''}`}
+                  key={brand.name}
+                >
+                  <div className="brand-logo-frame">
+                    <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" />
+                  </div>
+                  <div>
+                    <strong>{brand.name}</strong>
+                    <span>{brand.category}</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="video-testimonial-section reveal-section" aria-label="Video testimonials">
+          <div className="video-testimonial-panel">
+            <div className="video-testimonial-heading">
+              <div>
+                <p className="eyebrow">Video testimonials</p>
+                <h2>Real patient stories from our Clinics.</h2>
+              </div>
+              <div className="google-rating-line" aria-label="Google rating 4.8 stars with 1.5K plus reviews">
+                <span aria-hidden="true">★★★★★</span>
+                <strong>4.8 Stars (1.5K+ Google Reviews)</strong>
+              </div>
+            </div>
+
+            <div
+              className="testimonial-carousel"
+              onMouseEnter={() => setIsTestimonialHovered(true)}
+              onMouseLeave={() => setIsTestimonialHovered(false)}
+            >
+              <div
+                className="testimonial-track"
+                style={{ '--testimonial-index': testimonialSlideIndex }}
+              >
+                {carouselTestimonials.map((testimonial, index) => (
+                  <article className="testimonial-video-card" key={`${testimonial.id}-${index}`}>
+                    <video
+                      autoPlay
+                      loop
+                      muted={testimonialMuted[testimonial.id]}
+                      playsInline
+                      preload="metadata"
+                      src={testimonial.video}
+                      aria-label={testimonial.label}
+                    />
+                    <button
+                      type="button"
+                      className="testimonial-volume-button"
+                      aria-label={
+                        testimonialMuted[testimonial.id]
+                          ? 'Turn testimonial sound on'
+                          : 'Turn testimonial sound off'
+                      }
+                      onClick={() => handleTestimonialMuteToggle(testimonial.id)}
+                    >
+                      {testimonialMuted[testimonial.id] ? 'Sound off' : 'Sound on'}
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="instagram-section reveal-section" id="instagram">
           <div className="instagram-heading">
@@ -3334,55 +3676,33 @@ function WebsiteApp() {
         </div>
       </footer>
 
-      <details className={`whatsapp-launcher${isWhatsappHintVisible ? ' hint-visible' : ''}`}>
-        <summary aria-label="Open WhatsApp branch options">
-          <span className="whatsapp-hint-arrow" aria-hidden="true">
-            Chat with us
-            <span>→</span>
-          </span>
-          <span className="whatsapp-icon" aria-hidden="true">
-            <svg viewBox="0 0 32 32" focusable="false">
-              <path d="M16.02 4.5C9.64 4.5 4.5 9.54 4.5 15.78c0 2.12.6 4.1 1.64 5.8L4.5 27.5l6.12-1.56a11.7 11.7 0 0 0 5.4 1.34c6.36 0 11.48-5.04 11.48-11.26S22.38 4.5 16.02 4.5Zm0 20.82c-1.78 0-3.44-.48-4.88-1.32l-.36-.22-3.62.92.96-3.42-.24-.36a9.22 9.22 0 0 1-1.44-4.94c0-5.14 4.3-9.34 9.58-9.34s9.56 4.2 9.56 9.34-4.28 9.34-9.56 9.34Zm5.24-6.98c-.28-.14-1.66-.8-1.92-.9-.26-.08-.44-.14-.64.14-.18.28-.74.9-.9 1.08-.16.18-.34.2-.62.06-.28-.14-1.2-.44-2.28-1.38-.84-.74-1.4-1.66-1.56-1.94-.16-.28-.02-.44.12-.58.12-.12.28-.32.42-.48.14-.16.18-.28.28-.46.1-.18.04-.34-.02-.48-.08-.14-.64-1.5-.88-2.06-.22-.54-.46-.46-.64-.46h-.54c-.18 0-.48.06-.74.34-.26.28-.98.94-.98 2.3 0 1.36 1 2.68 1.14 2.86.14.18 1.98 2.96 4.78 4.14.66.28 1.18.46 1.58.58.66.2 1.28.18 1.76.1.54-.08 1.66-.66 1.9-1.3.24-.64.24-1.18.16-1.3-.08-.12-.26-.18-.54-.32Z" />
-            </svg>
-          </span>
-        </summary>
-        <div className="whatsapp-menu" aria-label="Choose a branch to message on WhatsApp">
-          <div className="whatsapp-menu-header">
-            <div>
-              <span>Whatsapp us</span>
-              <strong>Choose a branch</strong>
-            </div>
-            <button
-              type="button"
-              aria-label="Close WhatsApp branch options"
-              onClick={(event) => {
-                event.currentTarget.closest('details')?.removeAttribute('open')
-              }}
-            >
-              x
-            </button>
-          </div>
-          {branchContacts.map((contact) => (
-            <a
-              href={getWhatsappLink(contact.branch)}
-              key={contact.branch}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span>
-                <strong>{contact.area}</strong>
-                <small>Apple International Dental</small>
-              </span>
-              <span aria-hidden="true">›</span>
-            </a>
-          ))}
-        </div>
-      </details>
+      
     </main>
   )
 }
 
 function SchemesPage() {
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const params = new URLSearchParams(window.location.search)
+
+    if (params.get('scroll') !== 'scheme-list') {
+      return
+    }
+
+    const scrollTimeout = window.setTimeout(() => {
+      document.getElementById('scheme-list')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 450)
+
+    return () => window.clearTimeout(scrollTimeout)
+  }, [])
+
   return (
     <main className="page-shell schemes-page" id="top">
       <header className="site-header">
@@ -3397,16 +3717,11 @@ function SchemesPage() {
             </span>
           </a>
 
-          <nav className="site-nav" aria-label="Site">
-            <a href="/">Home</a>
-            <a href="/#services">Services</a>
-            <a href="/#booking">Booking</a>
-            <a href="/#contact">Contact</a>
-          </nav>
+          <SiteNav homePrefix="/" />
 
           <div className="site-actions">
             <a className="site-call" href={`tel:${clinicPhoneHref}`}>
-              Call now
+              CALL {clinicPhoneDisplay}
             </a>
             <a className="site-cta" href="/#booking">
               Book now
@@ -3432,11 +3747,18 @@ function SchemesPage() {
             </a>
           </div>
         </div>
-        <div className="scheme-hero-media">
-          <img src={heroImage} alt="Dental consultation at Apple International Dental" />
-          <div>
+        <div className="scheme-hero-media scheme-logo-collage" aria-label="Scheme logo collage">
+          <div className="scheme-collage-grid">
+            {schemePrograms.map((scheme) => (
+              <span className="scheme-collage-logo" key={scheme.shortName}>
+                <img src={scheme.logo} alt={`${scheme.name} logo`} />
+                <small>{scheme.shortName}</small>
+              </span>
+            ))}
+          </div>
+          <div className="scheme-collage-count">
             <strong>{schemePrograms.length}</strong>
-            <span>scheme categories listed from the clinic sheet</span>
+            <span>Schemes</span>
           </div>
         </div>
       </section>
@@ -3471,24 +3793,31 @@ function SchemesPage() {
         <div className="scheme-grid">
           {schemePrograms.map((scheme) => (
             <article className="scheme-card" key={scheme.shortName}>
-              <div className="scheme-card-top">
-                <span>{scheme.shortName}</span>
-                <small>{scheme.accent}</small>
+              <div className="scheme-logo-frame">
+                <img src={scheme.logo} alt={`${scheme.name} logo`} loading="lazy" />
               </div>
-              <h3>{scheme.name}</h3>
-              <p>{scheme.audience}</p>
-              <div className="scheme-card-detail">
-                <strong>How we help</strong>
-                <p>{scheme.carePath}</p>
+              <div className="scheme-card-body">
+                <div className="scheme-card-top">
+                  <span>{scheme.shortName}</span>
+                  <small>{scheme.accent}</small>
+                </div>
+                <h3>{scheme.name}</h3>
+                <p>{scheme.audience}</p>
+                <div className="scheme-card-detail">
+                  <strong>How we help</strong>
+                  <p>{scheme.carePath}</p>
+                </div>
               </div>
-              <div className="scheme-card-detail">
-                <strong>Dental focus</strong>
-                <p>{scheme.dentalFocus}</p>
-              </div>
-              <div className="scheme-doc-list">
-                {scheme.documents.map((document) => (
-                  <span key={document}>{document}</span>
-                ))}
+              <div className="scheme-card-aside">
+                <div className="scheme-card-detail">
+                  <strong>Dental focus</strong>
+                  <p>{scheme.dentalFocus}</p>
+                </div>
+                <div className="scheme-doc-list">
+                  {scheme.documents.map((document) => (
+                    <span key={document}>{document}</span>
+                  ))}
+                </div>
               </div>
             </article>
           ))}
@@ -3529,6 +3858,7 @@ function SchemesPage() {
           </div>
         </div>
       </footer>
+
     </main>
   )
 }
@@ -3543,7 +3873,12 @@ function App() {
     return <AdminDashboard />
   }
 
-  return isSchemesPath ? <SchemesPage /> : <WebsiteApp />
+  return (
+    <>
+      {isSchemesPath ? <SchemesPage /> : <WebsiteApp />}
+      <WhatsappLauncher />
+    </>
+  )
 }
 
 export default App
