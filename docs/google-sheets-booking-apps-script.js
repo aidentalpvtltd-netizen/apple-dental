@@ -1,6 +1,8 @@
 const SHEET_NAME = 'Bookings'
 const PATIENTS_SHEET_NAME = 'Patients'
 const HISTORY_SHEET_NAME = 'Treatment History'
+const SUPPORT_CHATS_SHEET_NAME = 'Support Chats'
+const SUPPORT_MESSAGES_SHEET_NAME = 'Support Messages'
 const ACTIVE_STATUSES = new Set(['', 'booked', 'confirmed', 'walk-in', 'website', 'in treatment'])
 const COMPLETED_STATUS = 'Treatment Completed'
 const MANUAL_SOURCE = 'Manual Walkin'
@@ -12,7 +14,7 @@ const ADMIN_SESSION_BRANCH_PROPERTY = 'ADMIN_SESSION_BRANCH'
 const RAZORPAY_KEY_ID_PROPERTY = 'RAZORPAY_KEY_ID'
 const RAZORPAY_KEY_SECRET_PROPERTY = 'RAZORPAY_KEY_SECRET'
 const ADMIN_SESSION_DURATION_MS = 8 * 60 * 60 * 1000
-const CONSULTATION_FEE_AMOUNT = 300
+const CONSULTATION_FEE_AMOUNT = 350
 const CONSULTATION_FEE_SUBUNITS = CONSULTATION_FEE_AMOUNT * 100
 const HEADERS = [
   'Timestamp',
@@ -61,6 +63,23 @@ const HISTORY_HEADERS = [
   'Completed Date',
   'Source',
   'Final Notes',
+]
+const SUPPORT_CHAT_HEADERS = [
+  'Chat ID',
+  'Created At',
+  'Updated At',
+  'Branch',
+  'Name',
+  'Phone',
+  'Email',
+  'Status',
+]
+const SUPPORT_MESSAGE_HEADERS = [
+  'Message ID',
+  'Chat ID',
+  'Created At',
+  'Sender',
+  'Message',
 ]
 const BRANCHES = [
   'Apple International Dental, Ongole',
@@ -134,6 +153,8 @@ function setupBookingSheet() {
   applyBookingSheetLayout(sheet)
   getPatientsSheet()
   getHistorySheet()
+  getSupportChatsSheet()
+  getSupportMessagesSheet()
 }
 
 function onEdit(event) {
@@ -209,6 +230,26 @@ function doPost(event) {
 
     if (payload.action === 'admin-update-booking') {
       return handleAdminUpdateBooking(payload)
+    }
+
+    if (payload.action === 'support-create-chat') {
+      return handleSupportCreateChat(payload)
+    }
+
+    if (payload.action === 'support-send-message') {
+      return handleSupportSendMessage(payload)
+    }
+
+    if (payload.action === 'support-get-chat') {
+      return handleSupportGetChat(payload)
+    }
+
+    if (payload.action === 'admin-support-chats') {
+      return handleAdminSupportChats(payload)
+    }
+
+    if (payload.action === 'admin-support-send-message') {
+      return handleAdminSupportSendMessage(payload)
     }
 
     if (payload.action === 'create-payment-order') {
@@ -631,6 +672,156 @@ function getAdminSessionBranch() {
   ).trim()
 }
 
+function handleSupportCreateChat(payload) {
+  const branch = String(payload.branch || '').trim()
+  const name = String(payload.name || '').trim()
+  const phone = normalizePhone(payload.phone)
+  const email = String(payload.email || '').trim()
+  const message = String(payload.message || '').trim()
+
+  if (!BRANCHES.includes(branch)) {
+    return jsonResponse({ ok: false, message: 'Please choose a valid branch.' })
+  }
+
+  if (!name || !phone || !email || !message) {
+    return jsonResponse({ ok: false, message: 'Name, phone, email, and message are required.' })
+  }
+
+  const chatId = `CHAT-${Date.now()}`
+  const now = new Date()
+
+  getSupportChatsSheet().appendRow([chatId, now, now, branch, name, phone, email, 'Open'])
+  getSupportMessagesSheet().appendRow([`MSG-${Date.now()}`, chatId, now, 'patient', message])
+
+  return jsonResponse({ ok: true, chatId, branch })
+}
+
+function handleSupportSendMessage(payload) {
+  const chatId = String(payload.chatId || '').trim()
+  const sender = String(payload.sender || 'patient').trim() === 'staff' ? 'staff' : 'patient'
+  const message = String(payload.message || '').trim()
+
+  if (!chatId || !message) {
+    return jsonResponse({ ok: false, message: 'Chat and message are required.' })
+  }
+
+  if (!getSupportChatById(chatId)) {
+    return jsonResponse({ ok: false, message: 'Support chat was not found.' })
+  }
+
+  appendSupportMessage(chatId, sender, message)
+
+  return jsonResponse({ ok: true })
+}
+
+function handleSupportGetChat(payload) {
+  const chatId = String(payload.chatId || '').trim()
+  const chat = getSupportChatById(chatId)
+
+  if (!chat) {
+    return jsonResponse({ ok: false, message: 'Support chat was not found.' })
+  }
+
+  return jsonResponse({ ok: true, chat, messages: getSupportMessages(chatId) })
+}
+
+function handleAdminSupportChats(payload) {
+  if (!isValidAdminToken(payload.token)) {
+    return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
+  }
+
+  const branchFilter = getAdminSessionBranch()
+  const chats = getSupportChats()
+    .filter((chat) => chat.branch === branchFilter)
+    .map((chat) => ({
+      ...chat,
+      messages: getSupportMessages(chat.chatId),
+    }))
+    .sort((a, b) => String(b.updatedAtRaw || '').localeCompare(String(a.updatedAtRaw || '')))
+
+  return jsonResponse({ ok: true, chats })
+}
+
+function handleAdminSupportSendMessage(payload) {
+  if (!isValidAdminToken(payload.token)) {
+    return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
+  }
+
+  const chatId = String(payload.chatId || '').trim()
+  const message = String(payload.message || '').trim()
+  const chat = getSupportChatById(chatId)
+
+  if (!chat || chat.branch !== getAdminSessionBranch()) {
+    return jsonResponse({ ok: false, message: 'This support chat is not assigned to this branch.' })
+  }
+
+  if (!message) {
+    return jsonResponse({ ok: false, message: 'Reply message is required.' })
+  }
+
+  appendSupportMessage(chatId, 'staff', message)
+
+  return jsonResponse({ ok: true })
+}
+
+function appendSupportMessage(chatId, sender, message) {
+  const now = new Date()
+
+  getSupportMessagesSheet().appendRow([`MSG-${Date.now()}`, chatId, now, sender, message])
+  touchSupportChat(chatId, now)
+}
+
+function touchSupportChat(chatId, updatedAt) {
+  const sheet = getSupportChatsSheet()
+  const values = sheet.getDataRange().getValues()
+  const rowIndex = values.findIndex(
+    (row, index) => index > 0 && String(row[0] || '').trim() === chatId,
+  )
+
+  if (rowIndex > 0) {
+    sheet.getRange(rowIndex + 1, 3).setValue(updatedAt)
+  }
+}
+
+function getSupportChatById(chatId) {
+  return getSupportChats().find((chat) => chat.chatId === chatId)
+}
+
+function getSupportChats() {
+  return getSupportChatsSheet()
+    .getDataRange()
+    .getValues()
+    .slice(1)
+    .map((row) => ({
+      chatId: String(row[0] || '').trim(),
+      createdAt: formatSheetTimestamp(row[1]),
+      updatedAt: formatSheetTimestamp(row[2]),
+      updatedAtRaw:
+        Object.prototype.toString.call(row[2]) === '[object Date]' ? row[2].toISOString() : String(row[2] || ''),
+      branch: String(row[3] || '').trim(),
+      name: String(row[4] || '').trim(),
+      phone: normalizePhone(row[5]),
+      email: String(row[6] || '').trim(),
+      status: String(row[7] || '').trim() || 'Open',
+    }))
+    .filter((chat) => chat.chatId && chat.branch)
+}
+
+function getSupportMessages(chatId) {
+  return getSupportMessagesSheet()
+    .getDataRange()
+    .getValues()
+    .slice(1)
+    .map((row) => ({
+      messageId: String(row[0] || '').trim(),
+      chatId: String(row[1] || '').trim(),
+      createdAt: formatSheetTimestamp(row[2]),
+      sender: String(row[3] || '').trim(),
+      message: String(row[4] || '').trim(),
+    }))
+    .filter((message) => message.chatId === chatId)
+}
+
 function parsePayload(event) {
   const contents = event.postData && event.postData.contents
 
@@ -680,6 +871,34 @@ function getHistorySheet() {
   sheet.setFrozenRows(1)
   sheet.getRange(1, 1, 1, HISTORY_HEADERS.length).setFontWeight('bold').setBackground('#f6f7f8')
   sheet.autoResizeColumns(1, HISTORY_HEADERS.length)
+
+  return sheet
+}
+
+function getSupportChatsSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+  const sheet =
+    spreadsheet.getSheetByName(SUPPORT_CHATS_SHEET_NAME) ||
+    spreadsheet.insertSheet(SUPPORT_CHATS_SHEET_NAME)
+
+  ensureHeaders(sheet, SUPPORT_CHAT_HEADERS)
+  sheet.setFrozenRows(1)
+  sheet.getRange(1, 1, 1, SUPPORT_CHAT_HEADERS.length).setFontWeight('bold').setBackground('#fff0f0')
+  sheet.autoResizeColumns(1, SUPPORT_CHAT_HEADERS.length)
+
+  return sheet
+}
+
+function getSupportMessagesSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+  const sheet =
+    spreadsheet.getSheetByName(SUPPORT_MESSAGES_SHEET_NAME) ||
+    spreadsheet.insertSheet(SUPPORT_MESSAGES_SHEET_NAME)
+
+  ensureHeaders(sheet, SUPPORT_MESSAGE_HEADERS)
+  sheet.setFrozenRows(1)
+  sheet.getRange(1, 1, 1, SUPPORT_MESSAGE_HEADERS.length).setFontWeight('bold').setBackground('#f6f7f8')
+  sheet.autoResizeColumns(1, SUPPORT_MESSAGE_HEADERS.length)
 
   return sheet
 }
