@@ -25,7 +25,7 @@ function App() {
       )}
       {!isWebsiteLoading && (
         <>
-          <ChatBotLauncher />
+          <ChatBotLauncher playMainSiteIntro={!isSchemesPath} />
           <WhatsappLauncher />
         </>
       )}

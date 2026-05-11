@@ -74,14 +74,16 @@ export function SchemesPage() {
             </a>
           </div>
         </div>
-        <div className="scheme-hero-media scheme-logo-collage" aria-label="Scheme logo collage">
-          <div className="scheme-collage-grid">
-            {schemePrograms.map((scheme) => (
-              <span className="scheme-collage-logo" key={scheme.shortName}>
-                <img src={scheme.logo} alt={`${scheme.name} logo`} />
-                <small>{scheme.shortName}</small>
-              </span>
-            ))}
+        <div className="scheme-hero-media scheme-logo-carousel" aria-label="Scheme logo carousel">
+          <div className="scheme-carousel-window">
+            <div className="scheme-carousel-track">
+              {[...schemePrograms, ...schemePrograms].map((scheme, index) => (
+                <span className="scheme-carousel-slide" key={`${scheme.shortName}-${index}`}>
+                  <img src={scheme.logo} alt={`${scheme.name} logo`} />
+                  <small>{scheme.shortName}</small>
+                </span>
+              ))}
+            </div>
           </div>
           <div className="scheme-collage-count">
             <strong>{schemePrograms.length}</strong>
@@ -184,6 +186,12 @@ export function SchemesPage() {
             <a href="/#contact">Contact</a>
           </div>
         </div>
+        <p className="site-footer-credit">
+          All Rights Reserved - 2026, Apple International Dental. Designed &amp; Managed By{' '}
+          <a href="https://phaseonevfx.com" target="_blank" rel="noreferrer">
+            PHASEONEVFX
+          </a>
+        </p>
       </footer>
 
     </main>

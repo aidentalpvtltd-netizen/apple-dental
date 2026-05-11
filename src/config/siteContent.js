@@ -1245,14 +1245,6 @@ export const fetchAdminSupportChats = ({ token }) =>
     token,
   })
 
-export const sendAdminSupportMessage = ({ token, chatId, message }) =>
-  postBookingEndpoint({
-    action: 'admin-support-send-message',
-    token,
-    chatId,
-    message,
-  })
-
 export const loadRazorpayCheckout = () =>
   new Promise((resolve, reject) => {
     if (typeof window === 'undefined') {

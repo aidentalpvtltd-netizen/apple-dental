@@ -17,7 +17,7 @@ export function VideoTestimonialsSection({
             className="google-rating-line"
             aria-label="Google rating 4.8 stars with 1.5K plus reviews"
           >
-            <span aria-hidden="true">?????</span>
+            <span aria-hidden="true">★★★★★</span>
             <strong>4.8 Stars (1.5K+ Google Reviews)</strong>
           </div>
         </div>

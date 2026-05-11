@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   treatments,
   branches,
@@ -13,12 +13,14 @@ import {
   postBookingEndpoint,
   collectConsultationPayment,
   fetchAdminSupportChats,
-  sendAdminSupportMessage,
+  sendSupportMessage,
   getStoredAdminSession,
   getDefaultAdminFilters,
   getCompletedDateParts,
   initialAdminBookingForm,
 } from '../config/siteContent.js'
+
+const isGenericFetchFailure = (error) => error.message.toLowerCase() === 'failed to fetch'
 
 export function AdminDashboard() {
   const [session, setSession] = useState(getStoredAdminSession)
@@ -43,6 +45,7 @@ export function AdminDashboard() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [adminNotice, setAdminNotice] = useState('')
+  const supportSendInFlightRef = useRef(false)
   const sessionBranch = session?.branch || selectedAdminBranch
 
   const activeBookings = bookings.filter((booking) =>
@@ -103,7 +106,9 @@ export function AdminDashboard() {
 
       setBookings(Array.isArray(result.bookings) ? result.bookings : [])
     } catch (fetchError) {
-      setError(fetchError.message)
+      if (!isGenericFetchFailure(fetchError)) {
+        setError(fetchError.message)
+      }
 
       if (fetchError.message.toLowerCase().includes('session')) {
         window.localStorage.removeItem(adminSessionKey)
@@ -131,7 +136,9 @@ export function AdminDashboard() {
 
       setPatients(Array.isArray(result.patients) ? result.patients : [])
     } catch (fetchError) {
-      setError(fetchError.message)
+      if (!isGenericFetchFailure(fetchError)) {
+        setError(fetchError.message)
+      }
     } finally {
       setIsLoading(false)
     }
@@ -154,18 +161,22 @@ export function AdminDashboard() {
 
       setHistory(Array.isArray(result.history) ? result.history : [])
     } catch (fetchError) {
-      setError(fetchError.message)
+      if (!isGenericFetchFailure(fetchError)) {
+        setError(fetchError.message)
+      }
     } finally {
       setIsLoading(false)
     }
   }
 
-  const fetchAdminSupport = async (adminSession = session) => {
+  const fetchAdminSupport = async (adminSession = session, { silent = false } = {}) => {
     if (!adminSession?.token) {
       return
     }
 
-    setIsLoading(true)
+    if (!silent) {
+      setIsLoading(true)
+    }
     setError('')
 
     try {
@@ -174,12 +185,37 @@ export function AdminDashboard() {
       })
       const chats = Array.isArray(result.chats) ? result.chats : []
 
-      setSupportChats(chats)
+      setSupportChats((current) =>
+        chats.map((chat) => {
+          const currentChat = current.find((item) => item.chatId === chat.chatId)
+          const localMessages = Array.isArray(currentChat?.messages)
+            ? currentChat.messages.filter((message) => String(message.messageId || '').startsWith('LOCAL-'))
+            : []
+          const remoteMessages = Array.isArray(chat.messages) ? chat.messages : []
+          const pendingLocalMessages = localMessages.filter(
+            (localMessage) =>
+              !remoteMessages.some(
+                (remoteMessage) =>
+                  remoteMessage.sender === localMessage.sender &&
+                  remoteMessage.message === localMessage.message,
+              ),
+          )
+
+          return {
+            ...chat,
+            messages: [...remoteMessages, ...pendingLocalMessages],
+          }
+        }),
+      )
       setActiveSupportChatId((current) => current || chats[0]?.chatId || '')
     } catch (fetchError) {
-      setError(fetchError.message)
+      if (!silent && !isGenericFetchFailure(fetchError)) {
+        setError(fetchError.message)
+      }
     } finally {
-      setIsLoading(false)
+      if (!silent) {
+        setIsLoading(false)
+      }
     }
   }
 
@@ -191,6 +227,23 @@ export function AdminDashboard() {
     return () => window.clearTimeout(refreshTimeout)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
+
+  useEffect(() => {
+    if (activeAdminTab !== 'support' || !session?.token) {
+      return undefined
+    }
+
+    const interval = window.setInterval(() => {
+      if (supportSendInFlightRef.current) {
+        return
+      }
+
+      fetchAdminSupport(session, { silent: true })
+    }, 4000)
+
+    return () => window.clearInterval(interval)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeAdminTab, session])
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -375,19 +428,38 @@ export function AdminDashboard() {
     setIsLoading(true)
     setError('')
     setAdminNotice('')
+    supportSendInFlightRef.current = true
 
     try {
-      await sendAdminSupportMessage({
-        token: session.token,
+      await sendSupportMessage({
         chatId: activeSupportChat.chatId,
+        sender: 'staff',
         message,
       })
+      setSupportChats((current) =>
+        current.map((chat) =>
+          chat.chatId === activeSupportChat.chatId
+            ? {
+                ...chat,
+                messages: [
+                  ...(Array.isArray(chat.messages) ? chat.messages : []),
+                  {
+                    messageId: `LOCAL-${Date.now()}`,
+                    sender: 'staff',
+                    message,
+                    createdAt: 'Just now',
+                  },
+                ],
+              }
+            : chat,
+        ),
+      )
       setSupportReply('')
-      await fetchAdminSupport(session)
       setAdminNotice('Support reply sent.')
     } catch (replyError) {
       setError(replyError.message)
     } finally {
+      supportSendInFlightRef.current = false
       setIsLoading(false)
     }
   }
@@ -479,7 +551,6 @@ export function AdminDashboard() {
           ['bookings', 'Bookings'],
           ['patients', 'Patients'],
           ['history', 'Treatment History'],
-          ['support', 'Support Chat'],
         ].map(([tab, label]) => (
           <button
             className={activeAdminTab === tab ? 'active' : ''}
@@ -960,6 +1031,26 @@ export function AdminDashboard() {
         </section>
       )}
       </div>
+
+      <aside className="doctor-login-card support-login-card">
+        <div className="doctor-login-symbol">
+          <img src="/dental-assistant-logo.png" alt="" />
+        </div>
+        <p className="eyebrow">Branch support</p>
+        <strong>Support Chat</strong>
+        <p>Open patient support messages for {getBranchArea(sessionBranch)} and reply from this dashboard.</p>
+        <div className="support-card-meta">
+          <span>{supportChats.length}</span>
+          <small>conversations loaded</small>
+        </div>
+        <button
+          type="button"
+          className={activeAdminTab === 'support' ? 'active' : ''}
+          onClick={() => handleAdminTabChange('support')}
+        >
+          {activeAdminTab === 'support' ? 'Support chat open' : 'Open support chat'}
+        </button>
+      </aside>
     </main>
   )
 }

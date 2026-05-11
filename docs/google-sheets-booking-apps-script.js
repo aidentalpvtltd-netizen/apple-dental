@@ -731,11 +731,12 @@ function handleAdminSupportChats(payload) {
   }
 
   const branchFilter = getAdminSessionBranch()
+  const messagesByChatId = getSupportMessagesByChatId()
   const chats = getSupportChats()
     .filter((chat) => chat.branch === branchFilter)
     .map((chat) => ({
       ...chat,
-      messages: getSupportMessages(chat.chatId),
+      messages: messagesByChatId[chat.chatId] || [],
     }))
     .sort((a, b) => String(b.updatedAtRaw || '').localeCompare(String(a.updatedAtRaw || '')))
 
@@ -808,6 +809,23 @@ function getSupportChats() {
 }
 
 function getSupportMessages(chatId) {
+  return getAllSupportMessages()
+    .filter((message) => message.chatId === chatId)
+}
+
+function getSupportMessagesByChatId() {
+  return getAllSupportMessages().reduce((messagesByChatId, message) => {
+    if (!messagesByChatId[message.chatId]) {
+      messagesByChatId[message.chatId] = []
+    }
+
+    messagesByChatId[message.chatId].push(message)
+
+    return messagesByChatId
+  }, {})
+}
+
+function getAllSupportMessages() {
   return getSupportMessagesSheet()
     .getDataRange()
     .getValues()
@@ -819,7 +837,7 @@ function getSupportMessages(chatId) {
       sender: String(row[3] || '').trim(),
       message: String(row[4] || '').trim(),
     }))
-    .filter((message) => message.chatId === chatId)
+    .filter((message) => message.chatId)
 }
 
 function parsePayload(event) {

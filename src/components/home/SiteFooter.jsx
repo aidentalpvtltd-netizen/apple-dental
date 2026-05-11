@@ -43,6 +43,12 @@ export function SiteFooter() {
           </a>
         </div>
       </div>
+      <p className="site-footer-credit">
+        All Rights Reserved - 2026, Apple International Dental. Designed &amp; Managed By{' '}
+        <a href="https://phaseonevfx.com" target="_blank" rel="noreferrer">
+          PHASEONEVFX
+        </a>
+      </p>
     </footer>
   )
 }
