@@ -1,5 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
+import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
 import {
   clinicPhoneDisplay,
   clinicPhoneHref,
@@ -9,6 +11,10 @@ import {
 } from '../config/siteContent.js'
 
 export function SchemesPage() {
+  const pageRef = useRef(null)
+
+  useGsapParallaxDepth(pageRef)
+
   useEffect(() => {
     if (typeof window === 'undefined') {
       return
@@ -31,7 +37,8 @@ export function SchemesPage() {
   }, [])
 
   return (
-    <main className="page-shell schemes-page" id="top">
+    <main className="page-shell schemes-page" id="top" ref={pageRef}>
+      <AmbientDentalLayer variant="schemes" />
       <header className="site-header">
         <div className="site-header-inner">
           <a className="site-brand" href="/">

@@ -35,6 +35,10 @@ html {
   overflow-x: hidden;
 }
 
+html.lenis {
+  scroll-behavior: auto;
+}
+
 body {
   margin: 0;
   min-width: 320px;

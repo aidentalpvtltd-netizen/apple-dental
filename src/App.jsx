@@ -5,14 +5,18 @@ import { WhatsappLauncher } from './components/WhatsappLauncher.jsx'
 import { AdminDashboard } from './pages/AdminDashboard.jsx'
 import { SchemesPage } from './pages/SchemesPage.jsx'
 import { WebsiteApp } from './pages/WebsiteApp.jsx'
+import { useLenisSmoothScroll } from './hooks/useLenisSmoothScroll.js'
 
 function App() {
   const normalizedPath =
     typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') : ''
   const isSchemesPath = normalizedPath === '/schemes'
+  const isAdminPath = normalizedPath === '/admin'
   const [isWebsiteLoading, setIsWebsiteLoading] = useState(!isSchemesPath)
 
-  if (normalizedPath === '/admin') {
+  useLenisSmoothScroll({ enabled: !isAdminPath })
+
+  if (isAdminPath) {
     return <AdminDashboard />
   }
 

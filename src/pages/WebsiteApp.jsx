@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   BookingSection,
   BrandSection,
@@ -17,6 +17,8 @@ import {
   VideoTestimonialsSection,
   WhyChooseUsSection,
 } from '../components/home/WebsiteSections.jsx'
+import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
+import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
 import {
   treatments,
   treatmentInsights,
@@ -52,6 +54,7 @@ import {
 } from '../config/siteContent.js'
 
 export function WebsiteApp({ onLoadingChange }) {
+  const pageRef = useRef(null)
   const [isLoading, setIsLoading] = useState(true)
   const [formState, setFormState] = useState(initialFormState)
   const [submittedFor, setSubmittedFor] = useState('')
@@ -103,6 +106,8 @@ export function WebsiteApp({ onLoadingChange }) {
     : 'Select a date to view available time slots.'
   const displayedInstagramPosts = liveInstagramPosts.length ? liveInstagramPosts : instagramPosts
   const carouselTestimonials = [...videoTestimonials, ...videoTestimonials.slice(0, 3)]
+
+  useGsapParallaxDepth(pageRef, { enabled: !isLoading })
 
   useEffect(() => {
     onLoadingChange?.(isLoading)
@@ -507,8 +512,9 @@ export function WebsiteApp({ onLoadingChange }) {
   }
 
   return (
-    <main className="page-shell" id="top">
+    <main className="page-shell" id="top" ref={pageRef}>
       <SiteLoader isLoading={isLoading} />
+      <AmbientDentalLayer />
       <HomeHeader />
       <HeroSection />
 
