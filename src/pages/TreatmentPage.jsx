@@ -12,6 +12,12 @@ import {
   clinicPhoneHref,
 } from '../config/siteContent.js'
 
+const highlightIcons = [
+  '/services/highlight-tooth.gif',
+  '/services/highlight-dental-care.gif',
+  '/services/highlight-tooth-plus.gif',
+]
+
 export function TreatmentPage({ page }) {
   const pageRef = useRef(null)
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
@@ -174,19 +180,25 @@ export function TreatmentPage({ page }) {
           </div>
 
           <div className="treatment-detail-highlights">
-            {page.highlights.map((highlight) => (
-              <article key={highlight}>
-                <span aria-hidden="true">+</span>
-                <p>{highlight}</p>
-              </article>
-            ))}
+            {page.highlights.map((highlight, index) => {
+              const icon = highlightIcons[index % highlightIcons.length]
+
+              return (
+                <article key={highlight}>
+                  <span aria-hidden="true">
+                    <img src={icon} alt="" loading="lazy" />
+                  </span>
+                  <p>{highlight}</p>
+                </article>
+              )
+            })}
           </div>
         </section>
 
         <FaqSection
           items={page.faqs}
           eyebrow="Frequently Asked Questions"
-          title="General Dentistry FAQs"
+          title={page.faqTitle ?? `${page.category} FAQs`}
           text={page.faqIntro}
         />
 

@@ -624,46 +624,121 @@ export const siteNavGroups = [
   {
     label: 'Cosmetic Dentistry',
     items: [
-      'Dental Veneers',
-      'Gingival Depigmentation',
-      'Teeth Whitening',
-      '3D Smile Designing',
-      'Smile Correction',
+      {
+        label: 'Dental Veneers',
+        href: '/cosmetic-dentistry/dental-veneers',
+      },
+      {
+        label: 'Gingival Depigmentation',
+        href: '/cosmetic-dentistry/gingival-depigmentation',
+      },
+      {
+        label: 'Teeth Whitening',
+        href: '/cosmetic-dentistry/teeth-whitening',
+      },
+      {
+        label: '3D Smile Designing',
+        href: '/cosmetic-dentistry/3d-smile-designing',
+      },
+      {
+        label: 'Smile Correction',
+        href: '/cosmetic-dentistry/smile-correction',
+      },
     ],
   },
   {
     label: 'Dental Implant Solutions',
     items: [
-      'Single Tooth Implant',
-      'Multiple Implants',
-      'All on 4 implants',
-      'Full mouth Implants',
-      'Basal implants',
-      'Keyhole implants',
-      'Bone Grafting',
-      'Soft Tissue Grafting',
+      {
+        label: 'Single Tooth Implant',
+        href: '/dental-implant-solutions/single-tooth-implant',
+      },
+      {
+        label: 'Multiple Implants',
+        href: '/dental-implant-solutions/multiple-implants',
+      },
+      {
+        label: 'All on 4 implants',
+        href: '/dental-implant-solutions/all-on-4-implants',
+      },
+      {
+        label: 'Full mouth Implants',
+        href: '/dental-implant-solutions/full-mouth-implants',
+      },
+      {
+        label: 'Basal implants',
+        href: '/dental-implant-solutions/basal-implants',
+      },
+      {
+        label: 'Keyhole implants',
+        href: '/dental-implant-solutions/keyhole-implants',
+      },
+      {
+        label: 'Bone Grafting',
+        href: '/dental-implant-solutions/bone-grafting',
+      },
+      {
+        label: 'Soft Tissue Grafting',
+        href: '/dental-implant-solutions/soft-tissue-grafting',
+      },
     ],
   },
   {
     label: 'Digital Dentistry',
     items: [
-      'CAD CAM Solutions',
-      'Intra-Oral Scanning',
-      'Digital Smile Design',
-      'Digital Dental Implants',
-      'Digital OPG and CBCT',
-      'Central Digital Lab',
+      {
+        label: 'CAD CAM Solutions',
+        href: '/digital-dentistry/cad-cam-solutions',
+      },
+      {
+        label: 'Intra-Oral Scanning',
+        href: '/digital-dentistry/intra-oral-scanning',
+      },
+      {
+        label: 'Digital Smile Design',
+        href: '/digital-dentistry/digital-smile-design',
+      },
+      {
+        label: 'Digital Dental Implants',
+        href: '/digital-dentistry/digital-dental-implants',
+      },
+      {
+        label: 'Digital OPG and CBCT',
+        href: '/digital-dentistry/digital-opg-and-cbct',
+      },
+      {
+        label: 'Central Digital Lab',
+        href: '/digital-dentistry/central-digital-lab',
+      },
     ],
   },
   {
     label: 'Specialist Dentistry',
     items: [
-      'Endodontics',
-      'Full mouth Rehabilitation',
-      'Periodontics',
-      'Orthodontics',
-      'Oral Surgery',
-      'Pedodontics',
+      {
+        label: 'Endodontics',
+        href: '/specialist-dentistry/endodontics',
+      },
+      {
+        label: 'Full mouth Rehabilitation',
+        href: '/specialist-dentistry/full-mouth-rehabilitation',
+      },
+      {
+        label: 'Periodontics',
+        href: '/specialist-dentistry/periodontics',
+      },
+      {
+        label: 'Orthodontics',
+        href: '/specialist-dentistry/orthodontics',
+      },
+      {
+        label: 'Oral Surgery',
+        href: '/specialist-dentistry/oral-surgery',
+      },
+      {
+        label: 'Pedodontics',
+        href: '/specialist-dentistry/pedodontics',
+      },
     ],
   },
 ]
@@ -726,7 +801,801 @@ export const generalDentistryFaqs = [
   },
 ]
 
+export const cosmeticDentistryFaqs = [
+  {
+    question: 'What is cosmetic dentistry?',
+    answer:
+      'Cosmetic dentistry improves the appearance of teeth, smile, and overall facial aesthetics.',
+  },
+  {
+    question: 'What is teeth whitening?',
+    answer:
+      'Teeth whitening is a treatment that removes stains and brightens the color of teeth.',
+  },
+  {
+    question: 'How long does teeth whitening last?',
+    answer:
+      'Results can last from several months to a few years depending on oral habits and food consumption.',
+  },
+  {
+    question: 'What are dental veneers?',
+    answer:
+      'Veneers are thin custom-made shells placed over teeth to improve shape, color, and appearance.',
+  },
+  {
+    question: 'Can cosmetic dentistry fix gaps between teeth?',
+    answer:
+      'Yes, gaps can be corrected using veneers, aligners, braces, or bonding treatments.',
+  },
+  {
+    question: 'What is smile designing?',
+    answer:
+      'Smile designing is a customized cosmetic treatment plan to improve smile aesthetics using digital analysis and modern dental procedures.',
+  },
+  {
+    question: 'Are cosmetic dental procedures safe?',
+    answer:
+      'Yes, cosmetic dental treatments are generally safe when performed by qualified dental professionals.',
+  },
+  {
+    question: 'Can stained teeth become white again?',
+    answer:
+      'Yes, professional teeth whitening and cleaning can effectively remove most stains.',
+  },
+  {
+    question: 'How long do veneers last?',
+    answer:
+      'With proper care, veneers can last 10-15 years or longer.',
+  },
+  {
+    question: 'Is cosmetic dentistry only for appearance?',
+    answer:
+      'No, some cosmetic procedures also improve function, bite alignment, and oral health.',
+  },
+]
+
+export const dentalImplantFaqs = [
+  {
+    question: 'What are dental implants?',
+    answer:
+      'Dental implants are artificial tooth roots placed into the jawbone to replace missing teeth permanently.',
+  },
+  {
+    question: 'Who is eligible for dental implants?',
+    answer:
+      'Most healthy adults with sufficient jawbone support are suitable candidates for dental implants.',
+  },
+  {
+    question: 'Are dental implants painful?',
+    answer:
+      'Implant procedures are generally comfortable with local anesthesia and modern techniques.',
+  },
+  {
+    question: 'How long do dental implants last?',
+    answer:
+      'With proper care and maintenance, dental implants can last many years or even a lifetime.',
+  },
+  {
+    question: 'How long does implant treatment take?',
+    answer:
+      'Treatment duration varies depending on healing and case complexity, usually several weeks to months.',
+  },
+  {
+    question: 'What are the benefits of dental implants?',
+    answer:
+      'Implants improve chewing, speech, appearance, comfort, and help preserve jawbone structure.',
+  },
+  {
+    question: 'Can implants replace multiple missing teeth?',
+    answer:
+      'Yes, implants can replace single, multiple, or all missing teeth.',
+  },
+  {
+    question: 'How should I care for dental implants?',
+    answer:
+      'Brush regularly, floss daily, maintain oral hygiene, and attend routine dental checkups.',
+  },
+  {
+    question: 'Are implants better than dentures?',
+    answer:
+      'Implants are more stable, comfortable, and natural-looking compared to removable dentures.',
+  },
+  {
+    question: 'What is full mouth implant rehabilitation?',
+    answer:
+      'It is a complete replacement solution for patients missing all or most teeth using implant-supported prosthetics.',
+  },
+]
+
+export const digitalDentistryFaqs = [
+  {
+    question: 'What is digital dentistry?',
+    answer:
+      'Digital dentistry uses advanced technology and digital tools to improve diagnosis, treatment accuracy, and patient comfort.',
+  },
+  {
+    question: 'What are digital dental scans?',
+    answer:
+      'Digital scans create 3D images of teeth and gums without messy traditional impressions.',
+  },
+  {
+    question: 'Are digital impressions better than traditional impressions?',
+    answer:
+      'Yes, digital impressions are faster, more accurate, and more comfortable for patients.',
+  },
+  {
+    question: 'What is a digital smile design?',
+    answer:
+      'Digital smile design uses advanced software to preview and plan smile makeover results before treatment begins.',
+  },
+  {
+    question: 'Is digital dentistry safe?',
+    answer:
+      'Yes, digital dentistry is safe and often reduces treatment time and improves precision.',
+  },
+  {
+    question: 'What are intraoral scanners?',
+    answer:
+      'Intraoral scanners are handheld devices used to capture detailed digital images inside the mouth.',
+  },
+  {
+    question: 'Does digital dentistry reduce treatment time?',
+    answer:
+      'Yes, digital technology helps speed up diagnosis, treatment planning, and restorations.',
+  },
+  {
+    question: 'What is CAD/CAM dentistry?',
+    answer:
+      'CAD/CAM technology helps design and create crowns, bridges, and restorations digitally with high precision.',
+  },
+  {
+    question: 'Are digital X-rays safe?',
+    answer:
+      'Digital X-rays use significantly lower radiation compared to traditional X-rays.',
+  },
+  {
+    question: 'Why is digital dentistry important?',
+    answer:
+      'It improves accuracy, comfort, treatment planning, and overall patient experience.',
+  },
+]
+
+export const specialistDentistryFaqs = [
+  {
+    question: 'What is specialist dentistry?',
+    answer:
+      'Specialist dentistry includes advanced treatments performed by dental experts in specific fields.',
+  },
+  {
+    question: 'What is orthodontic treatment?',
+    answer:
+      'Orthodontic treatment corrects crooked teeth and bite problems using braces or aligners.',
+  },
+  {
+    question: 'What are aligners?',
+    answer:
+      'Aligners are clear removable trays used to straighten teeth comfortably and discreetly.',
+  },
+  {
+    question: 'How long does braces treatment take?',
+    answer:
+      'Treatment duration depends on the complexity of the case, usually between 12-24 months.',
+  },
+  {
+    question: 'What is pediatric dentistry?',
+    answer:
+      'Pediatric dentistry focuses on dental care for infants, children, and teenagers.',
+  },
+  {
+    question: 'What is gum surgery?',
+    answer:
+      'Gum surgery treats advanced gum disease and helps restore gum health.',
+  },
+  {
+    question: 'What are crowns and bridges?',
+    answer:
+      'Crowns protect damaged teeth, while bridges replace missing teeth using adjacent support teeth.',
+  },
+  {
+    question: 'What is oral surgery?',
+    answer:
+      'Oral surgery includes procedures like wisdom tooth removal, implants, and jaw-related treatments.',
+  },
+  {
+    question: 'When should a child first visit the dentist?',
+    answer:
+      'Children should ideally visit the dentist by their first birthday or when the first tooth appears.',
+  },
+  {
+    question: 'Can adults get braces or aligners?',
+    answer:
+      'Yes, orthodontic treatment is effective for both teenagers and adults.',
+  },
+]
+
 export const treatmentPages = {
+  '/specialist-dentistry/endodontics': {
+    category: 'Specialist Dentistry',
+    title: 'Endodontics',
+    navLabel: 'Endodontics',
+    eyebrow: 'Specialized dental pulp and root care',
+    image: '/services/Endodontics.png',
+    imageAlt: 'Endodontic file cleaning the inner root canal of a tooth with dental X-ray inset',
+    sectionImage: '/services/Endodontics_2.png',
+    sectionImageAlt: 'Endodontic treatment steps showing infected tooth, opening, cleaning, filling, and restoration',
+    sectionTitle: 'Save natural teeth affected by infection, injury, or deep decay.',
+    summary:
+      "Endodontics is the specialized branch of dentistry focused on the study and treatment of the dental pulp, the soft inner tissue of the tooth containing nerves and blood vessels.",
+    body:
+      'Derived from the Greek words endo, meaning inside, and odont, meaning tooth, endodontics aims to save natural teeth that are diseased, injured, or infected. Treatment focuses on diagnosing pulp problems, cleaning infected root canals, relieving pain, and restoring the tooth so it can continue to function comfortably.',
+    highlights: [
+      'Focuses on dental pulp, nerves, blood vessels, and tissues around tooth roots',
+      'Helps save natural teeth affected by infection, trauma, or deep decay',
+      'Relieves pain while cleaning, sealing, and restoring the infected tooth',
+    ],
+    faqTitle: 'Specialist Dentistry FAQs',
+    faqIntro:
+      'These Specialist Dentistry FAQs apply to endodontics and the other treatments in this category.',
+    faqs: specialistDentistryFaqs,
+  },
+  '/specialist-dentistry/full-mouth-rehabilitation': {
+    category: 'Specialist Dentistry',
+    title: 'Full Mouth Rehabilitation',
+    variant: 'full-mouth-rehabilitation-treatment',
+    navLabel: 'Full mouth Rehabilitation',
+    eyebrow: 'Comprehensive bite, function, and smile restoration',
+    image: '/services/Full Mouth Rehabilitation.png',
+    imageAlt: 'Full mouth rehabilitation showing restored teeth and improved smile function',
+    sectionTitle: 'Rebuild the whole mouth with one coordinated treatment plan.',
+    summary:
+      'Full mouth rehabilitation is a comprehensive dental treatment approach that restores the health, function, bite stability, and appearance of the entire mouth.',
+    body:
+      'Instead of treating one tooth at a time, full mouth rehabilitation combines the needed procedures into a planned sequence. It may include fillings, crowns, bridges, veneers, root canal treatment, gum care, implants, dentures, or bite correction depending on the condition of the teeth, gums, jawbone, and chewing pattern. The goal is to improve comfort, chewing efficiency, tooth support, facial balance, and smile confidence.',
+    highlights: [
+      'Useful for worn, broken, missing, decayed, or heavily restored teeth',
+      'Plans the bite, tooth position, gum health, and final restorations together',
+      'Can combine crowns, bridges, veneers, implants, dentures, and gum treatment as needed',
+    ],
+    faqTitle: 'Specialist Dentistry FAQs',
+    faqIntro:
+      'These Specialist Dentistry FAQs apply to full mouth rehabilitation and the other treatments in this category.',
+    faqs: specialistDentistryFaqs,
+  },
+  '/specialist-dentistry/periodontics': {
+    category: 'Specialist Dentistry',
+    title: 'Periodontics',
+    variant: 'periodontics-treatment',
+    navLabel: 'Periodontics',
+    eyebrow: 'Specialized gum and tooth-support care',
+    image: '/services/Periodontics.png',
+    imageAlt: 'Before and after periodontal treatment showing healthier gums around the teeth',
+    sectionImage: '/services/Periodontics_2.png',
+    sectionImageAlt: 'Periodontics illustration comparing a healthy tooth with periodontitis and gum disease changes',
+    sectionTitle: 'Protect the gums, bone, and tissues that support your teeth.',
+    summary:
+      'Periodontics is the specialized branch of dentistry dedicated to the health of the periodontium, the tissues and structures that support and surround your teeth.',
+    body:
+      'Periodontal care focuses on the gums, supporting bone, periodontal ligament, and tissues that keep teeth stable. It helps diagnose and treat gum inflammation, bleeding gums, plaque and tartar buildup, periodontal pockets, bone loss, gum recession, and tooth mobility. Treatment may include professional cleaning, deep cleaning, gum therapy, flap surgery, grafting, and long-term maintenance based on the severity of the condition.',
+    highlights: [
+      'Targets gum inflammation, bleeding, plaque buildup, and periodontal pockets',
+      'Helps protect bone support and reduce the risk of loose or lost teeth',
+      'Can include cleaning, deep cleaning, gum surgery, grafting, and maintenance care',
+    ],
+    faqTitle: 'Specialist Dentistry FAQs',
+    faqIntro:
+      'These Specialist Dentistry FAQs apply to periodontics and the other treatments in this category.',
+    faqs: specialistDentistryFaqs,
+  },
+  '/specialist-dentistry/orthodontics': {
+    category: 'Specialist Dentistry',
+    title: 'Orthodontics',
+    navLabel: 'Orthodontics',
+    eyebrow: 'Specialized teeth and jaw alignment care',
+    image: '/services/Orthodontics.png',
+    imageAlt: 'Dental model with braces and clear aligners for orthodontic treatment',
+    sectionImage: '/services/Orthodontics_2.png',
+    sectionImageAlt: 'Orthodontics infographic showing braces, clear aligners, treatment steps, and benefits',
+    sectionTitle: 'Correct misaligned teeth and jaws for a healthier smile.',
+    summary:
+      'Orthodontics is a specialized branch of dentistry focused on diagnosing, preventing, and correcting misaligned teeth and jaws, also called malocclusions.',
+    body:
+      'Using tools such as braces and clear aligners, orthodontists help improve both function and appearance. Treatment can support better chewing, clearer speech, easier cleaning, improved bite balance, and a more confident smile. The plan is based on tooth position, jaw relationship, growth pattern, oral health, and the type of movement needed.',
+    highlights: [
+      'Corrects crowded, spaced, rotated, or misaligned teeth and jaws',
+      'Uses braces, aligners, and planned tooth movement to improve the bite',
+      'Supports chewing, speech, oral hygiene, smile balance, and long-term stability',
+    ],
+    faqTitle: 'Specialist Dentistry FAQs',
+    faqIntro:
+      'These Specialist Dentistry FAQs apply to orthodontics and the other treatments in this category.',
+    faqs: specialistDentistryFaqs,
+  },
+  '/specialist-dentistry/oral-surgery': {
+    category: 'Specialist Dentistry',
+    title: 'Oral Surgery',
+    navLabel: 'Oral Surgery',
+    eyebrow: 'Surgical care for teeth, jaws, and oral tissues',
+    image: '/services/Oral Surgery.png',
+    imageAlt: 'Oral surgeon treating a patient with wisdom tooth and jaw illustration overlay',
+    sectionImage: '/services/Oral Surgery_2.png',
+    sectionImageAlt: 'Oral surgery illustration showing tooth extraction, dental implants, gum surgery, and bone grafting',
+    sectionTitle: 'Manage complex tooth, jaw, mouth, and facial concerns surgically.',
+    summary:
+      'Oral surgery is a specialised field of dentistry focused on diagnosing and surgically treating diseases, injuries, and defects of the mouth, jaws, face, and neck.',
+    body:
+      'Often referred to as Oral and Maxillofacial Surgery, it bridges medicine and dentistry by handling everything from routine tooth extractions to complex reconstructive procedures following trauma or congenital issues. Oral surgery may include wisdom tooth removal, dental implant placement, jaw-related procedures, gum surgery, bone grafting, biopsy, and surgical care for infections or injuries.',
+    highlights: [
+      'Covers surgical treatment for the mouth, jaws, face, neck, and supporting tissues',
+      'Includes extractions, wisdom tooth removal, implants, gum surgery, and bone grafting',
+      'Helps manage infections, injuries, jaw problems, and complex reconstructive needs',
+    ],
+    faqTitle: 'Specialist Dentistry FAQs',
+    faqIntro:
+      'These Specialist Dentistry FAQs apply to oral surgery and the other treatments in this category.',
+    faqs: specialistDentistryFaqs,
+  },
+  '/specialist-dentistry/pedodontics': {
+    category: 'Specialist Dentistry',
+    title: 'Pedodontics',
+    navLabel: 'Pedodontics',
+    eyebrow: 'Specialized dental care for children',
+    image: '/services/Pedodontics.png',
+    imageAlt: 'Pediatric dentist gently examining a smiling child in a dental chair',
+    sectionTitle: 'Build healthy primary and permanent teeth from the first years.',
+    summary:
+      'Pedodontics, also called paediatric dentistry, is the specialized branch of dentistry focused on the oral health of children typically targeting the 0-13 age group from infancy through adolescence, including children with special needs.',
+    body:
+      'Pedodontic care aims to maintain healthy primary and permanent teeth through prevention, behaviour guidance, early diagnosis, and child-friendly treatment. It commonly includes dental checkups, caries-risk assessment, cleaning, fluoride care, sealants, habit counselling, preventive advice for parents, treatment of cavities, dental trauma care, growth and bite monitoring, and adapted care for children with special healthcare needs.',
+    highlights: [
+      'Supports infants, children, adolescents, and children with special healthcare needs',
+      'Focuses on prevention, behaviour management, parent guidance, and early treatment',
+      'Includes checkups, fluoride, sealants, cavity care, trauma care, and bite monitoring',
+    ],
+    faqTitle: 'Specialist Dentistry FAQs',
+    faqIntro:
+      'These Specialist Dentistry FAQs apply to pedodontics and the other treatments in this category.',
+    faqs: specialistDentistryFaqs,
+  },
+  '/digital-dentistry/cad-cam-solutions': {
+    category: 'Digital Dentistry',
+    title: 'CAD CAM Solutions',
+    navLabel: 'CAD CAM Solutions',
+    eyebrow: 'Computer-aided dental design and manufacturing',
+    image: '/services/CAD CAM Solutions.png',
+    imageAlt: 'Dentist using CAD CAM software to design digital dental restorations on a computer screen',
+    sectionTitle: 'Design and manufacture precise dental restorations digitally.',
+    summary:
+      'CAD/CAM solutions are integrated digital systems that connect dental restoration design with accurate physical manufacturing.',
+    body:
+      'CAD, or Computer-Aided Design, creates precise 2D or 3D models from digital scans. CAM, or Computer-Aided Manufacturing, converts those designs into manufacturing instructions for milling or 3D printing. In dentistry, this workflow helps create crowns, bridges, veneers, inlays, onlays, implant restorations, and other custom dental devices with improved accuracy, faster turnaround, fewer conventional impression steps, and a more comfortable patient experience.',
+    highlights: [
+      'Uses digital scans and design software to plan restorations precisely',
+      'Supports crowns, bridges, veneers, inlays, onlays, and implant restorations',
+      'Can reduce manual lab steps and help deliver accurate restorations faster',
+    ],
+    faqTitle: 'Digital Dentistry FAQs',
+    faqIntro:
+      'These Digital Dentistry FAQs apply to CAD CAM solutions and the other treatments in this category.',
+    faqs: digitalDentistryFaqs,
+  },
+  '/digital-dentistry/intra-oral-scanning': {
+    category: 'Digital Dentistry',
+    title: 'Intra Oral Scanning',
+    navLabel: 'Intra-Oral Scanning',
+    eyebrow: 'Precise 3D digital impressions',
+    image: '/services/Intra oral scanning.png',
+    imageAlt: 'Dentist using an intraoral scanner while a 3D dental model appears on a monitor',
+    sectionImage: '/services/Intra oral scanning_2.png',
+    sectionImageAlt: 'Intra oral scanning diagram showing scanner features, capture process, 3D visualization, and digital sharing',
+    sectionTitle: 'Capture a precise 3D map of teeth and gums without messy impressions.',
+    summary:
+      'Intra-oral scanning is a modern dental technology that uses a handheld device to create a precise 3D digital map of your mouth.',
+    body:
+      'The scanner captures thousands of detailed images of the teeth and soft tissues, then advanced software processes them into an accurate 3D model. This digital impression can be reviewed instantly on screen, shared with labs, and used for crowns, braces, aligners, implants, and same-day restoration workflows.',
+    highlights: [
+      'Creates accurate digital impressions without traditional silicone materials',
+      'Improves patient comfort during crowns, braces, aligners, and implant planning',
+      'Displays the 3D model instantly for review, planning, and lab sharing',
+    ],
+    faqTitle: 'Digital Dentistry FAQs',
+    faqIntro:
+      'These Digital Dentistry FAQs apply to intra oral scanning and the other treatments in this category.',
+    faqs: digitalDentistryFaqs,
+  },
+  '/digital-dentistry/digital-smile-design': {
+    category: 'Digital Dentistry',
+    title: 'Digital Smile Design',
+    navLabel: 'Digital Smile Design',
+    eyebrow: 'Facially driven digital smile planning',
+    image: '/services/Digital Smile-Design.png',
+    imageAlt: 'Digital smile design close-up showing tooth shape planning and final ceramic restoration preview',
+    sectionImage: '/services/Digital Smile Design_2.png',
+    sectionImageAlt: 'Digital smile design workflow showing diagnostic planning, design simulation, evaluation, preview, and final outcome',
+    sectionTitle: 'Preview and plan your ideal smile before treatment begins.',
+    summary:
+      'Digital Smile Design is a technical dental planning tool that uses 3D scanning, digital photography, and specialized software to design and simulate a patient’s ideal smile.',
+    body:
+      'DSD shifts the focus from fixing individual teeth to creating facially driven aesthetics. The workflow studies tooth proportions, gum line, facial features, speech, and personality so the final smile can look natural, balanced, and personal. It also helps patients preview the proposed result and helps the dental team communicate each step more clearly before treatment starts.',
+    highlights: [
+      'Uses scans, photographs, and software to plan smile shape and symmetry',
+      'Helps preview the expected result before permanent dental work begins',
+      'Aligns tooth design with facial features, speech, gums, and smile goals',
+    ],
+    faqTitle: 'Digital Dentistry FAQs',
+    faqIntro:
+      'These Digital Dentistry FAQs apply to digital smile design and the other treatments in this category.',
+    faqs: digitalDentistryFaqs,
+  },
+  '/digital-dentistry/digital-dental-implants': {
+    category: 'Digital Dentistry',
+    title: 'Digital Dental Implants',
+    navLabel: 'Digital Dental Implants',
+    eyebrow: 'Computer-guided implant planning',
+    image: '/services/Digital Dental Implant.png',
+    imageAlt: 'Digital implant planning software showing a 3D jaw model and planned implant position on a monitor',
+    sectionImage: '/services/Digital Dental Implant_2.png',
+    sectionImageAlt: 'Digital dental implant workflow showing scan, plan, guide, and precise implant placement steps',
+    sectionTitle: 'Plan implant placement digitally before surgery begins.',
+    summary:
+      'Digital dental implants represent a modern shift in restorative dentistry, moving from traditional physical molds and manual placement to a computer-guided process.',
+    body:
+      'Using 3D imaging and virtual simulations, dentists can map the jaw structure, bone density, nerve locations, and ideal implant angle before treatment starts. This allows the implant position, crown design, and surgical guide to be planned together for more predictable placement, improved communication, and a smoother treatment workflow.',
+    highlights: [
+      'Uses 3D imaging to plan implant position, angle, depth, and crown support',
+      'Helps identify bone density, nerve location, and important anatomy before surgery',
+      'Supports surgical guides for accurate, predictable implant placement',
+    ],
+    faqTitle: 'Digital Dentistry FAQs',
+    faqIntro:
+      'These Digital Dentistry FAQs apply to digital dental implants and the other treatments in this category.',
+    faqs: digitalDentistryFaqs,
+  },
+  '/digital-dentistry/digital-opg-and-cbct': {
+    category: 'Digital Dentistry',
+    title: 'Digital OPG and CBCT',
+    navLabel: 'Digital OPG and CBCT',
+    eyebrow: 'Advanced 2D and 3D dental imaging',
+    image: '/services/Digital OPG and CBCT.png',
+    imageAlt: 'Digital OPG panoramic x-ray and CBCT 3D skull imaging shown side by side',
+    sectionImage: '/services/Digital OPG and CBCT_2 .png',
+    sectionImageAlt: 'Digital OPG and CBCT comparison showing panoramic imaging, 3D views, accurate diagnosis, better planning, and lower radiation',
+    sectionTitle: 'See teeth, jaw, bone, nerves, and anatomy with clearer digital imaging.',
+    summary:
+      'Digital OPG and CBCT are advanced dental imaging tools used to view your teeth and jaw structure for diagnosis and treatment planning.',
+    body:
+      'An OPG, or Orthopantomogram, provides a flat 2D panoramic overview of the full mouth in a single image. CBCT, or Cone Beam Computed Tomography, creates detailed 3D volumes that allow dentists to view anatomical slices from different angles. Together they support implant planning, orthodontic assessment, surgical evaluation, impacted tooth diagnosis, bone-quality checks, and safer treatment decisions.',
+    highlights: [
+      'Digital OPG gives a quick 2D panoramic overview of the full mouth',
+      'CBCT provides 3D views for bone, nerve paths, jaw anatomy, and surgical planning',
+      'Supports accurate diagnosis, implant planning, orthodontics, and complex dental cases',
+    ],
+    faqTitle: 'Digital Dentistry FAQs',
+    faqIntro:
+      'These Digital Dentistry FAQs apply to Digital OPG and CBCT and the other treatments in this category.',
+    faqs: digitalDentistryFaqs,
+  },
+  '/digital-dentistry/central-digital-lab': {
+    category: 'Digital Dentistry',
+    title: 'Central Digital Lab',
+    navLabel: 'Central Digital Lab',
+    eyebrow: 'Integrated digital dental laboratory workflow',
+    image: '/services/Digital Dental Lab.png',
+    imageAlt: 'Digital dental lab implant planning software showing jaw model, implants, and CBCT slices on a monitor',
+    sectionImage: '/services/Digital Dental Lab_2.png',
+    sectionImageAlt: 'Central digital dental lab workflow with digital scanner, CAD design workstation, CAD CAM milling unit, 3D printing unit, and sintering furnace',
+    sectionTitle: 'Create precise prosthetics and surgical guides with a connected digital workflow.',
+    summary:
+      'Central Digital Lab offers comprehensive digital dental solutions using CAD/CAM technology, 3D printing, and digital scanning.',
+    body:
+      'This workflow connects digital scanners, CAD design workstations, milling units, 3D printers, and sintering furnaces to create high-precision prosthetics and surgical guides. It supports faster turnaround, consistent quality, repeatable results, and minimally invasive treatment planning for implant, restorative, and prosthetic cases.',
+    highlights: [
+      'Uses digital scanning, CAD design, milling, 3D printing, and sintering workflows',
+      'Supports high-precision prosthetics, implant guides, and restorative appliances',
+      'Improves turnaround time, accuracy, consistency, and repeatable lab quality',
+    ],
+    faqTitle: 'Digital Dentistry FAQs',
+    faqIntro:
+      'These Digital Dentistry FAQs apply to Central Digital Lab and the other treatments in this category.',
+    faqs: digitalDentistryFaqs,
+  },
+  '/dental-implant-solutions/single-tooth-implant': {
+    category: 'Dental Implant Solutions',
+    title: 'Single Tooth Implant',
+    navLabel: 'Single Tooth Implant',
+    eyebrow: 'Permanent single-tooth replacement',
+    image: '/services/Single Tooth Implant Page.png',
+    imageAlt: 'Single tooth implant with titanium post, abutment, and crown replacing one missing tooth',
+    sectionImage: '/services/Single Tooth Implant_2.png',
+    sectionImageAlt: 'Single tooth implant diagram showing crown, abutment, implant, gum, and bone support',
+    sectionTitle: 'Replace one missing tooth with a natural-looking implant crown.',
+    summary:
+      'A single tooth implant is the modern gold standard for replacing one missing tooth.',
+    body:
+      'It consists of a titanium post that acts as an artificial root, surgically placed into the jawbone, which then supports a custom-made crown. This approach helps restore chewing comfort, protect nearby teeth from shifting, and preserve jawbone support around the missing tooth area.',
+    highlights: [
+      'Replaces one missing tooth without relying on neighboring teeth for support',
+      'Uses a titanium implant post, abutment, and custom crown',
+      'Helps restore chewing comfort, appearance, and jawbone stimulation',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to single tooth implants and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/dental-implant-solutions/multiple-implants': {
+    category: 'Dental Implant Solutions',
+    title: 'Multiple Implants',
+    navLabel: 'Multiple Implants',
+    eyebrow: 'Stable replacement for several missing teeth',
+    image: '/services/Multiple Implants Page.png',
+    imageAlt: 'Dental x-ray showing multiple implants supporting replacement teeth',
+    sectionImage: '/services/Multiple Implants_2.png',
+    sectionImageAlt: 'Dental implants illustration showing crowns, abutments, implants, and implant benefits',
+    sectionTitle: 'Replace several missing teeth with strategically planned implants.',
+    summary:
+      'Multiple dental implants are used to replace several missing teeth, providing a permanent and stable alternative to removable dentures.',
+    body:
+      'Unlike placing a separate implant for every missing tooth, multiple teeth can often be supported by just a few strategically placed implants. Treatment may include implant-supported bridges or full-arch concepts such as All-on-4, depending on bone support, bite needs, and how many teeth are missing.',
+    highlights: [
+      'Replaces several missing teeth with fixed or implant-supported options',
+      'Can support implant bridges using fewer implants than one per tooth',
+      'Improves chewing stability, smile appearance, and long-term jaw support',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to multiple implants and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/dental-implant-solutions/all-on-4-implants': {
+    category: 'Dental Implant Solutions',
+    title: 'All on 4 Implants',
+    navLabel: 'All on 4 implants',
+    eyebrow: 'Full-arch fixed implant bridge',
+    image: '/services/All on 4 implants.jpeg',
+    imageAlt: 'Full-arch All-on-4 implant prosthesis on a black background',
+    sectionImage: '/services/All on 4 implants_2.png',
+    sectionImageAlt: 'All-on-4 dental implants diagram showing angled implants, titanium implants, and full-arch prosthesis',
+    sectionTitle: 'Support a full arch of fixed replacement teeth with four implants.',
+    summary:
+      'All-on-4 implants are a full-arch rehabilitation solution that uses only four strategically placed titanium implants to support an entire set of fixed replacement teeth.',
+    body:
+      'This technique is often referred to as Teeth-in-a-Day because it can provide patients with a functional bridge on the same day as their surgery. The rear implants are commonly angled to maximize bone contact and improve stability, helping restore chewing, speech, and smile confidence.',
+    highlights: [
+      'Uses four strategically positioned implants to support a full arch',
+      'Can provide a fixed bridge sooner in suitable treatment plans',
+      'Improves stability, chewing comfort, and confidence compared with loose dentures',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to All-on-4 implants and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/dental-implant-solutions/full-mouth-implants': {
+    category: 'Dental Implant Solutions',
+    title: 'Full Mouth Implants',
+    navLabel: 'Full mouth Implants',
+    eyebrow: 'Complete implant-supported restoration',
+    image: '/services/Full Mouth Implants.jpg',
+    imageAlt: 'Full mouth implant-supported teeth on a dental model',
+    sectionImage: '/services/Full Mouth Implants_2.png',
+    sectionImageAlt: 'Options for restoring a full mouth of teeth including complete dentures, full mouth dental implants, All-on-Four, same day implants, and mini dental implants',
+    sectionTitle: 'Restore one or both jaws with implant-supported teeth.',
+    summary:
+      'Full mouth dental implants are a comprehensive restorative solution for individuals who have lost all or most of their teeth in one or both jaws.',
+    body:
+      'Unlike traditional dentures that sit on the gums, these implants are titanium posts surgically anchored into the jawbone. They act as artificial roots to support a permanent bridge or a stable denture, improving chewing function, speech, smile appearance, and day-to-day confidence.',
+    highlights: [
+      'Restores most or all missing teeth in one or both jaws',
+      'Uses titanium implant posts to support fixed bridges or stable dentures',
+      'Improves chewing strength, speech comfort, appearance, and jaw support',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to full mouth implants and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/dental-implant-solutions/basal-implants': {
+    category: 'Dental Implant Solutions',
+    title: 'Basal Implants',
+    navLabel: 'Basal implants',
+    eyebrow: 'Implants for dense cortical bone support',
+    image: '/services/Basal implants Page.png',
+    imageAlt: 'Basal implant-supported full arch prosthesis inside the mouth',
+    sectionImage: '/services/Basal Implants_2.png',
+    sectionImageAlt: 'Basal implant diagram comparing conventional implant placement in spongy bone with basal implant anchorage in hard cortical bone',
+    sectionTitle: 'Anchor implants into dense basal bone when bone support is limited.',
+    summary:
+      'Basal implants, also known as cortical implants, are specialized dental implants designed to anchor into the deep, highly dense basal or cortical bone of the jaw.',
+    body:
+      'Unlike traditional implants that use the spongy alveolar bone, basal implants engage stronger cortical bone for stability. They are primarily used for patients with severe bone loss who may not support conventional implants without extensive bone grafting.',
+    highlights: [
+      'Designed for dense cortical bone support in selected implant cases',
+      'Can help patients with severe bone loss avoid extensive grafting in some plans',
+      'Supports stable prosthetic rehabilitation when conventional implant support is limited',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to basal implants and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/dental-implant-solutions/keyhole-implants': {
+    category: 'Dental Implant Solutions',
+    title: 'Keyhole Implants',
+    navLabel: 'Keyhole implants',
+    eyebrow: 'Minimally invasive implant placement',
+    image: '/services/Keyhole Implants Page.png',
+    imageAlt: 'Keyhole implants with crowns shown on a dental arch model',
+    sectionImage: '/services/Keyhole Implants_2.png',
+    sectionImageAlt: 'Keyhole implants diagram showing x-ray view and 3D implant placement dimensions',
+    sectionTitle: 'Place implants through a smaller opening with guided planning.',
+    summary:
+      'Keyhole implants are a minimally invasive implant technique where implants are placed through a small opening in the gum instead of raising a larger surgical flap.',
+    body:
+      'This approach is usually planned with digital scans, x-rays, or guided measurements so the implant can be positioned accurately in suitable bone. Because the gum opening is smaller, keyhole implant placement may reduce bleeding, swelling, stitches, and healing time in carefully selected cases.',
+    highlights: [
+      'Uses a smaller gum opening compared with traditional flap surgery',
+      'Often planned with x-rays or digital guidance for accurate placement',
+      'May support faster healing and less post-procedure discomfort in suitable cases',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to keyhole implants and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/dental-implant-solutions/bone-grafting': {
+    category: 'Dental Implant Solutions',
+    title: 'Bone Grafting',
+    navLabel: 'Bone Grafting',
+    eyebrow: 'Jawbone rebuilding for implant support',
+    image: '/services/Bone Grafting.jpg',
+    imageAlt: 'Dental implant and jawbone model showing implant placement where bone support is needed',
+    sectionImage: '/services/Bone Grafting_2.png',
+    sectionImageAlt: 'Bone grafting for dental implants diagram showing reduced bone thickness, graft healing, and implant placement',
+    sectionTitle: 'Rebuild jawbone volume for a stable dental implant foundation.',
+    summary:
+      'Bone grafting is a surgical procedure used to repair or rebuild bone that has been damaged or lost due to trauma, infection, disease, or tooth loss.',
+    body:
+      'It works by transplanting bone tissue or a similar graft material to act as a scaffold, stimulating the body to grow new, healthy bone. In implant dentistry, bone grafting can strengthen thin or weak jawbone areas so implants have the support they need for long-term stability.',
+    highlights: [
+      'Restores lost jawbone volume or density before implant placement',
+      'Creates a stronger foundation for predictable dental implant support',
+      'Supports natural bone healing as graft material integrates over time',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to bone grafting and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/dental-implant-solutions/soft-tissue-grafting': {
+    category: 'Dental Implant Solutions',
+    title: 'Soft Tissue Grafting',
+    navLabel: 'Soft Tissue Grafting',
+    eyebrow: 'Gum tissue restoration for exposed roots',
+    image: '/services/soft tissue grafting.jpg',
+    imageAlt: 'Soft tissue grafting procedure illustration showing gum tissue being placed over an exposed tooth root',
+    sectionImage: '/services/Soft tissue Grafting_2.png',
+    sectionImageAlt: 'Soft tissue grafting diagram showing gum recession, graft placement, healing, and long-term gum health benefits',
+    sectionTitle: 'Restore gum coverage and protect exposed tooth roots.',
+    summary:
+      'Soft tissue grafting is a common dental surgical procedure used to treat gum recession, where gum tissue has pulled away from the tooth and exposed the root.',
+    body:
+      'By placing a small piece of donor tissue, often from the roof of the mouth, onto the affected area, dentists can restore the gum line, protect the underlying bone, and reduce tooth sensitivity. It can also improve gum thickness, root coverage, and the overall appearance of the smile.',
+    highlights: [
+      'Covers exposed tooth roots caused by gum recession',
+      'Helps reduce sensitivity and protect the supporting bone',
+      'Improves gum thickness, coverage, and long-term gum health',
+    ],
+    faqIntro:
+      'These Dental Implant Solutions FAQs apply to soft tissue grafting and the other treatments in this category.',
+    faqs: dentalImplantFaqs,
+  },
+  '/cosmetic-dentistry/dental-veneers': {
+    category: 'Cosmetic Dentistry',
+    title: 'Dental Veneers',
+    navLabel: 'Dental Veneers',
+    eyebrow: 'Custom smile enhancement',
+    image: '/services/Veneers_2.png',
+    imageAlt: 'Before and after smile view showing dental veneers improving tooth color and shape',
+    sectionImage: '/services/Veneers Page.png',
+    sectionImageAlt: 'Dental veneers illustration showing veneer uses for stains, chips, gaps, worn teeth, and uneven teeth',
+    sectionTitle: 'Improve tooth color, shape, size, and symmetry.',
+    summary:
+      'Dental veneers are ultra-thin, custom-made shells designed to cover the front surface of your teeth to improve their appearance.',
+    body:
+      'They act like artificial fingernails for your smile, bonded to the natural enamel to change the color, shape, size, or length of teeth. Veneers can be used for stained teeth, small gaps, worn edges, chipped teeth, mild unevenness, and smile symmetry concerns.',
+    highlights: [
+      'Covers discoloration, small chips, worn edges, and minor shape concerns',
+      'Custom shade and contour planning helps create a natural-looking smile',
+      'Bonded to the front surface of teeth for a long-lasting cosmetic result',
+    ],
+    faqIntro:
+      'These Cosmetic Dentistry FAQs apply to dental veneers and the other treatments in this category.',
+    faqs: cosmeticDentistryFaqs,
+  },
+  '/cosmetic-dentistry/gingival-depigmentation': {
+    category: 'Cosmetic Dentistry',
+    title: 'Gingival Depigmentation',
+    variant: 'gingival-depigmentation-treatment',
+    navLabel: 'Gingival Depigmentation',
+    eyebrow: 'Cosmetic gum color correction',
+    image: '/services/Gingival Depigmentation.webp',
+    imageAlt: 'Before and after smile view showing dark gum pigmentation improved after treatment',
+    sectionImage: '/services/Gingival Depigmentation Page.png',
+    sectionImageAlt: 'Gingival depigmentation process showing before, during procedure, and after results',
+    sectionTitle: 'Restore a more even, healthy pink gum appearance.',
+    summary:
+      'Gingival depigmentation is a cosmetic gum treatment used to reduce dark or uneven pigmentation on the gums.',
+    body:
+      'Dark gum pigmentation is commonly caused by excess melanin in the gum tissue. Depigmentation gently removes or lightens the pigmented surface layer, helping the gums look more even and pink for a brighter, more confident smile.',
+    highlights: [
+      'Improves the appearance of dark, patchy, or uneven gum pigmentation',
+      'Can be planned with modern laser or soft-tissue techniques',
+      'Helps create a more balanced smile frame around the teeth',
+    ],
+    faqIntro:
+      'These Cosmetic Dentistry FAQs apply to gingival depigmentation and the other treatments in this category.',
+    faqs: cosmeticDentistryFaqs,
+  },
+  '/cosmetic-dentistry/teeth-whitening': {
+    category: 'Cosmetic Dentistry',
+    title: 'Teeth Whitening',
+    navLabel: 'Teeth Whitening',
+    eyebrow: 'Brighter smile treatment',
+    image: '/services/Teeth Whitening Page.png',
+    imageAlt: 'Before and after smile view showing teeth whitening results',
+    sectionImage: '/services/Teeth Whitening_2.png',
+    sectionImageAlt: 'Teeth whitening illustration showing peroxide gel, light activation, and desensitizing agents',
+    sectionTitle: 'Lighten tooth color and reduce stains safely.',
+    summary:
+      'Teeth whitening is a cosmetic procedure that lightens teeth color and removes stains using peroxide-based agents.',
+    body:
+      'Popular options include in-office treatments for faster results and at-home kits such as Auraglow or Colgate Visible White Serum. Whitening effectively targets stains from food, smoking, and aging, causing minimal sensitivity when products are used as directed.',
+    highlights: [
+      'Targets stains from food, drinks, smoking, and natural aging',
+      'Can be planned as an in-office treatment or guided at-home whitening',
+      'Uses whitening agents with sensitivity control for a more comfortable experience',
+    ],
+    faqIntro:
+      'These Cosmetic Dentistry FAQs apply to teeth whitening and the other treatments in this category.',
+    faqs: cosmeticDentistryFaqs,
+  },
+  '/cosmetic-dentistry/3d-smile-designing': {
+    category: 'Cosmetic Dentistry',
+    title: '3D Smile Designing',
+    navLabel: '3D Smile Designing',
+    eyebrow: 'Digital smile preview and planning',
+    image: '/services/3D Smile Designing Page.png',
+    imageAlt: 'Digital smile design software showing 3D scans and before-after smile preview',
+    sectionImage: '/services/3D Smile Designing_2.png',
+    sectionImageAlt: '3D smile designing workflow showing photo capture, digital analysis, 3D design, preview, and transformation',
+    sectionTitle: 'Preview your smile before permanent treatment begins.',
+    summary:
+      '3D Smile Designing, often called Digital Smile Design or DSD, is a high-tech dental process that creates a personalized blueprint of your ideal smile.',
+    body:
+      'It uses advanced digital scans, facial analysis, and computer-generated simulations to plan tooth shape, shade, proportions, and smile harmony. Unlike traditional methods, it allows you to preview and even test drive your results using a 3D-printed mock-up before any permanent dental work begins.',
+    highlights: [
+      'Uses digital scans and facial analysis to personalize smile planning',
+      'Helps preview tooth shape, color, proportions, and facial harmony',
+      'Can support a mock-up or test-drive stage before final treatment',
+    ],
+    faqIntro:
+      'These Cosmetic Dentistry FAQs apply to 3D smile designing and the other treatments in this category.',
+    faqs: cosmeticDentistryFaqs,
+  },
+  '/cosmetic-dentistry/smile-correction': {
+    category: 'Cosmetic Dentistry',
+    title: 'Smile Correction',
+    navLabel: 'Smile Correction',
+    eyebrow: 'Tailored smile makeover planning',
+    image: '/services/Smile Correction Page.png',
+    imageAlt: 'Before and after smile correction showing improved tooth alignment, shape, and color',
+    sectionTitle: 'Enhance alignment, color, shape, and gum balance.',
+    summary:
+      'Smile correction, also called a smile makeover, is a tailored combination of cosmetic dentistry procedures designed to enhance the aesthetics of your smile.',
+    body:
+      'Treatment planning may include teeth alignment, color correction, tooth shape refinement, and gum appearance improvement. Common options include dental veneers, teeth whitening, aligners such as Invisalign, and gum contouring, often used to fix gaps, crowding, staining, or an uneven smile line.',
+    highlights: [
+      'Combines cosmetic treatments based on the smile concern and desired result',
+      'Can address gaps, crowding, staining, uneven tooth shape, and gum display',
+      'Planned around facial balance, tooth proportions, comfort, and oral health',
+    ],
+    faqIntro:
+      'These Cosmetic Dentistry FAQs apply to smile correction and the other treatments in this category.',
+    faqs: cosmeticDentistryFaqs,
+  },
   '/general-dentistry/tooth-colored-fillings': {
     category: 'General Dentistry',
     title: 'Tooth Coloured Fillings',
@@ -735,8 +1604,8 @@ export const treatmentPages = {
     eyebrow: 'Natural-looking cavity repair',
     image: '/services/Tooth Colored Fillings_2.png',
     imageAlt: 'Before and after view of metal fillings replaced with tooth-colored fillings',
-    sectionImage: '/services/Tooth Colored Fillings.png',
-    sectionImageAlt: 'Illustration showing tooth decay, decay removed, and dental filling stages',
+    sectionImage: '/services/Tooth Colored Fillings_3.png',
+    sectionImageAlt: 'Tooth colored fillings illustration showing natural-looking restoration before and after',
     summary:
       'Tooth-colored fillings, also known as white fillings, are dental restorations designed to blend seamlessly with your natural teeth while repairing damage from cavities, chips, or fractures.',
     body:

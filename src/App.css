@@ -2675,6 +2675,11 @@ video.treatment-image {
   line-height: 0.95;
 }
 
+.gingival-depigmentation-treatment .treatment-detail-copy h1 {
+  max-width: 12ch;
+  font-size: clamp(2.7rem, 5vw, 4.8rem);
+}
+
 .treatment-detail-copy p:not(.eyebrow) {
   max-width: 62ch;
   margin: 18px 0 0;
@@ -2736,6 +2741,36 @@ video.treatment-image {
 }
 
 .wisdom-molar-treatment .treatment-detail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.full-mouth-rehabilitation-treatment .treatment-detail-hero {
+  grid-template-columns: minmax(0, 0.86fr) minmax(420px, 0.92fr);
+  gap: 30px;
+}
+
+.full-mouth-rehabilitation-treatment .treatment-detail-copy h1 {
+  max-width: 12ch;
+  font-size: clamp(2.5rem, 5vw, 4.7rem);
+}
+
+.full-mouth-rehabilitation-treatment .treatment-detail-media {
+  overflow: hidden;
+}
+
+.full-mouth-rehabilitation-treatment .treatment-detail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.periodontics-treatment .treatment-detail-media {
+  overflow: hidden;
+}
+
+.periodontics-treatment .treatment-detail-media img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -2917,11 +2952,16 @@ video.treatment-image {
   height: 42px;
   display: grid;
   place-items: center;
-  border-radius: 14px;
-  background: rgba(215, 25, 32, 0.1);
-  color: var(--accent-strong);
-  font-size: 1.3rem;
-  font-weight: 900;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.treatment-detail-highlights span img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 
 .treatment-detail-highlights p {
@@ -5533,6 +5573,25 @@ video.treatment-image {
     max-height: 230px;
   }
 
+  .full-mouth-rehabilitation-treatment .treatment-detail-hero {
+    gap: 16px;
+  }
+
+  .full-mouth-rehabilitation-treatment .treatment-detail-copy h1 {
+    max-width: none;
+    font-size: 1.9rem;
+  }
+
+  .full-mouth-rehabilitation-treatment .treatment-detail-media img {
+    max-height: none;
+    object-fit: contain;
+  }
+
+  .periodontics-treatment .treatment-detail-media img {
+    max-height: none;
+    object-fit: contain;
+  }
+
   .fillings-treatment .treatment-detail-media,
   .braces-treatment .treatment-detail-media {
     height: auto;
@@ -5595,6 +5654,11 @@ video.treatment-image {
   .treatment-detail-highlights span {
     width: 36px;
     height: 36px;
+  }
+
+  .treatment-detail-highlights span img {
+    width: 100%;
+    height: 100%;
   }
 
   .hero-accreditation {

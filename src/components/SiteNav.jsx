@@ -1,6 +1,9 @@
 import { schemePrograms, siteNavGroups } from '../config/siteContent.js'
 
 export function SiteNav({ homePrefix = '' }) {
+  const normalizedHomePrefix = homePrefix.replace(/\/$/, '')
+  const schemesHref = `${normalizedHomePrefix}/schemes`
+
   return (
     <nav className="site-nav" aria-label="Site">
       {siteNavGroups.map((group) => (
@@ -23,7 +26,7 @@ export function SiteNav({ homePrefix = '' }) {
         </div>
       ))}
       <div className="site-nav-item">
-        <a className="site-nav-trigger site-nav-link-trigger" href={`${homePrefix}/schemes`}>
+        <a className="site-nav-trigger site-nav-link-trigger" href={schemesHref}>
           Schemes
         </a>
       </div>
