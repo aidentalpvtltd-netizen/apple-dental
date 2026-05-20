@@ -9,11 +9,16 @@ export function SiteNav({ homePrefix = '' }) {
             {group.label}
           </button>
           <div className="site-nav-menu" role="menu">
-            {group.items.map((item) => (
-              <a href={`${homePrefix}#booking`} key={item} role="menuitem">
-                {item}
-              </a>
-            ))}
+            {group.items.map((item) => {
+              const label = typeof item === 'string' ? item : item.label
+              const href = typeof item === 'string' ? `${homePrefix}#booking` : item.href
+
+              return (
+                <a href={href} key={label} role="menuitem">
+                  {label}
+                </a>
+              )
+            })}
           </div>
         </div>
       ))}

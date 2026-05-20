@@ -14,11 +14,11 @@ export function SiteFooter() {
           </p>
         </div>
         <div className="footer-links">
-          <a href="#services">Services</a>
-          <a href="#booking">Booking</a>
+          <a href="/#services">Services</a>
+          <a href="/#booking">Booking</a>
           <a href="/schemes">Schemes</a>
-          <a href="#dentists">Doctors</a>
-          <a href="#contact">Contact</a>
+          <a href="/#dentists">Doctors</a>
+          <a href="/#contact">Contact</a>
         </div>
         <div className="footer-social-links" aria-label="Social media links">
           <a href={instagramProfileUrl} target="_blank" rel="noreferrer" aria-label="Instagram">

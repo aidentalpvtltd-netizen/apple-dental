@@ -28,7 +28,7 @@ export function ContactSection({ selectedClinic, onClinicChange }) {
               aria-label="Show previous branch"
               onClick={() => onClinicChange(-1)}
             >
-              ?
+              ‹
             </button>
             <button
               type="button"
@@ -36,7 +36,7 @@ export function ContactSection({ selectedClinic, onClinicChange }) {
               aria-label="Show next branch"
               onClick={() => onClinicChange(1)}
             >
-              ?
+              ›
             </button>
             <div className="clinic-image-caption">
               <strong>{selectedClinic.area}</strong>

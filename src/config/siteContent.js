@@ -555,22 +555,70 @@ export const siteNavGroups = [
   {
     label: 'General Dentistry',
     items: [
-      'Tooth Colored Fillings',
-      'Cleaning and polishing',
-      'Clips and Braces Treatment',
-      'Aligners',
-      'Crowns and Bridges',
-      'Root Canal Treatment',
-      'Complete Dentures',
-      'Tooth Extractions',
-      'Wisdom Molar Extraction',
-      'Gingival Flap Surgery',
-      'Frenectomy',
-      'Night Guard',
-      'Pit and Fissure Sealants',
-      'Partial Dentures',
-      'Over dentures',
-      'Kids Dentistry',
+      {
+        label: 'Tooth Colored Fillings',
+        href: '/general-dentistry/tooth-colored-fillings',
+      },
+      {
+        label: 'Cleaning and polishing',
+        href: '/general-dentistry/cleaning-and-polishing',
+      },
+      {
+        label: 'Clips and Braces Treatment',
+        href: '/general-dentistry/clips-and-braces-treatment',
+      },
+      {
+        label: 'Aligners',
+        href: '/general-dentistry/aligners',
+      },
+      {
+        label: 'Crowns and Bridges',
+        href: '/general-dentistry/crowns-and-bridges',
+      },
+      {
+        label: 'Root Canal Treatment',
+        href: '/general-dentistry/root-canal-treatment',
+      },
+      {
+        label: 'Complete Dentures',
+        href: '/general-dentistry/complete-dentures',
+      },
+      {
+        label: 'Tooth Extractions',
+        href: '/general-dentistry/tooth-extractions',
+      },
+      {
+        label: 'Wisdom Molar Extraction',
+        href: '/general-dentistry/wisdom-molar-extraction',
+      },
+      {
+        label: 'Gingival Flap Surgery',
+        href: '/general-dentistry/gingival-flap-surgery',
+      },
+      {
+        label: 'Frenectomy',
+        href: '/general-dentistry/frenectomy',
+      },
+      {
+        label: 'Night Guard',
+        href: '/general-dentistry/night-guard',
+      },
+      {
+        label: 'Pit and Fissure Sealants',
+        href: '/general-dentistry/pit-and-fissure-sealants',
+      },
+      {
+        label: 'Partial Dentures',
+        href: '/general-dentistry/partial-dentures',
+      },
+      {
+        label: 'Over dentures',
+        href: '/general-dentistry/over-dentures',
+      },
+      {
+        label: 'Kids Dentistry',
+        href: '/general-dentistry/kids-dentistry',
+      },
     ],
   },
   {
@@ -619,6 +667,432 @@ export const siteNavGroups = [
     ],
   },
 ]
+
+export const generalDentistryFaqs = [
+  {
+    question: 'What is general dentistry?',
+    answer:
+      'General dentistry focuses on maintaining overall oral health through regular checkups, cleaning, fillings, root canal treatments, extractions, and preventive care.',
+  },
+  {
+    question: 'How often should I visit the dentist?',
+    answer:
+      'It is recommended to visit the dentist every 6 months for a routine dental checkup and cleaning.',
+  },
+  {
+    question: 'Why are regular dental cleanings important?',
+    answer:
+      'Professional cleaning removes plaque and tartar buildup, helps prevent gum disease, cavities, bad breath, and keeps your teeth healthy.',
+  },
+  {
+    question: 'What are tooth-colored fillings?',
+    answer:
+      'Tooth-colored fillings are cosmetic fillings made to match your natural tooth color and are used to repair cavities or damaged teeth.',
+  },
+  {
+    question: 'What causes tooth sensitivity?',
+    answer:
+      'Sensitivity can occur due to enamel wear, cavities, gum recession, teeth grinding, or cracked teeth.',
+  },
+  {
+    question: 'What is root canal treatment?',
+    answer:
+      'Root canal treatment removes infected pulp inside the tooth to save the natural tooth and relieve pain.',
+  },
+  {
+    question: 'Is root canal treatment painful?',
+    answer:
+      'Modern root canal treatment is usually painless because it is performed under local anesthesia.',
+  },
+  {
+    question: 'When is tooth extraction necessary?',
+    answer:
+      'Tooth extraction may be needed for severely damaged teeth, infections, overcrowding, or impacted wisdom teeth.',
+  },
+  {
+    question: 'What is wisdom tooth extraction?',
+    answer:
+      'It is the removal of impacted or painful wisdom teeth that may cause swelling, pain, or infection.',
+  },
+  {
+    question: 'What are dentures?',
+    answer:
+      'Dentures are removable artificial teeth used to replace missing teeth and restore chewing and appearance.',
+  },
+  {
+    question: 'How can I prevent cavities?',
+    answer:
+      'Brush twice daily, floss regularly, avoid excess sugary foods, and attend regular dental checkups.',
+  },
+]
+
+export const treatmentPages = {
+  '/general-dentistry/tooth-colored-fillings': {
+    category: 'General Dentistry',
+    title: 'Tooth Coloured Fillings',
+    variant: 'fillings-treatment',
+    navLabel: 'Tooth Colored Fillings',
+    eyebrow: 'Natural-looking cavity repair',
+    image: '/services/Tooth Colored Fillings_2.png',
+    imageAlt: 'Before and after view of metal fillings replaced with tooth-colored fillings',
+    sectionImage: '/services/Tooth Colored Fillings.png',
+    sectionImageAlt: 'Illustration showing tooth decay, decay removed, and dental filling stages',
+    summary:
+      'Tooth-colored fillings, also known as white fillings, are dental restorations designed to blend seamlessly with your natural teeth while repairing damage from cavities, chips, or fractures.',
+    body:
+      'Unlike traditional silver amalgam fillings, these are made from modern materials like composite resin, porcelain, or glass ionomer.',
+    highlights: [
+      'Repairs cavities while keeping the smile natural-looking',
+      'Useful for minor chips, fractures, and small tooth defects',
+      'Shade-matched materials help the filling blend with nearby teeth',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to tooth-colored fillings and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/cleaning-and-polishing': {
+    category: 'General Dentistry',
+    title: 'Cleaning and Polishing',
+    navLabel: 'Cleaning and polishing',
+    eyebrow: 'Professional plaque and tartar removal',
+    image: '/services/TeethScaling_Polishing_2.webp',
+    imageAlt: 'Dental scaling instrument removing plaque and tartar near the gumline',
+    sectionImage: '/services/TeethScaling_Polishing.png',
+    sectionImageAlt: 'Illustration explaining teeth scaling and polishing steps',
+    sectionTitle: 'A cleaner, smoother smile with healthier gums.',
+    summary:
+      'Professional dental cleaning, often called scaling, removes plaque and tartar that brushing misses. Polishing is the final step using a gritty paste and a rotating brush to smooth the enamel.',
+    body:
+      'During scaling, the dentist or hygienist cleans hardened deposits from tooth surfaces and around the gumline. Polishing then removes surface stains and leaves teeth feeling smoother, which can make it harder for plaque to collect quickly after the visit.',
+    highlights: [
+      'Removes hard plaque and tartar from areas brushing cannot clean well',
+      'Helps reduce bad breath, gum irritation, and surface staining',
+      'Leaves tooth surfaces smoother and supports routine preventive care',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to cleaning and polishing and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/clips-and-braces-treatment': {
+    category: 'General Dentistry',
+    title: 'Clips and Braces Treatment',
+    variant: 'braces-treatment',
+    navLabel: 'Clips and Braces Treatment',
+    eyebrow: 'Orthodontic bite and alignment care',
+    image: '/services/Braces-Metal-Ceramic.png',
+    imageAlt: 'Metal and ceramic braces shown on teeth',
+    sectionImage: '/services/Clips and Braces Treatment.png',
+    sectionImageAlt: 'Orthodontics illustration showing braces, retainer, and palate expander examples',
+    sectionTitle: 'Correct misaligned, crowded, and rotated teeth.',
+    summary:
+      'Teeth clips, more commonly known as dental braces, are orthodontic devices used to correct misaligned, crooked, or crowded teeth and bite issues.',
+    body:
+      'Braces use brackets, bands, and archwires to apply continuous, gentle pressure that gradually shifts teeth into better positions over time. The orthodontist reviews the bite, crowding, spacing, jaw relationship, and oral hygiene needs before planning the treatment.',
+    highlights: [
+      'Helps correct crowding, spacing, rotated teeth, and bite imbalance',
+      'Uses brackets and wires for controlled tooth movement over time',
+      'Planned with regular adjustments, hygiene guidance, and retention after treatment',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to clips and braces treatment and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/aligners': {
+    category: 'General Dentistry',
+    title: 'Aligners',
+    navLabel: 'Aligners',
+    eyebrow: 'Removable clear orthodontic trays',
+    image: '/services/Clear Aligners Page.png',
+    imageAlt: 'Transparent clear aligner trays shown near teeth',
+    sectionVideo: '/treatment-videos/Clear Aligners.mp4',
+    sectionVideoLabel: 'Clear aligners treatment animation',
+    sectionTitle: 'Discreet teeth straightening with removable trays.',
+    summary:
+      'Clear aligners are transparent, custom-made plastic trays used as a discreet alternative to traditional metal braces to straighten teeth.',
+    body:
+      'Aligners work by applying gentle, constant pressure to gradually shift teeth into the desired position. Unlike fixed braces, aligners are removable for eating, brushing, and flossing, but they must be worn for 20 to 22 hours a day to be effective.',
+    highlights: [
+      'Transparent trays designed for discreet orthodontic correction',
+      'Removable for meals, brushing, and flossing',
+      'Best results depend on wearing them 20 to 22 hours daily',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to aligners and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/crowns-and-bridges': {
+    category: 'General Dentistry',
+    title: 'Crowns and Bridges',
+    variant: 'crowns-bridges-treatment',
+    navLabel: 'Crowns and Bridges',
+    eyebrow: 'Fixed tooth restoration',
+    image: '/services/Dental_Bridges_2.png',
+    imageAlt: 'Step-by-step dental bridge treatment replacing a missing tooth',
+    sectionImage: '/services/Dental Bridges Page.png',
+    sectionImageAlt: 'Dental bridge diagram showing crowns, pontic, jaw bone, and supporting structures',
+    sectionTitle: 'Restore damaged or missing teeth with fixed prosthetic care.',
+    summary:
+      'Dental crowns and bridges are fixed prosthetic devices used to restore the function and appearance of damaged or missing teeth.',
+    body:
+      'Unlike removable dentures, crowns and bridges are cemented onto existing teeth or implants and can only be removed by a dentist. A crown covers and protects a weakened tooth, while a bridge replaces one or more missing teeth by anchoring an artificial tooth to natural teeth or implants on either side.',
+    highlights: [
+      'Restores chewing function and smile appearance after damage or tooth loss',
+      'Crowns protect weakened, cracked, or heavily restored teeth',
+      'Bridges replace missing teeth with a fixed option anchored by nearby support',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to crowns and bridges and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/root-canal-treatment': {
+    category: 'General Dentistry',
+    title: 'Root Canal Treatment',
+    navLabel: 'Root Canal Treatment',
+    eyebrow: 'Pain-relieving tooth-saving care',
+    image: '/services/Root Canal Treatment_2.png',
+    imageAlt: 'Dental model showing root canal files cleaning tooth canals',
+    sectionImage: '/services/Root Canal Treatment Page.png',
+    sectionImageAlt: 'Root canal treatment steps from infected tooth to new crown placement',
+    sectionTitle: 'Save an infected tooth and restore comfortable chewing.',
+    summary:
+      'A root canal is a common, pain-relieving dental procedure used to save a tooth with severely infected or damaged pulp, usually caused by deep decay or cracks.',
+    body:
+      'An endodontist or dentist removes the damaged pulp, cleans and shapes the root canals, then fills and seals the space. A final crown is often recommended to restore full function and protect the tooth from future breakage.',
+    highlights: [
+      'Relieves infection-related tooth pain while preserving the natural tooth',
+      'Cleans, shapes, fills, and seals the root canals to prevent reinfection',
+      'Often completed with a crown to restore strength, function, and appearance',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to root canal treatment and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/complete-dentures': {
+    category: 'General Dentistry',
+    title: 'Complete Dentures',
+    navLabel: 'Complete Dentures',
+    eyebrow: 'Full-arch tooth replacement',
+    image: '/services/Complete Dentures_2.png',
+    imageAlt: 'Before and after view of implant-supported complete dentures',
+    sectionImage: '/services/Complete Dentures Page.png',
+    sectionImageAlt: 'Types of dentures including full, partial, immediate, flexible, flipper, and implant dentures',
+    sectionTitle: 'Replace missing teeth and restore smile function.',
+    summary:
+      'A complete denture is a removable, tissue-supported prosthetic device that replaces all missing teeth in the upper or lower jaw, restoring chewing, speech, and facial aesthetics.',
+    body:
+      'Custom-made from acrylic resin, complete dentures are designed for patients who have lost all natural teeth. Depending on the patient’s oral condition and treatment plan, options may include conventional, immediate, or implant-supported dentures.',
+    highlights: [
+      'Replaces a full arch of missing teeth in the upper or lower jaw',
+      'Supports chewing, speech, facial profile, and smile appearance',
+      'Can be planned as conventional, immediate, or implant-supported dentures',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to complete dentures and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/partial-dentures': {
+    category: 'General Dentistry',
+    title: 'Partial Dentures',
+    navLabel: 'Partial Dentures',
+    eyebrow: 'Removable replacement for missing teeth',
+    image: '/services/Partial Dentures Page.png',
+    imageAlt: 'Before and after smile view showing missing teeth restored with partial dentures',
+    sectionImage: '/services/Partial Dentures_2.jpg',
+    sectionImageAlt: 'Partial denture appliance with gum-colored base, artificial teeth, and metal framework',
+    sectionTitle: 'Replace missing teeth while supporting the remaining smile.',
+    summary:
+      'Partial dentures are removable dental appliances designed to replace one or more missing teeth, improving chewing, speech, and aesthetics while preventing remaining teeth from shifting.',
+    body:
+      'They consist of artificial teeth attached to a gum-colored plastic base, often supported by a metal framework or clasps. A partial denture is planned around the existing teeth, bite, gum support, and comfort so it can restore function while staying removable for cleaning.',
+    highlights: [
+      'Replaces one or more missing teeth without requiring a full denture',
+      'Helps maintain chewing comfort, speech clarity, and smile appearance',
+      'Supports the bite by reducing unwanted movement of remaining teeth',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to partial dentures and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/over-dentures': {
+    category: 'General Dentistry',
+    title: 'Over Dentures',
+    navLabel: 'Over dentures',
+    eyebrow: 'Implant-retained denture stability',
+    image: '/services/Overdentures_2.png',
+    imageAlt: 'Overdenture snapping onto dental implant attachments',
+    sectionImage: '/services/Overdentures Page.png',
+    sectionImageAlt: 'Overdenture diagram showing complete denture, implant abutments, dental implants, and attachments',
+    sectionTitle: 'A steadier removable denture anchored by teeth, roots, or implants.',
+    summary:
+      'Overdentures are a type of removable dental prosthesis that snap or rest on top of existing natural teeth, tooth roots, or dental implants.',
+    body:
+      "Unlike traditional dentures that sit directly on the gums and often slide, overdentures use these underlying structures as anchors for significantly better stability and bone preservation. They are planned around available support, bite comfort, hygiene access, and the patient's need for a removable but more secure replacement option.",
+    highlights: [
+      'Provides better denture stability than many traditional gum-supported dentures',
+      'Uses remaining roots, natural teeth, or implants as anchors when suitable',
+      'Helps improve chewing confidence while supporting bone and gum health planning',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to over dentures and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/kids-dentistry': {
+    category: 'General Dentistry',
+    title: 'Kids Dentistry',
+    navLabel: 'Kids Dentistry',
+    eyebrow: 'Gentle dental care for children',
+    image: '/services/Kids Dentistry Page.png',
+    imageAlt: 'Smiling child in a dental chair during a pediatric dental visit',
+    sectionTitle: 'Child-focused care from first visits through the teenage years.',
+    summary:
+      'Kids dentistry, or pediatric dentistry, is a specialised branch of dental care focused on the oral health of children from infancy through their teenage years.',
+    body:
+      "Pediatric dentists undergo 2 to 3 years of additional training after dental school to learn how to manage children's unique physical and emotional needs, including those with special healthcare requirements. Kids dentistry can include dental checkups, cavity-risk assessment, cleaning, fluoride guidance, sealants, tooth-colored fillings, space maintainers, habit counselling, dental trauma care, growth and bite monitoring, and child-friendly behavior guidance.",
+    highlights: [
+      'Supports regular checkups, cleanings, fluoride advice, and cavity prevention',
+      'Includes sealants, fillings, space maintainers, and dental injury care when needed',
+      'Focuses on gentle behavior guidance and care for children with special healthcare needs',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to kids dentistry and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/tooth-extractions': {
+    category: 'General Dentistry',
+    title: 'Tooth Extractions',
+    navLabel: 'Tooth Extractions',
+    eyebrow: 'Safe removal of damaged teeth',
+    image: '/services/tooth_extraction_2.jpg',
+    imageAlt: 'Extraction socket after permanent tooth removal',
+    sectionImage: '/services/Tooth Extractions Page.png',
+    sectionImageAlt: 'Tooth extraction diagram showing decay, socket, jawbone, gauze, and stitches',
+    sectionTitle: 'Remove teeth that cannot be repaired safely.',
+    summary:
+      'A tooth extraction is the permanent removal of a tooth from its socket in the jawbone.',
+    body:
+      'While dentists aim to save natural teeth through fillings or crowns, an extraction becomes necessary when a tooth is too damaged by decay, trauma, or gum disease to be repaired. The dentist evaluates the tooth, surrounding bone, infection risk, and replacement options before planning the procedure.',
+    highlights: [
+      'Removes teeth that are severely decayed, broken, infected, or loose',
+      'Helps protect surrounding teeth and gums when repair is no longer predictable',
+      'Includes aftercare guidance for bleeding control, healing, and replacement planning',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to tooth extractions and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/wisdom-molar-extraction': {
+    category: 'General Dentistry',
+    title: 'Wisdom Molar Extraction',
+    variant: 'wisdom-molar-treatment',
+    navLabel: 'Wisdom Molar Extraction',
+    eyebrow: 'Impacted third molar care',
+    image: '/services/Wisdom_Tooth_Extraction.jpg',
+    imageAlt: 'X-ray illustration showing an impacted wisdom tooth and third molar position',
+    sectionImage: '/treatment-gifs/wisdom-teeth.gif',
+    sectionImageAlt: 'Animated wisdom teeth extraction illustration',
+    sectionTitle: 'Remove painful or impacted wisdom molars safely.',
+    summary:
+      'Wisdom molar extraction is a common surgical procedure to remove one or more of your third molars, the four permanent adult teeth located at the back corners of your mouth.',
+    body:
+      'This is typically done to resolve or prevent issues like pain, infection, or crowding caused by impacted teeth that do not have enough room to grow. The dentist evaluates the tooth position, surrounding bone, swelling, and nearby structures before planning the extraction and aftercare.',
+    highlights: [
+      'Helps manage pain, swelling, infection, and food trapping around wisdom teeth',
+      'Recommended when third molars are impacted or do not have enough room to erupt',
+      'Includes surgical planning and aftercare guidance for comfortable healing',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to wisdom molar extraction and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/gingival-flap-surgery': {
+    category: 'General Dentistry',
+    title: 'Gingival Flap Surgery',
+    navLabel: 'Gingival Flap Surgery',
+    eyebrow: 'Advanced gum disease treatment',
+    image: '/services/Gingival Flap surgery_2.webp',
+    imageAlt: 'Dental instrument cleaning tartar and bacteria below the gumline',
+    sectionImage: '/services/Gingival Flap Surgery Page.png',
+    sectionImageAlt: 'Gingival flap surgery steps for treating advanced gum disease',
+    sectionTitle: 'Deep cleaning access for advanced gum pockets.',
+    summary:
+      'Gum flap surgery, also called periodontal flap surgery, is a common dental procedure used to treat advanced periodontitis by lifting the gums away from the teeth.',
+    body:
+      'This allows the dentist or periodontist to deeply clean roots, remove infected tissue, and reduce periodontal pockets. It is recommended when deep cleaning, also called scaling and root planing, cannot remove bacteria enough to save teeth and repair bone loss.',
+    highlights: [
+      'Provides access to deep periodontal pockets that trap plaque and bacteria',
+      'Helps remove infected tissue and clean tooth roots more thoroughly',
+      'Supports gum healing, pocket reduction, and long-term tooth stability',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to gingival flap surgery and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/frenectomy': {
+    category: 'General Dentistry',
+    title: 'Frenectomy',
+    navLabel: 'Frenectomy',
+    eyebrow: 'Minor soft-tissue release',
+    image: '/services/frenectomy.jpg',
+    imageAlt: 'Before and after view of upper lip frenum release between front teeth',
+    sectionTitle: 'Release tight tissue bands that restrict movement.',
+    summary:
+      'A frenectomy is a simple, minor surgical procedure used to remove or modify a small band of connective tissue in the mouth called a frenum or frenulum.',
+    body:
+      'These bands connect your lips, cheeks, and tongue to your jawbone and gums. When a frenum is too short or thick, it can restrict movement or cause dental issues, leading doctors to recommend its release.',
+    highlights: [
+      'Helps improve lip, cheek, or tongue movement when a frenum is too tight',
+      'May support speech, feeding, orthodontic, or gum-health treatment plans',
+      'Usually planned as a minor soft-tissue procedure with clear healing guidance',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to frenectomy and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/night-guard': {
+    category: 'General Dentistry',
+    title: 'Night Guard',
+    navLabel: 'Night Guard',
+    eyebrow: 'Protection from teeth grinding',
+    image: '/services/Night Guard Page.png',
+    imageAlt: 'Transparent dental night guard appliance',
+    sectionTitle: 'Protect your teeth while you sleep.',
+    summary:
+      'A night guard is a protective dental appliance worn during sleep to prevent damage caused by teeth grinding and clenching, a condition known as bruxism.',
+    body:
+      'A dentist-made night guard is designed to fit over the teeth and create a protective barrier between the upper and lower arches. It can help reduce enamel wear, tooth sensitivity, jaw strain, and damage to existing dental restorations caused by nighttime grinding.',
+    highlights: [
+      'Helps protect teeth from grinding, clenching, and enamel wear',
+      'Can reduce stress on the jaw joints and chewing muscles',
+      'Custom planning improves fit, comfort, and nightly use',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to night guards and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+  '/general-dentistry/pit-and-fissure-sealants': {
+    category: 'General Dentistry',
+    title: 'Pit and Fissure Sealants',
+    navLabel: 'Pit and Fissure Sealants',
+    eyebrow: 'Protective cavity prevention',
+    image: '/services/dentalpit_fissure_sealant_2.webp',
+    imageAlt: 'Before and after view of fissure sealant applied to molars',
+    sectionImage: '/services/dentalpit_fissure_sealant.png',
+    sectionImageAlt: 'Pit and fissure sealant process showing tooth without sealant, sealant applied, and final sealant',
+    sectionTitle: 'Seal deep grooves before decay starts.',
+    summary:
+      'Pit and fissure sealants are thin, protective resin or glass ionomer coatings applied to the deep grooves of teeth, primarily molars, to create a physical barrier against decay.',
+    body:
+      'Sealants prevent food and bacteria from trapping in hard-to-clean pits and fissures. By covering these deep grooves, they can significantly reduce cavity risk in children and adults, especially on chewing surfaces that are difficult to clean thoroughly with brushing alone.',
+    highlights: [
+      'Creates a protective barrier over deep molar grooves and pits',
+      'Helps prevent food and bacteria from collecting in hard-to-clean areas',
+      'Supports cavity prevention for children, teens, and adults with deep fissures',
+    ],
+    faqIntro:
+      'These General Dentistry FAQs apply to pit and fissure sealants and the other treatments in this category.',
+    faqs: generalDentistryFaqs,
+  },
+}
 
 export const formatPhoneDisplay = (phone) =>
   phone ? `+91 ${phone.slice(0, 5)} ${phone.slice(5)}` : clinicPhoneDisplay

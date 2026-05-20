@@ -2634,6 +2634,303 @@ video.treatment-image {
     #ffffff;
 }
 
+.treatment-detail-page {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.treatment-detail-hero {
+  width: 100%;
+  margin: 0;
+  padding: 28px max(16px, calc((100vw - 1240px) / 2)) 34px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.78fr);
+  gap: 24px;
+  align-items: stretch;
+  background:
+    linear-gradient(135deg, rgba(215, 25, 32, 0.13), rgba(185, 19, 25, 0.18)),
+    #fff7f5;
+}
+
+.treatment-detail-copy,
+.treatment-detail-media {
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(119, 30, 35, 0.14);
+  box-shadow: var(--shadow-soft);
+}
+
+.treatment-detail-copy {
+  display: grid;
+  align-content: center;
+  min-height: 480px;
+  padding: 42px;
+}
+
+.treatment-detail-copy h1 {
+  max-width: 11ch;
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(2.9rem, 6vw, 5.4rem);
+  line-height: 0.95;
+}
+
+.treatment-detail-copy p:not(.eyebrow) {
+  max-width: 62ch;
+  margin: 18px 0 0;
+  color: var(--text);
+  font-size: 1.06rem;
+  line-height: 1.7;
+}
+
+.treatment-detail-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.treatment-detail-media {
+  height: 480px;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.treatment-detail-media img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  object-fit: cover;
+  filter: none;
+}
+
+.fillings-treatment .treatment-detail-media,
+.braces-treatment .treatment-detail-media {
+  height: 480px;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.fillings-treatment .treatment-detail-media img,
+.braces-treatment .treatment-detail-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  max-height: none;
+  object-fit: cover;
+}
+
+.wisdom-molar-treatment .treatment-detail-media {
+  overflow: hidden;
+}
+
+.wisdom-molar-treatment .treatment-detail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.treatment-detail-content {
+  padding-top: 52px;
+}
+
+.treatment-detail-page .faq-section {
+  width: calc(100vw - 32px);
+  margin: 52px 0 0 calc(50% - 50vw + 16px);
+  padding: 44px max(24px, calc((100vw - 1240px) / 2 + 24px));
+  border-radius: 28px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(255, 238, 207, 0.72)),
+    #fff8ec;
+  border: 1px solid rgba(119, 30, 35, 0.12);
+  box-shadow: 0 22px 58px rgba(36, 45, 54, 0.1);
+  overflow: hidden;
+}
+
+.treatment-detail-section {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.72fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.treatment-detail-section-copy {
+  display: grid;
+  gap: 20px;
+}
+
+.treatment-detail-before-after {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(119, 30, 35, 0.14);
+  box-shadow: 0 18px 44px rgba(36, 45, 54, 0.1);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.treatment-detail-before-after:hover,
+.treatment-detail-before-after:focus-visible {
+  border-color: rgba(215, 25, 32, 0.3);
+  box-shadow: 0 22px 54px rgba(36, 45, 54, 0.14);
+  transform: translateY(-1px);
+}
+
+.treatment-detail-before-after img,
+.treatment-detail-before-after video {
+  width: 100%;
+  display: block;
+  height: auto;
+  object-fit: contain;
+}
+
+.treatment-detail-before-after video {
+  background: #000000;
+}
+
+.treatment-media-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(30, 22, 22, 0.42);
+  backdrop-filter: blur(9px);
+  animation: treatment-lightbox-fade 180ms ease both;
+}
+
+.page-shell > .treatment-media-lightbox {
+  position: fixed;
+  z-index: 140;
+}
+
+.treatment-media-lightbox-frame {
+  width: min(1180px, 100%);
+  max-height: min(86vh, 820px);
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  box-shadow: 0 32px 90px rgba(17, 24, 39, 0.28);
+  animation: treatment-media-zoom 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.treatment-media-lightbox-frame img,
+.treatment-media-lightbox-frame video {
+  max-width: 100%;
+  max-height: 82vh;
+  display: block;
+  object-fit: contain;
+}
+
+.treatment-media-lightbox-frame video {
+  width: 100%;
+  background: #000000;
+}
+
+.treatment-media-close {
+  position: fixed;
+  top: 20px;
+  right: 22px;
+  z-index: 141;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--accent-strong);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 18px 42px rgba(36, 45, 54, 0.18);
+}
+
+@keyframes treatment-lightbox-fade {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+
+  to {
+    opacity: 1;
+    backdrop-filter: blur(9px);
+  }
+}
+
+@keyframes treatment-media-zoom {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.treatment-detail-highlights {
+  display: grid;
+  gap: 12px;
+}
+
+.treatment-detail-highlights article {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  min-height: 78px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(119, 30, 35, 0.14);
+  box-shadow: 0 14px 34px rgba(36, 45, 54, 0.08);
+}
+
+.treatment-detail-highlights span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(215, 25, 32, 0.1);
+  color: var(--accent-strong);
+  font-size: 1.3rem;
+  font-weight: 900;
+}
+
+.treatment-detail-highlights p {
+  margin: 0;
+  color: var(--text);
+  font-weight: 800;
+  line-height: 1.45;
+}
+
 .scheme-hero {
   width: min(1240px, calc(100% - 32px));
   margin: 28px auto 0;
@@ -3110,6 +3407,52 @@ video.treatment-image {
   height: 17px;
   display: block;
   fill: currentColor;
+}
+
+@media (max-width: 1320px) and (min-width: 761px) {
+  .site-header-inner {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .site-brand {
+    flex-basis: 214px;
+    min-width: 190px;
+    gap: 8px;
+  }
+
+  .site-brand-copy strong {
+    font-size: 0.94rem;
+  }
+
+  .site-brand-copy small {
+    display: none;
+  }
+
+  .site-nav {
+    gap: 5px;
+  }
+
+  .site-nav-trigger {
+    padding: 8px 4px;
+    font-size: 0.74rem;
+  }
+
+  .site-call {
+    min-width: 68px;
+    padding: 0 10px;
+    font-size: 0;
+  }
+
+  .site-call::before {
+    content: 'Call';
+    font-size: 0.82rem;
+  }
+
+  .site-cta {
+    padding: 0 12px;
+    font-size: 0.86rem;
+  }
 }
 
 .chatbot-launcher {
@@ -4755,9 +5098,16 @@ video.treatment-image {
   .site-header-inner,
   .hero-overlay,
   .services-layout,
-  .contact-card {
+  .contact-card,
+  .treatment-detail-hero,
+  .treatment-detail-section {
     grid-template-columns: 1fr;
     align-items: start;
+  }
+
+  .treatment-detail-copy,
+  .treatment-detail-media {
+    min-height: auto;
   }
 
   .contact-card {
@@ -5111,6 +5461,8 @@ video.treatment-image {
 
   .hero-copy,
   .hero-info-card,
+  .treatment-detail-copy,
+  .treatment-detail-media,
   .service-card,
   .services-summary,
   .treatment-card,
@@ -5121,6 +5473,8 @@ video.treatment-image {
   }
 
   .hero-copy,
+  .treatment-detail-copy,
+  .treatment-detail-media,
   .service-card,
   .services-summary,
   .booking-panel,
@@ -5142,6 +5496,105 @@ video.treatment-image {
     max-width: none;
     font-size: 1.66rem;
     line-height: 1.1;
+  }
+
+  .treatment-detail-hero {
+    width: 100%;
+    margin-top: 0;
+    padding: 16px 14px 22px;
+    gap: 14px;
+  }
+
+  .treatment-detail-copy h1 {
+    max-width: none;
+    font-size: 2.05rem;
+    line-height: 1.04;
+  }
+
+  .treatment-detail-copy p:not(.eyebrow) {
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+
+  .treatment-detail-actions .primary-action,
+  .treatment-detail-actions .secondary-action {
+    width: 100%;
+  }
+
+  .treatment-detail-media {
+    height: auto;
+    min-height: auto;
+    padding: 0;
+  }
+
+  .treatment-detail-media img {
+    width: 100%;
+    height: auto;
+    max-height: 230px;
+  }
+
+  .fillings-treatment .treatment-detail-media,
+  .braces-treatment .treatment-detail-media {
+    height: auto;
+    min-height: auto;
+  }
+
+  .fillings-treatment .treatment-detail-media img,
+  .braces-treatment .treatment-detail-media img {
+    height: auto;
+    min-height: 0;
+    max-height: 230px;
+  }
+
+  .treatment-detail-content {
+    padding-top: 32px;
+  }
+
+  .treatment-detail-page .faq-section {
+    width: calc(100vw - 28px);
+    margin-left: calc(50% - 50vw + 14px);
+    margin-top: 32px;
+    padding: 22px 14px;
+    border-radius: 22px;
+  }
+
+  .treatment-detail-section {
+    gap: 16px;
+  }
+
+  .treatment-detail-section-copy {
+    gap: 14px;
+  }
+
+  .treatment-detail-before-after {
+    border-radius: 18px;
+  }
+
+  .treatment-media-lightbox {
+    padding: 14px;
+  }
+
+  .treatment-media-lightbox-frame {
+    max-height: 82vh;
+    border-radius: 18px;
+  }
+
+  .treatment-media-close {
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+  }
+
+  .treatment-detail-highlights article {
+    grid-template-columns: 36px minmax(0, 1fr);
+    min-height: 0;
+    padding: 14px;
+  }
+
+  .treatment-detail-highlights span {
+    width: 36px;
+    height: 36px;
   }
 
   .hero-accreditation {
@@ -5581,6 +6034,38 @@ video.treatment-image {
 
   .site-footer {
     padding-inline: 10px;
+  }
+}
+
+@media (max-width: 1320px) and (min-width: 761px) {
+  .site-brand {
+    flex-basis: 184px;
+    min-width: 184px;
+  }
+
+  .site-brand-copy strong {
+    max-width: 8.2rem;
+    font-size: 0.9rem;
+    line-height: 1.05;
+  }
+
+  .site-nav > .site-nav-item:last-child {
+    display: none;
+  }
+
+  .site-nav-trigger {
+    font-size: 0.72rem;
+  }
+
+  .site-call {
+    min-width: 58px;
+    padding: 0 9px;
+    font-size: 0;
+  }
+
+  .site-call::before {
+    content: 'Call';
+    font-size: 0.8rem;
   }
 }
 
