@@ -5,6 +5,40 @@
   padding-top: 92px;
 }
 
+.right-click-notice {
+  position: fixed;
+  left: min(calc(100vw - 190px), max(12px, var(--notice-x)));
+  top: min(calc(100vh - 54px), max(12px, var(--notice-y)));
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(21, 25, 29, 0.92);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 14px 34px rgba(21, 25, 29, 0.24);
+  pointer-events: none;
+  transform: translate(8px, 8px);
+  animation: right-click-notice-in 180ms ease both;
+}
+
+@keyframes right-click-notice-in {
+  from {
+    opacity: 0;
+    transform: translate(8px, 14px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(8px, 8px) scale(1);
+  }
+}
+
 .page-shell > :not(.site-loader) {
   position: relative;
   z-index: 1;
@@ -360,6 +394,7 @@
 
 .site-brand-copy strong {
   font-size: 1.06rem;
+  white-space: nowrap;
 }
 
 .site-brand-copy small {
@@ -1017,6 +1052,7 @@
 
 .services-overview,
 .instagram-section,
+.aligners-section,
 .treatment-section,
 .dentists-section,
 .why-section,
@@ -1048,6 +1084,17 @@
   border: 0;
   border-radius: 0;
   background: transparent;
+}
+
+.dentists-section {
+  width: calc(100vw - 32px);
+  margin-left: calc(50% - 50vw + 16px);
+  padding: 72px max(18px, calc((100vw - 1240px) / 2 + 18px));
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 248, 248, 0.18)),
+    url('/doctors/doctors-section-bg.png') center top / 100% auto no-repeat;
+  border: 1px solid rgba(215, 25, 32, 0.1);
 }
 
 .section-heading {
@@ -2242,6 +2289,196 @@ video.treatment-image {
   line-height: 1;
 }
 
+.aligners-section {
+  position: relative;
+  isolation: isolate;
+  width: calc(100vw - 32px);
+  margin-left: calc(50% - 50vw + 16px);
+  scroll-margin-top: 116px;
+  padding: 112px max(18px, calc((100vw - 1240px) / 2 + 18px)) 56px;
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    linear-gradient(90deg, rgba(239, 250, 255, 0.28), rgba(214, 239, 255, 0.18)),
+    url('/aligners/aligners-clean-background.png') center top / cover no-repeat;
+  border: 1px solid rgba(102, 181, 220, 0.2);
+  box-shadow: 0 24px 64px rgba(57, 127, 172, 0.12);
+}
+
+.aligners-floating-logo {
+  position: absolute;
+  top: -50px;
+  right: max(-520px, calc((100vw - 1240px) / 2 - 520px));
+  z-index: 4;
+  width: min(1600px, 35vw);
+  max-height: 500px;
+  display: block;
+  margin: 0;
+  object-fit: contain;
+  border-radius: 28px;
+  opacity: 0.98;
+  pointer-events: none;
+  filter: drop-shadow(0 18px 32px rgba(19, 76, 108, 0.16));
+  animation: aligners-logo-float 4.8s ease-in-out infinite;
+}
+
+@keyframes aligners-logo-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.aligners-section-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 24px;
+}
+
+.aligners-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 118px;
+}
+
+.aligners-carousel-controls {
+  display: flex;
+  gap: 10px;
+  margin-right: min(470px, 37vw);
+}
+
+.aligners-arrow {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(11, 126, 164, 0.2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #006d8d;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1;
+  box-shadow: 0 14px 30px rgba(57, 127, 172, 0.14);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.aligners-arrow:hover,
+.aligners-arrow:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px rgba(57, 127, 172, 0.18);
+}
+
+.aligners-carousel {
+  overflow: hidden;
+}
+
+.aligners-track {
+  display: flex;
+  transform: translateX(calc(var(--aligner-index) * -100%));
+  transition: transform 360ms ease;
+}
+
+.aligners-track.no-transition {
+  transition: none;
+}
+
+.aligners-case-card {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.36fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  padding: 20px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(102, 181, 220, 0.24);
+  box-shadow: 0 20px 48px rgba(57, 127, 172, 0.14);
+  backdrop-filter: blur(5px);
+}
+
+.aligners-case-copy {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.aligners-case-copy span {
+  width: fit-content;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #ff0201;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.aligners-case-copy h3 {
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(1.35rem, 2.4vw, 2.05rem);
+  line-height: 1.08;
+}
+
+.aligners-case-copy p {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.aligners-case-photo {
+  position: relative;
+  min-height: 330px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(0, 109, 141, 0.12);
+}
+
+.aligners-case-photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 330px;
+  display: block;
+  object-fit: contain;
+}
+
+.aligners-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.aligners-dots button {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 109, 141, 0.24);
+  cursor: pointer;
+}
+
+.aligners-dots button.active {
+  width: 28px;
+  background: #ff0201;
+}
+
 .dentists-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -2401,7 +2638,8 @@ video.treatment-image {
   height: 240px;
   margin-bottom: 16px;
   border-radius: 18px;
-  background-position: center;
+  background-position: center 18%;
+  background-repeat: no-repeat;
   background-size: cover;
   transform: scale(1);
   filter: grayscale(1);
@@ -2632,6 +2870,174 @@ video.treatment-image {
   background:
     linear-gradient(180deg, rgba(255, 246, 244, 0.92), rgba(247, 249, 251, 0.96)),
     #ffffff;
+}
+
+.privacy-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 80% 8%, rgba(255, 2, 1, 0.1), transparent 34%),
+    linear-gradient(180deg, #fff7f6, #ffffff 34%, #fff8f7);
+}
+
+.privacy-hero {
+  width: min(1060px, calc(100% - 32px));
+  margin: 34px auto 0;
+  display: grid;
+  justify-items: center;
+  padding: 52px 28px 46px;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 243, 241, 0.94)),
+    radial-gradient(circle at top right, rgba(255, 2, 1, 0.18), transparent 42%);
+  border: 1px solid rgba(215, 25, 32, 0.16);
+  box-shadow: 0 28px 74px rgba(185, 19, 25, 0.12);
+  text-align: center;
+}
+
+.privacy-hero-mark {
+  width: 104px;
+  height: 104px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+  border-radius: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(215, 25, 32, 0.14);
+  box-shadow: 0 18px 42px rgba(185, 19, 25, 0.12);
+}
+
+.privacy-hero-mark img {
+  width: 86px;
+  height: 86px;
+  display: block;
+  object-fit: contain;
+}
+
+.privacy-hero h1 {
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(2.25rem, 5vw, 4.4rem);
+  line-height: 1;
+}
+
+.privacy-hero p {
+  max-width: 760px;
+  margin: 18px 0 0;
+  color: var(--text);
+  font-size: 1.08rem;
+  line-height: 1.62;
+}
+
+.privacy-hero span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  margin-top: 20px;
+  padding: 0 15px;
+  border-radius: 999px;
+  background: rgba(215, 25, 32, 0.1);
+  color: var(--accent-strong);
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.privacy-content {
+  width: min(1060px, calc(100% - 32px));
+  margin: 26px auto 56px;
+  display: grid;
+  gap: 16px;
+}
+
+.privacy-intro-card,
+.privacy-policy-card {
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(119, 30, 35, 0.12);
+  box-shadow: 0 18px 48px rgba(36, 45, 54, 0.08);
+}
+
+.privacy-intro-card {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 246, 244, 0.92));
+  border-color: rgba(215, 25, 32, 0.16);
+}
+
+.privacy-intro-card h2,
+.privacy-policy-card h2 {
+  margin: 0 0 10px;
+  color: var(--heading);
+  font-size: clamp(1.24rem, 2.1vw, 1.7rem);
+  line-height: 1.16;
+}
+
+.privacy-intro-card p,
+.privacy-policy-card p,
+.privacy-policy-card li,
+.privacy-policy-card address span,
+.privacy-policy-card address a {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.68;
+}
+
+.privacy-policy-card p {
+  margin: 0 0 12px;
+}
+
+.privacy-policy-card p:last-child {
+  margin-bottom: 0;
+}
+
+.privacy-policy-card strong {
+  display: block;
+  margin: 8px 0 8px;
+  color: var(--heading);
+}
+
+.privacy-policy-card ul {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 0;
+  padding-left: 22px;
+}
+
+.privacy-policy-card li::marker {
+  color: var(--accent-strong);
+}
+
+.privacy-note {
+  margin-top: 14px !important;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(215, 25, 32, 0.08);
+  color: var(--accent-strong) !important;
+  font-weight: 900;
+}
+
+.privacy-contact-card address {
+  display: grid;
+  gap: 7px;
+  margin: 14px 0 0;
+  font-style: normal;
+}
+
+.privacy-contact-card address strong {
+  margin: 0;
+  color: var(--accent-strong);
+}
+
+.privacy-contact-card address a {
+  color: var(--heading);
+  text-decoration: none;
+  font-weight: 900;
+}
+
+.privacy-disclaimer-card {
+  border-color: rgba(215, 25, 32, 0.22);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(255, 241, 239, 0.94));
 }
 
 .treatment-detail-page {
@@ -2934,7 +3340,7 @@ video.treatment-image {
   gap: 12px;
 }
 
-.treatment-detail-highlights article {
+.treatment-detail-highlights > article {
   display: grid;
   grid-template-columns: 42px minmax(0, 1fr);
   gap: 12px;
@@ -2947,7 +3353,7 @@ video.treatment-image {
   box-shadow: 0 14px 34px rgba(36, 45, 54, 0.08);
 }
 
-.treatment-detail-highlights span {
+.treatment-detail-highlights > article > span {
   width: 42px;
   height: 42px;
   display: grid;
@@ -2957,7 +3363,7 @@ video.treatment-image {
   background: #ffffff;
 }
 
-.treatment-detail-highlights span img {
+.treatment-detail-highlights > article > span img {
   width: 100%;
   height: 100%;
   display: block;
@@ -2969,6 +3375,127 @@ video.treatment-image {
   color: var(--text);
   font-weight: 800;
   line-height: 1.45;
+}
+
+.treatment-case-carousel {
+  overflow: hidden;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(119, 30, 35, 0.14);
+  box-shadow: 0 14px 34px rgba(36, 45, 54, 0.08);
+}
+
+.aligners-treatment-case-carousel {
+  width: 100%;
+}
+
+.treatment-case-track {
+  display: flex;
+  width: 100%;
+  transform: translateX(calc(var(--treatment-case-index) * -100%));
+  transition: transform 360ms ease;
+}
+
+.treatment-case-track.no-transition {
+  transition: none;
+}
+
+.treatment-case-slide {
+  flex: 0 0 100%;
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 14px;
+}
+
+.aligners-treatment-case-carousel .treatment-case-slide {
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+.treatment-case-slide img {
+  width: 100%;
+  height: 360px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 14px;
+  background: #fff7f5;
+}
+
+.aligners-treatment-case-carousel .treatment-case-slide img {
+  min-width: 0;
+  height: clamp(320px, 32vw, 430px);
+  object-fit: contain;
+}
+
+.treatment-case-slide div {
+  display: grid;
+  gap: 4px;
+}
+
+.treatment-case-slide span {
+  width: fit-content;
+  height: auto;
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(215, 25, 32, 0.1);
+  color: var(--accent-strong);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.treatment-case-slide strong {
+  color: var(--heading);
+  font-size: 1.02rem;
+  line-height: 1.2;
+}
+
+.treatment-case-slide p {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.treatment-case-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 12px 10px;
+}
+
+.treatment-case-dots button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(215, 25, 32, 0.22);
+  cursor: pointer;
+}
+
+.treatment-case-dots button.active {
+  width: 24px;
+  background: var(--accent-strong);
+}
+
+.treatment-case-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin: 0 12px 12px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ff0201, #b91319);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 900;
+  box-shadow: 0 14px 30px rgba(185, 19, 25, 0.22);
 }
 
 .scheme-hero {
@@ -5410,6 +5937,7 @@ video.treatment-image {
   }
 
   .site-brand-copy strong {
+    max-width: none;
     font-size: 0.98rem;
     line-height: 1.1;
   }
@@ -5645,20 +6173,28 @@ video.treatment-image {
     height: 42px;
   }
 
-  .treatment-detail-highlights article {
+  .treatment-detail-highlights > article {
     grid-template-columns: 36px minmax(0, 1fr);
     min-height: 0;
     padding: 14px;
   }
 
-  .treatment-detail-highlights span {
+  .treatment-detail-highlights > article > span {
     width: 36px;
     height: 36px;
   }
 
-  .treatment-detail-highlights span img {
+  .treatment-detail-highlights > article > span img {
     width: 100%;
     height: 100%;
+  }
+
+  .treatment-case-slide img {
+    height: 260px;
+  }
+
+  .aligners-treatment-case-carousel .treatment-case-slide img {
+    height: min(78vw, 340px);
   }
 
   .hero-accreditation {
@@ -5697,6 +6233,7 @@ video.treatment-image {
 
   .services-overview,
   .instagram-section,
+  .aligners-section,
   .treatment-section,
   .dentists-section,
   .why-section,
@@ -5717,6 +6254,55 @@ video.treatment-image {
 
   .instagram-follow-button {
     width: fit-content;
+  }
+
+  .dentists-section {
+    width: calc(100vw - 28px);
+    margin-left: calc(50% - 50vw + 14px);
+    padding: 52px 14px 28px;
+    border-radius: 22px;
+    background-position: center top;
+    background-size: auto 100%;
+  }
+
+  .aligners-section {
+    width: calc(100vw - 28px);
+    margin-left: calc(50% - 50vw + 14px);
+    padding: 72px 14px 26px;
+    border-radius: 22px;
+    background-position: center top;
+    background-size: cover;
+  }
+
+  .aligners-floating-logo {
+    top: 16px;
+    right: 14px;
+    width: min(220px, 58vw);
+    max-height: 112px;
+    border-radius: 16px;
+  }
+
+  .aligners-carousel-controls {
+    margin-right: 0;
+  }
+
+  .aligners-heading {
+    align-items: start;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .aligners-case-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .aligners-case-photo,
+  .aligners-case-photo img {
+    min-height: 220px;
+    border-radius: 18px;
   }
 
   .why-section {
@@ -5980,8 +6566,8 @@ video.treatment-image {
 
 @media (max-width: 430px) {
   .site-brand-copy strong {
-    max-width: 11.5rem;
-    font-size: 0.88rem;
+    max-width: none;
+    font-size: 0.8rem;
   }
 
   .site-call,
@@ -6103,13 +6689,13 @@ video.treatment-image {
 
 @media (max-width: 1320px) and (min-width: 761px) {
   .site-brand {
-    flex-basis: 184px;
-    min-width: 184px;
+    flex-basis: 238px;
+    min-width: 238px;
   }
 
   .site-brand-copy strong {
-    max-width: 8.2rem;
-    font-size: 0.9rem;
+    max-width: none;
+    font-size: 0.84rem;
     line-height: 1.05;
   }
 

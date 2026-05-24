@@ -22,7 +22,12 @@ export function TreatmentPage({ page }) {
   const pageRef = useRef(null)
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
   const [expandedMedia, setExpandedMedia] = useState(null)
+  const [activeCaseIndex, setActiveCaseIndex] = useState(0)
+  const [isCaseTransitioning, setIsCaseTransitioning] = useState(true)
   const selectedClinic = clinicBranches[selectedClinicIndex] ?? clinicBranches[0]
+  const caseCarousel = page.caseCarousel ?? []
+  const visibleCaseIndex = caseCarousel.length ? activeCaseIndex % caseCarousel.length : 0
+  const renderedCaseCarousel = caseCarousel.length ? [...caseCarousel, caseCarousel[0]] : []
 
   useGsapParallaxDepth(pageRef)
 
@@ -78,6 +83,38 @@ export function TreatmentPage({ page }) {
       window.removeEventListener('keydown', handleEscape)
     }
   }, [expandedMedia])
+
+  useEffect(() => {
+    if (caseCarousel.length < 2) {
+      return undefined
+    }
+
+    const slideTimer = window.setInterval(() => {
+      setIsCaseTransitioning(true)
+      setActiveCaseIndex((current) => Math.min(current + 1, caseCarousel.length))
+    }, 3600)
+
+    return () => window.clearInterval(slideTimer)
+  }, [caseCarousel.length])
+
+  useEffect(() => {
+    if (isCaseTransitioning || activeCaseIndex !== 0) {
+      return undefined
+    }
+
+    const transitionTimer = window.requestAnimationFrame(() => {
+      setIsCaseTransitioning(true)
+    })
+
+    return () => window.cancelAnimationFrame(transitionTimer)
+  }, [activeCaseIndex, isCaseTransitioning])
+
+  const handleCaseTransitionEnd = () => {
+    if (activeCaseIndex === caseCarousel.length) {
+      setIsCaseTransitioning(false)
+      setActiveCaseIndex(0)
+    }
+  }
 
   return (
     <main
@@ -192,6 +229,52 @@ export function TreatmentPage({ page }) {
                 </article>
               )
             })}
+
+            {caseCarousel.length ? (
+              <div
+                className={`treatment-case-carousel${
+                  page.variant === 'aligners-treatment' ? ' aligners-treatment-case-carousel' : ''
+                }`}
+                aria-label={`${page.title} before and after cases`}
+              >
+                <div
+                  className={`treatment-case-track${isCaseTransitioning ? '' : ' no-transition'}`}
+                  style={{ '--treatment-case-index': activeCaseIndex }}
+                  onTransitionEnd={handleCaseTransitionEnd}
+                >
+                  {renderedCaseCarousel.map((caseItem, index) => (
+                    <article className="treatment-case-slide" key={`${caseItem.label}-${caseItem.title}-${index}`}>
+                      <img src={caseItem.image} alt={`${caseItem.label} ${caseItem.title} before and after`} />
+                      <div>
+                        <span>{caseItem.label}</span>
+                        <strong>{caseItem.title}</strong>
+                        <p>{caseItem.detail}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+
+                <div className="treatment-case-dots" aria-label={`${page.title} case carousel pagination`}>
+                  {caseCarousel.map((caseItem, index) => (
+                    <button
+                      type="button"
+                      key={`${caseItem.label}-${caseItem.title}`}
+                      className={index === visibleCaseIndex ? 'active' : ''}
+                      aria-label={`Show ${caseItem.label} ${caseItem.title}`}
+                      aria-current={index === visibleCaseIndex ? 'true' : undefined}
+                      onClick={() => {
+                        setIsCaseTransitioning(true)
+                        setActiveCaseIndex(index)
+                      }}
+                    />
+                  ))}
+                </div>
+
+                <a className="treatment-case-more" href="/#aligners-gallery">
+                  More testimonials
+                </a>
+              </div>
+            ) : null}
           </div>
         </section>
 

@@ -19,6 +19,10 @@ export function SiteFooter() {
           <a href="/schemes">Schemes</a>
           <a href="/#dentists">Doctors</a>
           <a href="/#contact">Contact</a>
+          <a href="/privacy-policy">Privacy Policy</a>
+          <a href="/terms-and-conditions">Terms &amp; Conditions</a>
+          <a href="/cookies-policy">Cookie Policy</a>
+          <a href="/refund-and-cancellation-policy">Refund &amp; Cancellation</a>
         </div>
         <div className="footer-social-links" aria-label="Social media links">
           <a href={instagramProfileUrl} target="_blank" rel="noreferrer" aria-label="Instagram">

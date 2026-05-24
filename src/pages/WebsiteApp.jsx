@@ -7,6 +7,7 @@ import {
   FaqSection,
   HeroSection,
   HomeHeader,
+  AlignersSection,
   InstagramSection,
   KpiSection,
   ServicesOverview,
@@ -112,6 +113,23 @@ export function WebsiteApp({ onLoadingChange }) {
   useEffect(() => {
     onLoadingChange?.(isLoading)
   }, [isLoading, onLoadingChange])
+
+  useEffect(() => {
+    if (isLoading || !window.location.hash) {
+      return undefined
+    }
+
+    const targetId = window.location.hash.slice(1)
+
+    const scrollTimer = window.setTimeout(() => {
+      document.getElementById(targetId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    }, 120)
+
+    return () => window.clearTimeout(scrollTimer)
+  }, [isLoading])
 
   const handleClinicChange = (direction) => {
     setSelectedClinicIndex((current) =>
@@ -555,6 +573,8 @@ export function WebsiteApp({ onLoadingChange }) {
           onBookTreatment={handleModalBooking}
         />
         <BrandSection />
+        <InstagramSection displayedInstagramPosts={displayedInstagramPosts} />
+        <AlignersSection />
         <VideoTestimonialsSection
           carouselTestimonials={carouselTestimonials}
           testimonialSlideIndex={testimonialSlideIndex}
@@ -562,7 +582,6 @@ export function WebsiteApp({ onLoadingChange }) {
           onHoverChange={setIsTestimonialHovered}
           onMuteToggle={handleTestimonialMuteToggle}
         />
-        <InstagramSection displayedInstagramPosts={displayedInstagramPosts} />
         <DentistsSection />
         <WhyChooseUsSection />
         <FaqSection />

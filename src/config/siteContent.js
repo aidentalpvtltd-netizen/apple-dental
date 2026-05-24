@@ -1669,6 +1669,7 @@ export const treatmentPages = {
   '/general-dentistry/aligners': {
     category: 'General Dentistry',
     title: 'Aligners',
+    variant: 'aligners-treatment',
     navLabel: 'Aligners',
     eyebrow: 'Removable clear orthodontic trays',
     image: '/services/Clear Aligners Page.png',
@@ -1684,6 +1685,32 @@ export const treatmentPages = {
       'Transparent trays designed for discreet orthodontic correction',
       'Removable for meals, brushing, and flossing',
       'Best results depend on wearing them 20 to 22 hours daily',
+    ],
+    caseCarousel: [
+      {
+        label: 'Atul',
+        title: 'Open Bites',
+        detail: '9 Months, 49 Aligners',
+        image: '/aligners/general/atul-open-bites.png',
+      },
+      {
+        label: 'Khajan',
+        title: 'Deep Bite',
+        detail: '9 Months, 49 Aligners',
+        image: '/aligners/general/khajan-deep-bite.png',
+      },
+      {
+        label: 'Aakanksha',
+        title: 'Forwardly Placed & Deep Bite',
+        detail: '10 Months, 32 Aligners',
+        image: '/aligners/cases/aligner-case-01.png',
+      },
+      {
+        label: 'Aarti',
+        title: 'Crowding',
+        detail: '10 Months, 32 Aligners',
+        image: '/aligners/cases/aligner-case-02.png',
+      },
     ],
     faqIntro:
       'These General Dentistry FAQs apply to aligners and the other treatments in this category.',
@@ -2036,25 +2063,16 @@ export const services = [
 
 export const dentists = [
   {
-    name: 'Dr. Ananya Reddy',
-    role: 'Cosmetic & Family Dentist',
-    bio: 'Known for smile design, veneers, and conservative aesthetic treatment plans for working professionals and families.',
-    image:
-      'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=80',
+    name: 'Dr. Parthasarathy',
+    role: 'Founder, Director and Managing Director',
+    bio: 'Founder leadership guiding Apple International Dental with a focus on patient care, clinical standards, and multi-branch dental excellence.',
+    image: '/doctors/dr-parthasarathy.jpeg',
   },
   {
-    name: 'Dr. Rohit Varma',
-    role: 'Implant & Restorative Dentist',
-    bio: 'Handles implants, crowns, full-mouth rehabilitation, and complex bite restoration with digital planning workflows.',
-    image:
-      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=80',
-  },
-  {
-    name: 'Dr. Meera Iyer',
-    role: 'Pediatric & Preventive Dentist',
-    bio: 'Supports child-friendly visits, preventive care, and parent guidance to help children build healthy dental habits early.',
-    image:
-      'https://images.unsplash.com/photo-1594824388853-d0cfe3f19b1c?auto=format&fit=crop&w=900&q=80',
+    name: 'Dr. Suma',
+    role: 'Founder and Director',
+    bio: 'Founder leadership supporting patient-first dentistry, clinic operations, and consistent care across Apple International Dental.',
+    image: '/doctors/dr-suma.jpeg',
   },
 ]
 
