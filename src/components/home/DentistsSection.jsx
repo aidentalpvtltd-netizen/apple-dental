@@ -20,7 +20,11 @@ export function DentistsSection() {
           <article className="dentist-card" key={dentist.name}>
             <div
               className="dentist-photo"
-              style={{ backgroundImage: `url(${dentist.image})` }}
+              style={{
+                backgroundImage: `url(${dentist.image})`,
+                backgroundPosition: dentist.imagePosition,
+                backgroundSize: dentist.imageSize,
+              }}
               aria-label={dentist.name}
             />
             <h3>{dentist.name}</h3>

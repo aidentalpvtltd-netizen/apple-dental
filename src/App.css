@@ -2725,12 +2725,32 @@ video.treatment-image {
   height: 100%;
   min-height: 360px;
   display: block;
+  object-fit: contain;
+}
+
+.clinic-image-frame img.clinic-image-fill {
   object-fit: cover;
+}
+
+.clinic-image-frame-backdrop::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: -18px;
+  background: center / cover no-repeat var(--clinic-frame-image);
+  filter: blur(12px);
+  opacity: 0.52;
+}
+
+.clinic-image-frame-backdrop img {
+  position: relative;
+  z-index: 1;
 }
 
 .clinic-image-frame::after {
   content: '';
   position: absolute;
+  z-index: 1;
   inset: 45% 0 0;
   background: linear-gradient(180deg, transparent, rgba(18, 22, 27, 0.64));
   pointer-events: none;

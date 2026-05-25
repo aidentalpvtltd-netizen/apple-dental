@@ -1,6 +1,23 @@
 import { heroImage, formatPhoneDisplay, getGoogleMapsUrl } from '../../config/siteContent.js'
 
+const filledImageBranches = new Set([
+  'Gajuwaka, Visakhapatnam',
+  'Gachibowli, Hyderabad',
+  'Habsiguda, Hyderabad',
+  'Kondapur, Hyderabad',
+  'Nellore',
+  'Nakkal Road, Vijayawada',
+  'One Town (Panja), Vijayawada',
+  'Guntur',
+  'Dwaraka Nagar, Visakhapatnam',
+  'Tirupati',
+  'Rajamundry',
+])
+
 export function ContactSection({ selectedClinic, onClinicChange }) {
+  const shouldFillImageFrame = filledImageBranches.has(selectedClinic.area)
+  const shouldUseImageBackdrop = !shouldFillImageFrame
+
   return (
     <section className="contact-section reveal-section" id="contact">
       <div className="contact-card">
@@ -14,8 +31,16 @@ export function ContactSection({ selectedClinic, onClinicChange }) {
         </div>
 
         <div className="clinic-carousel" aria-live="polite">
-          <div className="clinic-image-frame">
+          <div
+            className={`clinic-image-frame${shouldUseImageBackdrop ? ' clinic-image-frame-backdrop' : ''}`}
+            style={
+              shouldUseImageBackdrop
+                ? { '--clinic-frame-image': `url("${selectedClinic.image}")` }
+                : undefined
+            }
+          >
             <img
+              className={shouldFillImageFrame ? 'clinic-image-fill' : undefined}
               src={selectedClinic.image}
               alt={`${selectedClinic.area} branch`}
               onError={(event) => {

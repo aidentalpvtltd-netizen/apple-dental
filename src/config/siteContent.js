@@ -2063,16 +2063,24 @@ export const services = [
 
 export const dentists = [
   {
-    name: 'Dr. Parthasarathy',
+    name: 'Dr. Parthasarathy, MDS',
     role: 'Founder, Director and Managing Director',
     bio: 'Founder leadership guiding Apple International Dental with a focus on patient care, clinical standards, and multi-branch dental excellence.',
     image: '/doctors/dr-parthasarathy.jpeg',
   },
   {
-    name: 'Dr. Suma',
+    name: 'Dr. Suma, MDS',
     role: 'Founder and Director',
     bio: 'Founder leadership supporting patient-first dentistry, clinic operations, and consistent care across Apple International Dental.',
     image: '/doctors/dr-suma.jpeg',
+  },
+  {
+    name: 'Dr . Mohammed Moosa, BDS',
+    role: 'CEO',
+    bio: 'Chief Executive Officer guiding Apple International Dental with a commitment to patient-focused care, quality standards, and organizational growth.',
+    image: '/doctors/dr-mohammed-moosa.png',
+    imagePosition: 'center 25%',
+    imageSize: '150% auto',
   },
 ]
 
