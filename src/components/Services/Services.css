@@ -1,0 +1,361 @@
+.services-overview,
+.instagram-section,
+.aligners-section,
+.treatment-section,
+.dentists-section,
+.why-section,
+.faq-section {
+  margin-top: 52px;
+}
+
+.services-overview {
+  position: relative;
+  isolation: isolate;
+}
+
+.services-overview::before {
+  content: '';
+  position: absolute;
+  inset: -28px calc(50% - 50vw);
+  z-index: -1;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.79), rgba(255, 249, 247, 0.72)),
+    url('/decor/second-section-bg.png') center / cover no-repeat;
+  border-top: 1px solid rgba(119, 30, 35, 0.06);
+  border-bottom: 1px solid rgba(119, 30, 35, 0.06);
+}
+
+.services-heading-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(350px, 560px);
+  align-items: center;
+  gap: 32px;
+}
+
+.services-accreditation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transform: translateX(80px);
+}
+
+.services-accreditation img {
+  width: 112px;
+  height: 112px;
+  display: block;
+  object-fit: contain;
+}
+
+.services-accreditation strong {
+  max-width: 275px;
+  color: var(--heading);
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-weight: 800;
+  line-height: 1.22;
+}
+
+.services-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+  gap: 20px;
+  margin-top: 20px;
+  align-items: start;
+}
+
+.services-schemes-column {
+  position: relative;
+}
+
+.services-info-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.services-schemes-promo {
+  position: absolute;
+  top: 126px;
+  left: calc(100% + 30px);
+  display: grid;
+  align-content: center;
+  width: clamp(150px, 14vw, 245px);
+  gap: 2px;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.services-schemes-text {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.services-schemes-text img,
+.services-schemes-arrow img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.services-promo-sparkle,
+.services-promo-sparkle::before,
+.services-promo-sparkle::after {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2), 0 0 15px 7px rgba(255, 217, 220, 0.82);
+  opacity: 0;
+  content: '';
+  pointer-events: none;
+}
+
+.services-promo-sparkle {
+  top: 16%;
+  right: 22%;
+  animation: services-scheme-sparkle 4.8s ease-in-out infinite;
+}
+
+.services-promo-sparkle::before {
+  top: 32px;
+  right: 72px;
+  animation: services-scheme-sparkle 4.8s 0.12s ease-in-out infinite;
+}
+
+.services-promo-sparkle::after {
+  top: 75px;
+  right: -5px;
+  animation: services-scheme-sparkle 4.8s 0.2s ease-in-out infinite;
+}
+
+.services-schemes-arrow {
+  overflow: hidden;
+  animation: services-arrow-reveal 4.8s ease-in-out infinite;
+}
+
+.services-grid,
+.treatment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.service-card,
+.services-summary,
+.treatment-card,
+.dentist-card,
+.instagram-card {
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid var(--line-soft);
+}
+
+.service-card,
+.services-summary,
+.dentist-card {
+  padding: 22px;
+}
+
+.service-visual {
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(215, 25, 32, 0.12), rgba(255, 255, 255, 0.96));
+  border: 1px solid rgba(119, 30, 35, 0.14);
+  overflow: hidden;
+}
+
+.service-visual img {
+  width: 86px;
+  height: 86px;
+  display: block;
+  object-fit: contain;
+  transition: transform 220ms ease;
+}
+
+.service-card:hover .service-visual img,
+.service-card:focus-within .service-visual img {
+  transform: scale(1.05);
+}
+
+.service-card h3,
+.dentist-card h3,
+.instagram-copy h3,
+.treatment-card h3 {
+  margin: 0 0 8px;
+  color: var(--heading);
+  font-size: 1.12rem;
+  line-height: 1.22;
+}
+
+.service-card p,
+.services-summary p,
+.dentist-card p,
+.treatment-card p,
+.instagram-copy p {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 1.03rem;
+}
+
+.services-summary h3 {
+  font-size: 1.35rem;
+  color: var(--heading);
+  font-family: inherit;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.services-summary-points {
+  display: grid;
+  gap: 0;
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #ff0201, #b91319);
+  box-shadow: 0 18px 38px rgba(185, 19, 25, 0.2);
+}
+
+.services-summary-points article {
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.services-summary-points article:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.services-summary-points article:last-child {
+  padding-bottom: 0;
+}
+
+.services-summary-points strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.services-summary-points p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .services-heading-row {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+  .services-accreditation {
+      justify-content: flex-start;
+      gap: 14px;
+    }
+
+  .services-accreditation img {
+      width: 70px;
+      height: 70px;
+    }
+
+  .services-accreditation strong {
+      font-size: 1.15rem;
+    }
+
+  .services-schemes-promo {
+      display: none;
+    }
+
+  .services-overview::before {
+      inset-block: -18px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 249, 247, 0.82)),
+        url('/decor/second-section-bg.png') center / cover no-repeat;
+    }
+
+  .services-overview,
+    .instagram-section,
+    .aligners-section,
+    .treatment-section,
+    .dentists-section,
+    .why-section,
+    .faq-section,
+    .booking-section,
+    .contact-section {
+      margin-top: 32px;
+    }
+
+  .treatment-card p,
+    .service-card p,
+    .dentist-card p,
+    .instagram-copy p {
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+  .service-visual {
+      width: 82px;
+      height: 82px;
+      margin-bottom: 14px;
+    }
+
+  .service-visual img {
+      width: 74px;
+      height: 74px;
+    }
+}
+
+@media (max-width: 760px) {
+  .services-overview {
+      margin-top: 23px;
+    }
+
+  .services-layout {
+      gap: 12px;
+    }
+
+  .services-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+  .service-card {
+      min-height: 112px;
+      padding: 10px;
+      border-radius: 15px;
+    }
+
+  .service-visual {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 8px;
+      border-radius: 12px;
+    }
+
+  .service-visual img {
+      width: 44px;
+      height: 44px;
+    }
+
+  .service-card h3 {
+      margin-bottom: 0;
+      font-size: 0.86rem;
+      line-height: 1.2;
+    }
+
+  .service-card p {
+      display: none;
+    }
+
+  .services-info-grid {
+      gap: 8px;
+    }
+}

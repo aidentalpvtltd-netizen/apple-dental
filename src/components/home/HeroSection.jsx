@@ -1,12 +1,88 @@
-import { SchemeLogoStrip } from '../SiteNav.jsx'
-import { heroCarouselImages } from '../../config/siteContent.js'
+import { useEffect, useState } from 'react'
+import { heroImages } from '../../config/siteContent.js'
+
+const heroCarouselSlides = [...heroImages, heroImages[0]]
 
 export function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(true)
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setIsTransitioning(true)
+      setCurrentSlide((slide) => (slide >= heroImages.length ? slide : slide + 1))
+    }, 5600)
+
+    return () => window.clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    if (currentSlide !== heroImages.length) {
+      return undefined
+    }
+
+    const resetTimer = window.setTimeout(() => {
+      setIsTransitioning(false)
+      setCurrentSlide(0)
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          setIsTransitioning(true)
+        })
+      })
+    }, 760)
+
+    return () => window.clearTimeout(resetTimer)
+  }, [currentSlide])
+
+  const showPreviousSlide = () => {
+    if (currentSlide === 0) {
+      setIsTransitioning(false)
+      setCurrentSlide(heroImages.length)
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          setIsTransitioning(true)
+          setCurrentSlide(heroImages.length - 1)
+        })
+      })
+      return
+    }
+
+    setIsTransitioning(true)
+    setCurrentSlide((slide) => slide - 1)
+  }
+
+  const showNextSlide = () => {
+    setIsTransitioning(true)
+    setCurrentSlide((slide) => (slide >= heroImages.length ? 1 : slide + 1))
+  }
+
+  const handleSlideTransitionEnd = () => {
+    if (currentSlide !== heroImages.length) {
+      return
+    }
+
+    setIsTransitioning(false)
+    setCurrentSlide(0)
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        setIsTransitioning(true)
+      })
+    })
+  }
+
   return (
     <section className="hero-section reveal-section">
       <div className="hero-image-card">
-        <div className="hero-slide-track" aria-hidden="true">
-          {heroCarouselImages.map((image, index) => (
+        <div
+          className="hero-slide-track"
+          aria-hidden="true"
+          onTransitionEnd={handleSlideTransitionEnd}
+          style={{
+            transform: `translateX(-${Math.min(currentSlide, heroImages.length) * (100 / heroCarouselSlides.length)}%)`,
+            transition: isTransitioning ? undefined : 'none',
+          }}
+        >
+          {heroCarouselSlides.map((image, index) => (
             <div
               className="hero-slide"
               key={`${image}-${index}`}
@@ -14,58 +90,26 @@ export function HeroSection() {
             />
           ))}
         </div>
-        <div className="hero-overlay">
-          <div className="hero-copy">
-            <p className="eyebrow">Apple International Dental</p>
-            <div className="hero-accreditation">
-              <img src="/badges/nabh-accredited-dental-hospital.png" alt="NABH Accredited" />
-              <span>NABH ACCREDITED DENTAL HOSPITAL</span>
-            </div>
-            <h1>No.1 Trusted Dental Care in South India.</h1>
-            <p className="hero-text">
-              From routine cleanings and kids checkups to aligners, implants, and emergency
-              dentistry, our dental clinics in Andhra Pradesh, Telangana and Karnataka offers
-              complete care and services.
-            </p>
-
-            <div className="hero-actions">
-              <a className="secondary-action" href="#services">
-                Our services
-              </a>
-            </div>
-          </div>
-
-          <div className="hero-info-grid">
-            <article className="hero-info-card">
-              <span>Hours</span>
-              <strong>Mon - Sun: 10:00 am to 8:00 pm</strong>
-            </article>
-            <a className="hero-info-card hero-scheme-card-link" href="/schemes?scroll=scheme-list">
-              <span>CGHS and ECHS</span>
-              <SchemeLogoStrip schemes={['CGHS', 'ECHS']} />
-              <strong>
-                Dental care guidance for eligible government and ex-servicemen scheme patients
-              </strong>
-            </a>
-            <a className="hero-info-card hero-scheme-card-link" href="/schemes?scroll=scheme-list">
-              <span>EHS and ESIC</span>
-              <SchemeLogoStrip schemes={['EHS', 'ESIC']} />
-              <strong>
-                Scheme document support for employee health and insured patient dental visits
-              </strong>
-            </a>
-            <a
-              className="hero-info-card hero-scheme-card-link accent"
-              href="/schemes?scroll=scheme-list"
-            >
-              <span>CAPF, CRPF, SCR, ABS</span>
-              <SchemeLogoStrip schemes={['CAPF', 'CRPF', 'SCR', 'ABS']} />
-              <strong>
-                Branch help desk for defence, railway, and Aarogya Bhadratha dental approvals
-              </strong>
-            </a>
-          </div>
-        </div>
+        <button
+          className="hero-carousel-arrow hero-carousel-arrow-left"
+          type="button"
+          aria-label="Show previous banner"
+          onClick={showPreviousSlide}
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+            <path d="M15 5 8 12l7 7" />
+          </svg>
+        </button>
+        <button
+          className="hero-carousel-arrow hero-carousel-arrow-right"
+          type="button"
+          aria-label="Show next banner"
+          onClick={showNextSlide}
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+            <path d="m9 5 7 7-7 7" />
+          </svg>
+        </button>
       </div>
     </section>
   )

@@ -1,0 +1,293 @@
+.contact-section {
+  margin-top: 52px;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.75fr);
+  grid-template-areas:
+    'copy details'
+    'carousel details';
+  align-items: stretch;
+  gap: 20px;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent;
+  color: var(--text);
+  border: 0;
+  box-shadow: none;
+}
+
+.contact-copy {
+  grid-area: copy;
+}
+
+.contact-copy h2 {
+  margin: 0 0 12px;
+  font-size: 2rem;
+  line-height: 1.15;
+  color: var(--heading);
+}
+
+.contact-copy .section-text {
+  color: var(--text-soft);
+}
+
+.contact-grid {
+  grid-area: details;
+  display: grid;
+  grid-template-rows: 196px 112px 112px 112px;
+  gap: 14px;
+  min-height: 574px;
+}
+
+.clinic-carousel {
+  grid-area: carousel;
+  display: grid;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.clinic-image-frame {
+  position: relative;
+  height: 360px;
+  min-height: 360px;
+  max-height: 360px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(119, 30, 35, 0.18);
+  box-shadow: 0 18px 38px rgba(36, 45, 54, 0.12);
+  background: #f8ebe8;
+}
+
+.clinic-image-frame img {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  display: block;
+  object-fit: contain;
+}
+
+.clinic-image-frame img.clinic-image-fill {
+  object-fit: cover;
+}
+
+.clinic-image-frame-backdrop::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: -18px;
+  background: center / cover no-repeat var(--clinic-frame-image);
+  filter: blur(12px);
+  opacity: 0.52;
+}
+
+.clinic-image-frame-backdrop img {
+  position: relative;
+  z-index: 1;
+}
+
+.clinic-image-frame::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 45% 0 0;
+  background: linear-gradient(180deg, transparent, rgba(18, 22, 27, 0.64));
+  pointer-events: none;
+}
+
+.clinic-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--accent-strong);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1;
+  transform: translateY(-50%);
+  box-shadow: 0 14px 30px rgba(31, 39, 47, 0.18);
+}
+
+.clinic-arrow:hover {
+  background: #ffffff;
+}
+
+.clinic-arrow-left {
+  left: 14px;
+}
+
+.clinic-arrow-right {
+  right: 14px;
+}
+
+.clinic-image-caption {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 14px;
+  color: #ffffff;
+}
+
+.clinic-image-caption strong {
+  font-size: 1.15rem;
+  line-height: 1.2;
+}
+
+.clinic-image-caption span,
+.clinic-carousel-help {
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+.clinic-carousel-help {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.contact-item {
+  min-height: 112px;
+  overflow: hidden;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid var(--line-soft);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.contact-item span {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.contact-item strong {
+  display: block;
+  line-height: 1.35;
+  color: var(--heading);
+}
+
+.contact-item a,
+.contact-item > strong {
+  display: grid;
+  align-content: start;
+  max-height: 86px;
+  overflow: hidden;
+}
+
+.contact-item > strong {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.contact-item a strong {
+  display: block;
+  overflow: visible;
+}
+
+.contact-item a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-item a:hover strong,
+.contact-item a:focus-visible strong {
+  color: var(--accent-strong);
+}
+
+.contact-item small {
+  display: block;
+  margin-top: 4px;
+  color: var(--accent-strong);
+  font-weight: 800;
+}
+
+@media (max-width: 1080px) {
+  .contact-card {
+      grid-template-areas:
+        'copy'
+        'carousel'
+        'details';
+    }
+}
+
+@media (max-width: 760px) {
+  .contact-card {
+      padding: 16px;
+      border-radius: 22px;
+      gap: 16px;
+    }
+
+  .contact-copy h2 {
+      font-size: 1.45rem;
+    }
+
+  .clinic-image-frame,
+    .clinic-image-frame img {
+      height: 240px;
+      min-height: 240px;
+      max-height: 240px;
+    }
+
+  .contact-grid {
+      grid-template-rows: none;
+      min-height: 0;
+      gap: 10px;
+    }
+
+  .contact-item {
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      padding: 14px;
+      border-radius: 16px;
+    }
+
+  .contact-item:first-child,
+    .contact-item:not(:first-child) {
+      height: auto;
+      min-height: 0;
+      max-height: none;
+    }
+
+  .contact-item a,
+    .contact-item > strong {
+      max-height: none;
+    }
+
+  .contact-item a strong,
+    .contact-item > strong {
+      display: block;
+      -webkit-line-clamp: unset;
+    }
+}
+
+.contact-item:first-child {
+  height: 196px;
+  min-height: 196px;
+  max-height: 196px;
+}
+
+.contact-item:not(:first-child) {
+  height: 112px;
+  max-height: 112px;
+}

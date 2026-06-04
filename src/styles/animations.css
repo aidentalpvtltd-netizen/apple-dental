@@ -1,0 +1,344 @@
+@keyframes right-click-notice-in {
+  from {
+    opacity: 0;
+    transform: translate(8px, 14px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(8px, 8px) scale(1);
+  }
+}
+
+@keyframes loader-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hero-scheme-shine {
+  0%,
+  50%,
+  100% {
+    transform: translate(-44%, -44%);
+  }
+
+  82%,
+  99.9% {
+    transform: translate(44%, 44%);
+  }
+}
+
+@keyframes services-arrow-reveal {
+  0%,
+  13% {
+    clip-path: inset(0 0 0 100%);
+    opacity: 0;
+  }
+
+  48%,
+  82% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+  }
+}
+
+@keyframes services-scheme-sparkle {
+  0%,
+  12%,
+  36%,
+  60%,
+  84%,
+  100% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+
+  20%,
+  44%,
+  68% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  28%,
+  52%,
+  76% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes treatment-shine {
+  0% {
+    opacity: 0;
+    left: -70%;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    left: 122%;
+  }
+}
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes submit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes aligners-logo-float {
+  0%,
+  100% {
+    transform: translateY(-50%);
+  }
+
+  50% {
+    transform: translateY(calc(-50% - 10px));
+  }
+}
+
+@keyframes treatment-lightbox-fade {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0);
+  }
+
+  to {
+    opacity: 1;
+    backdrop-filter: blur(9px);
+  }
+}
+
+@keyframes treatment-media-zoom {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes scheme-logo-loop {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes whatsapp-menu-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chatbot-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chatbot-launcher-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.52);
+  }
+
+  45% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.18);
+  }
+
+  68% {
+    transform: translateY(2px) scale(0.94);
+  }
+
+  86% {
+    transform: translateY(-1px) scale(1.04);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chatbot-pop-ring {
+  0% {
+    opacity: 0.65;
+    transform: scale(0.66);
+  }
+
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(1.48);
+  }
+}
+
+@keyframes chatbot-bubble-pop {
+  0% {
+    opacity: 0;
+    transform: translate(-4px, 6px) scale(0.4);
+  }
+
+  32% {
+    opacity: 1;
+    transform: translate(0, -2px) scale(1.08);
+  }
+
+  58% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(0, -4px) scale(0.96);
+  }
+}
+
+@keyframes chatbot-attention-bounce {
+  0%,
+  82%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  86% {
+    transform: translateY(-7px) scale(1.04);
+  }
+
+  90% {
+    transform: translateY(0) scale(0.98);
+  }
+
+  94% {
+    transform: translateY(-4px) scale(1.02);
+  }
+
+  97% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes whatsapp-hint-arrow {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  18%,
+  78% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  48% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes whatsapp-button-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  22% {
+    transform: translateY(-5px) scale(1.04);
+  }
+
+  42% {
+    transform: translateY(0) scale(0.98);
+  }
+
+  62% {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
+
+@keyframes whatsapp-attention-bounce {
+  0%,
+  82%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  87% {
+    transform: translateY(-4px) scale(1.025);
+  }
+
+  91% {
+    transform: translateY(0) scale(0.992);
+  }
+
+  95% {
+    transform: translateY(-2px) scale(1.01);
+  }
+}
+
+@keyframes whatsapp-arrow-point {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(6px);
+  }
+}

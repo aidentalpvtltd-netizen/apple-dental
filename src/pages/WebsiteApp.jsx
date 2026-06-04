@@ -31,24 +31,19 @@ import {
   bookingEndpoint,
   formspreeEndpoint,
   consultationFeeAmount,
+  onlineConsultationFeeAmount,
   loaderMinimumDuration,
   loaderMaximumDuration,
-  concernWordLimit,
-  availabilityRefreshMs,
+  consultationTreatments,
   onlinePaymentMethod,
+  payAtClinicPaymentMethod,
   initialFormState,
-  limitWords,
   preloadImage,
   getPreloadImages,
   getActiveBookingLock,
   recordBookingSubmission,
   formatBookingCooldown,
   getTodayDateValue,
-  getAvailabilityKey,
-  getDateAvailability,
-  getDateSuggestions,
-  fetchBookingAvailability,
-  fetchBookingAvailabilityRange,
   submitFormToFormspree,
   submitBookingToSheets,
   collectConsultationPayment,
@@ -64,9 +59,6 @@ export function WebsiteApp({ onLoadingChange }) {
   const [bookingLock, setBookingLock] = useState(getActiveBookingLock)
   const [activeTreatmentId, setActiveTreatmentId] = useState('')
   const [liveInstagramPosts, setLiveInstagramPosts] = useState([])
-  const [bookingAvailability, setBookingAvailability] = useState({})
-  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false)
-  const [availabilityError, setAvailabilityError] = useState('')
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
   const [testimonialSlideIndex, setTestimonialSlideIndex] = useState(0)
   const [isTestimonialHovered, setIsTestimonialHovered] = useState(false)
@@ -75,7 +67,8 @@ export function WebsiteApp({ onLoadingChange }) {
   )
 
   const selectedTreatment =
-    treatments.find((treatment) => treatment.id === formState.treatment) ?? treatments[0]
+    consultationTreatments.find((treatment) => treatment.id === formState.treatment) ??
+    consultationTreatments[0]
   const activeTreatment = treatments.find((treatment) => treatment.id === activeTreatmentId)
   const activeTreatmentInsight = activeTreatment ? treatmentInsights[activeTreatment.id] : null
   const selectedClinic = clinicBranches[selectedClinicIndex] ?? clinicBranches[0]
@@ -84,27 +77,7 @@ export function WebsiteApp({ onLoadingChange }) {
   const isFormDisabled = isSubmitting || isBookingLocked
   const bookingCooldown = bookingLock ? formatBookingCooldown(bookingLock.submittedAt) : ''
   const todayDateValue = getTodayDateValue()
-  const selectedDateAvailability = getDateAvailability(
-    formState.branch,
-    formState.date,
-    bookingAvailability,
-  )
-  const suggestedDates = getDateSuggestions(formState.branch, bookingAvailability)
-  const hasAvailableSelectedDate =
-    Boolean(formState.date) &&
-    !selectedDateAvailability.isPast &&
-    !selectedDateAvailability.isClosed &&
-    !selectedDateAvailability.isFullyBooked
-  const requiresSlotSelection = !isBookingLocked && (!hasAvailableSelectedDate || !formState.timeSlot)
-  const appointmentStatusMessage = formState.date
-    ? isAvailabilityLoading
-      ? 'Checking the latest appointment slots...'
-      : selectedDateAvailability.isPast
-      ? 'Past dates are unavailable. Please choose today or a future date.'
-      : selectedDateAvailability.isClosed
-        ? 'This branch is closed on the selected date.'
-        : 'All consultation slots are currently open for appointment requests.'
-    : 'Select a date to view available time slots.'
+  const requiresSlotSelection = !isBookingLocked && (!formState.date || !formState.timeSlot)
   const displayedInstagramPosts = liveInstagramPosts.length ? liveInstagramPosts : instagramPosts
   const carouselTestimonials = [...videoTestimonials, ...videoTestimonials.slice(0, 3)]
 
@@ -224,104 +197,6 @@ export function WebsiteApp({ onLoadingChange }) {
   }, [])
 
   useEffect(() => {
-    if (!bookingEndpoint || !formState.branch) {
-      return undefined
-    }
-
-    let isMounted = true
-
-    const refreshAvailability = () => {
-      setIsAvailabilityLoading(true)
-      setAvailabilityError('')
-
-      fetchBookingAvailabilityRange({
-        branch: formState.branch,
-        startDate: todayDateValue,
-        days: 8,
-      })
-        .then((daysAvailability) => {
-          if (!isMounted) {
-            return
-          }
-
-          setBookingAvailability((current) => {
-            const nextAvailability = { ...current }
-
-            daysAvailability.forEach((day) => {
-              if (day.date) {
-                nextAvailability[getAvailabilityKey(formState.branch, day.date)] = day
-              }
-            })
-
-            return nextAvailability
-          })
-        })
-        .catch(() => {
-          if (isMounted) {
-            setAvailabilityError('Live slot sync is temporarily unavailable. Please try again.')
-          }
-        })
-        .finally(() => {
-          if (isMounted) {
-            setIsAvailabilityLoading(false)
-          }
-        })
-    }
-
-    refreshAvailability()
-    const refreshInterval = window.setInterval(refreshAvailability, availabilityRefreshMs)
-
-    return () => {
-      isMounted = false
-      window.clearInterval(refreshInterval)
-    }
-  }, [formState.branch, todayDateValue])
-
-  useEffect(() => {
-    if (!bookingEndpoint || !formState.branch || !formState.date) {
-      return undefined
-    }
-
-    let isMounted = true
-
-    const refreshSelectedDateAvailability = () => {
-      setIsAvailabilityLoading(true)
-      setAvailabilityError('')
-
-      fetchBookingAvailability({
-        branch: formState.branch,
-        date: formState.date,
-      })
-        .then((dateAvailability) => {
-          if (!isMounted || !dateAvailability) {
-            return
-          }
-
-          setBookingAvailability((current) => ({
-            ...current,
-            [getAvailabilityKey(formState.branch, formState.date)]: dateAvailability,
-          }))
-        })
-        .catch(() => {
-          if (isMounted) {
-            setAvailabilityError('Live slot sync is temporarily unavailable. Please try again.')
-          }
-        })
-        .finally(() => {
-          if (isMounted) {
-            setIsAvailabilityLoading(false)
-          }
-        })
-    }
-
-    refreshSelectedDateAvailability()
-
-    return () => {
-      isMounted = false
-    }
-  }, [formState.branch, formState.date])
-
-  useEffect(() => {
     const revealElements = document.querySelectorAll('.reveal-section')
 
     if (!('IntersectionObserver' in window)) {
@@ -372,27 +247,12 @@ export function WebsiteApp({ onLoadingChange }) {
     const nextValue =
       name === 'phone'
         ? value.replace(/\D/g, '').slice(0, 10)
-        : name === 'referredBy'
-          ? value.replace(/[^A-Za-z ]/g, '')
-          : name === 'email'
-            ? value.trim()
-          : name === 'concern'
-            ? limitWords(value, concernWordLimit)
           : value
 
     setFormState((current) => ({
       ...current,
       [name]: nextValue,
       ...(name === 'branch' || name === 'date' ? { timeSlot: '' } : {}),
-    }))
-    setSubmitError('')
-  }
-
-  const handleDateSuggestion = (dateValue) => {
-    setFormState((current) => ({
-      ...current,
-      date: dateValue,
-      timeSlot: '',
     }))
     setSubmitError('')
   }
@@ -449,9 +309,11 @@ export function WebsiteApp({ onLoadingChange }) {
 
     const treatmentName = selectedTreatment.name
     const branchName = formState.branch
+    const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
+    const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
 
     if (requiresSlotSelection) {
-      setSubmitError('Please choose an available date and time slot before sending the request.')
+      setSubmitError('Please choose a preferred date and time before sending the request.')
       return
     }
 
@@ -461,19 +323,21 @@ export function WebsiteApp({ onLoadingChange }) {
 
     try {
       let paymentDetails = {
-        paymentMethod: onlinePaymentMethod,
-        paymentStatus: 'Pending',
-        paymentAmount: consultationFeeAmount,
+        paymentMethod: formState.paymentMethod || onlinePaymentMethod,
+        paymentStatus: isPayAtClinic ? 'Payment due at clinic' : 'Pending',
+        paymentAmount: selectedFee,
       }
 
       if (bookingEndpoint) {
-        paymentDetails = await collectConsultationPayment({
-          name: formState.name,
-          phone: formState.phone,
-          email: formState.email,
-          branch: branchName,
-          source: 'Website consultation',
-        })
+        if (!isPayAtClinic) {
+          paymentDetails = await collectConsultationPayment({
+            name: formState.name,
+            phone: formState.phone,
+            email: '',
+            branch: branchName,
+            source: 'Website consultation',
+          })
+        }
 
         await submitBookingToSheets({
           formState: {
@@ -552,11 +416,6 @@ export function WebsiteApp({ onLoadingChange }) {
           handleChange={handleChange}
           handleDateFieldClick={handleDateFieldClick}
           todayDateValue={todayDateValue}
-          suggestedDates={suggestedDates}
-          handleDateSuggestion={handleDateSuggestion}
-          hasAvailableSelectedDate={hasAvailableSelectedDate}
-          appointmentStatusMessage={appointmentStatusMessage}
-          availabilityError={availabilityError}
           handleTimeSlotSelect={handleTimeSlotSelect}
           isSubmitting={isSubmitting}
           requiresSlotSelection={requiresSlotSelection}

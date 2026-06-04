@@ -1,0 +1,59 @@
+.dentists-section {
+  width: calc(100vw - 32px);
+  margin-left: calc(50% - 50vw + 16px);
+  padding: 72px max(18px, calc((100vw - 1240px) / 2 + 18px));
+  border-radius: 30px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 248, 248, 0.18)),
+    url('/doctors/doctors-section-bg.png') center top / 100% auto no-repeat;
+  border: 1px solid rgba(215, 25, 32, 0.1);
+}
+
+.dentists-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.dentist-photo {
+  height: 240px;
+  margin-bottom: 16px;
+  border-radius: 18px;
+  background-position: center 18%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: scale(1);
+  filter: grayscale(1);
+  transition:
+    filter 220ms ease,
+    transform 220ms ease;
+}
+
+.dentist-card:hover .dentist-photo,
+.dentist-card:focus-within .dentist-photo {
+  filter: grayscale(0);
+  transform: scale(1.035);
+}
+
+.dentist-card span {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1080px) {
+  .dentists-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+  .dentists-section {
+      width: calc(100vw - 28px);
+      margin-left: calc(50% - 50vw + 14px);
+      padding: 52px 14px 28px;
+      border-radius: 22px;
+      background-position: center top;
+      background-size: auto 100%;
+    }
+
+  .dentist-photo {
+      height: 190px;
+    }
+}

@@ -3,19 +3,19 @@ const PATIENTS_SHEET_NAME = 'Patients'
 const HISTORY_SHEET_NAME = 'Treatment History'
 const SUPPORT_CHATS_SHEET_NAME = 'Support Chats'
 const SUPPORT_MESSAGES_SHEET_NAME = 'Support Messages'
-const ACTIVE_STATUSES = new Set(['', 'booked', 'confirmed', 'walk-in', 'website', 'in treatment'])
-const COMPLETED_STATUS = 'Treatment Completed'
+const ACTIVE_STATUSES = new Set(['', 'booked', 'visited', 'in treatment'])
+const COMPLETED_STATUS = 'Treatment Complete'
 const MANUAL_SOURCE = 'Manual Walkin'
 const BOOKING_ROW_LIMIT = 1000
 const ADMIN_PASSWORD_PROPERTY = 'ADMIN_PASSWORD'
-const ADMIN_SESSION_TOKEN_PROPERTY = 'ADMIN_SESSION_TOKEN'
-const ADMIN_SESSION_EXPIRES_PROPERTY = 'ADMIN_SESSION_EXPIRES'
-const ADMIN_SESSION_BRANCH_PROPERTY = 'ADMIN_SESSION_BRANCH'
+const SUPER_ADMIN_PASSWORD_PROPERTY = 'SUPER_ADMIN_PASSWORD'
+const ADMIN_SESSION_PROPERTY_PREFIX = 'ADMIN_SESSION_'
 const RAZORPAY_KEY_ID_PROPERTY = 'RAZORPAY_KEY_ID'
 const RAZORPAY_KEY_SECRET_PROPERTY = 'RAZORPAY_KEY_SECRET'
 const ADMIN_SESSION_DURATION_MS = 8 * 60 * 60 * 1000
 const CONSULTATION_FEE_AMOUNT = 350
-const CONSULTATION_FEE_SUBUNITS = CONSULTATION_FEE_AMOUNT * 100
+const ONLINE_CONSULTATION_FEE_AMOUNT = 250
+const ONLINE_CONSULTATION_FEE_SUBUNITS = ONLINE_CONSULTATION_FEE_AMOUNT * 100
 const HEADERS = [
   'Timestamp',
   'Source',
@@ -87,7 +87,6 @@ const BRANCHES = [
   'Apple International Dental, Gajuwaka, Visakhapatnam',
   'Apple International Dental, Madanapalle',
   'Apple International Dental, Nakkal Road, Vijayawada',
-  'Apple International Dental, One Town (Panja), Vijayawada',
   'Apple International Dental, Srikakulam',
   'Apple International Dental, Guntur',
   'Apple International Dental, Dwaraka Nagar, Visakhapatnam',
@@ -131,13 +130,10 @@ const APPOINTMENT_SLOTS = [
 const SOURCES = ['Apple International Dental website', 'Website', MANUAL_SOURCE, 'Phone Booking', 'Reception Booking']
 const STATUSES = [
   'Booked',
-  'Confirmed',
-  'Walk-in',
-  'Website',
+  'Visited',
   'In Treatment',
   COMPLETED_STATUS,
   'Cancelled',
-  'No Show',
 ]
 
 function onOpen() {
@@ -203,9 +199,12 @@ function doGet(event) {
 
 function doPost(event) {
   const payload = parsePayload(event)
-  const lock = LockService.getScriptLock()
+  const needsLock = needsWriteLock(payload.action)
+  const lock = needsLock ? LockService.getScriptLock() : null
 
-  lock.waitLock(10000)
+  if (lock) {
+    lock.waitLock(10000)
+  }
 
   try {
     if (payload.action === 'admin-login') {
@@ -307,13 +306,37 @@ function doPost(event) {
 
     return jsonResponse({ ok: true, bookingId })
   } finally {
-    lock.releaseLock()
+    if (lock) {
+      lock.releaseLock()
+    }
   }
 }
 
+function needsWriteLock(action) {
+  const normalizedAction = String(action || '').trim()
+
+  if (!normalizedAction) {
+    return true
+  }
+
+  return [
+    'admin-login',
+    'admin-create-booking',
+    'admin-update-booking',
+    'support-create-chat',
+    'support-send-message',
+    'admin-support-send-message',
+    'create-booking',
+    'create-payment-order',
+    'verify-payment',
+  ].includes(normalizedAction)
+}
+
 function handleAdminLogin(payload) {
+  const role = String(payload.role || '').trim() === 'super' ? 'super' : 'branch'
+  const passwordProperty = role === 'super' ? SUPER_ADMIN_PASSWORD_PROPERTY : ADMIN_PASSWORD_PROPERTY
   const configuredPassword = PropertiesService.getScriptProperties().getProperty(
-    ADMIN_PASSWORD_PROPERTY,
+    passwordProperty,
   )
   const password = String(payload.password || '')
   const branch = String(payload.branch || '').trim()
@@ -321,7 +344,7 @@ function handleAdminLogin(payload) {
   if (!configuredPassword) {
     return jsonResponse({
       ok: false,
-      message: 'Admin password is not configured in Apps Script properties.',
+      message: `${role === 'super' ? 'Super admin' : 'Admin'} password is not configured in Apps Script properties.`,
     })
   }
 
@@ -329,23 +352,27 @@ function handleAdminLogin(payload) {
     return jsonResponse({ ok: false, message: 'Invalid admin password.' })
   }
 
-  if (!BRANCHES.includes(branch)) {
+  if (role !== 'super' && !BRANCHES.includes(branch)) {
     return jsonResponse({ ok: false, message: 'Select a valid branch before signing in.' })
   }
 
   const token = Utilities.getUuid()
   const expiresAt = Date.now() + ADMIN_SESSION_DURATION_MS
   const properties = PropertiesService.getScriptProperties()
+  const session = {
+    expiresAt,
+    role,
+    branch: role === 'super' ? '' : branch,
+  }
 
-  properties.setProperty(ADMIN_SESSION_TOKEN_PROPERTY, token)
-  properties.setProperty(ADMIN_SESSION_EXPIRES_PROPERTY, String(expiresAt))
-  properties.setProperty(ADMIN_SESSION_BRANCH_PROPERTY, branch)
+  properties.setProperty(`${ADMIN_SESSION_PROPERTY_PREFIX}${token}`, JSON.stringify(session))
 
   return jsonResponse({
     ok: true,
     token,
     expiresAt,
-    branch,
+    role,
+    branch: session.branch,
   })
 }
 
@@ -358,7 +385,7 @@ function handleAdminBookings(payload) {
   const values = sheet.getDataRange().getValues()
   const startDate = String(payload.startDate || '').trim()
   const endDate = String(payload.endDate || '').trim()
-  const branchFilter = getAdminSessionBranch()
+  const branchFilter = getAdminBranchFilter(payload.token, payload.branch)
   const statusFilter = String(payload.status || '').trim().toLowerCase()
   const treatmentFilter = String(payload.treatment || '').trim()
 
@@ -401,7 +428,7 @@ function handleAdminPatients(payload) {
     return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
   }
 
-  const branchFilter = getAdminSessionBranch()
+  const branchFilter = getAdminBranchFilter(payload.token, payload.branch)
   const values = getPatientsSheet().getDataRange().getValues()
   const patients = values
     .slice(1)
@@ -430,7 +457,7 @@ function handleAdminHistory(payload) {
     return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
   }
 
-  const branchFilter = getAdminSessionBranch()
+  const branchFilter = getAdminBranchFilter(payload.token, payload.branch)
   const values = getHistorySheet().getDataRange().getValues()
   const history = values
     .slice(1)
@@ -467,9 +494,9 @@ function handleCreatePaymentOrder(payload) {
     })
   }
 
-  const amount = Number(payload.amount || CONSULTATION_FEE_SUBUNITS)
+  const amount = Number(payload.amount || ONLINE_CONSULTATION_FEE_SUBUNITS)
 
-  if (amount !== CONSULTATION_FEE_SUBUNITS) {
+  if (amount !== ONLINE_CONSULTATION_FEE_SUBUNITS) {
     return jsonResponse({ ok: false, message: 'Invalid consultation fee amount.' })
   }
 
@@ -545,7 +572,10 @@ function handleAdminCreateBooking(payload) {
   }
 
   const sheet = getBookingSheet()
-  const branch = getAdminSessionBranch()
+  const session = getAdminSession(payload.token)
+  const requestedBranch = String(payload.branch || '').trim()
+  const branch =
+    session.branch || (session.role === 'super' && BRANCHES.includes(requestedBranch) ? requestedBranch : '')
   const date = String(payload.date || '').trim()
   const timeSlot = String(payload.timeSlot || '').trim()
   const treatment = String(payload.treatmentName || payload.treatment || '').trim()
@@ -620,7 +650,7 @@ function handleAdminUpdateBooking(payload) {
   }
 
   const rowNumber = rowIndex + 1
-  const sessionBranch = getAdminSessionBranch()
+  const sessionBranch = getAdminSessionBranch(payload.token)
   const bookingBranch = String(values[rowIndex][2] || '').trim()
 
   if (sessionBranch && bookingBranch !== sessionBranch) {
@@ -658,18 +688,51 @@ function handleAdminUpdateBooking(payload) {
 }
 
 function isValidAdminToken(token) {
-  const properties = PropertiesService.getScriptProperties()
-  const savedToken = properties.getProperty(ADMIN_SESSION_TOKEN_PROPERTY)
-  const expiresAt = Number(properties.getProperty(ADMIN_SESSION_EXPIRES_PROPERTY) || 0)
-  const branch = String(properties.getProperty(ADMIN_SESSION_BRANCH_PROPERTY) || '').trim()
-
-  return Boolean(token && savedToken && branch && token === savedToken && expiresAt > Date.now())
+  return Boolean(getAdminSession(token))
 }
 
-function getAdminSessionBranch() {
-  return String(
-    PropertiesService.getScriptProperties().getProperty(ADMIN_SESSION_BRANCH_PROPERTY) || '',
-  ).trim()
+function getAdminSession(token) {
+  if (!token) {
+    return null
+  }
+
+  const properties = PropertiesService.getScriptProperties()
+  const propertyName = `${ADMIN_SESSION_PROPERTY_PREFIX}${token}`
+  const sessionValue = properties.getProperty(propertyName)
+
+  if (!sessionValue) {
+    return null
+  }
+
+  try {
+    const session = JSON.parse(sessionValue)
+    const hasScope = session.role === 'super' || BRANCHES.includes(session.branch)
+
+    if (!hasScope || Number(session.expiresAt) <= Date.now()) {
+      properties.deleteProperty(propertyName)
+      return null
+    }
+
+    return session
+  } catch {
+    properties.deleteProperty(propertyName)
+    return null
+  }
+}
+
+function getAdminSessionBranch(token) {
+  return String(getAdminSession(token)?.branch || '').trim()
+}
+
+function getAdminBranchFilter(token, requestedBranch) {
+  const session = getAdminSession(token)
+  const branch = String(requestedBranch || '').trim()
+
+  if (session?.role === 'super') {
+    return BRANCHES.includes(branch) ? branch : ''
+  }
+
+  return String(session?.branch || '').trim()
 }
 
 function handleSupportCreateChat(payload) {
@@ -698,7 +761,6 @@ function handleSupportCreateChat(payload) {
 
 function handleSupportSendMessage(payload) {
   const chatId = String(payload.chatId || '').trim()
-  const sender = String(payload.sender || 'patient').trim() === 'staff' ? 'staff' : 'patient'
   const message = String(payload.message || '').trim()
 
   if (!chatId || !message) {
@@ -709,7 +771,7 @@ function handleSupportSendMessage(payload) {
     return jsonResponse({ ok: false, message: 'Support chat was not found.' })
   }
 
-  appendSupportMessage(chatId, sender, message)
+  appendSupportMessage(chatId, 'patient', message)
 
   return jsonResponse({ ok: true })
 }
@@ -730,10 +792,10 @@ function handleAdminSupportChats(payload) {
     return jsonResponse({ ok: false, message: 'Admin session expired. Please log in again.' })
   }
 
-  const branchFilter = getAdminSessionBranch()
+  const branchFilter = getAdminBranchFilter(payload.token, payload.branch)
   const messagesByChatId = getSupportMessagesByChatId()
   const chats = getSupportChats()
-    .filter((chat) => chat.branch === branchFilter)
+    .filter((chat) => !branchFilter || chat.branch === branchFilter)
     .map((chat) => ({
       ...chat,
       messages: messagesByChatId[chat.chatId] || [],
@@ -752,7 +814,9 @@ function handleAdminSupportSendMessage(payload) {
   const message = String(payload.message || '').trim()
   const chat = getSupportChatById(chatId)
 
-  if (!chat || chat.branch !== getAdminSessionBranch()) {
+  const sessionBranch = getAdminSessionBranch(payload.token)
+
+  if (!chat || (sessionBranch && chat.branch !== sessionBranch)) {
     return jsonResponse({ ok: false, message: 'This support chat is not assigned to this branch.' })
   }
 

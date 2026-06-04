@@ -1,0 +1,903 @@
+# CSS Architecture Map
+
+This file documents where the former `src/App.css` selectors now live. Responsive selectors are listed under the component file that owns them.
+
+## Import Entry
+
+`src/App.jsx` imports `src/styles/index.css`, which imports the files below.
+
+## src/styles/variables.css
+
+- :root
+
+## src/styles/base.css
+
+- *
+- html
+- html.lenis
+- body
+- body::before
+- button, input, textarea
+- a
+- #root
+
+## src/styles/utilities.css
+
+- .u-card
+- .u-glass
+- .u-button-gradient
+- .eyebrow
+- .secondary-action
+- .secondary-action:hover
+- .section-heading
+- .section-heading.compact h2
+- .section-text
+- .required-mark
+- .field-label-row
+- .field-label-row span:last-child
+- .select-control
+- .select-control::after
+- @media (max-width: 760px)
+
+## src/styles/animations.css
+
+- @keyframes right-click-notice-in
+- @keyframes loader-enter
+- @keyframes hero-scheme-shine
+- @keyframes services-arrow-reveal
+- @keyframes services-scheme-sparkle
+- @keyframes treatment-shine
+- @keyframes modal-backdrop-in
+- @keyframes modal-enter
+- @keyframes submit-spin
+- @keyframes aligners-logo-float
+- @keyframes treatment-lightbox-fade
+- @keyframes treatment-media-zoom
+- @keyframes scheme-logo-loop
+- @keyframes whatsapp-menu-in
+- @keyframes chatbot-panel-in
+- @keyframes chatbot-launcher-pop
+- @keyframes chatbot-pop-ring
+- @keyframes chatbot-bubble-pop
+- @keyframes chatbot-attention-bounce
+- @keyframes whatsapp-hint-arrow
+- @keyframes whatsapp-button-bounce
+- @keyframes whatsapp-attention-bounce
+- @keyframes whatsapp-arrow-point
+
+## src/styles/layout.css
+
+- .page-shell
+- .right-click-notice
+- .page-shell > :not(.site-loader)
+- .ambient-dental-layer
+- .ambient-item, .ambient-glass-mark
+- .ambient-glass
+- .ambient-item svg
+- .ambient-item.tooth svg
+- .ambient-item.braces svg, .ambient-item.aligner svg
+- .ambient-item.braces rect
+- .ambient-item.mist
+- .ambient-item.halo
+- .tooth-one
+- .tooth-two
+- .tooth-three
+- .braces-one
+- .braces-two
+- .braces-three
+- .aligner-one
+- .aligner-two
+- .mist-one
+- .mist-two
+- .mist-three
+- .halo-one
+- .halo-two
+- .halo-three
+- .ambient-glass-marks
+- .ambient-glass-mark
+- .mark-1
+- .mark-2
+- .mark-3
+- .mark-4
+- .mark-5
+- .mark-6
+- .mark-7
+- .mark-8
+- .site-loader
+- .site-loader-card
+- .site-loader-logo
+- .site-loader-gif
+- .site-loader-card p
+- @media (max-width: 520px)
+- .content-shell
+- .reveal-section
+- .reveal-section.visible
+- @media (min-width: 761px) and (max-height: 820px)
+- @media (max-width: 760px)
+- @media (prefers-reduced-motion: reduce)
+- @media (max-width: 760px)
+- @media (min-width: 761px) and (max-width: 1440px)
+- @media (max-width: 760px)
+
+## src/components/Header/Header.css
+
+- .page-shell > .site-header
+- .site-header
+- .site-header-inner
+- .site-brand
+- .site-brand-mark
+- .site-brand-mark img
+- .site-brand-copy
+- .site-brand-copy strong, .site-brand-copy small
+- .site-brand-copy strong
+- .site-brand-copy small
+- .site-nav
+- .site-nav a, .site-nav button, .footer-links a
+- .site-nav-item
+- .site-nav-trigger
+- .site-nav-trigger
+- .site-nav-trigger:hover, .site-nav-item:focus-within .site-nav-trigger
+- .site-nav-trigger::after
+- .site-nav-item:last-child .site-nav-trigger::after
+- .site-nav-link-trigger::after
+- .site-nav-menu
+- .site-nav-menu::before
+- .site-nav-item:hover .site-nav-menu, .site-nav-item:focus-within .site-nav-menu
+- .site-nav-menu a
+- .site-nav-menu a:hover, .site-nav-menu a:focus-visible
+- .site-actions
+- .site-call
+- .site-call:hover
+- .site-cta
+- .primary-action:focus-visible, .secondary-action:focus-visible, .submit-button:focus-visible, .site-cta:focus-visible, .site-call:focus-visible, .site-nav a:focus-visible, .site-nav-trigger:focus-visible, .chatbot-toggle:focus-visible, .chatbot-panel button:focus-visible, .chatbot-panel a:focus-visible, .chatbot-panel input:focus-visible, .whatsapp-launcher summary:focus-visible, .whatsapp-menu a:focus-visible, .treatment-book-button:focus-visible, .treatment-modal-close:focus-visible, .faq-item summary:focus-visible
+- .primary-action:active, .secondary-action:active, .submit-button:active, .site-cta:active, .site-call:active, .treatment-book-button:active
+- @media (max-width: 1320px) and (min-width: 761px)
+- @media (max-width: 1080px)
+- @media (min-width: 761px) and (max-height: 820px)
+- @media (max-width: 760px)
+- @media (max-width: 430px)
+- @media (max-width: 1320px) and (min-width: 761px)
+- .site-nav-toggle
+- .site-nav-caret
+- @media (max-width: 1440px)
+- @media (max-width: 760px)
+
+## src/components/Hero/Hero.css
+
+- .hero-section
+- .hero-image-card
+- .hero-slide-track
+- .hero-slide
+- .hero-image-card::before
+- .hero-image-card::after
+- .hero-carousel-arrow
+- .hero-carousel-arrow:hover, .hero-carousel-arrow:focus-visible
+- .hero-carousel-arrow:focus-visible
+- .hero-carousel-arrow svg
+- .hero-carousel-arrow-left
+- .hero-carousel-arrow-right
+- .hero-overlay
+- .hero-copy, .hero-info-card, .kpi-card, .service-card, .services-summary, .treatment-card, .booking-panel, .instagram-card, .dentist-card
+- .hero-copy
+- .hero-copy > .eyebrow
+- .hero-copy h1, .section-heading h2, .booking-header h3, .services-summary h3
+- .hero-copy h1
+- .hero-accreditation
+- .hero-accreditation img
+- .hero-accreditation span
+- .hero-text
+- .hero-actions
+- .hero-info-grid
+- .hero-info-card
+- .hero-scheme-card-link
+- .hero-scheme-card-link::after
+- .hero-scheme-card-link:hover, .hero-scheme-card-link:focus-visible
+- .hero-scheme-logos
+- .hero-scheme-logos span
+- .hero-scheme-logos img
+- .hero-info-card.accent .hero-scheme-logos span
+- .hero-scheme-card-link .hero-scheme-logos span
+- .hero-info-card span
+- .hero-info-card strong
+- .hero-info-card.accent
+- .hero-info-card.accent span, .hero-info-card.accent strong, .hero-scheme-card-link span, .hero-scheme-card-link strong
+- .kpi-section
+- .kpi-card
+- .kpi-card strong
+- .kpi-card p
+- @media (max-width: 1080px)
+- @media (min-width: 761px) and (max-height: 820px)
+- @media (max-width: 760px)
+- @media (max-width: 430px)
+- @media (max-width: 760px)
+
+## src/components/Services/Services.css
+
+- .services-overview, .instagram-section, .aligners-section, .treatment-section, .dentists-section, .why-section, .faq-section
+- .services-overview
+- .services-overview::before
+- .services-heading-row
+- .services-accreditation
+- .services-accreditation img
+- .services-accreditation strong
+- .services-layout
+- .services-schemes-column
+- .services-info-grid
+- .services-schemes-promo
+- .services-schemes-text
+- .services-schemes-text img, .services-schemes-arrow img
+- .services-promo-sparkle, .services-promo-sparkle::before, .services-promo-sparkle::after
+- .services-promo-sparkle
+- .services-promo-sparkle::before
+- .services-promo-sparkle::after
+- .services-schemes-arrow
+- .services-grid, .treatment-grid
+- .service-card, .services-summary, .treatment-card, .dentist-card, .instagram-card
+- .service-card, .services-summary, .dentist-card
+- .service-visual
+- .service-visual img
+- .service-card:hover .service-visual img, .service-card:focus-within .service-visual img
+- .service-card h3, .dentist-card h3, .instagram-copy h3, .treatment-card h3
+- .service-card p, .services-summary p, .dentist-card p, .treatment-card p, .instagram-copy p
+- .services-summary h3
+- .services-summary-points
+- .services-summary-points article
+- .services-summary-points article:first-child
+- .services-summary-points article:last-child
+- .services-summary-points strong
+- .services-summary-points p
+- @media (max-width: 760px)
+- @media (max-width: 760px)
+
+## src/components/Treatments/Treatments.css
+
+- .treatment-section, .brand-section, .instagram-section, .why-section, .contact-section
+- .treatment-section, .instagram-section, .why-section, .contact-section
+- .primary-action:hover, .secondary-action:hover, .submit-button:hover, .treatment-card:hover
+- .treatment-section, .booking-section, .why-section
+- .treatment-section::before, .booking-section::before, .why-section::before
+- .treatment-section::before, .why-section::before
+- .treatment-grid
+- .treatment-card
+- .treatment-image-wrap
+- .treatment-image-wrap::after
+- .treatment-image
+- video.treatment-image
+- .treatment-card:hover .treatment-image, .treatment-card:focus-within .treatment-image
+- .treatment-card:hover .treatment-image-wrap::after, .treatment-card:focus-within .treatment-image-wrap::after
+- .treatment-card-top
+- .treatment-icon
+- .treatment-icon-fallback
+- .treatment-card.active
+- .treatment-card:hover .treatment-book-button, .treatment-card:focus-within .treatment-book-button
+- .treatment-tag, .treatment-meta, .dentist-card span
+- .treatment-tag
+- .treatment-card p
+- .treatment-card-footer
+- .treatment-meta, .dentist-card span
+- .treatment-book-button
+- .treatment-book-button:hover
+- .treatment-modal-backdrop
+- .treatment-modal
+- .treatment-modal-close
+- .treatment-modal-media
+- .treatment-modal-media img, .treatment-modal-media video
+- .treatment-modal-media video
+- .treatment-modal-copy
+- .treatment-modal-copy h3
+- .treatment-modal-copy p
+- .treatment-modal-grid
+- .treatment-modal-grid > div
+- .treatment-modal-grid strong
+- .treatment-modal-grid ul
+- .treatment-modal-footer
+- .treatment-modal-footer span
+- .treatment-modal-footer small
+- .treatment-modal-cta
+- .aligners-section
+- .aligners-floating-logo
+- .aligners-section-inner
+- .aligners-heading
+- .aligners-heading .section-heading.compact
+- .aligners-heading .section-heading.compact h2
+- .aligners-heading .section-text
+- .aligners-carousel-controls
+- .aligners-arrow
+- .aligners-arrow:hover, .aligners-arrow:focus-visible
+- .aligners-carousel
+- .aligners-track
+- .aligners-track.no-transition
+- .aligners-case-card
+- .aligners-case-copy
+- .aligners-case-copy span
+- .aligners-case-copy h3
+- .aligners-case-copy p
+- .aligners-case-photo
+- .aligners-case-photo img
+- .aligners-dots
+- .aligners-dots button
+- .aligners-dots button.active
+- .treatment-detail-page
+- .treatment-detail-hero
+- .treatment-detail-copy, .treatment-detail-media
+- .treatment-detail-copy
+- .treatment-detail-copy h1
+- .gingival-depigmentation-treatment .treatment-detail-copy h1
+- .treatment-detail-copy p:not(.eyebrow)
+- .treatment-detail-actions
+- .treatment-detail-media
+- .treatment-detail-media img
+- .fillings-treatment .treatment-detail-media, .braces-treatment .treatment-detail-media
+- .fillings-treatment .treatment-detail-media img, .braces-treatment .treatment-detail-media img
+- .wisdom-molar-treatment .treatment-detail-media
+- .wisdom-molar-treatment .treatment-detail-media img
+- .full-mouth-rehabilitation-treatment .treatment-detail-hero
+- .full-mouth-rehabilitation-treatment .treatment-detail-copy h1
+- .full-mouth-rehabilitation-treatment .treatment-detail-media
+- .full-mouth-rehabilitation-treatment .treatment-detail-media img
+- .periodontics-treatment .treatment-detail-media
+- .periodontics-treatment .treatment-detail-media img
+- .oral-surgery-treatment .treatment-detail-media
+- .oral-surgery-treatment .treatment-detail-media img
+- .treatment-detail-content
+- .treatment-detail-page .faq-section
+- .treatment-detail-section
+- .treatment-detail-section-copy
+- .treatment-detail-before-after
+- .treatment-detail-before-after:hover, .treatment-detail-before-after:focus-visible
+- .treatment-detail-before-after img, .treatment-detail-before-after video
+- .treatment-detail-before-after video
+- .treatment-media-lightbox
+- .page-shell > .treatment-media-lightbox
+- .treatment-media-lightbox-frame
+- .treatment-media-lightbox-frame img, .treatment-media-lightbox-frame video
+- .treatment-media-lightbox-frame video
+- .treatment-media-close
+- .treatment-detail-highlights
+- .treatment-detail-highlights > article
+- .treatment-detail-highlights > article > span
+- .treatment-detail-highlights > article > span img
+- .treatment-detail-highlights p
+- .treatment-case-carousel
+- .aligners-treatment-case-carousel
+- .treatment-case-track
+- .treatment-case-track.no-transition
+- .treatment-case-slide
+- .aligners-treatment-case-carousel .treatment-case-slide
+- .treatment-case-slide img
+- .aligners-treatment-case-carousel .treatment-case-slide img
+- .treatment-case-slide div
+- .treatment-case-slide span
+- .treatment-case-slide strong
+- .treatment-case-slide p
+- .treatment-case-dots
+- .treatment-case-dots button
+- .treatment-case-dots button.active
+- .treatment-case-more
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+- @media (max-width: 430px)
+- .treatment-mobile-toggle
+- @media (max-width: 760px)
+
+## src/components/Booking/Booking.css
+
+- .primary-action, .secondary-action, .submit-button
+- .primary-action, .submit-button
+- .booking-section
+- .booking-panel
+- .booking-panel-full
+- .booking-header h3
+- .booking-header p:last-child
+- .booking-form
+- .booking-form-grid
+- .booking-form fieldset
+- .booking-form label
+- .booking-form-wide
+- .booking-form select, .booking-form input, .booking-form textarea
+- .booking-form select
+- .booking-form select option
+- .booking-form fieldset:disabled .select-control::after
+- .booking-form select:focus, .booking-form input:focus, .booking-form textarea:focus
+- .booking-form input::placeholder, .booking-form textarea::placeholder
+- .time-slot
+- .time-slot:hover
+- .time-slot.selected
+- .time-slot:disabled
+- .consultation-fee-options
+- .consultation-fee-options legend
+- .consultation-fee-options label
+- .consultation-fee-options label.selected
+- .booking-form .consultation-fee-options input
+- .consultation-fee-options strong
+- .payment-summary, .admin-payment-panel
+- .payment-summary div, .admin-payment-panel div
+- .payment-summary strong, .admin-payment-panel strong
+- .payment-summary span, .admin-payment-panel span, .admin-payment-panel p
+- .razorpay-mark
+- .razorpay-mark img
+- .payment-summary p
+- .time-slot-grid
+- .time-slot
+- .booking-form fieldset:disabled
+- .booking-form fieldset:disabled select, .booking-form fieldset:disabled input, .booking-form fieldset:disabled textarea
+- .submit-button
+- .submit-button:disabled
+- .submit-button.submitting
+- .submit-spinner
+- .confirmation-card
+- .confirmation-card.visible
+- .confirmation-card.success
+- .confirmation-card.error
+- .confirmation-icon
+- .confirmation-icon::after
+- .confirmation-card strong
+- .confirmation-card p
+- @media (max-width: 760px)
+- @media (max-width: 430px)
+- @media (max-width: 760px)
+
+## src/components/Testimonials/Testimonials.css
+
+- .video-testimonial-section
+- .video-testimonial-panel
+- .video-testimonial-heading
+- .video-testimonial-heading h2
+- .video-testimonial-heading p:not(.eyebrow)
+- .google-rating-line
+- .google-rating-line span
+- .google-rating-line strong
+- .testimonial-carousel
+- .testimonial-track
+- .testimonial-video-card
+- .testimonial-video-card video
+- .testimonial-video-card::after
+- .testimonial-volume-button
+- .testimonial-video-card:hover .testimonial-volume-button, .testimonial-volume-button:focus-visible
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+
+## src/components/Brands/Brands.css
+
+- .brand-section
+- .brand-section
+- .brand-panel
+- .brand-panel::before
+- .brand-panel::after
+- .brand-heading
+- .brand-heading h2
+- .brand-heading p:not(.eyebrow)
+- .brand-logo-grid
+- .brand-logo-card
+- .brand-logo-frame
+- .brand-logo-frame img
+- .brand-logo-card-featured .brand-logo-frame img
+- .brand-logo-card strong, .brand-logo-card span
+- .brand-logo-card strong
+- .brand-logo-card span
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+- .brand-logo-grid
+- .brand-logo-card
+- .brand-logo-frame
+- .brand-logo-frame img
+- .brand-logo-card-featured .brand-logo-frame img
+- .brand-logo-card > div:last-child
+- @media (max-width: 1440px)
+- @media (max-width: 760px)
+
+## src/components/Instagram/Instagram.css
+
+- .instagram-grid, .dentists-grid, .why-grid
+- .instagram-grid
+- .instagram-heading
+- .instagram-follow-button
+- .instagram-follow-button:hover
+- .instagram-follow-button span
+- .instagram-card
+- .instagram-card:hover
+- .instagram-image
+- .instagram-copy
+- @media (max-width: 760px)
+- @media (max-width: 430px)
+- @media (max-width: 760px)
+
+## src/components/Dentists/Dentists.css
+
+- .dentists-section
+- .dentists-grid
+- .dentist-photo
+- .dentist-card:hover .dentist-photo, .dentist-card:focus-within .dentist-photo
+- .dentist-card span
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+
+## src/components/Why/Why.css
+
+- .why-section
+- .why-grid
+- .why-card
+- .why-card:hover
+- .why-card-icon
+- .why-card h3
+- .why-card ul
+- .why-card li
+- .why-card li::before
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+
+## src/components/FAQ/FAQ.css
+
+- .faq-list
+- .faq-item
+- .faq-item summary
+- .faq-item summary::-webkit-details-marker
+- .faq-item summary::after
+- .faq-item[open] summary::after
+- .faq-item p
+- @media (max-width: 760px)
+
+## src/components/Contact/Contact.css
+
+- .contact-section
+- .contact-card
+- .contact-copy
+- .contact-copy h2
+- .contact-copy .section-text
+- .contact-grid
+- .clinic-carousel
+- .clinic-image-frame
+- .clinic-image-frame img
+- .clinic-image-frame img.clinic-image-fill
+- .clinic-image-frame-backdrop::before
+- .clinic-image-frame-backdrop img
+- .clinic-image-frame::after
+- .clinic-arrow
+- .clinic-arrow:hover
+- .clinic-arrow-left
+- .clinic-arrow-right
+- .clinic-image-caption
+- .clinic-image-caption strong
+- .clinic-image-caption span, .clinic-carousel-help
+- .clinic-carousel-help
+- .contact-item
+- .contact-item span
+- .contact-item strong
+- .contact-item a, .contact-item > strong
+- .contact-item > strong
+- .contact-item a strong
+- .contact-item a
+- .contact-item a:hover strong, .contact-item a:focus-visible strong
+- .contact-item small
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+- .contact-item:first-child
+- .contact-item:not(:first-child)
+
+## src/components/Footer/Footer.css
+
+- .site-footer
+- .site-footer-inner
+- .site-footer-inner strong
+- .site-footer-inner p
+- .site-footer-credit
+- .site-footer-credit a
+- .footer-links
+- .footer-social-links
+- .footer-social-links a
+- .footer-social-links a:hover
+- .footer-social-links svg
+- .back-to-top-link
+- .back-to-top-icon
+- .back-to-top-icon svg
+- .back-to-top-link:hover .back-to-top-icon, .back-to-top-link:focus-visible .back-to-top-icon
+- .back-to-top-link:focus-visible
+- @media (max-width: 760px)
+- @media (max-width: 1080px)
+- @media (max-width: 430px)
+
+## src/components/Floating/Floating.css
+
+- .chatbot-launcher
+- .chatbot-launcher.intro-pop::before
+- .chatbot-toggle
+- .chatbot-launcher.intro-pop .chatbot-toggle
+- .chatbot-launcher.intro-pop .chatbot-toggle::after
+- .chatbot-toggle:hover
+- .chatbot-toggle img
+- .chatbot-panel
+- .chatbot-header
+- .chatbot-header div
+- .chatbot-header span
+- .chatbot-header strong
+- .chatbot-header button
+- .chatbot-disclaimer
+- .chatbot-messages
+- .chatbot-message
+- .chatbot-message.bot
+- .chatbot-message.user
+- .chatbot-message strong
+- .chatbot-message p
+- .chatbot-actions, .chatbot-quick-replies
+- .chatbot-actions a, .chatbot-actions button, .chatbot-quick-replies button
+- .chatbot-actions button
+- .chatbot-feedback
+- .chatbot-feedback span
+- .chatbot-feedback div
+- .chatbot-feedback button
+- .chatbot-quick-replies
+- .chatbot-form
+- .chatbot-support-form
+- .chatbot-support-form input, .chatbot-support-form select, .chatbot-support-form textarea
+- .chatbot-support-form textarea
+- .chatbot-support-form p
+- .chatbot-support-form button
+- .chatbot-support-form .chatbot-support-back
+- .chatbot-form input
+- .chatbot-form button
+- .whatsapp-launcher
+- .whatsapp-hint-arrow
+- .whatsapp-hint-arrow > span
+- .whatsapp-launcher.hint-visible:not([open]) .whatsapp-hint-arrow
+- .whatsapp-launcher.hint-visible:not([open]) summary
+- .whatsapp-launcher:not([open])::before
+- .whatsapp-launcher summary
+- .whatsapp-launcher:not([open]) summary
+- .whatsapp-launcher summary:hover
+- .whatsapp-launcher summary::-webkit-details-marker
+- .whatsapp-icon, .whatsapp-icon svg
+- .whatsapp-icon svg
+- .whatsapp-menu
+- .whatsapp-launcher[open] .whatsapp-menu
+- .whatsapp-menu::-webkit-scrollbar
+- .whatsapp-menu::-webkit-scrollbar-thumb
+- .whatsapp-menu-header
+- .whatsapp-menu-header div
+- .whatsapp-menu-header span
+- .whatsapp-menu-header strong
+- .whatsapp-menu-header button
+- .whatsapp-menu-header button:hover
+- .whatsapp-menu a
+- .whatsapp-menu a:hover
+- .whatsapp-menu a .whatsapp-branch-label
+- .whatsapp-menu a strong
+- .whatsapp-menu a small
+- @media (max-width: 430px)
+- @media (prefers-reduced-motion: reduce)
+
+## src/components/Admin/Admin.css
+
+- .admin-payment-panel
+- .admin-payment-panel p
+- .admin-page
+- .admin-login-grid
+- .admin-login-card
+- .admin-login-card img
+- .admin-login-card h1, .admin-topbar h1, .admin-table-heading h2
+- .admin-login-card p
+- .admin-login-card form, .admin-filters
+- .admin-login-card label, .admin-filters label
+- .admin-login-card input, .admin-login-card select, .admin-filters input, .admin-filters select
+- .admin-branch-lock
+- .admin-branch-lock span
+- .admin-branch-lock strong
+- .admin-dashboard
+- .admin-topbar, .admin-summary-grid, .admin-filters, .admin-tabs, .admin-form-panel, .admin-table-panel
+- .admin-topbar, .admin-main-column
+- .admin-main-column
+- .admin-main-column > .admin-summary-grid, .admin-main-column > .admin-filters, .admin-main-column > .admin-tabs, .admin-main-column > .admin-form-panel, .admin-main-column > .admin-table-panel
+- .admin-topbar
+- .doctor-login-card
+- .doctor-login-card::after
+- .doctor-login-symbol
+- .doctor-login-symbol img
+- .doctor-login-card strong
+- .doctor-login-card > p:not(.eyebrow)
+- .doctor-login-card label
+- .doctor-login-card input
+- .doctor-login-card button
+- .support-login-card
+- .support-login-card .doctor-login-symbol
+- .support-login-card .doctor-login-symbol img
+- .support-card-meta
+- .support-card-meta span
+- .support-card-meta small
+- .support-login-card button
+- .support-login-card button.active
+- .admin-brand-heading
+- .admin-brand-heading strong
+- .admin-topbar-actions
+- .admin-topbar-actions a, .admin-topbar-actions button
+- .admin-summary-grid
+- .admin-summary-grid article
+- .admin-summary-grid span
+- .admin-summary-grid p
+- .admin-filters
+- .admin-tabs
+- .admin-tabs button
+- .admin-tabs button.active
+- .admin-form-panel
+- .admin-create-form
+- .admin-create-form label
+- .admin-create-form input, .admin-create-form select, .admin-create-form textarea
+- .admin-create-form textarea
+- .admin-form-wide
+- .admin-table-panel
+- .admin-table-heading
+- .admin-table-heading span
+- .admin-table-tools
+- .admin-table-tools label
+- .admin-table-tools label span
+- .admin-table-tools input
+- .admin-table-wrap
+- .admin-table-wrap table
+- .admin-table-wrap .admin-history-table
+- .admin-table-wrap th, .admin-table-wrap td
+- .admin-table-wrap th
+- .admin-table-wrap td
+- .admin-table-wrap th:nth-child(1), .admin-table-wrap td:nth-child(1)
+- .admin-table-wrap th:nth-child(2), .admin-table-wrap td:nth-child(2)
+- .admin-table-wrap th:nth-child(3), .admin-table-wrap td:nth-child(3)
+- .admin-table-wrap th:nth-child(4), .admin-table-wrap td:nth-child(4)
+- .admin-table-wrap th:nth-child(5), .admin-table-wrap td:nth-child(5)
+- .admin-table-wrap th:nth-child(6), .admin-table-wrap td:nth-child(6)
+- .admin-table-wrap th:nth-child(7), .admin-table-wrap td:nth-child(7)
+- .admin-table-wrap th:nth-child(8), .admin-table-wrap td:nth-child(8)
+- .admin-table-wrap th:nth-child(9), .admin-table-wrap td:nth-child(9), .admin-table-wrap th:nth-child(10), .admin-table-wrap td:nth-child(10)
+- .admin-table-wrap td:nth-child(9), .admin-table-wrap td:nth-child(10)
+- .admin-table-wrap td strong, .admin-table-wrap td small
+- .admin-table-wrap td small
+- .admin-history-table th:nth-child(1), .admin-history-table td:nth-child(1)
+- .admin-history-table th:nth-child(2), .admin-history-table td:nth-child(2)
+- .admin-history-table th:nth-child(3), .admin-history-table td:nth-child(3)
+- .admin-history-table th:nth-child(4), .admin-history-table td:nth-child(4)
+- .admin-history-table th:nth-child(5), .admin-history-table td:nth-child(5)
+- .admin-history-table th:nth-child(6), .admin-history-table td:nth-child(6)
+- .admin-history-table th:nth-child(7), .admin-history-table td:nth-child(7)
+- .admin-history-table th:nth-child(8), .admin-history-table td:nth-child(8), .admin-history-table th:nth-child(9), .admin-history-table td:nth-child(9)
+- .admin-status-pill, .admin-status-select
+- .admin-status-select
+- .admin-status-pill.status-cancelled, .admin-status-select.status-cancelled
+- .admin-status-pill.status-no-show, .admin-status-select.status-no-show
+- .admin-status-pill.status-in-treatment, .admin-status-select.status-in-treatment
+- .admin-status-pill.status-treatment-completed, .admin-status-select.status-treatment-completed
+- .admin-error
+- .admin-notice
+- .support-inbox
+- .support-chat-list
+- .support-chat-list button
+- .support-chat-list button.active
+- .support-chat-list span, .support-chat-list small
+- .support-chat-list p, .support-empty-thread
+- .support-chat-thread
+- .support-chat-profile
+- .support-chat-profile span
+- .support-chat-profile strong
+- .support-chat-profile p
+- .support-chat-messages
+- .support-chat-messages article
+- .support-chat-messages article.patient
+- .support-chat-messages article.staff
+- .support-chat-messages p
+- .support-chat-messages small
+- .support-reply-form
+- .support-reply-form textarea
+- .support-reply-form button, .admin-refresh-button
+- .support-reply-form button
+- .support-reply-form button:disabled
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+
+## src/components/Schemes/Schemes.css
+
+- .schemes-page
+- .scheme-hero
+- .scheme-hero-copy
+- .scheme-hero-copy h1
+- .scheme-hero-copy p:not(.eyebrow)
+- .scheme-hero-actions
+- .scheme-hero-media
+- .scheme-logo-carousel
+- .scheme-logo-carousel::before
+- .scheme-carousel-window
+- .scheme-carousel-track
+- .scheme-carousel-window:hover .scheme-carousel-track
+- .scheme-carousel-slide
+- .scheme-carousel-slide img
+- .scheme-carousel-slide small
+- .scheme-collage-count
+- .scheme-collage-count strong
+- .scheme-collage-count span
+- .scheme-intro, .scheme-section, .scheme-branch-cta
+- .scheme-intro
+- .scheme-intro article
+- .scheme-intro span, .scheme-card-top small
+- .scheme-intro strong
+- .scheme-section
+- .scheme-grid
+- .scheme-card
+- .scheme-logo-frame
+- .scheme-logo-frame img
+- .scheme-card-body
+- .scheme-card-aside
+- .scheme-card-top
+- .scheme-card-top span
+- .scheme-card h3
+- .scheme-card p
+- .scheme-card-detail
+- .scheme-card-detail strong
+- .scheme-doc-list
+- .scheme-doc-list span
+- .scheme-branch-cta
+- .scheme-branch-cta h2
+- .scheme-branch-cta p:not(.eyebrow)
+- .scheme-branch-links
+- .scheme-branch-links a
+- .scheme-branch-links .scheme-all-branches
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+
+## src/components/Privacy/Privacy.css
+
+- .privacy-page
+- .privacy-hero
+- .privacy-hero-mark
+- .privacy-hero-mark img
+- .privacy-hero h1
+- .privacy-hero p
+- .privacy-hero span
+- .privacy-content
+- .privacy-intro-card, .privacy-policy-card
+- .privacy-intro-card
+- .privacy-intro-card h2, .privacy-policy-card h2
+- .privacy-intro-card p, .privacy-policy-card p, .privacy-policy-card li, .privacy-policy-card address span, .privacy-policy-card address a
+- .privacy-policy-card p
+- .privacy-policy-card p:last-child
+- .privacy-policy-card strong
+- .privacy-policy-card ul
+- .privacy-policy-card li::marker
+- .privacy-note
+- .privacy-contact-card address
+- .privacy-contact-card address strong
+- .privacy-contact-card address a
+- .privacy-disclaimer-card
+
+## src/components/FindClinic/FindClinic.css
+
+- .find-clinic-page
+- .find-clinic-content
+- .clinic-finder-stage
+- .clinic-finder-collage
+- .clinic-finder-collage::after
+- .clinic-finder-collage img
+- .clinic-finder-section
+- .clinic-finder-heading
+- .clinic-finder-heading h1
+- .clinic-finder-heading p:not(.eyebrow)
+- .clinic-search-field
+- .clinic-search-field div
+- .clinic-search-field div:focus-within
+- .clinic-search-field svg
+- .clinic-search-field input
+- .clinic-search-field input::placeholder
+- .clinic-result-header
+- .clinic-result-header strong
+- .clinic-result-header button
+- .clinic-results-grid
+- .clinic-result-card
+- .clinic-result-card p
+- .clinic-result-card h2
+- .clinic-result-card address
+- .clinic-result-phone
+- .clinic-result-actions
+- .clinic-result-actions button, .clinic-result-actions a, .clinic-no-results a
+- .clinic-result-actions button
+- .clinic-result-actions a
+- .clinic-no-results
+- .clinic-no-results h2, .clinic-no-results p
+- .clinic-no-results h2
+- .clinic-no-results p
+- .clinic-no-results a
+- @media (max-width: 1080px)
+- @media (max-width: 760px)
+

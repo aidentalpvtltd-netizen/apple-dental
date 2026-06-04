@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { treatments } from '../../config/siteContent.js'
 
 export function TreatmentsSection({
@@ -5,6 +6,8 @@ export function TreatmentsSection({
   onTreatmentOpen,
   onTreatmentKeyDown,
 }) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
   return (
     <section className="treatment-section reveal-section" id="treatments">
       <div className="section-heading compact">
@@ -17,7 +20,22 @@ export function TreatmentsSection({
         </p>
       </div>
 
-      <div className="treatment-grid" role="list">
+      <button
+        className="treatment-mobile-toggle"
+        type="button"
+        aria-controls="popular-treatments-grid"
+        aria-expanded={isExpanded}
+        onClick={() => setIsExpanded((current) => !current)}
+      >
+        <span>{isExpanded ? 'Hide popular treatments' : 'Expand popular treatments'}</span>
+        <span className={`treatment-toggle-caret${isExpanded ? ' expanded' : ''}`} aria-hidden="true" />
+      </button>
+
+      <div
+        className={`treatment-grid${isExpanded ? ' expanded' : ''}`}
+        id="popular-treatments-grid"
+        role="list"
+      >
         {treatments.map((treatment) => {
           const isActive = treatment.id === selectedTreatmentId
 

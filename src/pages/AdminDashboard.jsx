@@ -3,21 +3,15 @@ import {
   treatments,
   branches,
   getBranchArea,
-  appointmentSlots,
   adminStatuses,
   adminSessionKey,
-  consultationFeeAmount,
-  onlinePaymentMethod,
-  cashPaymentMethod,
   getTodayDateValue,
   postBookingEndpoint,
-  collectConsultationPayment,
   fetchAdminSupportChats,
-  sendSupportMessage,
+  sendAdminSupportMessage,
   getStoredAdminSession,
   getDefaultAdminFilters,
   getCompletedDateParts,
-  initialAdminBookingForm,
 } from '../config/siteContent.js'
 
 const isGenericFetchFailure = (error) => error.message.toLowerCase() === 'failed to fetch'
@@ -28,9 +22,9 @@ export function AdminDashboard() {
     () => getStoredAdminSession()?.branch || branches[0],
   )
   const [password, setPassword] = useState('')
+  const [superAdminPassword, setSuperAdminPassword] = useState('')
   const [activeAdminTab, setActiveAdminTab] = useState('bookings')
   const [filters, setFilters] = useState(getDefaultAdminFilters)
-  const [adminBookingForm, setAdminBookingForm] = useState(initialAdminBookingForm)
   const [bookings, setBookings] = useState([])
   const [patients, setPatients] = useState([])
   const [history, setHistory] = useState([])
@@ -46,18 +40,17 @@ export function AdminDashboard() {
   const [error, setError] = useState('')
   const [adminNotice, setAdminNotice] = useState('')
   const supportSendInFlightRef = useRef(false)
-  const sessionBranch = session?.branch || selectedAdminBranch
+  const isSuperAdmin = session?.role === 'super'
+  const sessionBranch = isSuperAdmin ? '' : session?.branch || selectedAdminBranch
+  const dashboardBranchLabel = isSuperAdmin ? 'All branches' : getBranchArea(sessionBranch)
 
   const activeBookings = bookings.filter((booking) =>
-    ['', 'booked', 'confirmed', 'walk-in', 'website', 'in treatment'].includes(
-      booking.status.toLowerCase(),
-    ),
+    ['booked', 'visited', 'in treatment'].includes(booking.status.toLowerCase()),
   )
   const todayBookings = activeBookings.filter((booking) => booking.date === getTodayDateValue())
   const websiteBookings = bookings.filter((booking) =>
     booking.source.toLowerCase().includes('website'),
   )
-  const manualBookings = bookings.filter((booking) => !booking.source.toLowerCase().includes('website'))
   const bookingSearchTerm = adminSearch.bookings.trim().toLowerCase()
   const patientSearchTerm = adminSearch.patients.trim().toLowerCase()
   const historySearchTerm = adminSearch.history.trim().toLowerCase()
@@ -71,7 +64,7 @@ export function AdminDashboard() {
     : bookings
   const visiblePatients = patientSearchTerm
     ? patients.filter((patient) =>
-        [patient.patientName, patient.phone, patient.email, patient.patientId]
+        [patient.patientName, patient.phone, patient.email]
           .join(' ')
           .toLowerCase()
           .includes(patientSearchTerm),
@@ -101,7 +94,7 @@ export function AdminDashboard() {
         action: 'admin-bookings',
         token: adminSession.token,
         ...nextFilters,
-        branch: adminSession.branch,
+        branch: adminSession.role === 'super' ? nextFilters.branch : adminSession.branch,
       })
 
       setBookings(Array.isArray(result.bookings) ? result.bookings : [])
@@ -119,7 +112,7 @@ export function AdminDashboard() {
     }
   }
 
-  const fetchAdminPatients = async (adminSession = session) => {
+  const fetchAdminPatients = async (adminSession = session, nextFilters = filters) => {
     if (!adminSession?.token) {
       return
     }
@@ -131,7 +124,7 @@ export function AdminDashboard() {
       const result = await postBookingEndpoint({
         action: 'admin-patients',
         token: adminSession.token,
-        branch: adminSession.branch,
+        branch: adminSession.role === 'super' ? nextFilters.branch : adminSession.branch,
       })
 
       setPatients(Array.isArray(result.patients) ? result.patients : [])
@@ -144,7 +137,7 @@ export function AdminDashboard() {
     }
   }
 
-  const fetchAdminHistory = async (adminSession = session) => {
+  const fetchAdminHistory = async (adminSession = session, nextFilters = filters) => {
     if (!adminSession?.token) {
       return
     }
@@ -156,7 +149,7 @@ export function AdminDashboard() {
       const result = await postBookingEndpoint({
         action: 'admin-history',
         token: adminSession.token,
-        branch: adminSession.branch,
+        branch: adminSession.role === 'super' ? nextFilters.branch : adminSession.branch,
       })
 
       setHistory(Array.isArray(result.history) ? result.history : [])
@@ -182,6 +175,7 @@ export function AdminDashboard() {
     try {
       const result = await fetchAdminSupportChats({
         token: adminSession.token,
+        branch: adminSession.role === 'super' ? filters.branch : adminSession.branch,
       })
       const chats = Array.isArray(result.chats) ? result.chats : []
 
@@ -243,7 +237,7 @@ export function AdminDashboard() {
 
     return () => window.clearInterval(interval)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeAdminTab, session])
+  }, [activeAdminTab, filters.branch, session])
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -255,11 +249,13 @@ export function AdminDashboard() {
         action: 'admin-login',
         password,
         branch: selectedAdminBranch,
+        role: 'branch',
       })
       const nextSession = {
         token: result.token,
         expiresAt: result.expiresAt,
         branch: result.branch || selectedAdminBranch,
+        role: result.role || 'branch',
       }
 
       window.localStorage.setItem(adminSessionKey, JSON.stringify(nextSession))
@@ -267,13 +263,39 @@ export function AdminDashboard() {
         ...current,
         branch: nextSession.branch,
       }))
-      setAdminBookingForm((current) => ({
-        ...current,
-        branch: nextSession.branch,
-      }))
       setSession(nextSession)
       setPassword('')
       await fetchAdminBookings(nextSession)
+    } catch (loginError) {
+      setError(loginError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSuperAdminLogin = async (event) => {
+    event.preventDefault()
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const result = await postBookingEndpoint({
+        action: 'admin-login',
+        password: superAdminPassword,
+        role: 'super',
+      })
+      const nextSession = {
+        token: result.token,
+        expiresAt: result.expiresAt,
+        branch: '',
+        role: 'super',
+      }
+
+      window.localStorage.setItem(adminSessionKey, JSON.stringify(nextSession))
+      setFilters(getDefaultAdminFilters())
+      setSession(nextSession)
+      setSuperAdminPassword('')
+      await fetchAdminBookings(nextSession, getDefaultAdminFilters())
     } catch (loginError) {
       setError(loginError.message)
     } finally {
@@ -320,25 +342,7 @@ export function AdminDashboard() {
     setSupportChats([])
     setActiveSupportChatId('')
     setPassword('')
-  }
-
-  const handleAdminBookingChange = ({ target: { name, value } }) => {
-    const nextValue = name === 'phone' ? value.replace(/\D/g, '').slice(0, 10) : value
-
-    setAdminBookingForm((current) => ({
-      ...current,
-      [name]: nextValue,
-      ...(name === 'paymentMethod'
-        ? {
-            paymentStatus: value === cashPaymentMethod ? 'Paid' : '',
-            paymentId: '',
-            paymentOrderId: '',
-            paymentSignature: '',
-          }
-        : {}),
-    }))
-    setError('')
-    setAdminNotice('')
+    setSuperAdminPassword('')
   }
 
   const handleAdminSearchChange = (tab, value) => {
@@ -346,52 +350,6 @@ export function AdminDashboard() {
       ...current,
       [tab]: value,
     }))
-  }
-
-  const handleAdminCreateBooking = async (event) => {
-    event.preventDefault()
-    setIsLoading(true)
-    setError('')
-    setAdminNotice('')
-
-    try {
-      const paymentDetails =
-        adminBookingForm.paymentMethod === onlinePaymentMethod
-          ? await collectConsultationPayment({
-              name: adminBookingForm.name,
-              phone: adminBookingForm.phone,
-              email: adminBookingForm.email,
-              branch: sessionBranch,
-              source: 'Admin walk-in',
-            })
-          : {
-              paymentMethod: cashPaymentMethod,
-              paymentStatus: 'Paid',
-              paymentAmount: consultationFeeAmount,
-            }
-      const result = await postBookingEndpoint({
-        action: 'admin-create-booking',
-        token: session.token,
-        ...adminBookingForm,
-        ...paymentDetails,
-        branch: sessionBranch,
-        treatmentName: adminBookingForm.treatment,
-      })
-
-      setAdminNotice(`Booking created: ${result.bookingId}. Consultation fee ${paymentDetails.paymentStatus.toLowerCase()} via ${paymentDetails.paymentMethod}.`)
-      setAdminBookingForm((current) => ({
-        ...initialAdminBookingForm,
-        branch: sessionBranch,
-        date: current.date,
-        treatment: current.treatment,
-      }))
-      await fetchAdminBookings(session, filters)
-      await fetchAdminPatients(session)
-    } catch (createError) {
-      setError(createError.message)
-    } finally {
-      setIsLoading(false)
-    }
   }
 
   const handleBookingStatusChange = async (booking, status) => {
@@ -431,9 +389,9 @@ export function AdminDashboard() {
     supportSendInFlightRef.current = true
 
     try {
-      await sendSupportMessage({
+      await sendAdminSupportMessage({
+        token: session.token,
         chatId: activeSupportChat.chatId,
-        sender: 'staff',
         message,
       })
       setSupportChats((current) =>
@@ -466,43 +424,67 @@ export function AdminDashboard() {
 
   if (!session) {
     return (
-      <main className="admin-page">
-        <section className="admin-login-card">
-          <img src="/logo.png" alt="Apple International Dental" />
-          <p className="eyebrow">Admin login</p>
-          <h1>Choose branch dashboard</h1>
-          <p>Select the clinic branch first, then sign in to open only that branch dashboard.</p>
-          <form onSubmit={handleLogin}>
-            <label>
-              Branch
-              <select
-                required
-                value={selectedAdminBranch}
-                onChange={(event) => setSelectedAdminBranch(event.target.value)}
-              >
-                {branches.map((branch) => (
-                  <option key={branch} value={branch}>
-                    {branch}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Password
-              <input
-                required
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                placeholder="Enter admin password"
-              />
-            </label>
-            <button className="submit-button" type="submit" disabled={isLoading}>
-              {isLoading ? 'Checking...' : 'Open branch dashboard'}
-            </button>
-          </form>
-          {error && <p className="admin-error">{error}</p>}
-        </section>
+      <main className="admin-page admin-login-page">
+        <div className="admin-login-grid">
+          <section className="admin-login-card">
+            <img src="/logo.png" alt="Apple International Dental" />
+            <p className="eyebrow">Admin login</p>
+            <h1>Choose branch dashboard</h1>
+            <p>Select the clinic branch first, then sign in to open only that branch dashboard.</p>
+            <form onSubmit={handleLogin}>
+              <label>
+                Branch
+                <select
+                  required
+                  value={selectedAdminBranch}
+                  onChange={(event) => setSelectedAdminBranch(event.target.value)}
+                >
+                  {branches.map((branch) => (
+                    <option key={branch} value={branch}>
+                      {branch}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                Password
+                <input
+                  required
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  placeholder="Enter admin password"
+                />
+              </label>
+              <button className="submit-button" type="submit" disabled={isLoading}>
+                {isLoading ? 'Checking...' : 'Open branch dashboard'}
+              </button>
+            </form>
+          </section>
+
+          <section className="admin-login-card admin-super-login-card">
+            <img src="/logo.png" alt="Apple International Dental" />
+            <p className="eyebrow">Super admin login</p>
+            <h1>All branches dashboard</h1>
+            <p>Review bookings, patients, treatment history, and support activity across every branch.</p>
+            <form onSubmit={handleSuperAdminLogin}>
+              <label>
+                Password
+                <input
+                  required
+                  type="password"
+                  value={superAdminPassword}
+                  onChange={(event) => setSuperAdminPassword(event.target.value)}
+                  placeholder="Enter super admin password"
+                />
+              </label>
+              <button className="submit-button" type="submit" disabled={isLoading}>
+                {isLoading ? 'Checking...' : 'Open super dashboard'}
+              </button>
+            </form>
+          </section>
+        </div>
+        {error && <p className="admin-error admin-login-error">{error}</p>}
       </main>
     )
   }
@@ -513,8 +495,8 @@ export function AdminDashboard() {
         <div className="admin-brand-heading">
           <div>
             <strong>Apple International Dental</strong>
-            <p className="eyebrow">Admin dashboard</p>
-            <h1>{getBranchArea(sessionBranch)} bookings</h1>
+            <p className="eyebrow">{isSuperAdmin ? 'Super admin dashboard' : 'Admin dashboard'}</p>
+            <h1>{dashboardBranchLabel} bookings</h1>
           </div>
         </div>
         <div className="admin-topbar-actions">
@@ -539,15 +521,10 @@ export function AdminDashboard() {
           <span>{websiteBookings.length}</span>
           <p>website</p>
         </article>
-        <article>
-          <span>{manualBookings.length}</span>
-          <p>manual / clinic</p>
-        </article>
       </section>
 
       <nav className="admin-tabs" aria-label="Admin dashboard sections">
         {[
-          ['new-booking', 'New Walk-in'],
           ['bookings', 'Bookings'],
           ['patients', 'Patients'],
           ['history', 'Treatment History'],
@@ -577,10 +554,24 @@ export function AdminDashboard() {
               To
               <input name="endDate" type="date" value={filters.endDate} onChange={handleFilterChange} />
             </label>
-            <div className="admin-branch-lock">
-              <span>Branch</span>
-              <strong>{getBranchArea(sessionBranch)}</strong>
-            </div>
+            {isSuperAdmin ? (
+              <label>
+                Branch
+                <select name="branch" value={filters.branch} onChange={handleFilterChange}>
+                  <option value="">All branches</option>
+                  {branches.map((branch) => (
+                    <option key={branch} value={branch}>
+                      {getBranchArea(branch)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : (
+              <div className="admin-branch-lock">
+                <span>Branch</span>
+                <strong>{getBranchArea(sessionBranch)}</strong>
+              </div>
+            )}
             <label>
               Treatment
               <select name="treatment" value={filters.treatment} onChange={handleFilterChange}>
@@ -684,148 +675,6 @@ export function AdminDashboard() {
         </>
       )}
 
-      {activeAdminTab === 'new-booking' && (
-        <section className="admin-form-panel">
-          <div className="admin-table-heading">
-            <h2>New walk-in / manual booking</h2>
-            <span>Writes to Google Sheets</span>
-          </div>
-          <form className="admin-create-form" onSubmit={handleAdminCreateBooking}>
-            <label>
-              Patient name
-              <input
-                required
-                name="name"
-                value={adminBookingForm.name}
-                onChange={handleAdminBookingChange}
-                placeholder="Patient full name"
-              />
-            </label>
-            <label>
-              Phone
-              <input
-                required
-                name="phone"
-                inputMode="numeric"
-                pattern="[0-9]{10}"
-                maxLength="10"
-                value={adminBookingForm.phone}
-                onChange={handleAdminBookingChange}
-                placeholder="10 digit phone"
-              />
-            </label>
-            <label>
-              Email
-              <input
-                name="email"
-                type="email"
-                value={adminBookingForm.email}
-                onChange={handleAdminBookingChange}
-                placeholder="Optional"
-              />
-            </label>
-            <label>
-              Referred by
-              <input
-                name="referredBy"
-                value={adminBookingForm.referredBy}
-                onChange={handleAdminBookingChange}
-                placeholder="Optional"
-              />
-            </label>
-            <label>
-              Treatment
-              <select name="treatment" value={adminBookingForm.treatment} onChange={handleAdminBookingChange}>
-                {treatments.map((treatment) => (
-                  <option key={treatment.id} value={treatment.name}>
-                    {treatment.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Branch
-              <input value={getBranchArea(sessionBranch)} readOnly />
-            </label>
-            <label>
-              Date
-              <input
-                required
-                name="date"
-                type="date"
-                value={adminBookingForm.date}
-                onChange={handleAdminBookingChange}
-              />
-            </label>
-            <label>
-              Time slot
-              <select name="timeSlot" value={adminBookingForm.timeSlot} onChange={handleAdminBookingChange}>
-                {appointmentSlots.map((slot) => (
-                  <option key={slot} value={slot}>
-                    {slot}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Source
-              <select name="source" value={adminBookingForm.source} onChange={handleAdminBookingChange}>
-                {['Manual Walkin', 'Phone Booking', 'Reception Booking'].map((source) => (
-                  <option key={source} value={source}>
-                    {source}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              Status
-              <select name="status" value={adminBookingForm.status} onChange={handleAdminBookingChange}>
-                {adminStatuses.map((status) => (
-                  <option key={status} value={status}>
-                    {status}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <div className="admin-payment-panel admin-form-wide">
-              <div>
-                <strong>Consultation fee</strong>
-                <span>₹{consultationFeeAmount}</span>
-              </div>
-              <label>
-                Payment mode
-                <select
-                  name="paymentMethod"
-                  value={adminBookingForm.paymentMethod}
-                  onChange={handleAdminBookingChange}
-                >
-                  <option value={cashPaymentMethod}>Received in cash</option>
-                  <option value={onlinePaymentMethod}>Collect online payment</option>
-                </select>
-              </label>
-              <p>
-                {adminBookingForm.paymentMethod === cashPaymentMethod
-                  ? 'Use this when the patient pays the consultation fee at reception.'
-                  : 'The Razorpay checkout opens before the walk-in booking is saved.'}
-              </p>
-            </div>
-            <label className="admin-form-wide">
-              Notes / concern
-              <textarea
-                name="concern"
-                rows="4"
-                value={adminBookingForm.concern}
-                onChange={handleAdminBookingChange}
-                placeholder="Short clinical or reception note"
-              />
-            </label>
-            <button className="submit-button admin-form-wide" type="submit" disabled={isLoading}>
-              {isLoading ? 'Saving...' : 'Create booking'}
-            </button>
-          </form>
-        </section>
-      )}
-
       {activeAdminTab === 'patients' && (
         <section className="admin-table-panel">
           <div className="admin-table-heading">
@@ -836,7 +685,7 @@ export function AdminDashboard() {
                 <input
                   value={adminSearch.patients}
                   onChange={(event) => handleAdminSearchChange('patients', event.target.value)}
-                  placeholder="Name, phone, email, ID"
+                  placeholder="Name, phone, email"
                 />
               </label>
               <span>{visiblePatients.length} records</span>
@@ -855,7 +704,6 @@ export function AdminDashboard() {
                   <th>Active treatment</th>
                   <th>Status</th>
                   <th>Last branch</th>
-                  <th>Patient ID</th>
                 </tr>
               </thead>
               <tbody>
@@ -873,12 +721,11 @@ export function AdminDashboard() {
                     <td>{patient.activeTreatment || '-'}</td>
                     <td>{patient.currentStatus || '-'}</td>
                     <td>{patient.lastBranch ? getBranchArea(patient.lastBranch) : '-'}</td>
-                    <td>{patient.patientId}</td>
                   </tr>
                 ))}
                 {!visiblePatients.length && (
                   <tr>
-                    <td colSpan="10">No patient records found for this search.</td>
+                    <td colSpan="9">No patient records found for this search.</td>
                   </tr>
                 )}
               </tbody>
@@ -956,7 +803,7 @@ export function AdminDashboard() {
       {activeAdminTab === 'support' && (
         <section className="admin-table-panel support-inbox-panel">
           <div className="admin-table-heading">
-            <h2>Branch support chat</h2>
+            <h2>{isSuperAdmin ? 'All branch support chats' : 'Branch support chat'}</h2>
             <div className="admin-table-tools">
               <button className="admin-refresh-button" type="button" onClick={() => fetchAdminSupport()}>
                 Refresh
@@ -983,7 +830,7 @@ export function AdminDashboard() {
                   </button>
                 ))
               ) : (
-                <p>No support chats for this branch yet.</p>
+                <p>{isSuperAdmin ? 'No support chats found yet.' : 'No support chats for this branch yet.'}</p>
               )}
             </div>
 
@@ -1036,9 +883,12 @@ export function AdminDashboard() {
         <div className="doctor-login-symbol">
           <img src="/dental-assistant-logo.png" alt="" />
         </div>
-        <p className="eyebrow">Branch support</p>
+        <p className="eyebrow">{isSuperAdmin ? 'All branch support' : 'Branch support'}</p>
         <strong>Support Chat</strong>
-        <p>Open patient support messages for {getBranchArea(sessionBranch)} and reply from this dashboard.</p>
+        <p>
+          Open patient support messages for {isSuperAdmin ? 'all branches' : getBranchArea(sessionBranch)} and reply
+          from this dashboard.
+        </p>
         <div className="support-card-meta">
           <span>{supportChats.length}</span>
           <small>conversations loaded</small>

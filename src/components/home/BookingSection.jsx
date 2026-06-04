@@ -1,11 +1,11 @@
 import {
-  treatments,
+  consultationTreatments,
   branches,
   formspreeEndpoint,
   consultationFeeAmount,
-  concernWordLimit,
+  onlineConsultationFeeAmount,
   onlinePaymentMethod,
-  getWords,
+  payAtClinicPaymentMethod,
   appointmentSlots,
 } from '../../config/siteContent.js'
 
@@ -17,11 +17,6 @@ export function BookingSection({
   handleChange,
   handleDateFieldClick,
   todayDateValue,
-  suggestedDates,
-  handleDateSuggestion,
-  hasAvailableSelectedDate,
-  appointmentStatusMessage,
-  availabilityError,
   handleTimeSlotSelect,
   isSubmitting,
   requiresSlotSelection,
@@ -31,6 +26,9 @@ export function BookingSection({
   bookingLock,
   bookingCooldown,
 }) {
+  const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
+  const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
+
   return (
     <section className="booking-section reveal-section" id="booking-form">
       <div className="section-heading compact">
@@ -39,8 +37,8 @@ export function BookingSection({
           <h2>Schedule your dental consultation</h2>
         </div>
         <p className="section-text">
-          Tell us what you need help with and our front desk team will confirm the right doctor,
-          visit type, and available appointment slot.
+          Choose your consultation details and our front desk team will confirm the right doctor,
+          visit type, and appointment time.
         </p>
       </div>
 
@@ -63,8 +61,8 @@ export function BookingSection({
           <input type="hidden" name="treatment_name" value={selectedTreatment.name} />
           <input type="hidden" name="branch_name" value={formState.branch} />
           <input type="hidden" name="timeSlot" value={formState.timeSlot} />
-          <input type="hidden" name="payment_amount" value={consultationFeeAmount} />
-          <input type="hidden" name="payment_method" value={onlinePaymentMethod} />
+          <input type="hidden" name="payment_amount" value={selectedFee} />
+          <input type="hidden" name="payment_method" value={formState.paymentMethod} />
 
           <fieldset disabled={isFormDisabled}>
             <label className="select-label">
@@ -76,7 +74,7 @@ export function BookingSection({
                   value={formState.treatment}
                   onChange={handleChange}
                 >
-                  {treatments.map((treatment) => (
+                  {consultationTreatments.map((treatment) => (
                     <option key={treatment.id} value={treatment.id}>
                       {treatment.name}
                     </option>
@@ -99,7 +97,9 @@ export function BookingSection({
             </label>
 
             <label>
-              Full name
+              <span>
+                Full name <span className="required-mark" aria-hidden="true">*</span>
+              </span>
               <input
                 required
                 name="name"
@@ -111,7 +111,9 @@ export function BookingSection({
             </label>
 
             <label>
-              Phone number
+              <span>
+                Phone number <span className="required-mark" aria-hidden="true">*</span>
+              </span>
               <input
                 required
                 name="phone"
@@ -126,36 +128,10 @@ export function BookingSection({
               />
             </label>
 
-            <label>
-              Email address
-              <input
-                required
-                name="email"
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                title="Enter a valid email address"
-                placeholder="yourname@gmail.com"
-                value={formState.email}
-                onChange={handleChange}
-              />
-            </label>
-
-            <label>
-              Reffered by
-              <input
-                name="referredBy"
-                type="text"
-                pattern="[A-Za-z ]*"
-                title="Use alphabets and spaces only"
-                placeholder="Doctor, friend, family, or online"
-                value={formState.referredBy}
-                onChange={handleChange}
-              />
-            </label>
-
             <label onClick={handleDateFieldClick}>
-              Preferred date
+              <span>
+                Preferred date <span className="required-mark" aria-hidden="true">*</span>
+              </span>
               <input
                 required
                 name="date"
@@ -166,79 +142,63 @@ export function BookingSection({
               />
             </label>
 
-            <div className="booking-availability booking-form-wide">
-              <div className="date-suggestions" aria-label="Available appointment dates">
-                {suggestedDates.map((date) => (
+            {formState.date && (
+              <div className="time-slot-grid booking-form-wide" aria-label="Appointment time slots">
+                {appointmentSlots.map((slot) => (
                   <button
-                    className={`date-chip${formState.date === date.value ? ' selected' : ''}`}
-                    disabled={date.isUnavailable}
-                    key={date.value}
+                    className={`time-slot${formState.timeSlot === slot ? ' selected' : ''}`}
+                    key={slot}
                     type="button"
-                    onClick={() => handleDateSuggestion(date.value)}
+                    onClick={() => handleTimeSlotSelect(slot)}
                   >
-                    <span>{date.label}</span>
-                    <small>{date.isUnavailable ? 'Closed' : 'Open'}</small>
+                    {slot}
                   </button>
                 ))}
               </div>
+            )}
 
-              <p
-                className={`availability-note${
-                  hasAvailableSelectedDate ? ' available' : formState.date ? ' unavailable' : ''
-                }`}
-              >
-                {appointmentStatusMessage}
-              </p>
-              {availabilityError && (
-                <p className="availability-note unavailable">{availabilityError}</p>
-              )}
-
-              {formState.date && (
-                <div className="time-slot-grid" aria-label="Available appointment time slots">
-                  {appointmentSlots.map((slot) => (
-                    <button
-                      className={`time-slot${formState.timeSlot === slot ? ' selected' : ''}`}
-                      disabled={!hasAvailableSelectedDate}
-                      key={slot}
-                      type="button"
-                      onClick={() => handleTimeSlotSelect(slot)}
-                    >
-                      {slot}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <fieldset className="consultation-fee-options booking-form-wide">
+              <legend>Consultation Fee</legend>
+              <label className={isPayAtClinic ? '' : 'selected'}>
+                <input
+                  checked={!isPayAtClinic}
+                  name="paymentMethod"
+                  type="radio"
+                  value={onlinePaymentMethod}
+                  onChange={handleChange}
+                />
+                <span>Pay Online</span>
+                <strong>Rs {onlineConsultationFeeAmount}</strong>
+              </label>
+              <label className={isPayAtClinic ? 'selected' : ''}>
+                <input
+                  checked={isPayAtClinic}
+                  name="paymentMethod"
+                  type="radio"
+                  value={payAtClinicPaymentMethod}
+                  onChange={handleChange}
+                />
+                <span>Pay at Clinic</span>
+                <strong>Rs {consultationFeeAmount}</strong>
+              </label>
+            </fieldset>
 
             <div className="payment-summary booking-form-wide">
               <div>
                 <strong>Consultation fee</strong>
-                <span>
-                  Paid securely before the appointment request is sent.
-                  <span className="razorpay-mark" aria-label="Powered by Razorpay">
-                    <img src="/payments/razorpay.svg" alt="" />
+                {isPayAtClinic ? (
+                  <span>Pay during your visit. No online payment is required.</span>
+                ) : (
+                  <span>
+                    Paid securely before the appointment request is sent.
+                    <span className="razorpay-mark" aria-label="Powered by Razorpay">
+                      <img src="/payments/razorpay.svg" alt="" />
+                    </span>
                   </span>
-                </span>
+                )}
               </div>
-              <p>Rs {consultationFeeAmount}</p>
+              <p>Rs {selectedFee}</p>
             </div>
-
-            <label className="booking-form-wide">
-              <span className="field-label-row">
-                <span>What would you like help with?</span>
-                <span>
-                  {getWords(formState.concern).length}/{concernWordLimit} words
-                </span>
-              </span>
-              <textarea
-                required
-                name="concern"
-                rows="4"
-                placeholder="Tell us about your smile goals or dental concern."
-                value={formState.concern}
-                onChange={handleChange}
-              />
-            </label>
           </fieldset>
 
           <button
@@ -249,12 +209,16 @@ export function BookingSection({
             {isSubmitting && <span className="submit-spinner" aria-hidden="true" />}
             <span>
               {isSubmitting
-                ? 'Opening payment...'
+                ? isPayAtClinic
+                  ? 'Sending request...'
+                  : 'Opening payment...'
                 : isBookingLocked
                   ? 'Request limit reached'
                   : requiresSlotSelection
                     ? 'Select date and time'
-                    : `Pay Rs ${consultationFeeAmount} & request appointment`}
+                    : isPayAtClinic
+                      ? `Request appointment - Pay Rs ${selectedFee} at clinic`
+                      : `Pay Rs ${selectedFee} & request appointment`}
             </span>
           </button>
         </form>
@@ -282,7 +246,7 @@ export function BookingSection({
               : confirmationTreatment
                 ? bookingLock
                   ? `Thank you. Your ${confirmationTreatment} request has been sent to our reception team. This device has reached four requests, so the form is paused for about ${bookingCooldown}.`
-                  : `Thank you. Your ${confirmationTreatment} request and Rs ${consultationFeeAmount} consultation fee have been received. We will contact you shortly to confirm your appointment.`
+                  : `Thank you. Your ${confirmationTreatment} request has been received. We will contact you shortly to confirm your appointment.`
                 : 'Select a treatment from the dropdown or use the treatment cards above to begin.'}
           </p>
         </div>

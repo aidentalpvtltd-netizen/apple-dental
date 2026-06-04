@@ -7,7 +7,6 @@ const filledImageBranches = new Set([
   'Kondapur, Hyderabad',
   'Nellore',
   'Nakkal Road, Vijayawada',
-  'One Town (Panja), Vijayawada',
   'Guntur',
   'Dwaraka Nagar, Visakhapatnam',
   'Tirupati',

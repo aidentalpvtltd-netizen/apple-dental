@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+import './styles/index.css'
 import { ChatBotLauncher } from './components/ChatBotLauncher.jsx'
 import { WhatsappLauncher } from './components/WhatsappLauncher.jsx'
 import { treatmentPages } from './config/siteContent.js'
@@ -7,6 +7,7 @@ import { AdminDashboard } from './pages/AdminDashboard.jsx'
 import { CookiesPolicyPage } from './pages/CookiesPolicyPage.jsx'
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage.jsx'
 import { RefundCancellationPolicyPage } from './pages/RefundCancellationPolicyPage.jsx'
+import { FindClinicPage } from './pages/FindClinicPage.jsx'
 import { SchemesPage } from './pages/SchemesPage.jsx'
 import { TermsConditionsPage } from './pages/TermsConditionsPage.jsx'
 import { TreatmentPage } from './pages/TreatmentPage.jsx'
@@ -17,6 +18,7 @@ function App() {
   const normalizedPath =
     typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') : ''
   const isSchemesPath = normalizedPath === '/schemes'
+  const isFindClinicPath = normalizedPath === '/find-a-clinic'
   const isPrivacyPath = normalizedPath === '/privacy-policy'
   const isTermsPath = normalizedPath === '/terms-and-conditions'
   const isCookiesPath = normalizedPath === '/cookies-policy'
@@ -25,6 +27,7 @@ function App() {
   const treatmentPage = treatmentPages[normalizedPath]
   const isStaticPublicPath =
     isSchemesPath ||
+    isFindClinicPath ||
     isPrivacyPath ||
     isTermsPath ||
     isCookiesPath ||
@@ -101,6 +104,8 @@ function App() {
     <>
       {isSchemesPath ? (
         <SchemesPage />
+      ) : isFindClinicPath ? (
+        <FindClinicPage />
       ) : isPrivacyPath ? (
         <PrivacyPolicyPage />
       ) : isTermsPath ? (
@@ -116,7 +121,7 @@ function App() {
       )}
       {!isWebsiteLoading && (
         <>
-          <ChatBotLauncher playMainSiteIntro={!isSchemesPath} />
+          <ChatBotLauncher playMainSiteIntro={!isSchemesPath && !isFindClinicPath} />
           <WhatsappLauncher />
         </>
       )}

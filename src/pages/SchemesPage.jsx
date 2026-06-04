@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
+import { BackToTopLink } from '../components/BackToTopLink.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
 import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
 import {
@@ -9,6 +10,11 @@ import {
   schemePrograms,
   getWhatsappLink,
 } from '../config/siteContent.js'
+
+const carouselSchemeNames = ['CGHS', 'EHS', 'CAPF', 'ABS']
+const carouselSchemes = carouselSchemeNames
+  .map((shortName) => schemePrograms.find((scheme) => scheme.shortName === shortName))
+  .filter(Boolean)
 
 export function SchemesPage() {
   const pageRef = useRef(null)
@@ -84,7 +90,7 @@ export function SchemesPage() {
         <div className="scheme-hero-media scheme-logo-carousel" aria-label="Scheme logo carousel">
           <div className="scheme-carousel-window">
             <div className="scheme-carousel-track">
-              {[...schemePrograms, ...schemePrograms].map((scheme, index) => (
+              {[...carouselSchemes, ...carouselSchemes].map((scheme, index) => (
                 <span className="scheme-carousel-slide" key={`${scheme.shortName}-${index}`}>
                   <img src={scheme.logo} alt={`${scheme.name} logo`} />
                   <small>{scheme.shortName}</small>
@@ -93,8 +99,7 @@ export function SchemesPage() {
             </div>
           </div>
           <div className="scheme-collage-count">
-            <strong>{schemePrograms.length}</strong>
-            <span>Schemes</span>
+            <span>Empanelled Schemes</span>
           </div>
         </div>
       </section>
@@ -199,6 +204,7 @@ export function SchemesPage() {
             PHASEONEVFX
           </a>
         </p>
+        <BackToTopLink />
       </footer>
 
     </main>

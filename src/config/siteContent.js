@@ -241,15 +241,6 @@ export const clinicBranches = [
     image: '/branches/nakkal-road-vijayawada.jpg',
   },
   {
-    branch: 'Apple International Dental, One Town (Panja), Vijayawada',
-    area: 'One Town (Panja), Vijayawada',
-    address:
-      '1st floor, D, : 11-1-18, Babu Rajendra Prasad Rd, beside Amma Hotel, 1 Town, Vijayawada, Andhra Pradesh 520001',
-    phone: '9281094967',
-    email: 'appledentalvij@gmail.com',
-    image: '/branches/one-town-panja-vijayawada.jpg',
-  },
-  {
     branch: 'Apple International Dental, Srikakulam',
     area: 'Srikakulam',
     address:
@@ -414,7 +405,7 @@ export const schemePrograms = [
   {
     shortName: 'EHS',
     name: 'Employees Health Scheme',
-    logo: '/schemes/ehs.png',
+    logo: '/schemes/ehs-updated.webp',
     audience: 'Eligible Andhra Pradesh state government employees, pensioners, and dependent family members.',
     carePath:
       'The front desk can help verify scheme documents and guide patients on whether the planned dental care needs approval.',
@@ -425,7 +416,7 @@ export const schemePrograms = [
   {
     shortName: 'CAPF',
     name: 'Central Armed Police Forces',
-    logo: '/schemes/capf.jpg',
+    logo: '/schemes/capf-crpf-updated.webp',
     audience: 'Eligible personnel and dependents from central armed police forces.',
     carePath:
       'Patients can visit with force ID and scheme papers so the branch team can guide the correct approval route.',
@@ -436,7 +427,7 @@ export const schemePrograms = [
   {
     shortName: 'CRPF',
     name: 'Central Reserve Police Force',
-    logo: '/schemes/crpf.png',
+    logo: '/schemes/capf-crpf-updated.webp',
     audience: 'Eligible CRPF personnel, families, and dependents under applicable cashless or referral systems.',
     carePath:
       'CRPF patients should carry identity and entitlement documents for branch-level verification before treatment planning.',
@@ -469,7 +460,7 @@ export const schemePrograms = [
   {
     shortName: 'ABS',
     name: 'Aarogya Bhadratha Scheme',
-    logo: '/schemes/aarogya-bhadratha.jpg',
+    logo: '/schemes/aarogya-bhadratha-updated.jpg',
     audience: 'Eligible police personnel and dependent family members in Andhra Pradesh and Telangana.',
     carePath:
       'Police families can visit with scheme documents for help with dental consultation and cashless approval guidance.',
@@ -707,7 +698,7 @@ export const siteNavGroups = [
         href: '/digital-dentistry/digital-opg-and-cbct',
       },
       {
-        label: 'Central Digital Lab',
+        label: 'Digital Dental Lab',
         href: '/digital-dentistry/central-digital-lab',
       },
     ],
@@ -1112,6 +1103,7 @@ export const treatmentPages = {
   },
   '/specialist-dentistry/oral-surgery': {
     category: 'Specialist Dentistry',
+    variant: 'oral-surgery-treatment',
     title: 'Oral Surgery',
     navLabel: 'Oral Surgery',
     eyebrow: 'Surgical care for teeth, jaws, and oral tissues',
@@ -1276,8 +1268,8 @@ export const treatmentPages = {
   },
   '/digital-dentistry/central-digital-lab': {
     category: 'Digital Dentistry',
-    title: 'Central Digital Lab',
-    navLabel: 'Central Digital Lab',
+    title: 'Digital Dental Lab',
+    navLabel: 'Digital Dental Lab',
     eyebrow: 'Integrated digital dental laboratory workflow',
     image: '/services/Digital Dental Lab.png',
     imageAlt: 'Digital dental lab implant planning software showing jaw model, implants, and CBCT slices on a monitor',
@@ -2009,13 +2001,10 @@ export const appointmentSlots = [
 
 export const adminStatuses = [
   'Booked',
-  'Confirmed',
-  'Walk-in',
-  'Website',
+  'Visited',
   'In Treatment',
-  'Treatment Completed',
+  'Treatment Complete',
   'Cancelled',
-  'No Show',
 ]
 
 export const branchAvailability = Object.fromEntries(
@@ -2030,8 +2019,8 @@ export const branchAvailability = Object.fromEntries(
 export const kpis = [
   { value: '22 years+', label: 'serving patients' },
   { value: '33 lakh+', label: 'patients treated across routine and advanced care' },
-  { value: '7 days', label: 'consultations and emergency visits available' },
-  { value: '13', label: 'core treatments under one roof' },
+  { value: '120+ dentists', label: 'experienced dental professionals across our clinic network' },
+  { value: '30K+ Implants', label: 'successful implant placements and smile restorations' },
 ]
 
 export const services = [
@@ -2112,14 +2101,17 @@ export const instagramPosts = [
 ]
 
 export const instagramProfileUrl = 'https://www.instagram.com/appleinternational_dental/'
-export const instagramFeedEndpoint = import.meta.env.VITE_INSTAGRAM_FEED_ENDPOINT
+export const instagramFeedEndpoint =
+  import.meta.env.VITE_INSTAGRAM_FEED_ENDPOINT ?? '/.netlify/functions/instagram-feed'
 export const bookingEndpoint = import.meta.env.VITE_BOOKING_ENDPOINT
 
 export const heroImage = '/hero/dental-hero-smile-exam.jpg'
 export const heroImages = [
-  heroImage,
-  '/hero/hero-crown-decay-check.png',
-  '/hero/hero-dental-treatment.webp',
+  '/hero/root-canal-homepage-banner.png',
+  '/hero/aligners-homepage-banner.png',
+  '/hero/implants-homepage-banner.png',
+  '/hero/teeth-whitening-homepage-banner.png',
+  '/hero/digital-analog-oral-scanning.png',
 ]
 export const heroCarouselImages = [...heroImages, heroImages[0]]
 
@@ -2205,27 +2197,34 @@ export const adminSessionKey = 'appleInternationalDentalAdminSession'
 export const bookingLockDuration = 24 * 60 * 60 * 1000
 export const bookingLockSubmissionLimit = 4
 export const consultationFeeAmount = 350
-export const consultationFeeSubunits = consultationFeeAmount * 100
+export const onlineConsultationFeeAmount = 250
+export const onlineConsultationFeeSubunits = onlineConsultationFeeAmount * 100
 export const loaderMinimumDuration = 1400
 export const loaderMaximumDuration = 5200
 export const concernWordLimit = 100
 export const availabilityRefreshMs = 30 * 1000
 export const onlinePaymentMethod = 'Online payment'
-export const cashPaymentMethod = 'Cash received'
+export const payAtClinicPaymentMethod = 'Pay at clinic'
+
+export const generalConsultationTreatment = {
+  id: 'general-consultation',
+  name: 'General Consultation',
+  details:
+    'A general dental consultation to assess your oral health needs and guide you to the appropriate care.',
+}
+
+export const consultationTreatments = [generalConsultationTreatment, ...treatments]
 
 export const initialFormState = {
-  treatment: treatments[0].id,
+  treatment: generalConsultationTreatment.id,
   branch: branches[0],
   name: '',
   phone: '',
-  email: '',
-  referredBy: '',
   date: '',
   timeSlot: '',
-  concern: '',
   paymentMethod: onlinePaymentMethod,
   paymentStatus: '',
-  paymentAmount: consultationFeeAmount,
+  paymentAmount: onlineConsultationFeeAmount,
   paymentId: '',
   paymentOrderId: '',
   paymentSignature: '',
@@ -2543,11 +2542,11 @@ export const submitBookingToSheets = async ({ formState, treatmentName, branchNa
       branch: branchName,
       name: formState.name,
       phone: formState.phone,
-      email: formState.email,
-      referredBy: formState.referredBy,
+      email: '',
+      referredBy: '',
       date: formState.date,
       timeSlot: formState.timeSlot,
-      concern: formState.concern,
+      concern: '',
       paymentMethod: formState.paymentMethod || onlinePaymentMethod,
       paymentStatus: formState.paymentStatus,
       paymentAmount: formState.paymentAmount,
@@ -2571,10 +2570,28 @@ export const postBookingEndpoint = async (payload) => {
     throw new Error('Booking endpoint is not configured.')
   }
 
-  const response = await fetch(bookingEndpoint, {
-    method: 'POST',
-    body: JSON.stringify(payload),
-  })
+  let response
+
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      response = await fetch(bookingEndpoint, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      })
+      break
+    } catch (error) {
+      const canRetry = attempt < 2 && String(error.message || '').toLowerCase() === 'failed to fetch'
+
+      if (!canRetry) {
+        throw error
+      }
+
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, 450 * (attempt + 1))
+      })
+    }
+  }
+
   const result = await response.json().catch(() => null)
 
   if (!response.ok || result?.ok === false) {
@@ -2608,10 +2625,19 @@ export const fetchSupportChat = ({ chatId }) =>
     chatId,
   })
 
-export const fetchAdminSupportChats = ({ token }) =>
+export const fetchAdminSupportChats = ({ token, branch = '' }) =>
   postBookingEndpoint({
     action: 'admin-support-chats',
     token,
+    branch,
+  })
+
+export const sendAdminSupportMessage = ({ token, chatId, message }) =>
+  postBookingEndpoint({
+    action: 'admin-support-send-message',
+    token,
+    chatId,
+    message,
   })
 
 export const loadRazorpayCheckout = () =>
@@ -2637,7 +2663,7 @@ export const loadRazorpayCheckout = () =>
 export const createConsultationPaymentOrder = async ({ name, phone, email, branch, source }) =>
   postBookingEndpoint({
     action: 'create-payment-order',
-    amount: consultationFeeSubunits,
+    amount: onlineConsultationFeeSubunits,
     currency: 'INR',
     name,
     phone,
@@ -2672,7 +2698,7 @@ export const collectConsultationPayment = async ({ name, phone, email, branch, s
   const payment = await new Promise((resolve, reject) => {
     const checkout = new window.Razorpay({
       key: order.keyId,
-      amount: order.amount || consultationFeeSubunits,
+      amount: order.amount || onlineConsultationFeeSubunits,
       currency: order.currency || 'INR',
       name: 'Apple International Dental',
       description: 'Consultation fee',
@@ -2707,7 +2733,7 @@ export const collectConsultationPayment = async ({ name, phone, email, branch, s
   return {
     paymentMethod: onlinePaymentMethod,
     paymentStatus: 'Paid',
-    paymentAmount: consultationFeeAmount,
+    paymentAmount: onlineConsultationFeeAmount,
     paymentId: payment.razorpay_payment_id,
     paymentOrderId: payment.razorpay_order_id,
     paymentSignature: payment.razorpay_signature,
@@ -2722,7 +2748,9 @@ export const getStoredAdminSession = () => {
   try {
     const savedSession = JSON.parse(window.localStorage.getItem(adminSessionKey))
 
-    if (!savedSession?.token || !savedSession?.branch || Number(savedSession.expiresAt) <= Date.now()) {
+    const hasAllowedScope = savedSession?.role === 'super' || Boolean(savedSession?.branch)
+
+    if (!savedSession?.token || !hasAllowedScope || Number(savedSession.expiresAt) <= Date.now()) {
       window.localStorage.removeItem(adminSessionKey)
       return null
     }
@@ -2790,24 +2818,4 @@ export const getCompletedDateParts = (value) => {
     date: match[1],
     time: formatTimeWithMeridiem(match[2]),
   }
-}
-
-export const initialAdminBookingForm = {
-  treatment: treatments[0].name,
-  branch: '',
-  name: '',
-  phone: '',
-  email: '',
-  referredBy: '',
-  date: getTodayDateValue(),
-  timeSlot: appointmentSlots[0],
-  concern: '',
-  status: 'Booked',
-  source: 'Manual Walkin',
-  paymentMethod: cashPaymentMethod,
-  paymentStatus: 'Paid',
-  paymentAmount: consultationFeeAmount,
-  paymentId: '',
-  paymentOrderId: '',
-  paymentSignature: '',
 }

@@ -1,0 +1,118 @@
+.u-card {
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow-soft);
+}
+
+.u-glass {
+  background: rgba(255, 255, 255, 0.84);
+  backdrop-filter: blur(14px);
+}
+
+.u-button-gradient {
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--gradient-red);
+  color: #ffffff;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.84rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  font-weight: 700;
+}
+
+.secondary-action {
+  padding: 13px 20px;
+  color: var(--accent-strong);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(215, 25, 32, 0.28);
+}
+
+.secondary-action:hover {
+  background: rgba(214, 32, 39, 0.12);
+  border-color: rgba(214, 32, 39, 0.28);
+}
+
+.section-heading {
+  display: grid;
+  gap: 10px;
+  max-width: 760px;
+}
+
+.section-heading.compact h2 {
+  font-size: clamp(1.75rem, 2.4vw, 2.25rem);
+  color: var(--heading);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.section-text {
+  max-width: 680px;
+  margin: 0;
+  color: var(--text);
+  font-size: 1.04rem;
+  line-height: 1.55;
+}
+
+.required-mark {
+  color: var(--accent-strong);
+}
+
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.field-label-row span:last-child {
+  flex-shrink: 0;
+  color: #59636a;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.select-control {
+  position: relative;
+  display: block;
+}
+
+.select-control::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid rgba(214, 32, 39, 0.76);
+  border-bottom: 2px solid rgba(214, 32, 39, 0.76);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+@media (max-width: 760px) {
+  .section-heading {
+      gap: 8px;
+    }
+
+  .section-heading.compact h2 {
+      font-size: 1.52rem;
+      line-height: 1.16;
+    }
+
+  .section-text {
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+  .eyebrow {
+      margin-bottom: 9px;
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+    }
+}

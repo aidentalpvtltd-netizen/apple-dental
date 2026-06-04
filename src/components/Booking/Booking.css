@@ -1,0 +1,519 @@
+.primary-action,
+.secondary-action,
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.primary-action,
+.submit-button {
+  padding: 13px 20px;
+  color: #f4fbfb;
+  background: linear-gradient(135deg, #ff0201, #b91319);
+  box-shadow: 0 16px 28px rgba(185, 19, 25, 0.32);
+}
+
+.booking-section {
+  margin-top: 52px;
+}
+
+.booking-panel {
+  padding: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 236, 232, 0.97)),
+    radial-gradient(circle at top right, rgba(215, 25, 32, 0.18), transparent 40%);
+  color: var(--text);
+  border: 1px solid rgba(119, 30, 35, 0.24);
+  box-shadow: 0 24px 60px rgba(36, 45, 54, 0.14);
+}
+
+.booking-panel-full {
+  margin-top: 20px;
+}
+
+.booking-header h3 {
+  font-size: 1.6rem;
+  color: var(--heading);
+}
+
+.booking-header p:last-child {
+  margin-top: 10px;
+  color: #505a61;
+  font-size: 1.02rem;
+}
+
+.booking-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.booking-form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.booking-form fieldset {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: inherit;
+  gap: 14px 16px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.booking-form label {
+  display: grid;
+  gap: 7px;
+  font-size: 0.98rem;
+  color: var(--heading);
+  font-weight: 700;
+}
+
+.booking-form-wide {
+  grid-column: 1 / -1;
+}
+
+.booking-form select,
+.booking-form input,
+.booking-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(119, 30, 35, 0.28);
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 13px 14px;
+  color: var(--heading);
+  font: inherit;
+  outline: none;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.booking-form select {
+  appearance: none;
+  padding-right: 44px;
+}
+
+.booking-form select option {
+  background: #ffffff;
+  color: var(--heading);
+}
+
+.booking-form fieldset:disabled .select-control::after {
+  opacity: 0.62;
+}
+
+.booking-form select:focus,
+.booking-form input:focus,
+.booking-form textarea:focus {
+  border-color: rgba(255, 107, 99, 0.84);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.14);
+}
+
+.booking-form input::placeholder,
+.booking-form textarea::placeholder {
+  color: rgba(83, 92, 99, 0.64);
+}
+
+.time-slot {
+  border: 1px solid rgba(119, 30, 35, 0.24);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--heading);
+  cursor: pointer;
+  font: inherit;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.time-slot:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 107, 99, 0.65);
+  background: #ffffff;
+}
+
+.time-slot.selected {
+  border-color: rgba(215, 25, 32, 0.88);
+  background: rgba(215, 25, 32, 0.14);
+  box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.14);
+}
+
+.time-slot:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  filter: grayscale(0.35);
+  transform: none;
+}
+
+.consultation-fee-options {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin-top: 2px !important;
+}
+
+.consultation-fee-options legend {
+  grid-column: 1 / -1;
+  margin-bottom: 7px;
+  color: var(--heading);
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.consultation-fee-options label {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(119, 30, 35, 0.22);
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 13px 14px;
+  cursor: pointer;
+}
+
+.consultation-fee-options label.selected {
+  border-color: rgba(215, 25, 32, 0.76);
+  background: rgba(215, 25, 32, 0.06);
+  box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.11);
+}
+
+.booking-form .consultation-fee-options input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--accent-strong);
+}
+
+.consultation-fee-options strong {
+  color: var(--accent-strong);
+  font-size: 1rem;
+}
+
+.payment-summary,
+.admin-payment-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 1px solid rgba(119, 30, 35, 0.18);
+  border-radius: 16px;
+  background: rgba(255, 248, 248, 0.82);
+  padding: 14px 16px;
+}
+
+.payment-summary div,
+.admin-payment-panel div {
+  display: grid;
+  gap: 3px;
+}
+
+.payment-summary strong,
+.admin-payment-panel strong {
+  color: var(--heading);
+  font-size: 0.96rem;
+}
+
+.payment-summary span,
+.admin-payment-panel span,
+.admin-payment-panel p {
+  color: #5f686f;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.razorpay-mark {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 10px;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  vertical-align: middle;
+  box-shadow: none;
+}
+
+.razorpay-mark img {
+  width: 122px;
+  height: 24px;
+  display: block;
+  object-fit: contain;
+}
+
+.payment-summary p {
+  margin: 0;
+  color: var(--accent-strong);
+  font-size: 1.15rem;
+  font-weight: 900;
+}
+
+.time-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.time-slot {
+  min-height: 42px;
+  padding: 10px 8px;
+  font-weight: 800;
+}
+
+.booking-form fieldset:disabled {
+  opacity: 0.68;
+}
+
+.booking-form fieldset:disabled select,
+.booking-form fieldset:disabled input,
+.booking-form fieldset:disabled textarea {
+  cursor: not-allowed;
+}
+
+.submit-button {
+  border: 0;
+  margin-top: 4px;
+  font: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.76;
+  transform: none;
+}
+
+.submit-button.submitting {
+  opacity: 0.94;
+}
+
+.submit-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.42);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: submit-spin 780ms linear infinite;
+}
+
+.confirmation-card {
+  position: relative;
+  margin-top: 16px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(214, 32, 39, 0.18);
+  opacity: 0.9;
+}
+
+.confirmation-card.visible {
+  padding-left: 54px;
+}
+
+.confirmation-card.success {
+  background: rgba(52, 199, 89, 0.14);
+  border-color: rgba(52, 199, 89, 0.32);
+}
+
+.confirmation-card.error {
+  background: rgba(255, 59, 48, 0.12);
+  border-color: rgba(255, 59, 48, 0.24);
+}
+
+.confirmation-icon {
+  position: absolute;
+  top: 17px;
+  left: 16px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #34c759;
+}
+
+.confirmation-icon::after {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 5px;
+  width: 7px;
+  height: 12px;
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.confirmation-card strong {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.confirmation-card p {
+  margin: 0;
+  color: #4c555c;
+  font-size: 1rem;
+}
+
+@media (max-width: 760px) {
+  .booking-form-grid {
+      grid-template-columns: 1fr;
+    }
+
+  .booking-form fieldset {
+      grid-template-columns: 1fr;
+    }
+
+  .booking-form label {
+      font-size: 0.94rem;
+    }
+
+  .booking-form select,
+    .booking-form input,
+    .booking-form textarea {
+      min-height: 50px;
+      padding: 12px 13px;
+      font-size: 16px;
+      border-radius: 14px;
+    }
+
+  .booking-form textarea {
+      min-height: 108px;
+    }
+
+  .consultation-fee-options {
+      grid-template-columns: 1fr !important;
+    }
+
+  .time-slot-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+  .submit-button {
+      width: 100%;
+    }
+
+  .confirmation-card.visible {
+      padding-left: 48px;
+    }
+}
+
+@media (max-width: 430px) {
+  .time-slot-grid {
+      gap: 8px;
+    }
+}
+
+@media (max-width: 760px) {
+  .booking-section {
+      margin-top: 24px;
+    }
+
+  .booking-section .section-heading {
+      gap: 6px;
+    }
+
+  .booking-section .section-text {
+      font-size: 0.9rem;
+      line-height: 1.42;
+    }
+
+  .booking-panel-full {
+      margin-top: 13px;
+    }
+
+  .booking-header h3 {
+      font-size: 1.26rem;
+    }
+
+  .booking-header p:last-child {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+  .booking-form {
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+  .booking-form fieldset {
+      gap: 10px;
+    }
+
+  .consultation-fee-options {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 8px !important;
+    }
+
+  .consultation-fee-options legend {
+      margin-bottom: 2px;
+    }
+
+  .consultation-fee-options label {
+      grid-template-columns: auto 1fr;
+      gap: 4px 8px;
+      padding: 9px 8px;
+      font-size: 0.84rem;
+    }
+
+  .consultation-fee-options strong {
+      grid-column: 2;
+      font-size: 0.88rem;
+    }
+
+  .time-slot-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+  .time-slot {
+      min-height: 39px;
+      padding: 7px 4px;
+      font-size: 0.8rem;
+    }
+
+  .payment-summary {
+      padding: 11px 12px;
+      gap: 10px;
+    }
+
+  .payment-summary strong {
+      font-size: 0.9rem;
+    }
+
+  .payment-summary span {
+      font-size: 0.76rem;
+    }
+
+  .payment-summary p {
+      font-size: 1rem;
+    }
+
+  .razorpay-mark img {
+      width: 92px;
+      height: 20px;
+    }
+}

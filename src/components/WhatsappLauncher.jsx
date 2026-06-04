@@ -1,5 +1,24 @@
 import { branchContacts, getWhatsappLink } from '../config/siteContent.js'
 
+function keepBranchListWheelInside(event) {
+  const menu = event.currentTarget
+
+  if (menu.scrollHeight <= menu.clientHeight) {
+    return
+  }
+
+  const isScrollingUp = event.deltaY < 0
+  const isScrollingDown = event.deltaY > 0
+  const atTop = menu.scrollTop <= 0
+  const atBottom = Math.ceil(menu.scrollTop + menu.clientHeight) >= menu.scrollHeight
+
+  if ((isScrollingUp && atTop) || (isScrollingDown && atBottom)) {
+    return
+  }
+
+  event.stopPropagation()
+}
+
 export function WhatsappLauncher() {
   return (
     <details className="whatsapp-launcher">
@@ -10,7 +29,11 @@ export function WhatsappLauncher() {
           </svg>
         </span>
       </summary>
-      <div className="whatsapp-menu" aria-label="Choose a branch to message on WhatsApp">
+      <div
+        className="whatsapp-menu"
+        aria-label="Choose a branch to message on WhatsApp"
+        onWheel={keepBranchListWheelInside}
+      >
         <div className="whatsapp-menu-header">
           <div>
             <span>Whatsapp us</span>

@@ -1,0 +1,240 @@
+.brand-section {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 245, 0.7) 52%, rgba(255, 247, 245, 0.58)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 247, 245, 0.38)),
+    url('/brands/aligners-and-implants.png') center center / cover no-repeat,
+    #fff7f5;
+  background-size: auto, auto, cover, auto;
+}
+
+.brand-section {
+  margin-top: 34px;
+}
+
+.brand-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.brand-panel::before {
+  content: none;
+}
+
+.brand-panel::after {
+  content: none;
+}
+
+.brand-heading {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.58fr);
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 22px;
+}
+
+.brand-heading h2 {
+  max-width: 18ch;
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(2rem, 4vw, 3.3rem);
+  line-height: 1;
+}
+
+.brand-heading p:not(.eyebrow) {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.brand-logo-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.brand-logo-card {
+  min-height: 170px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(119, 30, 35, 0.12);
+  box-shadow: 0 16px 34px rgba(36, 45, 54, 0.1);
+}
+
+.brand-logo-frame {
+  min-height: 86px;
+  display: grid;
+  place-items: center;
+}
+
+.brand-logo-frame img {
+  max-width: 100%;
+  max-height: 78px;
+  display: block;
+  object-fit: contain;
+}
+
+.brand-logo-card-featured .brand-logo-frame img {
+  max-width: 108%;
+  max-height: 88px;
+}
+
+.brand-logo-card strong,
+.brand-logo-card span {
+  display: block;
+}
+
+.brand-logo-card strong {
+  color: var(--heading);
+  font-size: 0.98rem;
+  line-height: 1.2;
+}
+
+.brand-logo-card span {
+  margin-top: 4px;
+  color: var(--accent-strong);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1080px) {
+  .brand-heading {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+  .brand-heading h2 {
+      max-width: 22ch;
+    }
+
+  .brand-logo-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+  .brand-panel {
+      padding: 22px;
+      border-radius: 22px;
+    }
+
+  .brand-panel::after {
+      content: none;
+    }
+
+  .brand-logo-grid {
+      grid-template-columns: 1fr;
+    }
+
+  .brand-logo-card {
+      min-height: 146px;
+    }
+}
+
+.brand-logo-grid {
+  grid-template-columns: repeat(auto-fit, minmax(108px, clamp(122px, 11.5vw, 172px)));
+  justify-content: center;
+  gap: clamp(8px, 0.95vw, 12px);
+}
+
+.brand-logo-card {
+  min-height: clamp(58px, 6.2vw, 80px);
+  display: grid;
+  place-items: center;
+  padding: clamp(7px, 0.85vw, 11px);
+  border-radius: clamp(10px, 0.9vw, 14px);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(119, 30, 35, 0.12);
+  box-shadow: 0 6px 15px rgba(36, 45, 54, 0.1);
+}
+
+.brand-logo-frame {
+  width: 100%;
+  height: clamp(38px, 4.4vw, 57px);
+  display: grid;
+  place-items: center;
+}
+
+.brand-logo-frame img {
+  max-width: 100%;
+  max-height: clamp(31px, 3.7vw, 48px);
+  display: block;
+  object-fit: contain;
+}
+
+.brand-logo-card-featured .brand-logo-frame img {
+  max-width: 100%;
+  max-height: clamp(34px, 4vw, 52px);
+}
+
+.brand-logo-card > div:last-child {
+  display: none;
+}
+
+@media (max-width: 1440px) {
+  .brand-logo-grid {
+      grid-template-columns: repeat(auto-fit, minmax(92px, clamp(100px, 13vw, 148px)));
+      gap: clamp(7px, 1vw, 11px);
+    }
+}
+
+@media (max-width: 760px) {
+  .brand-section,
+    .instagram-section {
+      margin-top: 24px;
+      padding: 24px 14px;
+    }
+
+  .brand-heading {
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+  .brand-heading h2 {
+      font-size: clamp(1.35rem, 6vw, 1.62rem);
+      line-height: 1.12;
+    }
+
+  .brand-heading p:not(.eyebrow) {
+      display: none;
+    }
+
+  .brand-logo-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      justify-content: stretch;
+      gap: 7px;
+    }
+
+  .brand-logo-card {
+      min-height: clamp(46px, 13vw, 58px);
+      padding: 5px 7px;
+      border-radius: 9px;
+    }
+
+  .brand-logo-frame {
+      height: clamp(34px, 10vw, 45px);
+    }
+
+  .brand-logo-frame img {
+      max-height: clamp(27px, 8vw, 38px);
+    }
+
+  .brand-logo-card-featured .brand-logo-frame img {
+      max-height: clamp(29px, 8.6vw, 40px);
+    }
+}

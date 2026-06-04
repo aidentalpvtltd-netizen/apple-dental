@@ -1,0 +1,127 @@
+.instagram-grid,
+.dentists-grid,
+.why-grid {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.instagram-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.instagram-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.instagram-follow-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 10px;
+  background: #0095f6;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 800;
+  box-shadow: 0 12px 26px rgba(0, 149, 246, 0.24);
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.instagram-follow-button:hover {
+  background: #1877f2;
+  transform: translateY(-1px);
+}
+
+.instagram-follow-button span {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.instagram-card {
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.instagram-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 48px rgba(36, 45, 54, 0.14);
+}
+
+.instagram-image {
+  min-height: 220px;
+  background-position: center;
+  background-size: cover;
+}
+
+.instagram-copy {
+  padding: 16px;
+}
+
+@media (max-width: 760px) {
+  .instagram-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+
+  .instagram-follow-button {
+      width: fit-content;
+    }
+}
+
+@media (max-width: 430px) {
+  .instagram-image {
+      min-height: 178px;
+    }
+}
+
+@media (max-width: 760px) {
+  .instagram-heading {
+      gap: 10px;
+    }
+
+  .instagram-heading .section-text {
+      display: none;
+    }
+
+  .instagram-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+  .instagram-card {
+      border-radius: 14px;
+    }
+
+  .instagram-image {
+      min-height: 0;
+      aspect-ratio: 1 / 1;
+    }
+
+  .instagram-copy {
+      padding: 8px;
+    }
+
+  .instagram-copy h3 {
+      margin-bottom: 0;
+      font-size: 0.78rem;
+      line-height: 1.22;
+    }
+
+  .instagram-copy p {
+      display: none;
+    }
+}

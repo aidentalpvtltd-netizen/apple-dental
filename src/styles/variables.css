@@ -1,0 +1,19 @@
+:root {
+  --heading: #15191d;
+  --text: #2f363d;
+  --text-soft: #56626b;
+  --accent-strong: #d71920;
+  --accent-soft: #ff0201;
+  --surface: #ffffff;
+  --surface-tint: #fff0ed;
+  --line-soft: rgba(119, 30, 35, 0.18);
+  --shadow-soft: 0 18px 42px rgba(36, 45, 54, 0.11);
+  --shadow-strong: 0 30px 80px rgba(30, 38, 46, 0.2);
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --radius-pill: 999px;
+  --radius-card: 22px;
+  --radius-panel: 30px;
+  --transition-fast: 180ms ease;
+  --gradient-red: linear-gradient(135deg, #ff0201, #b91319);
+  --gradient-page: linear-gradient(180deg, #fffdfb 0%, #f8fafc 46%, #ffffff 100%);
+}
