@@ -26,19 +26,20 @@ export function InstagramSection({ displayedInstagramPosts }) {
           <a
             className="instagram-card"
             href={post.permalink ?? instagramProfileUrl}
-            key={`${post.title}-${post.image}`}
+            key={`${post.permalink ?? post.caption}-${post.image}`}
             target="_blank"
             rel="noreferrer"
           >
             <div
               className="instagram-image"
               style={{ backgroundImage: `url(${post.image})` }}
-              aria-label={post.title}
+              aria-label={post.caption || 'Instagram post'}
             />
-            <div className="instagram-copy">
-              <h3>{post.title}</h3>
-              <p>{post.caption}</p>
-            </div>
+            {post.caption ? (
+              <div className="instagram-copy">
+                <p>{post.caption}</p>
+              </div>
+            ) : null}
           </a>
         ))}
       </div>

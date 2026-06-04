@@ -177,7 +177,6 @@ export function WebsiteApp({ onLoadingChange }) {
           posts
             .map((post) => ({
               image: post.image ?? post.media_url ?? post.thumbnail_url,
-              title: post.title ?? 'Instagram post',
               caption: post.caption ?? '',
               permalink: post.permalink ?? instagramProfileUrl,
             }))

@@ -17,13 +17,11 @@ const getPostImage = (post) => {
   return post.media_url
 }
 
-const getPostTitle = (post) => {
-  if (post.media_type === 'VIDEO') {
-    return 'Latest reel'
-  }
-
-  return 'Latest post'
-}
+const getFirstCaptionLine = (caption = '') =>
+  caption
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .find(Boolean) ?? ''
 
 export const handler = async () => {
   const accountId = process.env.INSTAGRAM_ACCOUNT_ID
@@ -54,8 +52,7 @@ export const handler = async () => {
       .map((post) => ({
         id: post.id,
         image: getPostImage(post),
-        title: getPostTitle(post),
-        caption: post.caption ?? '',
+        caption: getFirstCaptionLine(post.caption),
         permalink: post.permalink,
         mediaType: post.media_type,
         timestamp: post.timestamp,
