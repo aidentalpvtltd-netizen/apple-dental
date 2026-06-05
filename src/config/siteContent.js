@@ -2103,7 +2103,8 @@ export const instagramPosts = [
 export const instagramProfileUrl = 'https://www.instagram.com/appleinternational_dental/'
 export const instagramFeedEndpoint =
   import.meta.env.VITE_INSTAGRAM_FEED_ENDPOINT ?? '/.netlify/functions/instagram-feed'
-export const bookingEndpoint = import.meta.env.VITE_BOOKING_ENDPOINT
+export const bookingEndpoint =
+  import.meta.env.VITE_BOOKING_ENDPOINT ?? '/.netlify/functions/booking-api'
 
 export const heroImage = '/hero/dental-hero-smile-exam.webp'
 export const heroImages = [
