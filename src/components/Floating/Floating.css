@@ -652,6 +652,15 @@
     }
 }
 
+@media (max-width: 760px) {
+  .chatbot-launcher.intro-pop::before,
+    .whatsapp-launcher:not([open])::before,
+    .whatsapp-hint-arrow {
+      display: none !important;
+      content: none;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .whatsapp-hint-arrow {
       display: none;

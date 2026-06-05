@@ -1026,9 +1026,28 @@ video.treatment-image {
 }
 
 @media (max-width: 1080px) {
+  .treatment-detail-hero,
+    .full-mouth-rehabilitation-treatment .treatment-detail-hero {
+      grid-template-columns: 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
   .treatment-detail-copy,
     .treatment-detail-media {
+      width: 100%;
+      min-width: 0;
       min-height: auto;
+    }
+
+  .treatment-detail-section {
+      grid-template-columns: 1fr;
+    }
+
+  .treatment-detail-section-copy,
+    .treatment-detail-highlights {
+      min-width: 0;
+      width: 100%;
     }
 
   .treatment-grid {
@@ -1044,36 +1063,61 @@ video.treatment-image {
   .treatment-detail-hero {
       width: 100%;
       margin-top: 0;
-      padding: 16px 14px 22px;
-      gap: 14px;
+      padding: 16px 14px 24px;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+  .treatment-detail-copy {
+      padding: 22px;
+      border-radius: 22px;
+      align-content: start;
     }
 
   .treatment-detail-copy h1 {
       max-width: none;
-      font-size: 2.05rem;
-      line-height: 1.04;
+      font-size: clamp(2.1rem, 10vw, 3rem);
+      line-height: 0.98;
     }
 
   .treatment-detail-copy p:not(.eyebrow) {
-      font-size: 0.98rem;
-      line-height: 1.55;
+      max-width: none;
+      margin-top: 14px;
+      font-size: 0.96rem;
+      line-height: 1.5;
+    }
+
+  .treatment-detail-actions {
+      gap: 10px;
+      margin-top: 20px;
     }
 
   .treatment-detail-actions .primary-action,
     .treatment-detail-actions .secondary-action {
       width: 100%;
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: 999px;
+      text-align: center;
     }
 
   .treatment-detail-media {
-      height: auto;
+      height: clamp(210px, 56vw, 300px);
       min-height: auto;
       padding: 0;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid rgba(119, 30, 35, 0.12);
+      box-shadow: 0 14px 34px rgba(36, 45, 54, 0.08);
     }
 
   .treatment-detail-media img {
       width: 100%;
-      height: auto;
-      max-height: 230px;
+      height: 100%;
+      max-height: none;
+      object-fit: contain;
+      background: #ffffff;
     }
 
   .full-mouth-rehabilitation-treatment .treatment-detail-hero {
@@ -1097,15 +1141,16 @@ video.treatment-image {
 
   .fillings-treatment .treatment-detail-media,
     .braces-treatment .treatment-detail-media {
-      height: auto;
+      height: clamp(210px, 56vw, 300px);
       min-height: auto;
     }
 
   .fillings-treatment .treatment-detail-media img,
     .braces-treatment .treatment-detail-media img {
-      height: auto;
+      height: 100%;
       min-height: 0;
-      max-height: 230px;
+      max-height: none;
+      object-fit: contain;
     }
 
   .treatment-detail-content {
@@ -1121,15 +1166,42 @@ video.treatment-image {
     }
 
   .treatment-detail-section {
+      grid-template-columns: 1fr;
       gap: 16px;
+      width: 100%;
+      min-width: 0;
     }
 
   .treatment-detail-section-copy {
       gap: 14px;
+      min-width: 0;
+    }
+
+  .treatment-detail-section .section-heading {
+      max-width: none;
+    }
+
+  .treatment-detail-section .section-heading.compact h2 {
+      font-size: clamp(1.75rem, 8vw, 2.35rem);
+      line-height: 1.04;
+    }
+
+  .treatment-detail-section .section-text {
+      max-width: none;
+      font-size: 0.96rem;
+      line-height: 1.5;
     }
 
   .treatment-detail-before-after {
+      width: 100%;
       border-radius: 18px;
+    }
+
+  .treatment-detail-before-after img,
+    .treatment-detail-before-after video {
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
     }
 
   .treatment-media-lightbox {
@@ -1148,10 +1220,15 @@ video.treatment-image {
       height: 42px;
     }
 
+  .treatment-detail-highlights {
+      gap: 10px;
+    }
+
   .treatment-detail-highlights > article {
       grid-template-columns: 36px minmax(0, 1fr);
       min-height: 0;
-      padding: 14px;
+      padding: 13px;
+      border-radius: 16px;
     }
 
   .treatment-detail-highlights > article > span {
@@ -1162,6 +1239,11 @@ video.treatment-image {
   .treatment-detail-highlights > article > span img {
       width: 100%;
       height: 100%;
+    }
+
+  .treatment-detail-highlights p {
+      font-size: 0.92rem;
+      line-height: 1.35;
     }
 
   .treatment-case-slide img {
@@ -1182,7 +1264,7 @@ video.treatment-image {
     }
 
   .aligners-floating-logo {
-      top: 14px;
+      top: 66px;
       right: 14px;
       width: min(200px, 52vw);
       max-height: 100px;
@@ -1207,7 +1289,13 @@ video.treatment-image {
       align-items: start;
       flex-direction: column;
       min-height: 0;
+      padding-top: 62px;
       padding-right: 0;
+    }
+
+  .aligners-heading .section-heading.compact h2 {
+      font-size: clamp(2rem, 9.2vw, 2.7rem);
+      line-height: 0.96;
     }
 
   .aligners-case-card {
@@ -1390,16 +1478,19 @@ video.treatment-image {
     }
 
   .treatment-grid.expanded {
+      grid-template-columns: 1fr;
+      gap: 10px;
       margin-top: 12px;
     }
 
   .treatment-card {
       display: grid;
-      grid-template-columns: 84px minmax(0, 1fr);
-      grid-template-rows: auto auto 1fr;
-      gap: 5px 11px;
-      min-height: 105px;
-      padding: 9px;
+      grid-template-columns: minmax(96px, 32%) minmax(0, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: 7px 12px;
+      min-height: 132px;
+      padding: 10px;
+      overflow: hidden;
     }
 
   .treatment-image-wrap {
@@ -1407,9 +1498,13 @@ video.treatment-image {
       grid-row: 1 / 4;
       align-self: stretch;
       height: auto;
-      min-height: 87px;
+      min-height: 112px;
       margin: 0;
       border-radius: 12px;
+    }
+
+  .treatment-image {
+      object-fit: contain;
     }
 
   .treatment-card-top,
@@ -1420,27 +1515,34 @@ video.treatment-image {
 
   .treatment-card-top {
       margin: 0;
+      gap: 6px;
+      min-width: 0;
     }
 
   .treatment-card-footer {
-      align-items: center;
+      align-items: end;
       flex-direction: row;
+      justify-content: flex-start;
       gap: 7px;
+      margin-top: 0;
     }
 
   .treatment-book-button {
-      width: auto;
+      width: fit-content;
       opacity: 1;
       transform: none;
-      min-height: 31px;
-      padding: 6px 10px;
-      font-size: 0.78rem;
+      min-height: 34px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      line-height: 1.12;
     }
 
   .treatment-card h3 {
       margin: 0;
-      font-size: 0.93rem;
-      line-height: 1.18;
+      overflow-wrap: anywhere;
+      font-size: clamp(1rem, 4.7vw, 1.2rem);
+      line-height: 1.12;
     }
 
   .treatment-card p,
@@ -1451,7 +1553,11 @@ video.treatment-image {
 
   .treatment-tag {
       padding: 4px 7px;
+      max-width: 100%;
+      overflow: hidden;
       font-size: 0.68rem;
       line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 }

@@ -53,7 +53,71 @@
       background-size: auto 100%;
     }
 
+  .dentists-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+  .dentist-card {
+      display: grid;
+      grid-template-columns: 124px minmax(0, 1fr);
+      gap: 12px 14px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 18px;
+    }
+
   .dentist-photo {
-      height: 190px;
+      grid-row: 1 / 4;
+      width: 124px;
+      height: 154px;
+      margin-bottom: 0;
+      border-radius: 16px;
+      background-position: center 16% !important;
+      background-size: 165% auto !important;
+    }
+
+  .dentist-card h3 {
+      margin: 0 0 4px;
+      font-size: 1.08rem;
+      line-height: 1.12;
+    }
+
+  .dentist-card span {
+      margin-bottom: 0;
+      font-size: 0.82rem;
+      line-height: 1.28;
+    }
+
+  .dentist-card p {
+      display: -webkit-box;
+      overflow: hidden;
+      font-size: 0.88rem;
+      line-height: 1.42;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+    }
+}
+
+@media (max-width: 430px) {
+  .dentist-card {
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 10px 12px;
+      padding: 12px;
+    }
+
+  .dentist-photo {
+      width: 112px;
+      height: 142px;
+      background-size: 172% auto !important;
+    }
+
+  .dentist-card h3 {
+      font-size: 1rem;
+    }
+
+  .dentist-card p {
+      font-size: 0.82rem;
+      -webkit-line-clamp: 5;
     }
 }

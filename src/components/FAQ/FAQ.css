@@ -55,11 +55,46 @@
 }
 
 @media (max-width: 760px) {
+  .faq-list {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+  .faq-item {
+      min-height: 76px;
+      border-radius: 16px;
+    }
+
   .faq-item summary {
-      padding: 16px 48px 16px 16px;
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      padding: 14px 52px 14px 16px;
+      font-size: 1rem;
+      line-height: 1.25;
+    }
+
+  .faq-item summary::after {
+      right: 16px;
+      width: 28px;
+      height: 28px;
     }
 
   .faq-item p {
       padding: 0 16px 16px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+}
+
+@media (max-width: 430px) {
+  .faq-item,
+    .faq-item summary {
+      min-height: 70px;
+    }
+
+  .faq-item summary {
+      font-size: 0.95rem;
     }
 }

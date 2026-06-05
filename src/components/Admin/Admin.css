@@ -738,7 +738,9 @@
 .support-inbox {
   display: grid;
   grid-template-columns: minmax(260px, 0.36fr) minmax(0, 1fr);
-  min-height: 560px;
+  height: clamp(520px, calc(100vh - 260px), 720px);
+  min-height: 0;
+  overflow: hidden;
 }
 
 .support-chat-list {
@@ -746,6 +748,8 @@
   align-content: start;
   gap: 10px;
   padding: 18px;
+  min-height: 0;
+  overflow-y: auto;
   border-right: 1px solid rgba(119, 30, 35, 0.1);
   background: rgba(255, 247, 245, 0.55);
 }
@@ -786,6 +790,8 @@
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .support-chat-profile {
@@ -821,6 +827,7 @@
   align-content: start;
   gap: 10px;
   padding: 18px;
+  min-height: 0;
   overflow-y: auto;
 }
 
@@ -930,12 +937,18 @@
 
   .support-inbox {
       grid-template-columns: 1fr;
-      min-height: 0;
+      height: auto;
+      overflow: visible;
     }
 
   .support-chat-list {
+      max-height: 300px;
       border-right: 0;
       border-bottom: 1px solid rgba(119, 30, 35, 0.1);
+    }
+
+  .support-chat-thread {
+      min-height: 420px;
     }
 
   .support-chat-messages {

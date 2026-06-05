@@ -2052,7 +2052,7 @@ export const services = [
 
 export const dentists = [
   {
-    name: 'Dr. Parthasarathy, MDS',
+    name: 'Dr . Pardha Saradhi, MDS',
     role: 'Founder, Director and Managing Director',
     bio: 'Founder leadership guiding Apple International Dental with a focus on patient care, clinical standards, and multi-branch dental excellence.',
     image: '/doctors/dr-parthasarathy.jpeg',
@@ -2192,6 +2192,10 @@ export const faqs = [
 ]
 
 export const formspreeEndpoint = import.meta.env.VITE_FORMSPREE_ENDPOINT
+export const createRazorpayOrderEndpoint =
+  import.meta.env.VITE_CREATE_RAZORPAY_ORDER_ENDPOINT ?? '/.netlify/functions/create-razorpay-order'
+export const verifyRazorpayPaymentEndpoint =
+  import.meta.env.VITE_VERIFY_RAZORPAY_PAYMENT_ENDPOINT ?? '/.netlify/functions/verify-razorpay-payment'
 export const bookingLockKey = 'appleInternationalDentalBookingRequest'
 export const adminSessionKey = 'appleInternationalDentalAdminSession'
 export const bookingLockDuration = 24 * 60 * 60 * 1000
@@ -2657,12 +2661,29 @@ export const loadRazorpayCheckout = () =>
     script.async = true
     script.onload = resolve
     script.onerror = () => reject(new Error('Unable to load the payment gateway. Please try again.'))
-    document.body.appendChild(script)
+      document.body.appendChild(script)
   })
 
+export const postPaymentEndpoint = async (endpoint, payload) => {
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+  const result = await response.json().catch(() => null)
+
+  if (!response.ok || result?.ok === false) {
+    throw new Error(result?.message ?? 'Unable to reach the payment system.')
+  }
+
+  return result
+}
+
 export const createConsultationPaymentOrder = async ({ name, phone, email, branch, source }) =>
-  postBookingEndpoint({
-    action: 'create-payment-order',
+  postPaymentEndpoint(createRazorpayOrderEndpoint, {
     amount: onlineConsultationFeeSubunits,
     currency: 'INR',
     name,
@@ -2673,8 +2694,7 @@ export const createConsultationPaymentOrder = async ({ name, phone, email, branc
   })
 
 export const verifyConsultationPayment = async ({ orderId, paymentId, signature }) =>
-  postBookingEndpoint({
-    action: 'verify-payment',
+  postPaymentEndpoint(verifyRazorpayPaymentEndpoint, {
     orderId,
     paymentId,
     signature,

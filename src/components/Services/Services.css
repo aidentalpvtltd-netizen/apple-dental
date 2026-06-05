@@ -316,15 +316,25 @@
 @media (max-width: 760px) {
   .services-overview {
       margin-top: 23px;
+      overflow: hidden;
     }
 
   .services-layout {
-      gap: 12px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+  .services-schemes-column {
+      order: 1;
+      width: 100%;
+      min-width: 0;
     }
 
   .services-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+      order: 2;
+      display: none;
     }
 
   .service-card {
@@ -356,6 +366,84 @@
     }
 
   .services-info-grid {
-      gap: 8px;
+      gap: 9px;
+      width: 100%;
+      min-width: 0;
+    }
+
+  .services-accreditation {
+      width: 100%;
+      justify-content: center;
+      gap: 12px;
+      transform: none;
+      text-align: left;
+    }
+
+  .services-accreditation img {
+      width: 78px;
+      height: 78px;
+      flex: 0 0 78px;
+    }
+
+  .services-accreditation strong {
+      max-width: min(250px, calc(100vw - 150px));
+      font-size: clamp(1.05rem, 5.3vw, 1.32rem);
+      line-height: 1.15;
+    }
+
+  .services-info-grid .hero-info-card {
+      width: 100%;
+      min-height: 0;
+      padding: 12px 14px;
+      border-radius: 16px;
+      box-sizing: border-box;
+      transform: none;
+    }
+
+  .services-info-grid .hero-scheme-card-link {
+      padding: 13px 14px 14px;
+    }
+
+  .services-info-grid .hero-info-card span {
+      margin-bottom: 6px;
+      font-size: clamp(0.66rem, 3vw, 0.78rem);
+      line-height: 1.25;
+      letter-spacing: 0.08em;
+    }
+
+  .services-info-grid .hero-info-card strong {
+      font-size: clamp(0.82rem, 3.75vw, 0.96rem);
+      line-height: 1.38;
+    }
+
+  .services-info-grid .hero-scheme-logos {
+      gap: 6px;
+      margin: 5px 0 10px;
+    }
+
+  .services-info-grid .hero-scheme-logos span {
+      width: 40px;
+      height: 40px;
+      padding: 4px;
+      border-radius: 11px;
+    }
+}
+
+@media (max-width: 430px) {
+  .services-accreditation {
+      justify-content: center;
+      padding-left: 0;
+    }
+
+  .services-info-grid .hero-info-card {
+      padding: 11px 12px;
+    }
+
+  .services-info-grid .hero-scheme-card-link {
+      padding: 12px;
+    }
+
+  .services-info-grid .hero-info-card strong {
+      font-size: 0.86rem;
     }
 }

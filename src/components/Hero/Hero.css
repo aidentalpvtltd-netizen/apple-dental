@@ -525,13 +525,14 @@
 
 @media (max-width: 760px) {
   .hero-image-card {
-      aspect-ratio: 2172 / 724;
+      min-height: clamp(210px, 52vw, 285px);
+      aspect-ratio: auto;
     }
 
   .hero-slide {
-      background-position: center;
+      background-position: center top;
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: cover;
     }
 
   .hero-carousel-arrow {
@@ -555,25 +556,26 @@
 
   .kpi-section {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+      gap: 7px;
       margin-top: 0;
+      padding-inline: 2px;
     }
 
   .kpi-card {
-      min-height: 82px;
-      padding: 11px 12px;
+      min-height: 0;
+      padding: 10px 11px;
       border-radius: 15px;
     }
 
   .kpi-card strong {
-      font-size: clamp(1.24rem, 5.5vw, 1.48rem);
+      font-size: clamp(1.1rem, 5vw, 1.34rem);
       line-height: 1.1;
     }
 
   .kpi-card p {
-      margin-top: 5px;
-      font-size: clamp(0.72rem, 2.9vw, 0.82rem);
-      line-height: 1.34;
+      margin-top: 4px;
+      font-size: clamp(0.66rem, 2.65vw, 0.76rem);
+      line-height: 1.24;
     }
 
   .services-info-grid .hero-info-card {
