@@ -24,7 +24,14 @@ export function BrandSection() {
               key={brand.name}
             >
               <div className="brand-logo-frame">
-                <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" />
+                <img
+                  src={brand.logo}
+                  alt={`${brand.name} logo`}
+                  width="180"
+                  height="72"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <div>
                 <strong>{brand.name}</strong>

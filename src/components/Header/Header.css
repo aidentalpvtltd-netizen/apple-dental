@@ -610,6 +610,27 @@
   line-height: 1.65;
 }
 
+.processing-dialog {
+  display: grid;
+  justify-items: center;
+}
+
+.processing-dialog p:last-of-type {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.processing-spinner {
+  width: 42px;
+  height: 42px;
+  margin-top: 20px;
+  border: 4px solid rgba(215, 25, 32, 0.14);
+  border-top-color: var(--accent-strong);
+  border-radius: 50%;
+  animation: payment-processing-spin 760ms linear infinite;
+}
+
 .coming-soon-close {
   position: absolute;
   top: 14px;

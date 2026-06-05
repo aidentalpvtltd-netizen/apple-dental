@@ -1,18 +1,98 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import './styles/index.css'
-import { ChatBotLauncher } from './components/ChatBotLauncher.jsx'
-import { WhatsappLauncher } from './components/WhatsappLauncher.jsx'
-import { treatmentPages } from './config/siteContent.js'
-import { AdminDashboard } from './pages/AdminDashboard.jsx'
-import { CookiesPolicyPage } from './pages/CookiesPolicyPage.jsx'
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage.jsx'
-import { RefundCancellationPolicyPage } from './pages/RefundCancellationPolicyPage.jsx'
-import { FindClinicPage } from './pages/FindClinicPage.jsx'
-import { SchemesPage } from './pages/SchemesPage.jsx'
-import { TermsConditionsPage } from './pages/TermsConditionsPage.jsx'
-import { TreatmentPage } from './pages/TreatmentPage.jsx'
-import { WebsiteApp } from './pages/WebsiteApp.jsx'
 import { useLenisSmoothScroll } from './hooks/useLenisSmoothScroll.js'
+
+const treatmentRoutePaths = new Set([
+  '/specialist-dentistry/endodontics',
+  '/specialist-dentistry/full-mouth-rehabilitation',
+  '/specialist-dentistry/periodontics',
+  '/specialist-dentistry/orthodontics',
+  '/specialist-dentistry/oral-surgery',
+  '/specialist-dentistry/pedodontics',
+  '/digital-dentistry/cad-cam-solutions',
+  '/digital-dentistry/intra-oral-scanning',
+  '/digital-dentistry/digital-smile-design',
+  '/digital-dentistry/digital-dental-implants',
+  '/digital-dentistry/digital-opg-and-cbct',
+  '/digital-dentistry/central-digital-lab',
+  '/dental-implant-solutions/single-tooth-implant',
+  '/dental-implant-solutions/multiple-implants',
+  '/dental-implant-solutions/all-on-4-implants',
+  '/dental-implant-solutions/full-mouth-implants',
+  '/dental-implant-solutions/basal-implants',
+  '/dental-implant-solutions/keyhole-implants',
+  '/dental-implant-solutions/bone-grafting',
+  '/dental-implant-solutions/soft-tissue-grafting',
+  '/cosmetic-dentistry/dental-veneers',
+  '/cosmetic-dentistry/gingival-depigmentation',
+  '/cosmetic-dentistry/teeth-whitening',
+  '/cosmetic-dentistry/3d-smile-designing',
+  '/cosmetic-dentistry/smile-correction',
+  '/general-dentistry/tooth-colored-fillings',
+  '/general-dentistry/cleaning-and-polishing',
+  '/general-dentistry/clips-and-braces-treatment',
+  '/general-dentistry/aligners',
+  '/general-dentistry/crowns-and-bridges',
+  '/general-dentistry/root-canal-treatment',
+  '/general-dentistry/complete-dentures',
+  '/general-dentistry/partial-dentures',
+  '/general-dentistry/over-dentures',
+  '/general-dentistry/kids-dentistry',
+  '/general-dentistry/tooth-extractions',
+  '/general-dentistry/wisdom-molar-extraction',
+  '/general-dentistry/gingival-flap-surgery',
+  '/general-dentistry/frenectomy',
+  '/general-dentistry/night-guard',
+  '/general-dentistry/pit-and-fissure-sealants',
+])
+
+const AdminDashboard = lazy(() =>
+  import('./pages/AdminDashboard.jsx').then((module) => ({ default: module.AdminDashboard })),
+)
+const ChatBotLauncher = lazy(() =>
+  import('./components/ChatBotLauncher.jsx').then((module) => ({
+    default: module.ChatBotLauncher,
+  })),
+)
+const WhatsappLauncher = lazy(() =>
+  import('./components/WhatsappLauncher.jsx').then((module) => ({
+    default: module.WhatsappLauncher,
+  })),
+)
+const CookiesPolicyPage = lazy(() =>
+  import('./pages/CookiesPolicyPage.jsx').then((module) => ({
+    default: module.CookiesPolicyPage,
+  })),
+)
+const PrivacyPolicyPage = lazy(() =>
+  import('./pages/PrivacyPolicyPage.jsx').then((module) => ({
+    default: module.PrivacyPolicyPage,
+  })),
+)
+const RefundCancellationPolicyPage = lazy(() =>
+  import('./pages/RefundCancellationPolicyPage.jsx').then((module) => ({
+    default: module.RefundCancellationPolicyPage,
+  })),
+)
+const FindClinicPage = lazy(() =>
+  import('./pages/FindClinicPage.jsx').then((module) => ({ default: module.FindClinicPage })),
+)
+const SchemesPage = lazy(() =>
+  import('./pages/SchemesPage.jsx').then((module) => ({ default: module.SchemesPage })),
+)
+const TermsConditionsPage = lazy(() =>
+  import('./pages/TermsConditionsPage.jsx').then((module) => ({
+    default: module.TermsConditionsPage,
+  })),
+)
+const TreatmentPageRoute = lazy(() =>
+  import('./pages/TreatmentPageRoute.jsx').then((module) => ({
+    default: module.TreatmentPageRoute,
+  })),
+)
+const WebsiteApp = lazy(() =>
+  import('./pages/WebsiteApp.jsx').then((module) => ({ default: module.WebsiteApp })),
+)
 
 function App() {
   const normalizedPath =
@@ -24,7 +104,7 @@ function App() {
   const isCookiesPath = normalizedPath === '/cookies-policy'
   const isRefundPath = normalizedPath === '/refund-and-cancellation-policy'
   const isAdminPath = normalizedPath === '/admin'
-  const treatmentPage = treatmentPages[normalizedPath]
+  const hasTreatmentPage = treatmentRoutePaths.has(normalizedPath)
   const isStaticPublicPath =
     isSchemesPath ||
     isFindClinicPath ||
@@ -32,7 +112,7 @@ function App() {
     isTermsPath ||
     isCookiesPath ||
     isRefundPath ||
-    Boolean(treatmentPage)
+    hasTreatmentPage
   const [isWebsiteLoading, setIsWebsiteLoading] = useState(!isStaticPublicPath)
 
   useLenisSmoothScroll({ enabled: !isAdminPath })
@@ -52,33 +132,39 @@ function App() {
   }, [])
 
   if (isAdminPath) {
-    return <AdminDashboard />
+    return (
+      <Suspense fallback={null}>
+        <AdminDashboard />
+      </Suspense>
+    )
   }
 
   return (
     <>
-      {isSchemesPath ? (
-        <SchemesPage />
-      ) : isFindClinicPath ? (
-        <FindClinicPage />
-      ) : isPrivacyPath ? (
-        <PrivacyPolicyPage />
-      ) : isTermsPath ? (
-        <TermsConditionsPage />
-      ) : isCookiesPath ? (
-        <CookiesPolicyPage />
-      ) : isRefundPath ? (
-        <RefundCancellationPolicyPage />
-      ) : treatmentPage ? (
-        <TreatmentPage page={treatmentPage} />
-      ) : (
-        <WebsiteApp onLoadingChange={setIsWebsiteLoading} />
-      )}
+      <Suspense fallback={null}>
+        {isSchemesPath ? (
+          <SchemesPage />
+        ) : isFindClinicPath ? (
+          <FindClinicPage />
+        ) : isPrivacyPath ? (
+          <PrivacyPolicyPage />
+        ) : isTermsPath ? (
+          <TermsConditionsPage />
+        ) : isCookiesPath ? (
+          <CookiesPolicyPage />
+        ) : isRefundPath ? (
+          <RefundCancellationPolicyPage />
+        ) : hasTreatmentPage ? (
+          <TreatmentPageRoute path={normalizedPath} />
+        ) : (
+          <WebsiteApp onLoadingChange={setIsWebsiteLoading} />
+        )}
+      </Suspense>
       {!isWebsiteLoading && (
-        <>
+        <Suspense fallback={null}>
           <ChatBotLauncher playMainSiteIntro={!isSchemesPath && !isFindClinicPath} />
           <WhatsappLauncher />
-        </>
+        </Suspense>
       )}
     </>
   )

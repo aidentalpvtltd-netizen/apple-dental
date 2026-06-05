@@ -715,6 +715,52 @@
   color: #06632f;
 }
 
+.admin-payment-pill,
+.admin-clinic-payment-control {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.admin-payment-pill {
+  width: fit-content;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(38, 166, 91, 0.12);
+  color: #06632f;
+}
+
+.admin-payment-pill strong,
+.admin-clinic-payment-control strong {
+  color: inherit;
+  font-size: 0.84rem;
+  line-height: 1.2;
+}
+
+.admin-payment-pill small {
+  margin-top: 0;
+  color: inherit;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.admin-clinic-payment-control {
+  color: var(--heading);
+}
+
+.admin-clinic-payment-control select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid rgba(119, 30, 35, 0.2);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--heading);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 900;
+  outline: none;
+}
+
 .admin-error {
   width: min(1240px, 100%);
   margin: 0 auto;

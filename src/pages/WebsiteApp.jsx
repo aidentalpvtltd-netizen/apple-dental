@@ -1,33 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
-import {
-  BookingSection,
-  BrandSection,
-  ContactSection,
-  DentistsSection,
-  FaqSection,
-  HeroSection,
-  HomeHeader,
-  AlignersSection,
-  InstagramSection,
-  KpiSection,
-  ServicesOverview,
-  SiteFooter,
-  SiteLoader,
-  TreatmentModal,
-  TreatmentsSection,
-  VideoTestimonialsSection,
-  WhyChooseUsSection,
-} from '../components/home/WebsiteSections.jsx'
-import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { BookingSection } from '../components/home/BookingSection.jsx'
+import { HeroSection } from '../components/home/HeroSection.jsx'
+import { HomeHeader } from '../components/home/HomeHeader.jsx'
+import { KpiSection } from '../components/home/KpiSection.jsx'
+import { ServicesOverview } from '../components/home/ServicesOverview.jsx'
+import { SiteLoader } from '../components/home/SiteLoader.jsx'
+import { TreatmentModal } from '../components/home/TreatmentModal.jsx'
+import { TreatmentsSection } from '../components/home/TreatmentsSection.jsx'
+import { ComingSoonPopup } from '../components/ComingSoonPopup.jsx'
 import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
 import {
   treatments,
   treatmentInsights,
   clinicBranches,
   videoTestimonials,
-  instagramPosts,
-  instagramProfileUrl,
-  instagramFeedEndpoint,
   bookingEndpoint,
   formspreeEndpoint,
   consultationFeeAmount,
@@ -49,6 +35,126 @@ import {
   collectConsultationPayment,
 } from '../config/siteContent.js'
 
+const BrandSection = lazy(() =>
+  import('../components/home/BrandSection.jsx').then((module) => ({
+    default: module.BrandSection,
+  })),
+)
+const AmbientDentalLayer = lazy(() =>
+  import('../components/AmbientDentalLayer.jsx').then((module) => ({
+    default: module.AmbientDentalLayer,
+  })),
+)
+const InstagramSection = lazy(() =>
+  import('../components/home/InstagramSection.jsx').then((module) => ({
+    default: module.InstagramSection,
+  })),
+)
+const AlignersSection = lazy(() =>
+  import('../components/home/AlignersSection.jsx').then((module) => ({
+    default: module.AlignersSection,
+  })),
+)
+const VideoTestimonialsSection = lazy(() =>
+  import('../components/home/VideoTestimonialsSection.jsx').then((module) => ({
+    default: module.VideoTestimonialsSection,
+  })),
+)
+const DentistsSection = lazy(() =>
+  import('../components/home/DentistsSection.jsx').then((module) => ({
+    default: module.DentistsSection,
+  })),
+)
+const WhyChooseUsSection = lazy(() =>
+  import('../components/home/WhyChooseUsSection.jsx').then((module) => ({
+    default: module.WhyChooseUsSection,
+  })),
+)
+const FaqSection = lazy(() =>
+  import('../components/home/FaqSection.jsx').then((module) => ({
+    default: module.FaqSection,
+  })),
+)
+const ContactSection = lazy(() =>
+  import('../components/home/ContactSection.jsx').then((module) => ({
+    default: module.ContactSection,
+  })),
+)
+const SiteFooter = lazy(() =>
+  import('../components/home/SiteFooter.jsx').then((module) => ({
+    default: module.SiteFooter,
+  })),
+)
+
+function VisibleLazySection({ children }) {
+  const wrapperRef = useRef(null)
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current
+
+    if (!wrapper) {
+      return undefined
+    }
+
+    const markVisible = () => {
+      wrapper.querySelectorAll('.reveal-section').forEach((element) => {
+        element.classList.add('visible')
+      })
+    }
+
+    markVisible()
+
+    const observer = new MutationObserver(markVisible)
+    observer.observe(wrapper, { childList: true, subtree: true })
+
+    return () => observer.disconnect()
+  }, [])
+
+  return <div ref={wrapperRef}>{children}</div>
+}
+
+function LazyWhenVisible({ children, minHeight = 240 }) {
+  const placeholderRef = useRef(null)
+  const [shouldRender, setShouldRender] = useState(false)
+
+  useEffect(() => {
+    if (shouldRender) {
+      return undefined
+    }
+
+    const placeholder = placeholderRef.current
+
+    if (!placeholder || !('IntersectionObserver' in window)) {
+      setShouldRender(true)
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldRender(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '900px 0px' },
+    )
+
+    observer.observe(placeholder)
+
+    return () => observer.disconnect()
+  }, [shouldRender])
+
+  if (!shouldRender) {
+    return <div ref={placeholderRef} aria-hidden="true" style={{ minHeight }} />
+  }
+
+  return (
+    <VisibleLazySection>
+      <Suspense fallback={<div aria-hidden="true" style={{ minHeight }} />}>{children}</Suspense>
+    </VisibleLazySection>
+  )
+}
+
 export function WebsiteApp({ onLoadingChange }) {
   const pageRef = useRef(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -56,9 +162,10 @@ export function WebsiteApp({ onLoadingChange }) {
   const [submittedFor, setSubmittedFor] = useState('')
   const [submitError, setSubmitError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false)
+  const [shouldRenderAmbient, setShouldRenderAmbient] = useState(false)
   const [bookingLock, setBookingLock] = useState(getActiveBookingLock)
   const [activeTreatmentId, setActiveTreatmentId] = useState('')
-  const [liveInstagramPosts, setLiveInstagramPosts] = useState([])
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
   const [testimonialSlideIndex, setTestimonialSlideIndex] = useState(0)
   const [isTestimonialHovered, setIsTestimonialHovered] = useState(false)
@@ -78,7 +185,6 @@ export function WebsiteApp({ onLoadingChange }) {
   const bookingCooldown = bookingLock ? formatBookingCooldown(bookingLock.submittedAt) : ''
   const todayDateValue = getTodayDateValue()
   const requiresSlotSelection = !isBookingLocked && (!formState.date || !formState.timeSlot)
-  const displayedInstagramPosts = liveInstagramPosts.length ? liveInstagramPosts : instagramPosts
   const carouselTestimonials = [...videoTestimonials, ...videoTestimonials.slice(0, 3)]
 
   useGsapParallaxDepth(pageRef, { enabled: !isLoading })
@@ -86,6 +192,24 @@ export function WebsiteApp({ onLoadingChange }) {
   useEffect(() => {
     onLoadingChange?.(isLoading)
   }, [isLoading, onLoadingChange])
+
+  useEffect(() => {
+    if (isLoading) {
+      return undefined
+    }
+
+    if ('requestIdleCallback' in window) {
+      const ambientTimer = window.requestIdleCallback(() => setShouldRenderAmbient(true), {
+        timeout: 1200,
+      })
+
+      return () => window.cancelIdleCallback(ambientTimer)
+    }
+
+    const ambientTimer = window.setTimeout(() => setShouldRenderAmbient(true), 1200)
+
+    return () => window.clearTimeout(ambientTimer)
+  }, [isLoading])
 
   useEffect(() => {
     if (isLoading || !window.location.hash) {
@@ -152,48 +276,6 @@ export function WebsiteApp({ onLoadingChange }) {
 
     return () => window.clearInterval(slideTimer)
   }, [isTestimonialHovered])
-
-  useEffect(() => {
-    if (!instagramFeedEndpoint) {
-      return undefined
-    }
-
-    let isMounted = true
-
-    fetch(instagramFeedEndpoint)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Instagram feed unavailable.')
-        }
-
-        return response.json()
-      })
-      .then((posts) => {
-        if (!isMounted || !Array.isArray(posts)) {
-          return
-        }
-
-        setLiveInstagramPosts(
-          posts
-            .map((post) => ({
-              image: post.image ?? post.media_url ?? post.thumbnail_url,
-              caption: post.caption ?? '',
-              permalink: post.permalink ?? instagramProfileUrl,
-            }))
-            .filter((post) => post.image)
-            .slice(0, 8),
-        )
-      })
-      .catch(() => {
-        if (isMounted) {
-          setLiveInstagramPosts([])
-        }
-      })
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
 
   useEffect(() => {
     const revealElements = document.querySelectorAll('.reveal-section')
@@ -335,6 +417,7 @@ export function WebsiteApp({ onLoadingChange }) {
             email: '',
             branch: branchName,
             source: 'Website consultation',
+            onProcessingPayment: setIsPaymentProcessing,
           })
         }
 
@@ -388,6 +471,7 @@ export function WebsiteApp({ onLoadingChange }) {
     } catch (error) {
       setSubmitError(error.message)
     } finally {
+      setIsPaymentProcessing(false)
       setIsSubmitting(false)
     }
   }
@@ -395,8 +479,20 @@ export function WebsiteApp({ onLoadingChange }) {
   return (
     <main className="page-shell" id="top" ref={pageRef}>
       <SiteLoader isLoading={isLoading} />
-      <AmbientDentalLayer />
+      {shouldRenderAmbient ? (
+        <Suspense fallback={null}>
+          <AmbientDentalLayer />
+        </Suspense>
+      ) : null}
       <HomeHeader />
+      <ComingSoonPopup
+        eyebrow="Payment verification"
+        isDismissible={false}
+        isOpen={isPaymentProcessing}
+        message="Please wait while we verify your payment and send your appointment request to the clinic."
+        onClose={() => {}}
+        title="Completing payment process"
+      />
       <HeroSection />
 
       <div className="content-shell">
@@ -430,23 +526,41 @@ export function WebsiteApp({ onLoadingChange }) {
           onClose={() => setActiveTreatmentId('')}
           onBookTreatment={handleModalBooking}
         />
-        <BrandSection />
-        <InstagramSection displayedInstagramPosts={displayedInstagramPosts} />
-        <AlignersSection />
-        <VideoTestimonialsSection
-          carouselTestimonials={carouselTestimonials}
-          testimonialSlideIndex={testimonialSlideIndex}
-          testimonialMuted={testimonialMuted}
-          onHoverChange={setIsTestimonialHovered}
-          onMuteToggle={handleTestimonialMuteToggle}
-        />
-        <DentistsSection />
-        <WhyChooseUsSection />
-        <FaqSection />
-        <ContactSection selectedClinic={selectedClinic} onClinicChange={handleClinicChange} />
+        <LazyWhenVisible minHeight={300}>
+          <BrandSection />
+        </LazyWhenVisible>
+        <LazyWhenVisible minHeight={420}>
+          <InstagramSection />
+        </LazyWhenVisible>
+        <LazyWhenVisible minHeight={520}>
+          <AlignersSection />
+        </LazyWhenVisible>
+        <LazyWhenVisible minHeight={520}>
+          <VideoTestimonialsSection
+            carouselTestimonials={carouselTestimonials}
+            testimonialSlideIndex={testimonialSlideIndex}
+            testimonialMuted={testimonialMuted}
+            onHoverChange={setIsTestimonialHovered}
+            onMuteToggle={handleTestimonialMuteToggle}
+          />
+        </LazyWhenVisible>
+        <LazyWhenVisible minHeight={520}>
+          <DentistsSection />
+        </LazyWhenVisible>
+        <LazyWhenVisible minHeight={420}>
+          <WhyChooseUsSection />
+        </LazyWhenVisible>
+        <LazyWhenVisible minHeight={360}>
+          <FaqSection />
+        </LazyWhenVisible>
+        <LazyWhenVisible minHeight={520}>
+          <ContactSection selectedClinic={selectedClinic} onClinicChange={handleClinicChange} />
+        </LazyWhenVisible>
       </div>
 
-      <SiteFooter />
+      <LazyWhenVisible minHeight={180}>
+        <SiteFooter />
+      </LazyWhenVisible>
     </main>
   )
 }

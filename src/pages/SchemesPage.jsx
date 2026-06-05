@@ -49,7 +49,7 @@ export function SchemesPage() {
         <div className="site-header-inner">
           <a className="site-brand" href="/">
             <span className="site-brand-mark">
-              <img src="/logo.png" alt="" aria-hidden="true" />
+              <img src="/logo.webp" alt="" aria-hidden="true" />
             </span>
             <span className="site-brand-copy">
               <strong>Apple International Dental</strong>

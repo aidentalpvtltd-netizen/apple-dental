@@ -10,7 +10,14 @@ export function HomeHeader() {
       <div className="site-header-inner">
         <a className="site-brand" href="#top">
           <span className="site-brand-mark">
-            <img src="/logo.png" alt="" aria-hidden="true" />
+            <img
+              src="/logo.webp"
+              alt=""
+              width="160"
+              height="160"
+              decoding="async"
+              aria-hidden="true"
+            />
           </span>
           <span className="site-brand-copy">
             <strong>Apple International Dental</strong>

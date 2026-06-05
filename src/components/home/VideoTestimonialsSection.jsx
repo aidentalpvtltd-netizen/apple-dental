@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react'
+
 export function VideoTestimonialsSection({
   carouselTestimonials,
   testimonialSlideIndex,
@@ -5,8 +7,42 @@ export function VideoTestimonialsSection({
   onHoverChange,
   onMuteToggle,
 }) {
+  const sectionRef = useRef(null)
+  const [shouldLoadVideos, setShouldLoadVideos] = useState(false)
+
+  useEffect(() => {
+    if (shouldLoadVideos) {
+      return undefined
+    }
+
+    const section = sectionRef.current
+
+    if (!section || !('IntersectionObserver' in window)) {
+      setShouldLoadVideos(true)
+      return undefined
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoadVideos(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '900px 0px' },
+    )
+
+    observer.observe(section)
+
+    return () => observer.disconnect()
+  }, [shouldLoadVideos])
+
   return (
-    <section className="video-testimonial-section reveal-section" aria-label="Video testimonials">
+    <section
+      className="video-testimonial-section reveal-section"
+      aria-label="Video testimonials"
+      ref={sectionRef}
+    >
       <div className="video-testimonial-panel">
         <div className="video-testimonial-heading">
           <div>
@@ -31,14 +67,23 @@ export function VideoTestimonialsSection({
             {carouselTestimonials.map((testimonial, index) => (
               <article className="testimonial-video-card" key={`${testimonial.id}-${index}`}>
                 <video
-                  autoPlay
+                  autoPlay={shouldLoadVideos}
                   loop
                   muted={testimonialMuted[testimonial.id]}
                   playsInline
-                  preload="metadata"
-                  src={testimonial.video}
+                  preload="none"
+                  poster="/logo.webp"
+                  src={shouldLoadVideos ? testimonial.video : undefined}
                   aria-label={testimonial.label}
-                />
+                >
+                  <track
+                    kind="captions"
+                    src="/captions/testimonial-captions.vtt"
+                    srcLang="en"
+                    label="English captions"
+                    default
+                  />
+                </video>
                 <button
                   type="button"
                   className="testimonial-volume-button"

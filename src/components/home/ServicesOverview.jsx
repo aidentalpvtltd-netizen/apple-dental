@@ -18,7 +18,13 @@ export function ServicesOverview() {
         </div>
 
         <div className="services-accreditation" aria-label="NABH Accredited Dental Hospital">
-          <img src="/badges/nabh.png" alt="NABH Accredited" />
+          <img
+            src="/badges/nabh.webp"
+            alt="NABH Accredited"
+            width="512"
+            height="512"
+            decoding="async"
+          />
           <strong>NABH Accredited Dental Hospital</strong>
         </div>
       </div>
@@ -28,7 +34,14 @@ export function ServicesOverview() {
           {services.map((service) => (
             <article className="service-card" key={service.title}>
               <div className="service-visual" aria-hidden="true">
-                <img src={service.image} alt="" loading="lazy" />
+                <img
+                  src={service.image}
+                  alt=""
+                  width="160"
+                  height="160"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <h3>{service.title}</h3>
               <p>{service.text}</p>
@@ -70,11 +83,25 @@ export function ServicesOverview() {
 
           <div className="services-schemes-promo" aria-hidden="true">
             <div className="services-schemes-text">
-              <img src="/schemes/dental-schemes-text.png" alt="" />
+              <img
+                src="/schemes/dental-schemes-text.webp"
+                alt=""
+                width="503"
+                height="281"
+                loading="lazy"
+                decoding="async"
+              />
               <span className="services-promo-sparkle" />
             </div>
             <div className="services-schemes-arrow">
-              <img src="/schemes/dental-schemes-arrow.png" alt="" />
+              <img
+                src="/schemes/dental-schemes-arrow.webp"
+                alt=""
+                width="160"
+                height="160"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </div>
         </div>

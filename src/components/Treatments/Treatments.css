@@ -385,7 +385,7 @@ video.treatment-image {
   border-radius: 30px;
   background:
     linear-gradient(90deg, rgba(255, 250, 238, 0.84), rgba(239, 250, 255, 0.56)),
-    url('/aligners/aligners-clean-background.png') center top / cover no-repeat;
+    url('/aligners/aligners-clean-background.webp') center top / cover no-repeat;
   border: 1px solid rgba(102, 181, 220, 0.2);
   box-shadow: 0 16px 34px rgba(57, 127, 172, 0.1);
 }

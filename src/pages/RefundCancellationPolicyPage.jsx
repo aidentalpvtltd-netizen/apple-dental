@@ -137,7 +137,7 @@ export function RefundCancellationPolicyPage() {
         <div className="site-header-inner">
           <a className="site-brand" href="/">
             <span className="site-brand-mark">
-              <img src="/logo.png" alt="" aria-hidden="true" />
+              <img src="/logo.webp" alt="" aria-hidden="true" />
             </span>
             <span className="site-brand-copy">
               <strong>Apple International Dental</strong>
@@ -160,7 +160,7 @@ export function RefundCancellationPolicyPage() {
 
       <section className="privacy-hero">
         <div className="privacy-hero-mark">
-          <img src="/logo.png" alt="Apple International Dental logo" />
+          <img src="/logo.webp" alt="Apple International Dental logo" />
         </div>
         <p className="eyebrow">Refund & Cancellation Policy</p>
         <h1>Apple International Dental</h1>

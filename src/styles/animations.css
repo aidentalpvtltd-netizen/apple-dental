@@ -118,6 +118,12 @@
   }
 }
 
+@keyframes payment-processing-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes submit-spin {
   to {
     transform: rotate(360deg);

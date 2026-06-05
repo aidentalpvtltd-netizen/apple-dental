@@ -32,15 +32,27 @@ export function TreatmentModal({
               src={activeTreatment.video}
               muted
               playsInline
-              preload="metadata"
+              preload="none"
               autoPlay
               loop
               aria-label={`${activeTreatment.name} treatment video`}
             />
           ) : activeTreatment.gif ? (
-            <img src={activeTreatment.gif} alt={`${activeTreatment.name} animated preview`} />
+            <img
+              src={activeTreatment.gif}
+              alt={`${activeTreatment.name} animated preview`}
+              width="720"
+              height="540"
+              decoding="async"
+            />
           ) : (
-            <img src={activeTreatment.image} alt={activeTreatment.name} />
+            <img
+              src={activeTreatment.image}
+              alt={activeTreatment.name}
+              width="640"
+              height="640"
+              decoding="async"
+            />
           )}
         </div>
 

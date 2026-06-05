@@ -2,7 +2,7 @@
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 245, 0.7) 52%, rgba(255, 247, 245, 0.58)),
     linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 247, 245, 0.38)),
-    url('/brands/aligners-and-implants.png') center center / cover no-repeat,
+    url('/brands/aligners-and-implants.webp') center center / cover no-repeat,
     #fff7f5;
   background-size: auto, auto, cover, auto;
 }

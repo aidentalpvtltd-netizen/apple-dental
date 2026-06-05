@@ -15,6 +15,24 @@ import {
 } from '../config/siteContent.js'
 
 const isGenericFetchFailure = (error) => error.message.toLowerCase() === 'failed to fetch'
+const clinicPaymentStatuses = ['Payment due at clinic', 'Collected at clinic']
+
+const getBookingPaymentMode = (booking) => {
+  const method = String(booking.paymentMethod || '').toLowerCase()
+  const status = String(booking.paymentStatus || '').toLowerCase()
+
+  if (method.includes('pay at clinic') || status.includes('clinic')) {
+    return 'clinic'
+  }
+
+  return 'online'
+}
+
+const getBookingPaymentAmount = (booking) => {
+  const amount = Number(booking.paymentAmount)
+
+  return Number.isFinite(amount) && amount > 0 ? amount : ''
+}
 
 export function AdminDashboard() {
   const [session, setSession] = useState(getStoredAdminSession)
@@ -56,7 +74,7 @@ export function AdminDashboard() {
   const historySearchTerm = adminSearch.history.trim().toLowerCase()
   const visibleBookings = bookingSearchTerm
     ? bookings.filter((booking) =>
-        [booking.patientName, booking.phone, booking.email, booking.bookingId, booking.patientId]
+        [booking.patientName, booking.phone, booking.email, booking.bookingId, booking.paymentStatus]
           .join(' ')
           .toLowerCase()
           .includes(bookingSearchTerm),
@@ -72,7 +90,7 @@ export function AdminDashboard() {
     : patients
   const visibleHistory = historySearchTerm
     ? history.filter((item) =>
-        [item.patientName, item.phone, item.patientId, item.bookingId, item.historyId]
+        [item.patientName, item.phone, item.bookingId, item.historyId]
           .join(' ')
           .toLowerCase()
           .includes(historySearchTerm),
@@ -374,6 +392,29 @@ export function AdminDashboard() {
     }
   }
 
+  const handleBookingPaymentStatusChange = async (booking, paymentStatus) => {
+    setIsLoading(true)
+    setError('')
+
+    try {
+      await postBookingEndpoint({
+        action: 'admin-update-booking',
+        token: session.token,
+        bookingId: booking.bookingId,
+        status: booking.status,
+        branch: sessionBranch,
+        paymentMethod: 'Pay at clinic',
+        paymentStatus,
+        paymentAmount: booking.paymentAmount || 350,
+      })
+      await fetchAdminBookings(session, filters)
+    } catch (paymentError) {
+      setError(paymentError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const handleSupportReply = async (event) => {
     event.preventDefault()
 
@@ -427,7 +468,7 @@ export function AdminDashboard() {
       <main className="admin-page admin-login-page">
         <div className="admin-login-grid">
           <section className="admin-login-card">
-            <img src="/logo.png" alt="Apple International Dental" />
+            <img src="/logo.webp" alt="Apple International Dental" />
             <p className="eyebrow">Admin login</p>
             <h1>Choose branch dashboard</h1>
             <p>Select the clinic branch first, then sign in to open only that branch dashboard.</p>
@@ -463,7 +504,7 @@ export function AdminDashboard() {
           </section>
 
           <section className="admin-login-card admin-super-login-card">
-            <img src="/logo.png" alt="Apple International Dental" />
+            <img src="/logo.webp" alt="Apple International Dental" />
             <p className="eyebrow">Super admin login</p>
             <h1>All branches dashboard</h1>
             <p>Review bookings, patients, treatment history, and support activity across every branch.</p>
@@ -608,7 +649,7 @@ export function AdminDashboard() {
                   <input
                     value={adminSearch.bookings}
                     onChange={(event) => handleAdminSearchChange('bookings', event.target.value)}
-                    placeholder="Name, phone, email, ID"
+                    placeholder="Name, phone, email, booking"
                   />
                 </label>
                 <span>{visibleBookings.length} rows</span>
@@ -626,43 +667,72 @@ export function AdminDashboard() {
                     <th>Branch</th>
                     <th>Status</th>
                     <th>Source</th>
-                    <th>Patient ID</th>
+                    <th>Payment</th>
                     <th>Booking ID</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {visibleBookings.map((booking) => (
-                    <tr key={`${booking.bookingId}-${booking.date}-${booking.timeSlot}`}>
-                      <td>{booking.date}</td>
-                      <td>{booking.timeSlot}</td>
-                      <td>
-                        <strong>{booking.patientName || 'Not added'}</strong>
-                        {booking.email && <small>{booking.email}</small>}
-                      </td>
-                      <td>{booking.phone || '-'}</td>
-                      <td>{booking.treatment || '-'}</td>
-                      <td>{getBranchArea(booking.branch)}</td>
-                      <td>
-                        <select
-                          className={`admin-status-select status-${booking.status
-                            .toLowerCase()
-                            .replace(/\s+/g, '-')}`}
-                          value={booking.status}
-                          onChange={(event) => handleBookingStatusChange(booking, event.target.value)}
-                          disabled={isLoading || !booking.bookingId}
-                        >
-                          {adminStatuses.map((status) => (
-                            <option key={status} value={status}>
-                              {status}
-                            </option>
-                          ))}
-                        </select>
-                      </td>
-                      <td>{booking.source || '-'}</td>
-                      <td>{booking.patientId || '-'}</td>
-                      <td>{booking.bookingId || '-'}</td>
-                    </tr>
-                  ))}
+                  {visibleBookings.map((booking) => {
+                    const paymentMode = getBookingPaymentMode(booking)
+                    const paymentAmount = getBookingPaymentAmount(booking)
+                    const clinicPaymentStatus = clinicPaymentStatuses.includes(booking.paymentStatus)
+                      ? booking.paymentStatus
+                      : 'Payment due at clinic'
+
+                    return (
+                      <tr key={`${booking.bookingId}-${booking.date}-${booking.timeSlot}`}>
+                        <td>{booking.date}</td>
+                        <td>{booking.timeSlot}</td>
+                        <td>
+                          <strong>{booking.patientName || 'Not added'}</strong>
+                          {booking.email && <small>{booking.email}</small>}
+                        </td>
+                        <td>{booking.phone || '-'}</td>
+                        <td>{booking.treatment || '-'}</td>
+                        <td>{getBranchArea(booking.branch)}</td>
+                        <td>
+                          <select
+                            className={`admin-status-select status-${booking.status
+                              .toLowerCase()
+                              .replace(/\s+/g, '-')}`}
+                            value={booking.status}
+                            onChange={(event) => handleBookingStatusChange(booking, event.target.value)}
+                            disabled={isLoading || !booking.bookingId}
+                          >
+                            {adminStatuses.map((status) => (
+                              <option key={status} value={status}>
+                                {status}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>{booking.source || '-'}</td>
+                        <td>
+                          {paymentMode === 'online' ? (
+                            <span className="admin-payment-pill paid">
+                              <strong>Paid online</strong>
+                              <small>{paymentAmount ? `Rs ${paymentAmount}` : booking.paymentStatus || 'Paid'}</small>
+                            </span>
+                          ) : (
+                            <div className="admin-clinic-payment-control">
+                              <strong>Selected Pay at clinic</strong>
+                              <select
+                                value={clinicPaymentStatus}
+                                onChange={(event) =>
+                                  handleBookingPaymentStatusChange(booking, event.target.value)
+                                }
+                                disabled={isLoading || !booking.bookingId}
+                              >
+                                <option value="Payment due at clinic">Not collected</option>
+                                <option value="Collected at clinic">Collected at clinic</option>
+                              </select>
+                            </div>
+                          )}
+                        </td>
+                        <td>{booking.bookingId || '-'}</td>
+                      </tr>
+                    )
+                  })}
                   {!visibleBookings.length && (
                     <tr>
                       <td colSpan="10">No bookings found for these filters or search.</td>
@@ -744,7 +814,7 @@ export function AdminDashboard() {
                 <input
                   value={adminSearch.history}
                   onChange={(event) => handleAdminSearchChange('history', event.target.value)}
-                  placeholder="Name, phone, patient ID"
+                  placeholder="Name, phone, booking"
                 />
               </label>
               <span>{visibleHistory.length} completed</span>
@@ -761,7 +831,6 @@ export function AdminDashboard() {
                   <th>Appointment</th>
                   <th>Branch</th>
                   <th>Notes</th>
-                  <th>Patient ID</th>
                   <th>Booking ID</th>
                 </tr>
               </thead>
@@ -784,14 +853,13 @@ export function AdminDashboard() {
                     </td>
                     <td>{item.branch ? getBranchArea(item.branch) : '-'}</td>
                     <td>{item.finalNotes || '-'}</td>
-                    <td>{item.patientId || '-'}</td>
                     <td>{item.bookingId || '-'}</td>
                   </tr>
                   )
                 })}
                 {!visibleHistory.length && (
                   <tr>
-                    <td colSpan="9">No completed treatment history found for this search.</td>
+                    <td colSpan="8">No completed treatment history found for this search.</td>
                   </tr>
                 )}
               </tbody>
@@ -881,7 +949,7 @@ export function AdminDashboard() {
 
       <aside className="doctor-login-card support-login-card">
         <div className="doctor-login-symbol">
-          <img src="/dental-assistant-logo.png" alt="" />
+          <img src="/dental-assistant-logo.webp" alt="" />
         </div>
         <p className="eyebrow">{isSuperAdmin ? 'All branch support' : 'Branch support'}</p>
         <strong>Support Chat</strong>

@@ -42,6 +42,10 @@ export function ContactSection({ selectedClinic, onClinicChange }) {
               className={shouldFillImageFrame ? 'clinic-image-fill' : undefined}
               src={selectedClinic.image}
               alt={`${selectedClinic.area} branch`}
+              width="1000"
+              height="750"
+              loading="lazy"
+              decoding="async"
               onError={(event) => {
                 event.currentTarget.src = heroImage
               }}

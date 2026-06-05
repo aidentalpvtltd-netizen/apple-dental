@@ -124,7 +124,14 @@ export function SchemeLogoStrip({ schemes }) {
 
         return scheme ? (
           <span key={scheme.shortName}>
-            <img src={scheme.logo} alt="" />
+            <img
+              src={scheme.logo}
+              alt=""
+              width="96"
+              height="96"
+              loading="lazy"
+              decoding="async"
+            />
           </span>
         ) : null
       })}

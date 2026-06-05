@@ -20,7 +20,7 @@
   z-index: -1;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.79), rgba(255, 249, 247, 0.72)),
-    url('/decor/second-section-bg.png') center / cover no-repeat;
+    url('/decor/second-section-bg.webp') center / cover no-repeat;
   border-top: 1px solid rgba(119, 30, 35, 0.06);
   border-bottom: 1px solid rgba(119, 30, 35, 0.06);
 }
@@ -278,7 +278,7 @@
       inset-block: -18px;
       background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(255, 249, 247, 0.82)),
-        url('/decor/second-section-bg.png') center / cover no-repeat;
+        url('/decor/second-section-bg.webp') center / cover no-repeat;
     }
 
   .services-overview,

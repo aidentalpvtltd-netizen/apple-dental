@@ -83,11 +83,18 @@ export function HeroSection() {
           }}
         >
           {heroCarouselSlides.map((image, index) => (
-            <div
-              className="hero-slide"
-              key={`${image}-${index}`}
-              style={{ backgroundImage: `url('${image}')` }}
-            />
+            <div className="hero-slide" key={`${image}-${index}`}>
+              <img
+                src={image}
+                alt=""
+                aria-hidden="true"
+                width="2172"
+                height="724"
+                decoding="async"
+                fetchPriority={index === 0 ? 'high' : 'auto'}
+                loading={index === 0 ? 'eager' : 'lazy'}
+              />
+            </div>
           ))}
         </div>
         <button

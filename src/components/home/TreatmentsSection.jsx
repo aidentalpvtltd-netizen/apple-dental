@@ -34,7 +34,6 @@ export function TreatmentsSection({
       <div
         className={`treatment-grid${isExpanded ? ' expanded' : ''}`}
         id="popular-treatments-grid"
-        role="list"
       >
         {treatments.map((treatment) => {
           const isActive = treatment.id === selectedTreatmentId
@@ -58,7 +57,7 @@ export function TreatmentsSection({
                       playsInline
                       autoPlay
                       loop
-                      preload="metadata"
+                      preload="none"
                       aria-label={`${treatment.name} preview`}
                     />
                   ) : (
@@ -67,6 +66,9 @@ export function TreatmentsSection({
                       src={treatment.image}
                       alt={treatment.name}
                       loading="lazy"
+                      decoding="async"
+                      width="640"
+                      height="640"
                     />
                   )}
                 </div>

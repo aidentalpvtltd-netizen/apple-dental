@@ -636,6 +636,9 @@ function handleAdminUpdateBooking(payload) {
   const bookingId = String(payload.bookingId || '').trim()
   const status = String(payload.status || '').trim()
   const notes = String(payload.notes || '').trim()
+  const paymentMethod = String(payload.paymentMethod || '').trim()
+  const paymentStatus = String(payload.paymentStatus || '').trim()
+  const paymentAmount = String(payload.paymentAmount || '').trim()
 
   if (!bookingId || !status) {
     return jsonResponse({ ok: false, message: 'Booking ID and status are required.' })
@@ -661,6 +664,18 @@ function handleAdminUpdateBooking(payload) {
 
   if (notes) {
     sheet.getRange(rowNumber, 11).setValue(notes)
+  }
+
+  if (paymentMethod) {
+    sheet.getRange(rowNumber, 15).setValue(paymentMethod)
+  }
+
+  if (paymentStatus) {
+    sheet.getRange(rowNumber, 16).setValue(paymentStatus)
+  }
+
+  if (paymentAmount) {
+    sheet.getRange(rowNumber, 17).setValue(paymentAmount)
   }
 
   const booking = getBookingFromRow(sheet.getRange(rowNumber, 1, 1, HEADERS.length).getValues()[0])

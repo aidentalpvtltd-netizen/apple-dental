@@ -6,84 +6,84 @@ const alignerCases = [
     label: 'Case 01',
     title: 'Aakanksha',
     note: 'Forwardly Placed & Deep Bite - 10 Months, 32 Aligners',
-    image: '/aligners/cases/aligner-case-01.png',
+    image: '/aligners/cases/aligner-case-01.webp',
   },
   {
     id: 'aligner-case-2',
     label: 'Case 02',
     title: 'Aarti',
     note: 'Crowding - 10 Months, 32 Aligners',
-    image: '/aligners/cases/aligner-case-02.png',
+    image: '/aligners/cases/aligner-case-02.webp',
   },
   {
     id: 'aligner-case-3',
     label: 'Case 03',
     title: 'Abhishek',
     note: 'Crooked & Forwardly Placed - 8 Months, 32 Aligners',
-    image: '/aligners/cases/aligner-case-03.png',
+    image: '/aligners/cases/aligner-case-03.webp',
   },
   {
     id: 'aligner-case-4',
     label: 'Case 04',
     title: 'Andyson',
     note: 'Crowding - 7 Months, 25 Aligners',
-    image: '/aligners/cases/aligner-case-04.png',
+    image: '/aligners/cases/aligner-case-04.webp',
   },
   {
     id: 'aligner-case-5',
     label: 'Case 05',
     title: 'Ankit',
     note: 'Spacing - 20 Months, 79 Aligners',
-    image: '/aligners/cases/aligner-case-05.png',
+    image: '/aligners/cases/aligner-case-05.webp',
   },
   {
     id: 'aligner-case-6',
     label: 'Case 06',
     title: 'Anusha',
     note: 'Crowding - 14 Months, 52 Aligners',
-    image: '/aligners/cases/aligner-case-06.png',
+    image: '/aligners/cases/aligner-case-06.webp',
   },
   {
     id: 'aligner-case-7',
     label: 'Case 07',
     title: 'Atul',
     note: 'Open Bites - 9 Months, 49 Aligners',
-    image: '/aligners/cases/aligner-case-07.png',
+    image: '/aligners/cases/aligner-case-07.webp',
   },
   {
     id: 'aligner-case-8',
     label: 'Case 08',
     title: 'Khajan',
     note: 'Deep Bite - 9 Months, 49 Aligners',
-    image: '/aligners/cases/aligner-case-08.png',
+    image: '/aligners/cases/aligner-case-08.webp',
   },
   {
     id: 'aligner-case-9',
     label: 'Case 09',
     title: 'Nisha',
     note: 'Spacing - 11 Months, 40 Aligners',
-    image: '/aligners/cases/aligner-case-09.png',
+    image: '/aligners/cases/aligner-case-09.webp',
   },
   {
     id: 'aligner-case-10',
     label: 'Case 10',
     title: 'Pooja',
     note: 'Crowding - 13 Months, 42 Aligners',
-    image: '/aligners/cases/aligner-case-10.png',
+    image: '/aligners/cases/aligner-case-10.webp',
   },
   {
     id: 'aligner-case-11',
     label: 'Case 11',
     title: 'Shanmugapriya',
     note: 'Forwardly Placed - 9 Months, 36 Aligners',
-    image: '/aligners/cases/aligner-case-11.png',
+    image: '/aligners/cases/aligner-case-11.webp',
   },
   {
     id: 'aligner-case-12',
     label: 'Case 12',
     title: 'Vamshi',
     note: 'Forwardly Placed - 8 Months, 26 Aligners',
-    image: '/aligners/cases/aligner-case-12.png',
+    image: '/aligners/cases/aligner-case-12.webp',
   },
 ]
 
@@ -140,9 +140,12 @@ export function AlignersSection() {
     >
       <img
         className="aligners-floating-logo"
-        src="/aligners/toothsi-logo-float.png"
+        src="/aligners/toothsi-logo-float.webp"
         alt="makeO toothsi aligners"
+        width="520"
+        height="347"
         loading="lazy"
+        decoding="async"
       />
       <div className="aligners-section-inner">
         <div className="aligners-heading">
@@ -192,7 +195,14 @@ export function AlignersSection() {
                 </div>
 
                 <figure className="aligners-case-photo">
-                  <img src={alignerCase.image} alt={`${alignerCase.title} aligner before and after`} />
+                  <img
+                    src={alignerCase.image}
+                    alt={`${alignerCase.title} aligner before and after`}
+                    width="720"
+                    height="542"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
                 </figure>
               </article>
             ))}

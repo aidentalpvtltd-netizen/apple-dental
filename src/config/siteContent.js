@@ -2,7 +2,7 @@ export const treatments = [
   {
     id: 'root-canal-treatment',
     name: 'Root Canal Treatment',
-    image: '/services/Rootcanal.png',
+    image: '/services/Rootcanal.webp',
     video: '/treatment-videos/Rootcanal.mp4',
     duration: '75 min diagnosis',
     blurb: 'Relieve tooth pain and save infected teeth with precise root canal care.',
@@ -13,8 +13,8 @@ export const treatments = [
   {
     id: 'wisdom-tooth-removal',
     name: 'Wisdom Tooth Removal',
-    image: '/services/Wisdom Tooth.png',
-    gif: '/treatment-gifs/wisdom-teeth.gif',
+    image: '/services/Wisdom Tooth.webp',
+    gif: '/treatment-gifs/wisdom-teeth.webp',
     duration: '45 min surgical consult',
     blurb: 'Careful evaluation and removal for painful, impacted, or crowded wisdom teeth.',
     highlight: 'Oral surgery',
@@ -24,7 +24,7 @@ export const treatments = [
   {
     id: 'laser-dentistry',
     name: 'Laser Dentistry',
-    image: '/services/Laser Dentistry.png',
+    image: '/services/Laser Dentistry.webp',
     duration: '40 min consultation',
     blurb: 'Minimally invasive laser care for soft-tissue treatments and gum comfort.',
     highlight: 'Modern care',
@@ -34,7 +34,7 @@ export const treatments = [
   {
     id: 'teeth-whitening',
     name: 'Teeth Whitening',
-    image: '/services/Teeth Whitening.png',
+    image: '/services/Teeth Whitening.webp',
     video: '/treatment-videos/Teeth%20Whitening.mp4',
     duration: '45 min cosmetic consult',
     blurb: 'Brighten stains and refresh your smile with dentist-guided whitening care.',
@@ -45,7 +45,7 @@ export const treatments = [
   {
     id: 'dental-fillings',
     name: 'Dental Fillings',
-    image: '/services/Dental Fillings.png',
+    image: '/services/Dental Fillings.webp',
     video: '/treatment-videos/Dental%20Fillings.mp4',
     duration: '35 min visit',
     blurb: 'Repair cavities and minor tooth damage with natural-looking dental fillings.',
@@ -56,8 +56,8 @@ export const treatments = [
   {
     id: 'dental-crown',
     name: 'Dental Crown',
-    image: '/services/Dental Crown.png',
-    gif: '/treatment-gifs/dental%20crown.gif',
+    image: '/services/Dental Crown.webp',
+    gif: '/treatment-gifs/dental%20crown.webp',
     duration: '60 min restorative visit',
     blurb: 'Restore weakened or broken teeth with durable, shade-matched crowns.',
     highlight: 'Restorative care',
@@ -67,7 +67,7 @@ export const treatments = [
   {
     id: 'dental-implants',
     name: 'Dental Implants',
-    image: '/services/Dental implants.png',
+    image: '/services/Dental implants.webp',
     video: '/treatment-videos/Dental%20Implants.mp4',
     duration: '120 min implant assessment',
     blurb: 'Replace missing teeth with stable, natural-looking implant treatment planning.',
@@ -78,8 +78,8 @@ export const treatments = [
   {
     id: 'dental-braces',
     name: 'Dental Braces',
-    image: '/services/Dental Braces.png',
-    gif: '/treatment-gifs/Dental%20braces.gif',
+    image: '/services/Dental Braces.webp',
+    gif: '/treatment-gifs/Dental%20braces.webp',
     duration: '60 min orthodontic consult',
     blurb: 'Plan reliable teeth alignment with braces for crowding, spacing, and bite correction.',
     highlight: 'Orthodontics',
@@ -89,7 +89,7 @@ export const treatments = [
   {
     id: 'clear-aligners',
     name: 'Clear Aligners',
-    image: '/services/Clear Aligners.png',
+    image: '/services/Clear Aligners.webp',
     video: '/treatment-videos/Clear%20Aligners.mp4',
     duration: '60 min scan',
     blurb: 'Straighten teeth discreetly with scan-led clear aligner treatment planning.',
@@ -100,7 +100,7 @@ export const treatments = [
   {
     id: 'advanced-gum-treatment',
     name: 'Advanced Gum Treatment',
-    image: '/services/Advanced Gum Treatment.png',
+    image: '/services/Advanced Gum Treatment.webp',
     duration: '50 min periodontal exam',
     blurb: 'Treat bleeding gums, inflammation, and periodontal concerns with focused care.',
     highlight: 'Gum health',
@@ -110,7 +110,7 @@ export const treatments = [
   {
     id: 'kids-dentistry',
     name: 'Kids Dentistry',
-    image: '/services/Kids Dentistry.png',
+    image: '/services/Kids Dentistry.webp',
     duration: '45 min visit',
     blurb: 'Gentle checkups, preventive care, sealants, and friendly guidance for children.',
     highlight: 'Child dental care',
@@ -120,8 +120,8 @@ export const treatments = [
   {
     id: 'dentures',
     name: 'Dentures',
-    image: '/services/Dentures.png',
-    gif: '/treatment-gifs/Dentures.gif',
+    image: '/services/Dentures.webp',
+    gif: '/treatment-gifs/Dentures.webp',
     duration: '70 min prosthetic consult',
     blurb: 'Restore missing teeth with comfortable full or partial denture planning.',
     highlight: 'Smile restoration',
@@ -131,7 +131,7 @@ export const treatments = [
   {
     id: 'mouth-ulcers',
     name: 'Mouth Ulcers',
-    image: '/services/mouth ulcers.png',
+    image: '/services/mouth ulcers.webp',
     duration: '30 min oral exam',
     blurb: 'Get recurring or painful mouth ulcers checked with careful oral examination.',
     highlight: 'Oral medicine',
@@ -203,7 +203,7 @@ export const clinicBranches = [
       '32-54-645, Opp Aravind Super specialty Hospital, Below Vijaya Sri blood bank, Beside Aaha Kitchen, 1st Cross, 7th Cross Rd, Ongole, Andhra Pradesh 523002',
     phone: '7386080969',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/ongole.jpg',
+    image: '/branches/ongole.webp',
   },
   {
     branch: 'Apple International Dental, Nellore',
@@ -212,7 +212,7 @@ export const clinicBranches = [
       '2nd Floor, Pabolu Plaza, D. No.16-4-140, behind Venkataramana Hotel, Pogathota, Nellore, Andhra Pradesh 524001',
     phone: '7382379710',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/nellore.jpg',
+    image: '/branches/nellore.webp',
   },
   {
     branch: 'Apple International Dental, Gajuwaka, Visakhapatnam',
@@ -221,7 +221,7 @@ export const clinicBranches = [
       'Main Rd, opp. laxmikanth theatre, New Gajuwaka, Pedagantyada, Visakhapatnam, Gajuwaka, Andhra Pradesh 530026',
     phone: '6300722549',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/gajuwaka-visakhapatnam.jpg',
+    image: '/branches/gajuwaka-visakhapatnam.webp',
   },
   {
     branch: 'Apple International Dental, Madanapalle',
@@ -230,7 +230,7 @@ export const clinicBranches = [
       '153-1, BHAVANI AGRO AGENCIES BUILDING, DOOR No. 111, CTM Rd, opp. GANESH HOTEL, Madanapalle, Andhra Pradesh 517325',
     phone: '9988163456',
     email: 'appledentalmpl@gmail.com',
-    image: '/branches/madanapalle.jpg',
+    image: '/branches/madanapalle.webp',
   },
   {
     branch: 'Apple International Dental, Nakkal Road, Vijayawada',
@@ -238,7 +238,7 @@ export const clinicBranches = [
     address: '29-6-24/1, Nakkala Rd, opp. DBS Bank, Near Vijaya Talkies, Suryaraopeta, Governor Peta',
     phone: '8058059879',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/nakkal-road-vijayawada.jpg',
+    image: '/branches/nakkal-road-vijayawada.webp',
   },
   {
     branch: 'Apple International Dental, Srikakulam',
@@ -247,7 +247,7 @@ export const clinicBranches = [
       'Below A Convention Hotel, Government Arts College Rd, near R.T.C COMPLEX, Shanti Nagar Colony, Balaga, Srikakulam, Andhra Pradesh 532001',
     phone: '9390406989',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/srikakulam.jpg',
+    image: '/branches/srikakulam.webp',
   },
   {
     branch: 'Apple International Dental, Guntur',
@@ -255,7 +255,7 @@ export const clinicBranches = [
     address: '13-7-72 2/6 Lane Opp.RTC Busstand, Gunturvari Thota, Guntur, Andhra Pradesh 522001',
     phone: '7382787569',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/guntur.jpg',
+    image: '/branches/guntur.webp',
   },
   {
     branch: 'Apple International Dental, Dwaraka Nagar, Visakhapatnam',
@@ -264,7 +264,7 @@ export const clinicBranches = [
       '47, 9-26, 3rd Ln, opp. Bajaj Capital, Sagar Nagar, Dwaraka Nagar, Visakhapatnam, Andhra Pradesh 530016',
     phone: '8179142424',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/dwaraka-nagar-visakhapatnam.jpg',
+    image: '/branches/dwaraka-nagar-visakhapatnam.webp',
   },
   {
     branch: 'Apple International Dental, Tirupati',
@@ -273,7 +273,7 @@ export const clinicBranches = [
       "10-1-756, Tilak Rd, beside Keerthy Medical Stores, Reddy & Reddy's Colony, Reddy and Reddy's Colony, Tirupati, Andhra Pradesh 517501",
     phone: '8019994774',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/tirupati.jpg',
+    image: '/branches/tirupati.webp',
   },
   {
     branch: 'Apple International Dental, Anantapur',
@@ -282,7 +282,7 @@ export const clinicBranches = [
       "Syed Jaffer Hussain's House, Revenue Ward, 13, Rtc Bus Stand Rd, beside Kavya Regency, opp. to Yatri Nivas, Anantapur, Andhra Pradesh 515005",
     phone: '7013891670',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/anantapur.jpg',
+    image: '/branches/anantapur.webp',
   },
   {
     branch: 'Apple International Dental, Rajamundry',
@@ -291,7 +291,7 @@ export const clinicBranches = [
       '46-20-1/10, FIRST FLOOR, Alankar Residency, near CHINA ANJANEYASWAMY TEMPLE, Danavai Peta, Rajamahendravaram, Andhra Pradesh 533103',
     phone: '9059556059',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/rajamundry.jpg',
+    image: '/branches/rajamundry.webp',
   },
   {
     branch: 'Apple International Dental, Mangalagiri',
@@ -299,7 +299,7 @@ export const clinicBranches = [
     address: 'above Jawed Habib Hair & Beauty Salon, Mangalagiri, Andhra Pradesh 522503',
     phone: '9493346026',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/mangalagiri.jpg',
+    image: '/branches/mangalagiri.webp',
   },
   {
     branch: 'Apple International Dental, Krishna Lanka, Vijayawada',
@@ -308,7 +308,7 @@ export const clinicBranches = [
       '41-2-70, Old Post Office Rd, Biyyam Kotla Bazar, Krishnalanka, Vijayawada, Andhra Pradesh 520013',
     phone: '7997593891',
     email: 'appledentalvij@gmail.com',
-    image: '/branches/krishna-lanka-vijayawada.jpg',
+    image: '/branches/krishna-lanka-vijayawada.webp',
   },
   {
     branch: 'Apple International Dental, Gachibowli, Hyderabad',
@@ -317,7 +317,7 @@ export const clinicBranches = [
       'Survey No 93, Plot No 3, Third Floor, MMN Plaza, beside Himagiri Hospital, Gachibowli, Hyderabad, Telangana',
     phone: '8639945819',
     email: 'appledentalgachibowli@gmail.com',
-    image: '/branches/gachibowli-hyderabad.jpg',
+    image: '/branches/gachibowli-hyderabad.webp',
   },
   {
     branch: 'Apple International Dental, Habsiguda, Hyderabad',
@@ -326,7 +326,7 @@ export const clinicBranches = [
       'Second Floor, 1-4-56/2, Captain Veera Raja Reddy Marg, Vijayanagar Colony, Margh, Habsiguda, Hyderabad, Telangana',
     phone: '9705540005',
     email: 'appledentalhabsiguda@gmail.com',
-    image: '/branches/habsiguda-hyderabad.jpg',
+    image: '/branches/habsiguda-hyderabad.webp',
   },
   {
     branch: 'Apple International Dental, Vanasthalipuram, Hyderabad',
@@ -335,7 +335,7 @@ export const clinicBranches = [
       'Plot no 72, 3rd Floor, septa Heights, Beisde Subbaya Gari Hotel, Hakeemabad Colony, Vanasthalipuram, Hyderabad, Telangana',
     phone: '8688657477',
     email: 'appledentalvanasthalipuram@gmail.com',
-    image: '/branches/vanasthalipuram-hyderabad.jpg',
+    image: '/branches/vanasthalipuram-hyderabad.webp',
   },
   {
     branch: 'Apple International Dental, Kondapur, Hyderabad',
@@ -344,7 +344,7 @@ export const clinicBranches = [
       'Plot number 51&54, Kondapur, New Hafeezpet, Gopal Reddy Nagar, Gachibowli, Hyderabad, Telangana',
     phone: '9281094975',
     email: 'appledentalkondapur@gmail.com',
-    image: '/branches/kondapur-hyderabad.jpg',
+    image: '/branches/kondapur-hyderabad.webp',
   },
   {
     branch: 'Apple International Dental, Champapet, Hyderabad',
@@ -353,7 +353,7 @@ export const clinicBranches = [
       'Door number:- 9, 6 - 1/2, 3RD Floor, Rohini Hospital, Sagar Road, beside HP petrol bunk, Champapet, Hyderabad, Telangana',
     phone: '9676669695',
     email: 'appleinternationaldentalhyd@gmail.com',
-    image: '/branches/champapet-hyderabad.jpg',
+    image: '/branches/champapet-hyderabad.webp',
   },
   {
     branch: 'Apple International Dental, HSR Layout, Bengaluru',
@@ -361,7 +361,7 @@ export const clinicBranches = [
     address: '2 nd floor, 14th Main Rd, opposite BDA Complex, Sector 4, HSR Layout, Bengaluru, Karnataka',
     phone: '9611042424',
     email: '',
-    image: '/branches/hsr-layout-bengaluru.jpg',
+    image: '/branches/hsr-layout-bengaluru.webp',
   },
 ]
 
@@ -383,7 +383,7 @@ export const schemePrograms = [
   {
     shortName: 'CGHS',
     name: 'Central Government Health Scheme',
-    logo: '/schemes/cghs.jpg',
+    logo: '/schemes/cghs.webp',
     audience: 'Central Government employees, pensioners, and eligible dependents.',
     carePath:
       'Patients usually visit with a valid CGHS card and any referral or permission required for planned dental treatment.',
@@ -394,7 +394,7 @@ export const schemePrograms = [
   {
     shortName: 'ECHS',
     name: 'Ex-Servicemen Contributory Health Scheme',
-    logo: '/schemes/echs.jpg',
+    logo: '/schemes/echs.webp',
     audience: 'Ex-servicemen pensioners and eligible dependents.',
     carePath:
       'ECHS members can be guided through consultation, documentation, and referral-based treatment planning.',
@@ -438,7 +438,7 @@ export const schemePrograms = [
   {
     shortName: 'SCR',
     name: 'South Central Railway',
-    logo: '/schemes/south-central-railway.jpg',
+    logo: '/schemes/south-central-railway.webp',
     audience: 'Railway employees, retired employees, and eligible railway beneficiaries.',
     carePath:
       'Railway beneficiaries can bring entitlement documents for guidance on approved dental care and referral requirements.',
@@ -449,7 +449,7 @@ export const schemePrograms = [
   {
     shortName: 'ESIC',
     name: "Employees' State Insurance Corporation",
-    logo: '/schemes/esic.png',
+    logo: '/schemes/esic.webp',
     audience: 'Insured employees and eligible family members covered under ESIC.',
     carePath:
       'ESIC patients can bring insurance documents so the team can help confirm the correct care and authorization pathway.',
@@ -460,7 +460,7 @@ export const schemePrograms = [
   {
     shortName: 'ABS',
     name: 'Aarogya Bhadratha Scheme',
-    logo: '/schemes/aarogya-bhadratha-updated.jpg',
+    logo: '/schemes/aarogya-bhadratha-updated.webp',
     audience: 'Eligible police personnel and dependent family members in Andhra Pradesh and Telangana.',
     carePath:
       'Police families can visit with scheme documents for help with dental consultation and cashless approval guidance.',
@@ -473,42 +473,42 @@ export const schemePrograms = [
 export const clinicBrands = [
   {
     name: 'Dentsply Sirona',
-    logo: '/brands/dentsply-sirona.png',
+    logo: '/brands/dentsply-sirona.webp',
     category: 'Digital dentistry',
   },
   {
     name: 'Pioon Laser',
-    logo: '/brands/pioon-laser.png',
+    logo: '/brands/pioon-laser.webp',
     category: 'Laser dentistry',
   },
   {
     name: 'Nobel Biocare',
-    logo: '/brands/nobel-biocare.png',
+    logo: '/brands/nobel-biocare.webp',
     category: 'Implant systems',
   },
   {
     name: '3M',
-    logo: '/brands/3m.png',
+    logo: '/brands/3m.webp',
     category: 'Restorative materials',
   },
   {
     name: 'Carestream Dental',
-    logo: '/brands/carestream-dental.png',
+    logo: '/brands/carestream-dental.webp',
     category: 'Digital imaging',
   },
   {
     name: 'Straumann',
-    logo: '/brands/straumann.png',
+    logo: '/brands/straumann.webp',
     category: 'Premium implants',
   },
   {
     name: 'Osstem Implant',
-    logo: '/brands/osstem-implant.png',
+    logo: '/brands/osstem-implant.webp',
     category: 'Implant dentistry',
   },
   {
     name: 'Toothsi',
-    logo: '/brands/toothsi.jpg',
+    logo: '/brands/toothsi.webp',
     category: 'Aligners',
     featured: true,
   },
@@ -1010,9 +1010,9 @@ export const treatmentPages = {
     title: 'Endodontics',
     navLabel: 'Endodontics',
     eyebrow: 'Specialized dental pulp and root care',
-    image: '/services/Endodontics.png',
+    image: '/services/Endodontics.webp',
     imageAlt: 'Endodontic file cleaning the inner root canal of a tooth with dental X-ray inset',
-    sectionImage: '/services/Endodontics_2.png',
+    sectionImage: '/services/Endodontics_2.webp',
     sectionImageAlt: 'Endodontic treatment steps showing infected tooth, opening, cleaning, filling, and restoration',
     sectionTitle: 'Save natural teeth affected by infection, injury, or deep decay.',
     summary:
@@ -1035,7 +1035,7 @@ export const treatmentPages = {
     variant: 'full-mouth-rehabilitation-treatment',
     navLabel: 'Full mouth Rehabilitation',
     eyebrow: 'Comprehensive bite, function, and smile restoration',
-    image: '/services/Full Mouth Rehabilitation.png',
+    image: '/services/Full Mouth Rehabilitation.webp',
     imageAlt: 'Full mouth rehabilitation showing restored teeth and improved smile function',
     sectionTitle: 'Rebuild the whole mouth with one coordinated treatment plan.',
     summary:
@@ -1058,9 +1058,9 @@ export const treatmentPages = {
     variant: 'periodontics-treatment',
     navLabel: 'Periodontics',
     eyebrow: 'Specialized gum and tooth-support care',
-    image: '/services/Periodontics.png',
+    image: '/services/Periodontics.webp',
     imageAlt: 'Before and after periodontal treatment showing healthier gums around the teeth',
-    sectionImage: '/services/Periodontics_2.png',
+    sectionImage: '/services/Periodontics_2.webp',
     sectionImageAlt: 'Periodontics illustration comparing a healthy tooth with periodontitis and gum disease changes',
     sectionTitle: 'Protect the gums, bone, and tissues that support your teeth.',
     summary:
@@ -1082,9 +1082,9 @@ export const treatmentPages = {
     title: 'Orthodontics',
     navLabel: 'Orthodontics',
     eyebrow: 'Specialized teeth and jaw alignment care',
-    image: '/services/Orthodontics.png',
+    image: '/services/Orthodontics.webp',
     imageAlt: 'Dental model with braces and clear aligners for orthodontic treatment',
-    sectionImage: '/services/Orthodontics_2.png',
+    sectionImage: '/services/Orthodontics_2.webp',
     sectionImageAlt: 'Orthodontics infographic showing braces, clear aligners, treatment steps, and benefits',
     sectionTitle: 'Correct misaligned teeth and jaws for a healthier smile.',
     summary:
@@ -1107,9 +1107,9 @@ export const treatmentPages = {
     title: 'Oral Surgery',
     navLabel: 'Oral Surgery',
     eyebrow: 'Surgical care for teeth, jaws, and oral tissues',
-    image: '/services/Oral Surgery.png',
+    image: '/services/Oral Surgery.webp',
     imageAlt: 'Oral surgeon treating a patient with wisdom tooth and jaw illustration overlay',
-    sectionImage: '/services/Oral Surgery_2.png',
+    sectionImage: '/services/Oral Surgery_2.webp',
     sectionImageAlt: 'Oral surgery illustration showing tooth extraction, dental implants, gum surgery, and bone grafting',
     sectionTitle: 'Manage complex tooth, jaw, mouth, and facial concerns surgically.',
     summary:
@@ -1131,7 +1131,7 @@ export const treatmentPages = {
     title: 'Pedodontics',
     navLabel: 'Pedodontics',
     eyebrow: 'Specialized dental care for children',
-    image: '/services/Pedodontics.png',
+    image: '/services/Pedodontics.webp',
     imageAlt: 'Pediatric dentist gently examining a smiling child in a dental chair',
     sectionTitle: 'Build healthy primary and permanent teeth from the first years.',
     summary:
@@ -1153,7 +1153,7 @@ export const treatmentPages = {
     title: 'CAD CAM Solutions',
     navLabel: 'CAD CAM Solutions',
     eyebrow: 'Computer-aided dental design and manufacturing',
-    image: '/services/CAD CAM Solutions.png',
+    image: '/services/CAD CAM Solutions.webp',
     imageAlt: 'Dentist using CAD CAM software to design digital dental restorations on a computer screen',
     sectionTitle: 'Design and manufacture precise dental restorations digitally.',
     summary:
@@ -1175,9 +1175,9 @@ export const treatmentPages = {
     title: 'Intra Oral Scanning',
     navLabel: 'Intra-Oral Scanning',
     eyebrow: 'Precise 3D digital impressions',
-    image: '/services/Intra oral scanning.png',
+    image: '/services/Intra oral scanning.webp',
     imageAlt: 'Dentist using an intraoral scanner while a 3D dental model appears on a monitor',
-    sectionImage: '/services/Intra oral scanning_2.png',
+    sectionImage: '/services/Intra oral scanning_2.webp',
     sectionImageAlt: 'Intra oral scanning diagram showing scanner features, capture process, 3D visualization, and digital sharing',
     sectionTitle: 'Capture a precise 3D map of teeth and gums without messy impressions.',
     summary:
@@ -1199,9 +1199,9 @@ export const treatmentPages = {
     title: 'Digital Smile Design',
     navLabel: 'Digital Smile Design',
     eyebrow: 'Facially driven digital smile planning',
-    image: '/services/Digital Smile-Design.png',
+    image: '/services/Digital Smile-Design.webp',
     imageAlt: 'Digital smile design close-up showing tooth shape planning and final ceramic restoration preview',
-    sectionImage: '/services/Digital Smile Design_2.png',
+    sectionImage: '/services/Digital Smile Design_2.webp',
     sectionImageAlt: 'Digital smile design workflow showing diagnostic planning, design simulation, evaluation, preview, and final outcome',
     sectionTitle: 'Preview and plan your ideal smile before treatment begins.',
     summary:
@@ -1223,9 +1223,9 @@ export const treatmentPages = {
     title: 'Digital Dental Implants',
     navLabel: 'Digital Dental Implants',
     eyebrow: 'Computer-guided implant planning',
-    image: '/services/Digital Dental Implant.png',
+    image: '/services/Digital Dental Implant.webp',
     imageAlt: 'Digital implant planning software showing a 3D jaw model and planned implant position on a monitor',
-    sectionImage: '/services/Digital Dental Implant_2.png',
+    sectionImage: '/services/Digital Dental Implant_2.webp',
     sectionImageAlt: 'Digital dental implant workflow showing scan, plan, guide, and precise implant placement steps',
     sectionTitle: 'Plan implant placement digitally before surgery begins.',
     summary:
@@ -1247,9 +1247,9 @@ export const treatmentPages = {
     title: 'Digital OPG and CBCT',
     navLabel: 'Digital OPG and CBCT',
     eyebrow: 'Advanced 2D and 3D dental imaging',
-    image: '/services/Digital OPG and CBCT.png',
+    image: '/services/Digital OPG and CBCT.webp',
     imageAlt: 'Digital OPG panoramic x-ray and CBCT 3D skull imaging shown side by side',
-    sectionImage: '/services/Digital OPG and CBCT_2 .png',
+    sectionImage: '/services/Digital OPG and CBCT_2 .webp',
     sectionImageAlt: 'Digital OPG and CBCT comparison showing panoramic imaging, 3D views, accurate diagnosis, better planning, and lower radiation',
     sectionTitle: 'See teeth, jaw, bone, nerves, and anatomy with clearer digital imaging.',
     summary:
@@ -1271,9 +1271,9 @@ export const treatmentPages = {
     title: 'Digital Dental Lab',
     navLabel: 'Digital Dental Lab',
     eyebrow: 'Integrated digital dental laboratory workflow',
-    image: '/services/Digital Dental Lab.png',
+    image: '/services/Digital Dental Lab.webp',
     imageAlt: 'Digital dental lab implant planning software showing jaw model, implants, and CBCT slices on a monitor',
-    sectionImage: '/services/Digital Dental Lab_2.png',
+    sectionImage: '/services/Digital Dental Lab_2.webp',
     sectionImageAlt: 'Central digital dental lab workflow with digital scanner, CAD design workstation, CAD CAM milling unit, 3D printing unit, and sintering furnace',
     sectionTitle: 'Create precise prosthetics and surgical guides with a connected digital workflow.',
     summary:
@@ -1295,9 +1295,9 @@ export const treatmentPages = {
     title: 'Single Tooth Implant',
     navLabel: 'Single Tooth Implant',
     eyebrow: 'Permanent single-tooth replacement',
-    image: '/services/Single Tooth Implant Page.png',
+    image: '/services/Single Tooth Implant Page.webp',
     imageAlt: 'Single tooth implant with titanium post, abutment, and crown replacing one missing tooth',
-    sectionImage: '/services/Single Tooth Implant_2.png',
+    sectionImage: '/services/Single Tooth Implant_2.webp',
     sectionImageAlt: 'Single tooth implant diagram showing crown, abutment, implant, gum, and bone support',
     sectionTitle: 'Replace one missing tooth with a natural-looking implant crown.',
     summary:
@@ -1318,9 +1318,9 @@ export const treatmentPages = {
     title: 'Multiple Implants',
     navLabel: 'Multiple Implants',
     eyebrow: 'Stable replacement for several missing teeth',
-    image: '/services/Multiple Implants Page.png',
+    image: '/services/Multiple Implants Page.webp',
     imageAlt: 'Dental x-ray showing multiple implants supporting replacement teeth',
-    sectionImage: '/services/Multiple Implants_2.png',
+    sectionImage: '/services/Multiple Implants_2.webp',
     sectionImageAlt: 'Dental implants illustration showing crowns, abutments, implants, and implant benefits',
     sectionTitle: 'Replace several missing teeth with strategically planned implants.',
     summary:
@@ -1341,9 +1341,9 @@ export const treatmentPages = {
     title: 'All on 4 Implants',
     navLabel: 'All on 4 implants',
     eyebrow: 'Full-arch fixed implant bridge',
-    image: '/services/All on 4 implants.jpeg',
+    image: '/services/All on 4 implants.webp',
     imageAlt: 'Full-arch All-on-4 implant prosthesis on a black background',
-    sectionImage: '/services/All on 4 implants_2.png',
+    sectionImage: '/services/All on 4 implants_2.webp',
     sectionImageAlt: 'All-on-4 dental implants diagram showing angled implants, titanium implants, and full-arch prosthesis',
     sectionTitle: 'Support a full arch of fixed replacement teeth with four implants.',
     summary:
@@ -1364,9 +1364,9 @@ export const treatmentPages = {
     title: 'Full Mouth Implants',
     navLabel: 'Full mouth Implants',
     eyebrow: 'Complete implant-supported restoration',
-    image: '/services/Full Mouth Implants.jpg',
+    image: '/services/Full Mouth Implants.webp',
     imageAlt: 'Full mouth implant-supported teeth on a dental model',
-    sectionImage: '/services/Full Mouth Implants_2.png',
+    sectionImage: '/services/Full Mouth Implants_2.webp',
     sectionImageAlt: 'Options for restoring a full mouth of teeth including complete dentures, full mouth dental implants, All-on-Four, same day implants, and mini dental implants',
     sectionTitle: 'Restore one or both jaws with implant-supported teeth.',
     summary:
@@ -1387,9 +1387,9 @@ export const treatmentPages = {
     title: 'Basal Implants',
     navLabel: 'Basal implants',
     eyebrow: 'Implants for dense cortical bone support',
-    image: '/services/Basal implants Page.png',
+    image: '/services/Basal implants Page.webp',
     imageAlt: 'Basal implant-supported full arch prosthesis inside the mouth',
-    sectionImage: '/services/Basal Implants_2.png',
+    sectionImage: '/services/Basal Implants_2.webp',
     sectionImageAlt: 'Basal implant diagram comparing conventional implant placement in spongy bone with basal implant anchorage in hard cortical bone',
     sectionTitle: 'Anchor implants into dense basal bone when bone support is limited.',
     summary:
@@ -1410,9 +1410,9 @@ export const treatmentPages = {
     title: 'Keyhole Implants',
     navLabel: 'Keyhole implants',
     eyebrow: 'Minimally invasive implant placement',
-    image: '/services/Keyhole Implants Page.png',
+    image: '/services/Keyhole Implants Page.webp',
     imageAlt: 'Keyhole implants with crowns shown on a dental arch model',
-    sectionImage: '/services/Keyhole Implants_2.png',
+    sectionImage: '/services/Keyhole Implants_2.webp',
     sectionImageAlt: 'Keyhole implants diagram showing x-ray view and 3D implant placement dimensions',
     sectionTitle: 'Place implants through a smaller opening with guided planning.',
     summary:
@@ -1433,9 +1433,9 @@ export const treatmentPages = {
     title: 'Bone Grafting',
     navLabel: 'Bone Grafting',
     eyebrow: 'Jawbone rebuilding for implant support',
-    image: '/services/Bone Grafting.jpg',
+    image: '/services/Bone Grafting.webp',
     imageAlt: 'Dental implant and jawbone model showing implant placement where bone support is needed',
-    sectionImage: '/services/Bone Grafting_2.png',
+    sectionImage: '/services/Bone Grafting_2.webp',
     sectionImageAlt: 'Bone grafting for dental implants diagram showing reduced bone thickness, graft healing, and implant placement',
     sectionTitle: 'Rebuild jawbone volume for a stable dental implant foundation.',
     summary:
@@ -1456,9 +1456,9 @@ export const treatmentPages = {
     title: 'Soft Tissue Grafting',
     navLabel: 'Soft Tissue Grafting',
     eyebrow: 'Gum tissue restoration for exposed roots',
-    image: '/services/soft tissue grafting.jpg',
+    image: '/services/soft tissue grafting.webp',
     imageAlt: 'Soft tissue grafting procedure illustration showing gum tissue being placed over an exposed tooth root',
-    sectionImage: '/services/Soft tissue Grafting_2.png',
+    sectionImage: '/services/Soft tissue Grafting_2.webp',
     sectionImageAlt: 'Soft tissue grafting diagram showing gum recession, graft placement, healing, and long-term gum health benefits',
     sectionTitle: 'Restore gum coverage and protect exposed tooth roots.',
     summary:
@@ -1479,9 +1479,9 @@ export const treatmentPages = {
     title: 'Dental Veneers',
     navLabel: 'Dental Veneers',
     eyebrow: 'Custom smile enhancement',
-    image: '/services/Veneers_2.png',
+    image: '/services/Veneers_2.webp',
     imageAlt: 'Before and after smile view showing dental veneers improving tooth color and shape',
-    sectionImage: '/services/Veneers Page.png',
+    sectionImage: '/services/Veneers Page.webp',
     sectionImageAlt: 'Dental veneers illustration showing veneer uses for stains, chips, gaps, worn teeth, and uneven teeth',
     sectionTitle: 'Improve tooth color, shape, size, and symmetry.',
     summary:
@@ -1505,7 +1505,7 @@ export const treatmentPages = {
     eyebrow: 'Cosmetic gum color correction',
     image: '/services/Gingival Depigmentation.webp',
     imageAlt: 'Before and after smile view showing dark gum pigmentation improved after treatment',
-    sectionImage: '/services/Gingival Depigmentation Page.png',
+    sectionImage: '/services/Gingival Depigmentation Page.webp',
     sectionImageAlt: 'Gingival depigmentation process showing before, during procedure, and after results',
     sectionTitle: 'Restore a more even, healthy pink gum appearance.',
     summary:
@@ -1526,9 +1526,9 @@ export const treatmentPages = {
     title: 'Teeth Whitening',
     navLabel: 'Teeth Whitening',
     eyebrow: 'Brighter smile treatment',
-    image: '/services/Teeth Whitening Page.png',
+    image: '/services/Teeth Whitening Page.webp',
     imageAlt: 'Before and after smile view showing teeth whitening results',
-    sectionImage: '/services/Teeth Whitening_2.png',
+    sectionImage: '/services/Teeth Whitening_2.webp',
     sectionImageAlt: 'Teeth whitening illustration showing peroxide gel, light activation, and desensitizing agents',
     sectionTitle: 'Lighten tooth color and reduce stains safely.',
     summary:
@@ -1549,9 +1549,9 @@ export const treatmentPages = {
     title: '3D Smile Designing',
     navLabel: '3D Smile Designing',
     eyebrow: 'Digital smile preview and planning',
-    image: '/services/3D Smile Designing Page.png',
+    image: '/services/3D Smile Designing Page.webp',
     imageAlt: 'Digital smile design software showing 3D scans and before-after smile preview',
-    sectionImage: '/services/3D Smile Designing_2.png',
+    sectionImage: '/services/3D Smile Designing_2.webp',
     sectionImageAlt: '3D smile designing workflow showing photo capture, digital analysis, 3D design, preview, and transformation',
     sectionTitle: 'Preview your smile before permanent treatment begins.',
     summary:
@@ -1572,7 +1572,7 @@ export const treatmentPages = {
     title: 'Smile Correction',
     navLabel: 'Smile Correction',
     eyebrow: 'Tailored smile makeover planning',
-    image: '/services/Smile Correction Page.png',
+    image: '/services/Smile Correction Page.webp',
     imageAlt: 'Before and after smile correction showing improved tooth alignment, shape, and color',
     sectionTitle: 'Enhance alignment, color, shape, and gum balance.',
     summary:
@@ -1594,9 +1594,9 @@ export const treatmentPages = {
     variant: 'fillings-treatment',
     navLabel: 'Tooth Colored Fillings',
     eyebrow: 'Natural-looking cavity repair',
-    image: '/services/Tooth Colored Fillings_2.png',
+    image: '/services/Tooth Colored Fillings_2.webp',
     imageAlt: 'Before and after view of metal fillings replaced with tooth-colored fillings',
-    sectionImage: '/services/Tooth Colored Fillings_3.png',
+    sectionImage: '/services/Tooth Colored Fillings_3.webp',
     sectionImageAlt: 'Tooth colored fillings illustration showing natural-looking restoration before and after',
     summary:
       'Tooth-colored fillings, also known as white fillings, are dental restorations designed to blend seamlessly with your natural teeth while repairing damage from cavities, chips, or fractures.',
@@ -1618,7 +1618,7 @@ export const treatmentPages = {
     eyebrow: 'Professional plaque and tartar removal',
     image: '/services/TeethScaling_Polishing_2.webp',
     imageAlt: 'Dental scaling instrument removing plaque and tartar near the gumline',
-    sectionImage: '/services/TeethScaling_Polishing.png',
+    sectionImage: '/services/TeethScaling_Polishing.webp',
     sectionImageAlt: 'Illustration explaining teeth scaling and polishing steps',
     sectionTitle: 'A cleaner, smoother smile with healthier gums.',
     summary:
@@ -1640,9 +1640,9 @@ export const treatmentPages = {
     variant: 'braces-treatment',
     navLabel: 'Clips and Braces Treatment',
     eyebrow: 'Orthodontic bite and alignment care',
-    image: '/services/Braces-Metal-Ceramic.png',
+    image: '/services/Braces-Metal-Ceramic.webp',
     imageAlt: 'Metal and ceramic braces shown on teeth',
-    sectionImage: '/services/Clips and Braces Treatment.png',
+    sectionImage: '/services/Clips and Braces Treatment.webp',
     sectionImageAlt: 'Orthodontics illustration showing braces, retainer, and palate expander examples',
     sectionTitle: 'Correct misaligned, crowded, and rotated teeth.',
     summary:
@@ -1664,7 +1664,7 @@ export const treatmentPages = {
     variant: 'aligners-treatment',
     navLabel: 'Aligners',
     eyebrow: 'Removable clear orthodontic trays',
-    image: '/services/Clear Aligners Page.png',
+    image: '/services/Clear Aligners Page.webp',
     imageAlt: 'Transparent clear aligner trays shown near teeth',
     sectionVideo: '/treatment-videos/Clear Aligners.mp4',
     sectionVideoLabel: 'Clear aligners treatment animation',
@@ -1683,25 +1683,25 @@ export const treatmentPages = {
         label: 'Atul',
         title: 'Open Bites',
         detail: '9 Months, 49 Aligners',
-        image: '/aligners/general/atul-open-bites.png',
+        image: '/aligners/general/atul-open-bites.webp',
       },
       {
         label: 'Khajan',
         title: 'Deep Bite',
         detail: '9 Months, 49 Aligners',
-        image: '/aligners/general/khajan-deep-bite.png',
+        image: '/aligners/general/khajan-deep-bite.webp',
       },
       {
         label: 'Aakanksha',
         title: 'Forwardly Placed & Deep Bite',
         detail: '10 Months, 32 Aligners',
-        image: '/aligners/cases/aligner-case-01.png',
+        image: '/aligners/cases/aligner-case-01.webp',
       },
       {
         label: 'Aarti',
         title: 'Crowding',
         detail: '10 Months, 32 Aligners',
-        image: '/aligners/cases/aligner-case-02.png',
+        image: '/aligners/cases/aligner-case-02.webp',
       },
     ],
     faqIntro:
@@ -1714,9 +1714,9 @@ export const treatmentPages = {
     variant: 'crowns-bridges-treatment',
     navLabel: 'Crowns and Bridges',
     eyebrow: 'Fixed tooth restoration',
-    image: '/services/Dental_Bridges_2.png',
+    image: '/services/Dental_Bridges_2.webp',
     imageAlt: 'Step-by-step dental bridge treatment replacing a missing tooth',
-    sectionImage: '/services/Dental Bridges Page.png',
+    sectionImage: '/services/Dental Bridges Page.webp',
     sectionImageAlt: 'Dental bridge diagram showing crowns, pontic, jaw bone, and supporting structures',
     sectionTitle: 'Restore damaged or missing teeth with fixed prosthetic care.',
     summary:
@@ -1737,9 +1737,9 @@ export const treatmentPages = {
     title: 'Root Canal Treatment',
     navLabel: 'Root Canal Treatment',
     eyebrow: 'Pain-relieving tooth-saving care',
-    image: '/services/Root Canal Treatment_2.png',
+    image: '/services/Root Canal Treatment_2.webp',
     imageAlt: 'Dental model showing root canal files cleaning tooth canals',
-    sectionImage: '/services/Root Canal Treatment Page.png',
+    sectionImage: '/services/Root Canal Treatment Page.webp',
     sectionImageAlt: 'Root canal treatment steps from infected tooth to new crown placement',
     sectionTitle: 'Save an infected tooth and restore comfortable chewing.',
     summary:
@@ -1760,9 +1760,9 @@ export const treatmentPages = {
     title: 'Complete Dentures',
     navLabel: 'Complete Dentures',
     eyebrow: 'Full-arch tooth replacement',
-    image: '/services/Complete Dentures_2.png',
+    image: '/services/Complete Dentures_2.webp',
     imageAlt: 'Before and after view of implant-supported complete dentures',
-    sectionImage: '/services/Complete Dentures Page.png',
+    sectionImage: '/services/Complete Dentures Page.webp',
     sectionImageAlt: 'Types of dentures including full, partial, immediate, flexible, flipper, and implant dentures',
     sectionTitle: 'Replace missing teeth and restore smile function.',
     summary:
@@ -1783,9 +1783,9 @@ export const treatmentPages = {
     title: 'Partial Dentures',
     navLabel: 'Partial Dentures',
     eyebrow: 'Removable replacement for missing teeth',
-    image: '/services/Partial Dentures Page.png',
+    image: '/services/Partial Dentures Page.webp',
     imageAlt: 'Before and after smile view showing missing teeth restored with partial dentures',
-    sectionImage: '/services/Partial Dentures_2.jpg',
+    sectionImage: '/services/Partial Dentures_2.webp',
     sectionImageAlt: 'Partial denture appliance with gum-colored base, artificial teeth, and metal framework',
     sectionTitle: 'Replace missing teeth while supporting the remaining smile.',
     summary:
@@ -1806,9 +1806,9 @@ export const treatmentPages = {
     title: 'Over Dentures',
     navLabel: 'Over dentures',
     eyebrow: 'Implant-retained denture stability',
-    image: '/services/Overdentures_2.png',
+    image: '/services/Overdentures_2.webp',
     imageAlt: 'Overdenture snapping onto dental implant attachments',
-    sectionImage: '/services/Overdentures Page.png',
+    sectionImage: '/services/Overdentures Page.webp',
     sectionImageAlt: 'Overdenture diagram showing complete denture, implant abutments, dental implants, and attachments',
     sectionTitle: 'A steadier removable denture anchored by teeth, roots, or implants.',
     summary:
@@ -1829,7 +1829,7 @@ export const treatmentPages = {
     title: 'Kids Dentistry',
     navLabel: 'Kids Dentistry',
     eyebrow: 'Gentle dental care for children',
-    image: '/services/Kids Dentistry Page.png',
+    image: '/services/Kids Dentistry Page.webp',
     imageAlt: 'Smiling child in a dental chair during a pediatric dental visit',
     sectionTitle: 'Child-focused care from first visits through the teenage years.',
     summary:
@@ -1850,9 +1850,9 @@ export const treatmentPages = {
     title: 'Tooth Extractions',
     navLabel: 'Tooth Extractions',
     eyebrow: 'Safe removal of damaged teeth',
-    image: '/services/tooth_extraction_2.jpg',
+    image: '/services/tooth_extraction_2.webp',
     imageAlt: 'Extraction socket after permanent tooth removal',
-    sectionImage: '/services/Tooth Extractions Page.png',
+    sectionImage: '/services/Tooth Extractions Page.webp',
     sectionImageAlt: 'Tooth extraction diagram showing decay, socket, jawbone, gauze, and stitches',
     sectionTitle: 'Remove teeth that cannot be repaired safely.',
     summary:
@@ -1874,9 +1874,9 @@ export const treatmentPages = {
     variant: 'wisdom-molar-treatment',
     navLabel: 'Wisdom Molar Extraction',
     eyebrow: 'Impacted third molar care',
-    image: '/services/Wisdom_Tooth_Extraction.jpg',
+    image: '/services/Wisdom_Tooth_Extraction.webp',
     imageAlt: 'X-ray illustration showing an impacted wisdom tooth and third molar position',
-    sectionImage: '/treatment-gifs/wisdom-teeth.gif',
+    sectionImage: '/treatment-gifs/wisdom-teeth.webp',
     sectionImageAlt: 'Animated wisdom teeth extraction illustration',
     sectionTitle: 'Remove painful or impacted wisdom molars safely.',
     summary:
@@ -1899,7 +1899,7 @@ export const treatmentPages = {
     eyebrow: 'Advanced gum disease treatment',
     image: '/services/Gingival Flap surgery_2.webp',
     imageAlt: 'Dental instrument cleaning tartar and bacteria below the gumline',
-    sectionImage: '/services/Gingival Flap Surgery Page.png',
+    sectionImage: '/services/Gingival Flap Surgery Page.webp',
     sectionImageAlt: 'Gingival flap surgery steps for treating advanced gum disease',
     sectionTitle: 'Deep cleaning access for advanced gum pockets.',
     summary:
@@ -1920,7 +1920,7 @@ export const treatmentPages = {
     title: 'Frenectomy',
     navLabel: 'Frenectomy',
     eyebrow: 'Minor soft-tissue release',
-    image: '/services/frenectomy.jpg',
+    image: '/services/frenectomy.webp',
     imageAlt: 'Before and after view of upper lip frenum release between front teeth',
     sectionTitle: 'Release tight tissue bands that restrict movement.',
     summary:
@@ -1941,7 +1941,7 @@ export const treatmentPages = {
     title: 'Night Guard',
     navLabel: 'Night Guard',
     eyebrow: 'Protection from teeth grinding',
-    image: '/services/Night Guard Page.png',
+    image: '/services/Night Guard Page.webp',
     imageAlt: 'Transparent dental night guard appliance',
     sectionTitle: 'Protect your teeth while you sleep.',
     summary:
@@ -1964,7 +1964,7 @@ export const treatmentPages = {
     eyebrow: 'Protective cavity prevention',
     image: '/services/dentalpit_fissure_sealant_2.webp',
     imageAlt: 'Before and after view of fissure sealant applied to molars',
-    sectionImage: '/services/dentalpit_fissure_sealant.png',
+    sectionImage: '/services/dentalpit_fissure_sealant.webp',
     sectionImageAlt: 'Pit and fissure sealant process showing tooth without sealant, sealant applied, and final sealant',
     sectionTitle: 'Seal deep grooves before decay starts.',
     summary:
@@ -2026,25 +2026,25 @@ export const kpis = [
 export const services = [
   {
     title: 'Preventive Dentistry',
-    image: '/service-gifs/Preventive Dentistry.gif',
+    image: '/service-gifs/Preventive Dentistry.webp',
     text:
       'Routine checkups, digital x-rays, ultrasonic scaling, fluoride care, and gum-health reviews for long-term prevention.',
   },
   {
     title: 'Cosmetic Dentistry',
-    image: '/service-gifs/Cosemtic Dentistry.gif',
+    image: '/service-gifs/Cosemtic Dentistry.webp',
     text:
       'Smile design, veneers, whitening, and enamel reshaping for patients looking for a brighter, more balanced smile.',
   },
   {
     title: 'Restorative Dentistry',
-    image: '/service-gifs/Restorative Dentistry.gif',
+    image: '/service-gifs/Restorative Dentistry.webp',
     text:
       'Tooth-colored fillings, crowns, bridges, implants, and root canal care that restore strength, comfort, and function.',
   },
   {
     title: 'Children & Orthodontic Care',
-    image: '/service-gifs/Children and Orthodontic Care.gif',
+    image: '/service-gifs/Children and Orthodontic Care.webp',
     text:
       'Kids checkups, habit guidance, sealants, and clear aligner treatment planned around comfort and predictable results.',
   },
@@ -2055,19 +2055,19 @@ export const dentists = [
     name: 'Dr . Pardha Saradhi, MDS',
     role: 'Founder, Director and Managing Director',
     bio: 'Founder leadership guiding Apple International Dental with a focus on patient care, clinical standards, and multi-branch dental excellence.',
-    image: '/doctors/dr-parthasarathy.jpeg',
+    image: '/doctors/dr-parthasarathy.webp',
   },
   {
     name: 'Dr. Suma, MDS',
     role: 'Founder and Director',
     bio: 'Founder leadership supporting patient-first dentistry, clinic operations, and consistent care across Apple International Dental.',
-    image: '/doctors/dr-suma.jpeg',
+    image: '/doctors/dr-suma.webp',
   },
   {
     name: 'Dr . Mohammed Moosa, BDS',
     role: 'CEO',
     bio: 'Chief Executive Officer guiding Apple International Dental with a commitment to patient-focused care, quality standards, and organizational growth.',
-    image: '/doctors/dr-mohammed-moosa.png',
+    image: '/doctors/dr-mohammed-moosa.webp',
     imagePosition: 'center 25%',
     imageSize: '150% auto',
   },
@@ -2105,13 +2105,13 @@ export const instagramFeedEndpoint =
   import.meta.env.VITE_INSTAGRAM_FEED_ENDPOINT ?? '/.netlify/functions/instagram-feed'
 export const bookingEndpoint = import.meta.env.VITE_BOOKING_ENDPOINT
 
-export const heroImage = '/hero/dental-hero-smile-exam.jpg'
+export const heroImage = '/hero/dental-hero-smile-exam.webp'
 export const heroImages = [
-  '/hero/root-canal-homepage-banner.png',
-  '/hero/aligners-homepage-banner.png',
-  '/hero/implants-homepage-banner.png',
-  '/hero/teeth-whitening-homepage-banner.png',
-  '/hero/digital-analog-oral-scanning.png',
+  '/hero/root-canal-homepage-banner.webp',
+  '/hero/aligners-homepage-banner.webp',
+  '/hero/implants-homepage-banner.webp',
+  '/hero/teeth-whitening-homepage-banner.webp',
+  '/hero/digital-analog-oral-scanning.webp',
 ]
 export const heroCarouselImages = [...heroImages, heroImages[0]]
 
@@ -2203,8 +2203,8 @@ export const bookingLockSubmissionLimit = 4
 export const consultationFeeAmount = 350
 export const onlineConsultationFeeAmount = 250
 export const onlineConsultationFeeSubunits = onlineConsultationFeeAmount * 100
-export const loaderMinimumDuration = 1400
-export const loaderMaximumDuration = 5200
+export const loaderMinimumDuration = 500
+export const loaderMaximumDuration = 1800
 export const concernWordLimit = 100
 export const availabilityRefreshMs = 30 * 1000
 export const onlinePaymentMethod = 'Online payment'
@@ -2274,13 +2274,8 @@ export const preloadImage = (src) =>
 
 export const getPreloadImages = () =>
   [
-    '/logo.png',
-    '/loading/dentistry.gif',
-    ...heroImages,
-    ...treatments.map((treatment) => treatment.image),
-    ...services.map((service) => service.image),
-    ...dentists.map((dentist) => dentist.image),
-    ...instagramPosts.map((post) => post.image),
+    '/logo.webp',
+    heroImages[0],
   ].filter(Boolean)
 
 export const getActiveBookingLock = () => {
@@ -2700,7 +2695,14 @@ export const verifyConsultationPayment = async ({ orderId, paymentId, signature 
     signature,
   })
 
-export const collectConsultationPayment = async ({ name, phone, email, branch, source }) => {
+export const collectConsultationPayment = async ({
+  name,
+  phone,
+  email,
+  branch,
+  source,
+  onProcessingPayment,
+}) => {
   const order = await createConsultationPaymentOrder({
     name,
     phone,
@@ -2743,6 +2745,8 @@ export const collectConsultationPayment = async ({ name, phone, email, branch, s
 
     checkout.open()
   })
+
+  onProcessingPayment?.(true)
 
   await verifyConsultationPayment({
     orderId: payment.razorpay_order_id,

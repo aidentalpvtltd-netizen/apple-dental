@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
 
 const prefersReducedMotion = () =>
@@ -34,30 +33,43 @@ export function useLenisSmoothScroll({ enabled = true } = {}) {
       return undefined
     }
 
-    const lenis = new Lenis({
-      anchors: {
-        duration: 0.85,
-        easing: (time) => 1 - Math.pow(1 - time, 3),
-      },
-      duration: 0.9,
-      easing: (time) => 1 - Math.pow(1 - time, 3),
-      smoothWheel: true,
-      syncTouch: false,
-      prevent: shouldUseNativeScroll,
-    })
-
+    let lenis
     let animationFrameId = 0
+    let isCancelled = false
 
-    const raf = (time) => {
-      lenis.raf(time)
+    const setupLenis = async () => {
+      const { default: Lenis } = await import('lenis')
+
+      if (isCancelled) {
+        return
+      }
+
+      lenis = new Lenis({
+        anchors: {
+          duration: 0.85,
+          easing: (time) => 1 - Math.pow(1 - time, 3),
+        },
+        duration: 0.9,
+        easing: (time) => 1 - Math.pow(1 - time, 3),
+        smoothWheel: true,
+        syncTouch: false,
+        prevent: shouldUseNativeScroll,
+      })
+
+      const raf = (time) => {
+        lenis?.raf(time)
+        animationFrameId = window.requestAnimationFrame(raf)
+      }
+
       animationFrameId = window.requestAnimationFrame(raf)
     }
 
-    animationFrameId = window.requestAnimationFrame(raf)
+    setupLenis()
 
     return () => {
+      isCancelled = true
       window.cancelAnimationFrame(animationFrameId)
-      lenis.destroy()
+      lenis?.destroy()
     }
   }, [enabled])
 }
