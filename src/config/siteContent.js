@@ -2576,6 +2576,10 @@ export const postBookingEndpoint = async (payload) => {
     try {
       response = await fetch(bookingEndpoint, {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
         body: JSON.stringify(payload),
       })
       break
