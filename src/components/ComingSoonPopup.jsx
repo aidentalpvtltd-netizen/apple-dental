@@ -8,6 +8,7 @@ export function ComingSoonPopup({
   message,
   onClose,
   title = 'Coming soon',
+  variant = 'default',
 }) {
   useEffect(() => {
     if (!isOpen) {
@@ -49,7 +50,9 @@ export function ComingSoonPopup({
       onClick={isDismissible ? onClose : undefined}
     >
       <div
-        className={`coming-soon-dialog${isDismissible ? '' : ' processing-dialog'}`}
+        className={`coming-soon-dialog${isDismissible ? '' : ' processing-dialog'} ${
+          variant === 'success' ? 'success-dialog' : ''
+        }`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="coming-soon-title"
@@ -65,10 +68,17 @@ export function ComingSoonPopup({
             x
           </button>
         ) : null}
+        {variant === 'success' ? (
+          <span className="payment-success-check" aria-hidden="true">
+            ✓
+          </span>
+        ) : null}
         {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
         <h2 id="coming-soon-title">{title}</h2>
         <p>{message}</p>
-        {!isDismissible ? <span className="processing-spinner" aria-hidden="true" /> : null}
+        {!isDismissible && variant !== 'success' ? (
+          <span className="processing-spinner" aria-hidden="true" />
+        ) : null}
       </div>
     </div>,
     document.body,

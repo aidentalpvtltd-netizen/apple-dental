@@ -714,7 +714,11 @@ export function AdminDashboard() {
                               <small>{paymentAmount ? `Rs ${paymentAmount}` : booking.paymentStatus || 'Paid'}</small>
                             </span>
                           ) : (
-                            <div className="admin-clinic-payment-control">
+                            <div
+                              className={`admin-clinic-payment-control ${
+                                clinicPaymentStatus === 'Collected at clinic' ? 'collected' : 'due'
+                              }`}
+                            >
                               <strong>Selected Pay at clinic</strong>
                               <select
                                 value={clinicPaymentStatus}

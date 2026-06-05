@@ -631,6 +631,33 @@
   animation: payment-processing-spin 760ms linear infinite;
 }
 
+.success-dialog {
+  border-color: rgba(38, 166, 91, 0.24);
+  background:
+    radial-gradient(circle at top right, rgba(38, 166, 91, 0.16), transparent 38%),
+    #ffffff;
+}
+
+.payment-success-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  background: rgba(38, 166, 91, 0.14);
+  color: #087537;
+  box-shadow: 0 18px 36px rgba(38, 166, 91, 0.2);
+  font-size: 2.3rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.success-dialog .eyebrow {
+  color: #087537;
+}
+
 .coming-soon-close {
   position: absolute;
   top: 14px;

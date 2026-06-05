@@ -162,7 +162,7 @@ export function WebsiteApp({ onLoadingChange }) {
   const [submittedFor, setSubmittedFor] = useState('')
   const [submitError, setSubmitError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isPaymentProcessing, setIsPaymentProcessing] = useState(false)
+  const [paymentModalState, setPaymentModalState] = useState('idle')
   const [shouldRenderAmbient, setShouldRenderAmbient] = useState(false)
   const [bookingLock, setBookingLock] = useState(getActiveBookingLock)
   const [activeTreatmentId, setActiveTreatmentId] = useState('')
@@ -186,6 +186,8 @@ export function WebsiteApp({ onLoadingChange }) {
   const todayDateValue = getTodayDateValue()
   const requiresSlotSelection = !isBookingLocked && (!formState.date || !formState.timeSlot)
   const carouselTestimonials = [...videoTestimonials, ...videoTestimonials.slice(0, 3)]
+  const isPaymentModalOpen = paymentModalState !== 'idle'
+  const isPaymentSuccess = paymentModalState === 'success'
 
   useGsapParallaxDepth(pageRef, { enabled: !isLoading })
 
@@ -417,7 +419,7 @@ export function WebsiteApp({ onLoadingChange }) {
             email: '',
             branch: branchName,
             source: 'Website consultation',
-            onProcessingPayment: setIsPaymentProcessing,
+            onProcessingPayment: () => setPaymentModalState('processing'),
           })
         }
 
@@ -468,10 +470,17 @@ export function WebsiteApp({ onLoadingChange }) {
       setBookingLock(nextBookingLock)
       setSubmittedFor(treatmentName)
       setFormState(initialFormState)
+
+      if (!isPayAtClinic) {
+        setPaymentModalState('success')
+        await new Promise((resolve) => {
+          window.setTimeout(resolve, 2400)
+        })
+      }
     } catch (error) {
       setSubmitError(error.message)
     } finally {
-      setIsPaymentProcessing(false)
+      setPaymentModalState('idle')
       setIsSubmitting(false)
     }
   }
@@ -486,12 +495,17 @@ export function WebsiteApp({ onLoadingChange }) {
       ) : null}
       <HomeHeader />
       <ComingSoonPopup
-        eyebrow="Payment verification"
+        eyebrow={isPaymentSuccess ? 'Payment complete' : 'Payment verification'}
         isDismissible={false}
-        isOpen={isPaymentProcessing}
-        message="Please wait while we verify your payment and send your appointment request to the clinic."
+        isOpen={isPaymentModalOpen}
+        message={
+          isPaymentSuccess
+            ? 'Your payment is verified and your appointment request has been sent to the clinic.'
+            : 'Please wait while we verify your payment and send your appointment request to the clinic.'
+        }
         onClose={() => {}}
-        title="Completing payment process"
+        title={isPaymentSuccess ? 'Payment successful' : 'Completing payment process'}
+        variant={isPaymentSuccess ? 'success' : 'processing'}
       />
       <HeroSection />
 
