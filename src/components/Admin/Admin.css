@@ -532,7 +532,7 @@
 
 .admin-table-wrap table {
   width: 100%;
-  min-width: 0;
+  min-width: 1500px;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -604,16 +604,23 @@
 }
 
 .admin-table-wrap th:nth-child(9),
-.admin-table-wrap td:nth-child(9),
+.admin-table-wrap td:nth-child(9) {
+  width: 260px;
+}
+
 .admin-table-wrap th:nth-child(10),
 .admin-table-wrap td:nth-child(10) {
-  width: 132px;
+  width: 165px;
 }
 
 .admin-table-wrap td:nth-child(9),
 .admin-table-wrap td:nth-child(10) {
-  font-size: 0.8rem;
+  font-size: 0.86rem;
   overflow-wrap: break-word;
+}
+
+.admin-table-wrap td:nth-child(9) {
+  overflow: visible;
 }
 
 .admin-table-wrap td strong,
@@ -718,13 +725,14 @@
 .admin-payment-pill,
 .admin-clinic-payment-control {
   display: grid;
-  gap: 5px;
+  gap: 7px;
   min-width: 0;
 }
 
 .admin-payment-pill {
-  width: fit-content;
-  padding: 8px 10px;
+  width: max-content;
+  min-width: 112px;
+  padding: 9px 12px;
   border-radius: 14px;
   background: rgba(38, 166, 91, 0.12);
   color: #06632f;
@@ -735,6 +743,7 @@
   color: inherit;
   font-size: 0.84rem;
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .admin-payment-pill small {
@@ -745,15 +754,15 @@
 }
 
 .admin-clinic-payment-control {
-  width: min(230px, 100%);
-  min-width: 190px;
+  width: 220px;
+  min-width: 220px;
   color: var(--heading);
 }
 
 .admin-clinic-payment-control select {
   width: 100%;
   min-height: 40px;
-  padding: 0 34px 0 12px;
+  padding: 0 36px 0 14px;
   border: 1px solid rgba(119, 30, 35, 0.2);
   border-radius: 14px;
   background: #ffffff;
@@ -763,6 +772,7 @@
   font-weight: 900;
   line-height: 1.1;
   outline: none;
+  white-space: nowrap;
 }
 
 .admin-clinic-payment-control.due {
