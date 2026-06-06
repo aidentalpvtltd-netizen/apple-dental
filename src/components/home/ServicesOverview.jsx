@@ -36,7 +36,7 @@ export function ServicesOverview() {
               <div className="service-visual" aria-hidden="true">
                 <img
                   src={service.image}
-                  alt=""
+                  alt={`${service.title} dental care illustration`}
                   width="160"
                   height="160"
                   loading="lazy"
@@ -56,28 +56,32 @@ export function ServicesOverview() {
               <strong>Mon - Sun: 10:00 am to 8:00 pm</strong>
             </article>
             <a className="hero-info-card hero-scheme-card-link" href="/schemes?scroll=scheme-list">
-              <span>CGHS and ECHS Empanelled Schemes</span>
+              <span>CGHS and ECHS Schemes Empanelled</span>
               <SchemeLogoStrip schemes={['CGHS', 'ECHS']} />
-              <strong>
-                Dental care guidance for eligible government and ex-servicemen scheme patients
-              </strong>
+              <ul className="scheme-card-points">
+                <li>Cash less Treatment for CGHS Pensioners and Ex-Service men</li>
+                <li>Reimbursement for CGHS service employees and their family members</li>
+              </ul>
             </a>
             <a className="hero-info-card hero-scheme-card-link" href="/schemes?scroll=scheme-list">
-              <span>EHS and ESIC Empanelled Schemes</span>
-              <SchemeLogoStrip schemes={['EHS', 'ESIC']} />
-              <strong>
-                Scheme document support for employee health and insured patient dental visits
-              </strong>
+              <span>EHS and ABS Schemes Empanelled</span>
+              <SchemeLogoStrip schemes={['EHS', 'ABS']} />
+              <ul className="scheme-card-points">
+                <li>
+                  Cash less Treatment for State Govt Employees, Pensioners, Police Employees and
+                  their Family members
+                </li>
+              </ul>
             </a>
             <a
               className="hero-info-card hero-scheme-card-link accent"
               href="/schemes?scroll=scheme-list"
             >
-              <span>CAPF, CRPF, SCR, ABS Empanelled Schemes</span>
-              <SchemeLogoStrip schemes={['CAPF', 'CRPF', 'SCR', 'ABS']} />
-              <strong>
-                Branch help desk for defence, railway, and Aarogya Bhadratha dental approvals
-              </strong>
+              <span>CAPF, CRPF, SCR, ESIC Schemes Empanelled</span>
+              <SchemeLogoStrip schemes={['CAPF', 'CRPF', 'SCR', 'ESIC']} />
+              <ul className="scheme-card-points">
+                <li>Cash less Treatment for CAPF, CRPF, SCR, ESIC employees</li>
+              </ul>
             </a>
           </div>
 
@@ -85,7 +89,7 @@ export function ServicesOverview() {
             <div className="services-schemes-text">
               <img
                 src="/schemes/dental-schemes-text.webp"
-                alt=""
+                alt="Dental schemes accepted at Apple International Dental"
                 width="503"
                 height="281"
                 loading="lazy"
@@ -96,7 +100,7 @@ export function ServicesOverview() {
             <div className="services-schemes-arrow">
               <img
                 src="/schemes/dental-schemes-arrow.webp"
-                alt=""
+                alt="Arrow pointing to empanelled dental schemes"
                 width="160"
                 height="160"
                 loading="lazy"

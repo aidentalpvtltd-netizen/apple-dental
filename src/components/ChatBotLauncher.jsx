@@ -601,7 +601,7 @@ export function ChatBotLauncher({ playMainSiteIntro = false }) {
         aria-label="Open Apple Dental chat assistant"
         onClick={() => setIsOpen((current) => !current)}
       >
-        <img src="/dental-assistant-logo.webp" alt="" aria-hidden="true" />
+        <img src="/dental-assistant-logo.webp" alt="Apple Dental chat assistant" />
       </button>
     </div>
   )

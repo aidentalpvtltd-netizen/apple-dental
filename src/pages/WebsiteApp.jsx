@@ -9,6 +9,8 @@ import { TreatmentModal } from '../components/home/TreatmentModal.jsx'
 import { TreatmentsSection } from '../components/home/TreatmentsSection.jsx'
 import { ComingSoonPopup } from '../components/ComingSoonPopup.jsx'
 import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
+import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
+import { defaultSeo } from '../config/seoContent.js'
 import {
   treatments,
   treatmentInsights,
@@ -185,6 +187,12 @@ export function WebsiteApp({ onLoadingChange }) {
   const carouselTestimonials = [...videoTestimonials, ...videoTestimonials.slice(0, 3)]
   const isPaymentModalOpen = paymentModalState !== 'idle'
   const isPaymentSuccess = paymentModalState === 'success'
+
+  useDocumentSeo({
+    title: defaultSeo.title,
+    description: defaultSeo.description,
+    path: '/',
+  })
 
   useGsapParallaxDepth(pageRef, { enabled: !isLoading })
 

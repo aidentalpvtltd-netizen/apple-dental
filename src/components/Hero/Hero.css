@@ -291,6 +291,21 @@
   box-shadow: 0 14px 30px rgba(80, 0, 0, 0.24);
 }
 
+.scheme-card-points {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+  color: #f5fbfb;
+  font-size: 1.02rem;
+  font-weight: 800;
+  line-height: 1.36;
+}
+
+.scheme-card-points li::marker {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .hero-info-card span {
   display: block;
   margin-bottom: 6px;

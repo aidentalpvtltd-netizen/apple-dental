@@ -6,6 +6,7 @@ import { FaqSection } from '../components/home/FaqSection.jsx'
 import { SiteFooter } from '../components/home/SiteFooter.jsx'
 import { WhyChooseUsSection } from '../components/home/WhyChooseUsSection.jsx'
 import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
+import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
 import {
   clinicBranches,
   clinicPhoneDisplay,
@@ -18,7 +19,7 @@ const highlightIcons = [
   '/services/highlight-tooth-plus.webp',
 ]
 
-export function TreatmentPage({ page }) {
+export function TreatmentPage({ page, path }) {
   const pageRef = useRef(null)
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
   const [expandedMedia, setExpandedMedia] = useState(null)
@@ -28,6 +29,24 @@ export function TreatmentPage({ page }) {
   const caseCarousel = page.caseCarousel ?? []
   const visibleCaseIndex = caseCarousel.length ? activeCaseIndex % caseCarousel.length : 0
   const renderedCaseCarousel = caseCarousel.length ? [...caseCarousel, caseCarousel[0]] : []
+
+  useDocumentSeo({
+    title: `${page.title} | Apple International Dental`,
+    description: page.summary,
+    path,
+    image: page.image,
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'MedicalProcedure',
+      name: page.title,
+      description: page.summary,
+      medicalSpecialty: page.category,
+      provider: {
+        '@type': 'Dentist',
+        name: 'Apple International Dental',
+      },
+    },
+  })
 
   useGsapParallaxDepth(pageRef)
 
@@ -127,7 +146,7 @@ export function TreatmentPage({ page }) {
         <div className="site-header-inner">
           <a className="site-brand" href="/">
             <span className="site-brand-mark">
-              <img src="/logo.webp" alt="" aria-hidden="true" />
+              <img src="/logo.webp" alt="Apple International Dental logo" />
             </span>
             <span className="site-brand-copy">
               <strong>Apple International Dental</strong>
@@ -222,8 +241,8 @@ export function TreatmentPage({ page }) {
 
               return (
                 <article key={highlight}>
-                  <span aria-hidden="true">
-                    <img src={icon} alt="" loading="lazy" />
+                  <span>
+                    <img src={icon} alt={`${highlight} icon`} loading="lazy" />
                   </span>
                   <p>{highlight}</p>
                 </article>

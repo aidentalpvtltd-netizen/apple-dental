@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { heroImages } from '../../config/siteContent.js'
+import { heroImageAlts, heroImages } from '../../config/siteContent.js'
 
 const heroCarouselSlides = [...heroImages, heroImages[0]]
 
@@ -72,10 +72,13 @@ export function HeroSection() {
 
   return (
     <section className="hero-section reveal-section">
+      <h1 className="sr-only">
+        Apple International Dental clinic for root canal treatment, dental implants, braces, clear
+        aligners, kids dentistry, crowns, dentures, and emergency dental consultations
+      </h1>
       <div className="hero-image-card">
         <div
           className="hero-slide-track"
-          aria-hidden="true"
           onTransitionEnd={handleSlideTransitionEnd}
           style={{
             transform: `translateX(-${Math.min(currentSlide, heroImages.length) * (100 / heroCarouselSlides.length)}%)`,
@@ -86,8 +89,7 @@ export function HeroSection() {
             <div className="hero-slide" key={`${image}-${index}`}>
               <img
                 src={image}
-                alt=""
-                aria-hidden="true"
+                alt={heroImageAlts[index % heroImages.length]}
                 width="2172"
                 height="724"
                 decoding="async"

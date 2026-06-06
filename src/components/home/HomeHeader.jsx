@@ -12,11 +12,10 @@ export function HomeHeader() {
           <span className="site-brand-mark">
             <img
               src="/logo.webp"
-              alt=""
+              alt="Apple International Dental logo"
               width="160"
               height="160"
               decoding="async"
-              aria-hidden="true"
             />
           </span>
           <span className="site-brand-copy">

@@ -1,4 +1,5 @@
-import { heroImage, formatPhoneDisplay, getGoogleMapsUrl } from '../../config/siteContent.js'
+import { useEffect } from 'react'
+import { heroImage, clinicBranches, formatPhoneDisplay, getGoogleMapsUrl } from '../../config/siteContent.js'
 
 const filledImageBranches = new Set([
   'Gajuwaka, Visakhapatnam',
@@ -16,6 +17,28 @@ const filledImageBranches = new Set([
 export function ContactSection({ selectedClinic, onClinicChange }) {
   const shouldFillImageFrame = filledImageBranches.has(selectedClinic.area)
   const shouldUseImageBackdrop = !shouldFillImageFrame
+
+  useEffect(() => {
+    const preloadImages = () => {
+      clinicBranches.forEach((clinic) => {
+        if (!clinic.image) {
+          return
+        }
+
+        const image = new Image()
+        image.decoding = 'async'
+        image.src = clinic.image
+      })
+    }
+
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(preloadImages, { timeout: 1800 })
+      return () => window.cancelIdleCallback(idleId)
+    }
+
+    const preloadTimer = window.setTimeout(preloadImages, 600)
+    return () => window.clearTimeout(preloadTimer)
+  }, [])
 
   return (
     <section className="contact-section reveal-section" id="contact">
@@ -44,7 +67,7 @@ export function ContactSection({ selectedClinic, onClinicChange }) {
               alt={`${selectedClinic.area} branch`}
               width="1000"
               height="750"
-              loading="lazy"
+              loading="eager"
               decoding="async"
               onError={(event) => {
                 event.currentTarget.src = heroImage

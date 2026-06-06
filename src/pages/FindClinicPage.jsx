@@ -6,6 +6,7 @@ import { ContactSection } from '../components/home/ContactSection.jsx'
 import { SiteFooter } from '../components/home/SiteFooter.jsx'
 import { WhyChooseUsSection } from '../components/home/WhyChooseUsSection.jsx'
 import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
+import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
 import {
   clinicBranches,
   clinicPhoneDisplay,
@@ -28,6 +29,13 @@ export function FindClinicPage() {
         normalizeSearchTerm(`${clinic.area} ${clinic.branch} ${clinic.address}`).includes(query),
       )
     : clinicBranches
+
+  useDocumentSeo({
+    title: 'Find Apple International Dental Clinics | Hyderabad, Andhra Pradesh and Bangalore',
+    description:
+      'Find Apple International Dental clinic branches for dental consultations in Hyderabad, Andhra Pradesh, Bangalore and Bengaluru with address, phone and directions.',
+    path: '/find-a-clinic',
+  })
 
   useGsapParallaxDepth(pageRef)
 
@@ -82,7 +90,7 @@ export function FindClinicPage() {
         <div className="site-header-inner">
           <a className="site-brand" href="/">
             <span className="site-brand-mark">
-              <img src="/logo.webp" alt="" aria-hidden="true" />
+              <img src="/logo.webp" alt="Apple International Dental logo" />
             </span>
             <span className="site-brand-copy">
               <strong>Apple International Dental</strong>
@@ -107,7 +115,11 @@ export function FindClinicPage() {
         <div className="clinic-finder-stage">
           <div className="clinic-finder-collage" aria-hidden="true">
             {finderCollageClinics.map((clinic, index) => (
-              <img src={clinic.image} alt="" key={`${clinic.branch}-backdrop-${index}`} />
+              <img
+                src={clinic.image}
+                alt={`${clinic.branch} Apple International Dental branch`}
+                key={`${clinic.branch}-backdrop-${index}`}
+              />
             ))}
           </div>
 

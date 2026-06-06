@@ -4,5 +4,5 @@ import { TreatmentPage } from './TreatmentPage.jsx'
 export function TreatmentPageRoute({ path }) {
   const page = treatmentPages[path]
 
-  return page ? <TreatmentPage page={page} /> : null
+  return page ? <TreatmentPage page={page} path={path} /> : null
 }

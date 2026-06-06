@@ -17,12 +17,11 @@ export function SiteLoader({ isLoading }) {
         <img
           className="site-loader-gif"
           src="/loading/dentistry.webp"
-          alt=""
+          alt="Dental care loading animation"
           width="160"
           height="160"
           decoding="async"
           fetchPriority="low"
-          aria-hidden="true"
         />
         <p>Preparing your smile care experience...</p>
       </div>

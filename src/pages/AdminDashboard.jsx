@@ -405,7 +405,7 @@ export function AdminDashboard() {
         branch: sessionBranch,
         paymentMethod: 'Pay at clinic',
         paymentStatus,
-        paymentAmount: booking.paymentAmount || 350,
+        paymentAmount: booking.paymentAmount || 300,
       })
       await fetchAdminBookings(session, filters)
     } catch (paymentError) {
@@ -953,7 +953,7 @@ export function AdminDashboard() {
 
       <aside className="doctor-login-card support-login-card">
         <div className="doctor-login-symbol">
-          <img src="/dental-assistant-logo.webp" alt="" />
+          <img src="/dental-assistant-logo.webp" alt="Apple Dental support chat" />
         </div>
         <p className="eyebrow">{isSuperAdmin ? 'All branch support' : 'Branch support'}</p>
         <strong>Support Chat</strong>

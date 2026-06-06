@@ -3,6 +3,7 @@ import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
 import { BackToTopLink } from '../components/BackToTopLink.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
 import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
+import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
 import {
   clinicPhoneDisplay,
   clinicPhoneHref,
@@ -18,6 +19,13 @@ const carouselSchemes = carouselSchemeNames
 
 export function SchemesPage() {
   const pageRef = useRef(null)
+
+  useDocumentSeo({
+    title: 'Empanelled Dental Schemes | Apple International Dental',
+    description:
+      'Apple International Dental supports CGHS, ECHS, EHS, ABS, CAPF, CRPF, SCR and ESIC scheme dental consultation guidance across Hyderabad, Andhra Pradesh and Bangalore branches.',
+    path: '/schemes',
+  })
 
   useGsapParallaxDepth(pageRef)
 
@@ -49,7 +57,7 @@ export function SchemesPage() {
         <div className="site-header-inner">
           <a className="site-brand" href="/">
             <span className="site-brand-mark">
-              <img src="/logo.webp" alt="" aria-hidden="true" />
+              <img src="/logo.webp" alt="Apple International Dental logo" />
             </span>
             <span className="site-brand-copy">
               <strong>Apple International Dental</strong>

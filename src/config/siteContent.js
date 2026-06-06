@@ -2020,7 +2020,7 @@ export const kpis = [
   { value: '22 years+', label: 'serving patients' },
   { value: '33 lakh+', label: 'patients treated across routine and advanced care' },
   { value: '120+ dentists', label: 'experienced dental professionals across our clinic network' },
-  { value: '30K+ Implants', label: 'successful implant placements and smile restorations' },
+  { value: '1.2 Lakh+ Implants', label: 'successful implant placements and smile restorations' },
 ]
 
 export const services = [
@@ -2114,6 +2114,15 @@ export const heroImages = [
   '/hero/teeth-whitening-homepage-banner.webp',
   '/hero/digital-analog-oral-scanning.webp',
 ]
+
+export const heroImageAlts = [
+  'Apple International Dental root canal treatment consultation banner',
+  'Apple International Dental clear aligners smile correction banner',
+  'Apple International Dental dental implants consultation banner',
+  'Apple International Dental teeth whitening consultation banner',
+  'Apple International Dental digital and analog intra oral scanning banner',
+]
+
 export const heroCarouselImages = [...heroImages, heroImages[0]]
 
 export const whyChooseUs = [
@@ -2201,7 +2210,7 @@ export const bookingLockKey = 'appleInternationalDentalBookingRequest'
 export const adminSessionKey = 'appleInternationalDentalAdminSession'
 export const bookingLockDuration = 24 * 60 * 60 * 1000
 export const bookingLockSubmissionLimit = 4
-export const consultationFeeAmount = 350
+export const consultationFeeAmount = 300
 export const onlineConsultationFeeAmount = 250
 export const onlineConsultationFeeSubunits = onlineConsultationFeeAmount * 100
 export const loaderMinimumDuration = 500

@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
 import './styles/index.css'
 import { useLenisSmoothScroll } from './hooks/useLenisSmoothScroll.js'
+import { locationSeoPages, locationSeoPaths } from './config/seoContent.js'
 
 const treatmentRoutePaths = new Set([
   '/specialist-dentistry/endodontics',
@@ -93,6 +94,12 @@ const TreatmentPageRoute = lazy(() =>
 const WebsiteApp = lazy(() =>
   import('./pages/WebsiteApp.jsx').then((module) => ({ default: module.WebsiteApp })),
 )
+const LocationSeoPage = lazy(() =>
+  import('./pages/LocationSeoPage.jsx').then((module) => ({ default: module.LocationSeoPage })),
+)
+const NotFoundPage = lazy(() =>
+  import('./pages/NotFoundPage.jsx').then((module) => ({ default: module.NotFoundPage })),
+)
 
 function App() {
   const normalizedPath =
@@ -105,6 +112,7 @@ function App() {
   const isRefundPath = normalizedPath === '/refund-and-cancellation-policy'
   const isAdminPath = normalizedPath === '/admin'
   const hasTreatmentPage = treatmentRoutePaths.has(normalizedPath)
+  const hasLocationSeoPage = locationSeoPaths.includes(normalizedPath)
   const isStaticPublicPath =
     isSchemesPath ||
     isFindClinicPath ||
@@ -112,7 +120,8 @@ function App() {
     isTermsPath ||
     isCookiesPath ||
     isRefundPath ||
-    hasTreatmentPage
+    hasTreatmentPage ||
+    hasLocationSeoPage
   const [isWebsiteLoading, setIsWebsiteLoading] = useState(!isStaticPublicPath)
 
   useLenisSmoothScroll({ enabled: !isAdminPath })
@@ -216,6 +225,10 @@ function App() {
           <RefundCancellationPolicyPage />
         ) : hasTreatmentPage ? (
           <TreatmentPageRoute path={normalizedPath} />
+        ) : hasLocationSeoPage ? (
+          <LocationSeoPage page={locationSeoPages[normalizedPath]} path={normalizedPath} />
+        ) : normalizedPath ? (
+          <NotFoundPage />
         ) : (
           <WebsiteApp onLoadingChange={setIsWebsiteLoading} />
         )}

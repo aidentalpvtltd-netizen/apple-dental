@@ -118,7 +118,7 @@ export function SiteNav({ homePrefix = '' }) {
 
 export function SchemeLogoStrip({ schemes }) {
   return (
-    <div className="hero-scheme-logos" aria-hidden="true">
+    <div className="hero-scheme-logos">
       {schemes.map((schemeName) => {
         const scheme = schemePrograms.find((program) => program.shortName === schemeName)
 
@@ -126,7 +126,7 @@ export function SchemeLogoStrip({ schemes }) {
           <span key={scheme.shortName}>
             <img
               src={scheme.logo}
-              alt=""
+              alt={`${scheme.name} logo`}
               width="96"
               height="96"
               loading="lazy"
