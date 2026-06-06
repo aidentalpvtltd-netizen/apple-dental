@@ -3,8 +3,6 @@ import {
   branches,
   formspreeEndpoint,
   consultationFeeAmount,
-  onlineConsultationFeeAmount,
-  onlinePaymentMethod,
   payAtClinicPaymentMethod,
   appointmentSlots,
 } from '../../config/siteContent.js'
@@ -27,7 +25,7 @@ export function BookingSection({
   bookingCooldown,
 }) {
   const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
-  const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
+  const selectedFee = consultationFeeAmount
 
   return (
     <section className="booking-section reveal-section" id="booking-form">
@@ -62,7 +60,7 @@ export function BookingSection({
           <input type="hidden" name="branch_name" value={formState.branch} />
           <input type="hidden" name="timeSlot" value={formState.timeSlot} />
           <input type="hidden" name="payment_amount" value={selectedFee} />
-          <input type="hidden" name="payment_method" value={formState.paymentMethod} />
+          <input type="hidden" name="payment_method" value={payAtClinicPaymentMethod} />
 
           <fieldset disabled={isFormDisabled}>
             <label className="select-label">
@@ -159,20 +157,9 @@ export function BookingSection({
 
             <fieldset className="consultation-fee-options booking-form-wide">
               <legend>Consultation Fee</legend>
-              <label className={isPayAtClinic ? '' : 'selected'}>
-                <input
-                  checked={!isPayAtClinic}
-                  name="paymentMethod"
-                  type="radio"
-                  value={onlinePaymentMethod}
-                  onChange={handleChange}
-                />
-                <span>Pay Online</span>
-                <strong>Rs {onlineConsultationFeeAmount}</strong>
-              </label>
               <label className={isPayAtClinic ? 'selected' : ''}>
                 <input
-                  checked={isPayAtClinic}
+                  checked
                   name="paymentMethod"
                   type="radio"
                   value={payAtClinicPaymentMethod}
@@ -186,16 +173,7 @@ export function BookingSection({
             <div className="payment-summary booking-form-wide">
               <div>
                 <strong>Consultation fee</strong>
-                {isPayAtClinic ? (
-                  <span>Pay during your visit. No online payment is required.</span>
-                ) : (
-                  <span>
-                    Paid securely before the appointment request is sent.
-                    <span className="razorpay-mark" aria-label="Powered by Razorpay">
-                      <img src="/payments/razorpay.svg" alt="" />
-                    </span>
-                  </span>
-                )}
+                <span>Pay during your visit. No online payment is required.</span>
               </div>
               <p>Rs {selectedFee}</p>
             </div>

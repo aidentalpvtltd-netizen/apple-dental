@@ -3,7 +3,6 @@ import {
   branchContacts,
   branches,
   consultationFeeAmount,
-  onlineConsultationFeeAmount,
   createSupportChat,
   fetchSupportChat,
   getBranchArea,
@@ -41,7 +40,7 @@ const chatTopics = {
   },
   booking: {
     title: 'Booking',
-    text: `The consultation fee is Rs ${onlineConsultationFeeAmount} online or Rs ${consultationFeeAmount} at the clinic. Choose a treatment, branch, date, and slot to request an appointment.`,
+    text: `The consultation fee is Rs ${consultationFeeAmount} at the clinic. Choose a treatment, branch, date, and slot to request an appointment.`,
     actions: [{ label: 'Book now', href: '/#booking' }],
   },
   emergency: {

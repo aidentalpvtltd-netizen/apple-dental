@@ -17,11 +17,9 @@ import {
   bookingEndpoint,
   formspreeEndpoint,
   consultationFeeAmount,
-  onlineConsultationFeeAmount,
   loaderMinimumDuration,
   loaderMaximumDuration,
   consultationTreatments,
-  onlinePaymentMethod,
   payAtClinicPaymentMethod,
   initialFormState,
   preloadImage,
@@ -32,7 +30,6 @@ import {
   getTodayDateValue,
   submitFormToFormspree,
   submitBookingToSheets,
-  collectConsultationPayment,
 } from '../config/siteContent.js'
 
 const BrandSection = lazy(() =>
@@ -392,8 +389,8 @@ export function WebsiteApp({ onLoadingChange }) {
 
     const treatmentName = selectedTreatment.name
     const branchName = formState.branch
-    const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
-    const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
+    const isPayAtClinic = true
+    const selectedFee = consultationFeeAmount
 
     if (requiresSlotSelection) {
       setSubmitError('Please choose a preferred date and time before sending the request.')
@@ -406,23 +403,12 @@ export function WebsiteApp({ onLoadingChange }) {
 
     try {
       let paymentDetails = {
-        paymentMethod: formState.paymentMethod || onlinePaymentMethod,
-        paymentStatus: isPayAtClinic ? 'Payment due at clinic' : 'Pending',
+        paymentMethod: payAtClinicPaymentMethod,
+        paymentStatus: 'Payment due at clinic',
         paymentAmount: selectedFee,
       }
 
       if (bookingEndpoint) {
-        if (!isPayAtClinic) {
-          paymentDetails = await collectConsultationPayment({
-            name: formState.name,
-            phone: formState.phone,
-            email: '',
-            branch: branchName,
-            source: 'Website consultation',
-            onProcessingPayment: () => setPaymentModalState('processing'),
-          })
-        }
-
         await submitBookingToSheets({
           formState: {
             ...formState,

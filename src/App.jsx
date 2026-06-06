@@ -131,6 +131,66 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    const blockedKeys = new Set(['F12'])
+    const allowedEditableTags = new Set(['INPUT', 'TEXTAREA', 'SELECT'])
+    let noticeTimer
+
+    const showProtectionNotice = () => {
+      const existingNotice = document.querySelector('.right-click-notice')
+
+      if (existingNotice) {
+        window.clearTimeout(noticeTimer)
+        noticeTimer = window.setTimeout(() => existingNotice.remove(), 1800)
+        return
+      }
+
+      const notice = document.createElement('div')
+      notice.className = 'right-click-notice'
+      notice.setAttribute('role', 'status')
+      notice.textContent = 'Content protection is enabled on this website.'
+      document.body.appendChild(notice)
+
+      noticeTimer = window.setTimeout(() => notice.remove(), 1800)
+    }
+
+    const handleContextMenu = (event) => {
+      event.preventDefault()
+      showProtectionNotice()
+    }
+
+    const handleKeyDown = (event) => {
+      const targetTag = event.target instanceof Element ? event.target.tagName : ''
+      const isEditable =
+        allowedEditableTags.has(targetTag) ||
+        (event.target instanceof HTMLElement && event.target.isContentEditable)
+
+      if (isEditable) {
+        return
+      }
+
+      const key = event.key.toUpperCase()
+      const isDevToolsShortcut =
+        blockedKeys.has(event.key) ||
+        (event.ctrlKey && event.shiftKey && ['I', 'J', 'C'].includes(key)) ||
+        (event.ctrlKey && key === 'U')
+
+      if (isDevToolsShortcut) {
+        event.preventDefault()
+        showProtectionNotice()
+      }
+    }
+
+    window.addEventListener('contextmenu', handleContextMenu)
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.clearTimeout(noticeTimer)
+      window.removeEventListener('contextmenu', handleContextMenu)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
   if (isAdminPath) {
     return (
       <Suspense fallback={null}>
