@@ -19,6 +19,33 @@ const highlightIcons = [
   '/services/highlight-tooth-plus.webp',
 ]
 
+const clinicSeoCities = 'Hyderabad, Vijayawada & Bangalore'
+const clinicSeoCitiesDescription = 'in Hyderabad, Vijayawada, and Bangalore'
+
+const treatmentSeoTitleOverrides = {
+  'Root Canal Treatment': `Root Canal Treatment in ${clinicSeoCities} | Apple International Dental`,
+  'Clips and Braces Treatment': `Braces Treatment in ${clinicSeoCities} | Apple International Dental`,
+  Aligners: `Clear Aligners in ${clinicSeoCities} | Apple International Dental`,
+  'Teeth Whitening': `Teeth Whitening in ${clinicSeoCities} | Apple International Dental`,
+}
+
+const getTreatmentSeoTitle = (page) => {
+  if (page.category === 'Dental Implant Solutions' || /implant/i.test(page.title)) {
+    return `Dental Implants in ${clinicSeoCities} | Apple International Dental`
+  }
+
+  return (
+    treatmentSeoTitleOverrides[page.title] ??
+    `${page.title} in ${clinicSeoCities} | Apple International Dental`
+  )
+}
+
+const getTreatmentSeoDescription = (page) => {
+  const summary = page.summary.replace(/\s+/g, ' ').trim()
+
+  return `Apple international dental ${clinicSeoCitiesDescription} offers ${page.title.toLowerCase()} consultations and treatment guidance. ${summary}`
+}
+
 export function TreatmentPage({ page, path }) {
   const pageRef = useRef(null)
   const [selectedClinicIndex, setSelectedClinicIndex] = useState(0)
@@ -31,8 +58,8 @@ export function TreatmentPage({ page, path }) {
   const renderedCaseCarousel = caseCarousel.length ? [...caseCarousel, caseCarousel[0]] : []
 
   useDocumentSeo({
-    title: `${page.title} | Apple International Dental`,
-    description: page.summary,
+    title: getTreatmentSeoTitle(page),
+    description: getTreatmentSeoDescription(page),
     path,
     image: page.image,
     schema: {

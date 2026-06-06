@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
-import { heroImageAlts, heroImages } from '../../config/siteContent.js'
+import {
+  getResponsiveSrcSet,
+  heroImageAlts,
+  heroImageDimensions,
+  heroImageWidths,
+  heroImages,
+} from '../../config/siteContent.js'
 
 const heroCarouselSlides = [...heroImages, heroImages[0]]
 
@@ -85,19 +91,25 @@ export function HeroSection() {
             transition: isTransitioning ? undefined : 'none',
           }}
         >
-          {heroCarouselSlides.map((image, index) => (
-            <div className="hero-slide" key={`${image}-${index}`}>
-              <img
-                src={image}
-                alt={heroImageAlts[index % heroImages.length]}
-                width="2172"
-                height="724"
-                decoding="async"
-                fetchPriority={index === 0 ? 'high' : 'auto'}
-                loading={index === 0 ? 'eager' : 'lazy'}
-              />
-            </div>
-          ))}
+          {heroCarouselSlides.map((image, index) => {
+            const dimensions = heroImageDimensions[image] ?? { width: 1920, height: 640 }
+
+            return (
+              <div className="hero-slide" key={`${image}-${index}`}>
+                <img
+                  src={image}
+                  srcSet={getResponsiveSrcSet(image, heroImageWidths)}
+                  sizes="100vw"
+                  alt={heroImageAlts[index % heroImages.length]}
+                  width={dimensions.width}
+                  height={dimensions.height}
+                  decoding="async"
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
+            )
+          })}
         </div>
         <button
           className="hero-carousel-arrow hero-carousel-arrow-left"

@@ -2123,6 +2123,52 @@ export const heroImageAlts = [
   'Apple International Dental digital and analog intra oral scanning banner',
 ]
 
+export const heroImageDimensions = {
+  '/hero/root-canal-homepage-banner.webp': { width: 1920, height: 640 },
+  '/hero/aligners-homepage-banner.webp': { width: 1920, height: 640 },
+  '/hero/implants-homepage-banner.webp': { width: 1920, height: 640 },
+  '/hero/teeth-whitening-homepage-banner.webp': { width: 1920, height: 641 },
+  '/hero/digital-analog-oral-scanning.webp': { width: 1920, height: 640 },
+}
+
+export const branchImageDimensions = {
+  '/branches/anantapur.webp': { width: 1000, height: 450 },
+  '/branches/champapet-hyderabad.webp': { width: 1000, height: 483 },
+  '/branches/dwaraka-nagar-visakhapatnam.webp': { width: 1000, height: 649 },
+  '/branches/gachibowli-hyderabad.webp': { width: 1000, height: 750 },
+  '/branches/gajuwaka-visakhapatnam.webp': { width: 1000, height: 750 },
+  '/branches/guntur.webp': { width: 1000, height: 750 },
+  '/branches/habsiguda-hyderabad.webp': { width: 1000, height: 750 },
+  '/branches/hsr-layout-bengaluru.webp': { width: 1000, height: 459 },
+  '/branches/kondapur-hyderabad.webp': { width: 1000, height: 750 },
+  '/branches/krishna-lanka-vijayawada.webp': { width: 1000, height: 576 },
+  '/branches/madanapalle.webp': { width: 1000, height: 703 },
+  '/branches/mangalagiri.webp': { width: 1000, height: 246 },
+  '/branches/nakkal-road-vijayawada.webp': { width: 1000, height: 609 },
+  '/branches/nellore.webp': { width: 1000, height: 1333 },
+  '/branches/ongole.webp': { width: 1000, height: 750 },
+  '/branches/rajamundry.webp': { width: 1000, height: 750 },
+  '/branches/srikakulam.webp': { width: 1280, height: 572 },
+  '/branches/tirupati.webp': { width: 1000, height: 562 },
+  '/branches/vanasthalipuram-hyderabad.webp': { width: 1000, height: 494 },
+}
+
+const getResponsiveImagePath = (src, width) => {
+  const extensionIndex = src.lastIndexOf('.')
+
+  if (extensionIndex === -1) {
+    return src
+  }
+
+  return `${src.slice(0, extensionIndex)}-${width}w${src.slice(extensionIndex)}`
+}
+
+export const getResponsiveSrcSet = (src, widths) =>
+  widths.map((width) => `${getResponsiveImagePath(src, width)} ${width}w`).join(', ')
+
+export const heroImageWidths = [768, 1280, 1920]
+export const branchImageWidths = [420, 720, 1000]
+
 export const heroCarouselImages = [...heroImages, heroImages[0]]
 
 export const whyChooseUs = [

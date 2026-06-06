@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import '../components/Schemes/Schemes.css'
 import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
 import { BackToTopLink } from '../components/BackToTopLink.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
@@ -21,9 +22,9 @@ export function SchemesPage() {
   const pageRef = useRef(null)
 
   useDocumentSeo({
-    title: 'Empanelled Dental Schemes | Apple International Dental',
+    title: 'Empanelled Dental Schemes in Hyderabad, Vijayawada & Bangalore | Apple International Dental',
     description:
-      'Apple International Dental supports CGHS, ECHS, EHS, ABS, CAPF, CRPF, SCR and ESIC scheme dental consultation guidance across Hyderabad, Andhra Pradesh and Bangalore branches.',
+      'Apple international dental in Hyderabad, Vijayawada, and Bangalore supports CGHS, ECHS, EHS, ABS, CAPF, CRPF, SCR and ESIC scheme dental consultation guidance.',
     path: '/schemes',
   })
 

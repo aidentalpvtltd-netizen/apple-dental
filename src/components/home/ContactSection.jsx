@@ -1,5 +1,13 @@
 import { useEffect } from 'react'
-import { heroImage, clinicBranches, formatPhoneDisplay, getGoogleMapsUrl } from '../../config/siteContent.js'
+import {
+  heroImage,
+  branchImageDimensions,
+  branchImageWidths,
+  clinicBranches,
+  formatPhoneDisplay,
+  getGoogleMapsUrl,
+  getResponsiveSrcSet,
+} from '../../config/siteContent.js'
 
 const filledImageBranches = new Set([
   'Gajuwaka, Visakhapatnam',
@@ -17,6 +25,10 @@ const filledImageBranches = new Set([
 export function ContactSection({ selectedClinic, onClinicChange }) {
   const shouldFillImageFrame = filledImageBranches.has(selectedClinic.area)
   const shouldUseImageBackdrop = !shouldFillImageFrame
+  const selectedImageDimensions = branchImageDimensions[selectedClinic.image] ?? {
+    width: 1000,
+    height: 750,
+  }
 
   useEffect(() => {
     const preloadImages = () => {
@@ -64,10 +76,12 @@ export function ContactSection({ selectedClinic, onClinicChange }) {
             <img
               className={shouldFillImageFrame ? 'clinic-image-fill' : undefined}
               src={selectedClinic.image}
+              srcSet={getResponsiveSrcSet(selectedClinic.image, branchImageWidths)}
+              sizes="(max-width: 760px) 100vw, (max-width: 1080px) 94vw, 64vw"
               alt={`${selectedClinic.area} branch`}
-              width="1000"
-              height="750"
-              loading="eager"
+              width={selectedImageDimensions.width}
+              height={selectedImageDimensions.height}
+              loading="lazy"
               decoding="async"
               onError={(event) => {
                 event.currentTarget.src = heroImage

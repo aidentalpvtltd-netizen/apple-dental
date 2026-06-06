@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import '../components/Admin/Admin.css'
 import {
   treatments,
   branches,

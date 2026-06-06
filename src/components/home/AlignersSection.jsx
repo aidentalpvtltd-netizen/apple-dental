@@ -1,4 +1,37 @@
 import { useEffect, useState } from 'react'
+import { getResponsiveSrcSet } from '../../config/siteContent.js'
+
+const alignerCaseImageWidths = [260, 420, 560]
+
+const alignerCaseResponsiveWidths = {
+  '/aligners/cases/aligner-case-01.webp': [260],
+  '/aligners/cases/aligner-case-02.webp': [260],
+  '/aligners/cases/aligner-case-03.webp': [260],
+  '/aligners/cases/aligner-case-04.webp': [260],
+  '/aligners/cases/aligner-case-05.webp': [260],
+  '/aligners/cases/aligner-case-06.webp': [260],
+  '/aligners/cases/aligner-case-07.webp': [260, 420],
+  '/aligners/cases/aligner-case-08.webp': [260, 420, 560],
+  '/aligners/cases/aligner-case-09.webp': [260],
+  '/aligners/cases/aligner-case-10.webp': [260, 420],
+  '/aligners/cases/aligner-case-11.webp': [260],
+  '/aligners/cases/aligner-case-12.webp': [260, 420],
+}
+
+const alignerCaseImageDimensions = {
+  '/aligners/cases/aligner-case-01.webp': { width: 389, height: 261 },
+  '/aligners/cases/aligner-case-02.webp': { width: 272, height: 182 },
+  '/aligners/cases/aligner-case-03.webp': { width: 389, height: 261 },
+  '/aligners/cases/aligner-case-04.webp': { width: 272, height: 182 },
+  '/aligners/cases/aligner-case-05.webp': { width: 389, height: 261 },
+  '/aligners/cases/aligner-case-06.webp': { width: 389, height: 261 },
+  '/aligners/cases/aligner-case-07.webp': { width: 544, height: 364 },
+  '/aligners/cases/aligner-case-08.webp': { width: 718, height: 542 },
+  '/aligners/cases/aligner-case-09.webp': { width: 389, height: 261 },
+  '/aligners/cases/aligner-case-10.webp': { width: 544, height: 364 },
+  '/aligners/cases/aligner-case-11.webp': { width: 389, height: 261 },
+  '/aligners/cases/aligner-case-12.webp': { width: 544, height: 364 },
+}
 
 const alignerCases = [
   {
@@ -197,9 +230,14 @@ export function AlignersSection() {
                 <figure className="aligners-case-photo">
                   <img
                     src={alignerCase.image}
+                    srcSet={getResponsiveSrcSet(
+                      alignerCase.image,
+                      alignerCaseResponsiveWidths[alignerCase.image] ?? alignerCaseImageWidths,
+                    )}
+                    sizes="(max-width: 760px) 84vw, 360px"
                     alt={`${alignerCase.title} aligner before and after`}
-                    width="720"
-                    height="542"
+                    width={alignerCaseImageDimensions[alignerCase.image]?.width ?? 544}
+                    height={alignerCaseImageDimensions[alignerCase.image]?.height ?? 364}
                     loading={index === 0 ? 'eager' : 'lazy'}
                     decoding="async"
                   />

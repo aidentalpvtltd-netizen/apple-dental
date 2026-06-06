@@ -1,6 +1,8 @@
+import '../components/Privacy/Privacy.css'
 import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
 import { SiteFooter } from '../components/home/SiteFooter.jsx'
+import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
 import {
   branchContacts,
   clinicPhoneDisplay,
@@ -127,6 +129,13 @@ export function PrivacyPolicyPage() {
   const contactEmail = primaryContact.email || 'appledentalvij@gmail.com'
   const contactAddress =
     primaryContact.address || 'Apple International Dental clinic network'
+
+  useDocumentSeo({
+    title: 'Privacy Policy in Hyderabad, Vijayawada & Bangalore | Apple International Dental',
+    description:
+      'Apple international dental privacy policy explains how patient and appointment information is handled in Hyderabad, Vijayawada, and Bangalore.',
+    path: '/privacy-policy',
+  })
 
   return (
     <main className="page-shell privacy-page" id="top">

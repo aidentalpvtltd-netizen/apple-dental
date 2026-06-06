@@ -1,6 +1,8 @@
+import '../components/Privacy/Privacy.css'
 import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
 import { SiteFooter } from '../components/home/SiteFooter.jsx'
+import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
 import {
   branchContacts,
   clinicPhoneDisplay,
@@ -129,6 +131,14 @@ export function RefundCancellationPolicyPage() {
   const contactEmail = primaryContact.email || 'appledentalvij@gmail.com'
   const contactAddress =
     primaryContact.address || 'Apple International Dental clinic network'
+
+  useDocumentSeo({
+    title:
+      'Refund and Cancellation Policy in Hyderabad, Vijayawada & Bangalore | Apple International Dental',
+    description:
+      'Apple international dental refund and cancellation policy explains appointment changes, consultation fees, and treatment payment guidance in Hyderabad, Vijayawada, and Bangalore.',
+    path: '/refund-and-cancellation-policy',
+  })
 
   return (
     <main className="page-shell privacy-page" id="top">

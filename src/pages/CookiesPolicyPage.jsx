@@ -1,6 +1,8 @@
+import '../components/Privacy/Privacy.css'
 import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
 import { SiteFooter } from '../components/home/SiteFooter.jsx'
+import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
 import {
   branchContacts,
   clinicPhoneDisplay,
@@ -91,6 +93,13 @@ export function CookiesPolicyPage() {
   const contactEmail = primaryContact.email || 'appledentalvij@gmail.com'
   const contactAddress =
     primaryContact.address || 'Apple International Dental clinic network'
+
+  useDocumentSeo({
+    title: 'Cookie Policy in Hyderabad, Vijayawada & Bangalore | Apple International Dental',
+    description:
+      'Apple international dental cookie policy explains website cookies and tracking choices for patients using the site in Hyderabad, Vijayawada, and Bangalore.',
+    path: '/cookies-policy',
+  })
 
   return (
     <main className="page-shell privacy-page" id="top">

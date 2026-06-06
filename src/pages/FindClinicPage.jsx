@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import '../components/FindClinic/FindClinic.css'
 import { AmbientDentalLayer } from '../components/AmbientDentalLayer.jsx'
 import { SiteNav } from '../components/SiteNav.jsx'
 import { BrandSection } from '../components/home/BrandSection.jsx'
@@ -8,11 +9,14 @@ import { WhyChooseUsSection } from '../components/home/WhyChooseUsSection.jsx'
 import { useGsapParallaxDepth } from '../hooks/useGsapParallaxDepth.js'
 import { useDocumentSeo } from '../hooks/useDocumentSeo.js'
 import {
+  branchImageDimensions,
+  branchImageWidths,
   clinicBranches,
   clinicPhoneDisplay,
   clinicPhoneHref,
   formatPhoneDisplay,
   getGoogleMapsUrl,
+  getResponsiveSrcSet,
 } from '../config/siteContent.js'
 
 const normalizeSearchTerm = (value) => value.toLowerCase().replace(/\s+/g, ' ').trim()
@@ -31,9 +35,9 @@ export function FindClinicPage() {
     : clinicBranches
 
   useDocumentSeo({
-    title: 'Find Apple International Dental Clinics | Hyderabad, Andhra Pradesh and Bangalore',
+    title: 'Find Dental Clinics in Hyderabad, Vijayawada & Bangalore | Apple International Dental',
     description:
-      'Find Apple International Dental clinic branches for dental consultations in Hyderabad, Andhra Pradesh, Bangalore and Bengaluru with address, phone and directions.',
+      'Find Apple international dental branches in Hyderabad, Vijayawada, and Bangalore with clinic address, phone number, directions, hours, and dental consultation details.',
     path: '/find-a-clinic',
   })
 
@@ -114,13 +118,23 @@ export function FindClinicPage() {
       <div className="content-shell find-clinic-content">
         <div className="clinic-finder-stage">
           <div className="clinic-finder-collage" aria-hidden="true">
-            {finderCollageClinics.map((clinic, index) => (
-              <img
-                src={clinic.image}
-                alt={`${clinic.branch} Apple International Dental branch`}
-                key={`${clinic.branch}-backdrop-${index}`}
-              />
-            ))}
+            {finderCollageClinics.map((clinic, index) => {
+              const dimensions = branchImageDimensions[clinic.image] ?? { width: 1000, height: 750 }
+
+              return (
+                <img
+                  src={clinic.image}
+                  srcSet={getResponsiveSrcSet(clinic.image, branchImageWidths)}
+                  sizes="(max-width: 760px) 50vw, (max-width: 1080px) 33vw, 20vw"
+                  alt={`${clinic.branch} Apple International Dental branch`}
+                  width={dimensions.width}
+                  height={dimensions.height}
+                  loading="lazy"
+                  decoding="async"
+                  key={`${clinic.branch}-backdrop-${index}`}
+                />
+              )
+            })}
           </div>
 
           <section className="clinic-finder-section" aria-labelledby="clinic-finder-title">

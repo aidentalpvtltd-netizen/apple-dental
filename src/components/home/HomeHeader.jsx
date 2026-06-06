@@ -5,10 +5,20 @@ import {
 } from '../../config/siteContent.js'
 
 export function HomeHeader() {
+  const handleBrandClick = (event) => {
+    if (window.location.pathname !== '/') {
+      return
+    }
+
+    event.preventDefault()
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.history.replaceState(null, '', window.location.pathname + window.location.search)
+  }
+
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <a className="site-brand" href="#top">
+        <a className="site-brand" href="/" onClick={handleBrandClick}>
           <span className="site-brand-mark">
             <img
               src="/logo.webp"

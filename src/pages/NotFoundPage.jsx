@@ -7,7 +7,7 @@ export function NotFoundPage() {
   useDocumentSeo({
     title: 'Page Not Found | Apple International Dental',
     description:
-      'The page you are looking for could not be found. Visit Apple International Dental home, services, schemes, or clinic finder pages.',
+      'The page you are looking for could not be found. Visit Apple international dental pages for services, schemes, and clinic details in Hyderabad, Vijayawada, and Bangalore.',
     path: '/404',
   })
 
