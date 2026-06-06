@@ -3,6 +3,8 @@ import './styles/index.css'
 import { useLenisSmoothScroll } from './hooks/useLenisSmoothScroll.js'
 import { locationSeoPages, locationSeoPaths } from './config/seoContent.js'
 
+const bookingScrollStorageKey = 'appleDentalPendingBookingScroll'
+
 const treatmentRoutePaths = new Set([
   '/specialist-dentistry/endodontics',
   '/specialist-dentistry/full-mouth-rehabilitation',
@@ -138,6 +140,58 @@ function App() {
     return () => {
       window.removeEventListener('dragstart', handleImageDragStart, { capture: true })
     }
+  }, [])
+
+  useEffect(() => {
+    const scrollToBooking = () => {
+      const target = document.getElementById('booking-form') ?? document.getElementById('booking')
+
+      target?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+
+      window.history.replaceState(null, '', window.location.pathname + window.location.search)
+    }
+
+    const handleBookingLinkClick = (event) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return
+      }
+
+      const anchor = event.target instanceof Element ? event.target.closest('a[href]') : null
+
+      if (!anchor) {
+        return
+      }
+
+      const targetUrl = new URL(anchor.href, window.location.href)
+
+      if (targetUrl.origin !== window.location.origin || targetUrl.hash !== '#booking') {
+        return
+      }
+
+      event.preventDefault()
+
+      if (window.location.pathname === '/') {
+        scrollToBooking()
+        return
+      }
+
+      window.sessionStorage.setItem(bookingScrollStorageKey, 'true')
+      window.location.assign('/')
+    }
+
+    window.addEventListener('click', handleBookingLinkClick)
+
+    return () => window.removeEventListener('click', handleBookingLinkClick)
   }, [])
 
   useEffect(() => {

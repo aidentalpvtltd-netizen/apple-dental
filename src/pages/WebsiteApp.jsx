@@ -34,6 +34,8 @@ import {
   submitBookingToSheets,
 } from '../config/siteContent.js'
 
+const bookingScrollStorageKey = 'appleDentalPendingBookingScroll'
+
 const BrandSection = lazy(() =>
   import('../components/home/BrandSection.jsx').then((module) => ({
     default: module.BrandSection,
@@ -219,17 +221,31 @@ export function WebsiteApp({ onLoadingChange }) {
   }, [isLoading])
 
   useEffect(() => {
-    if (isLoading || !window.location.hash) {
+    if (isLoading) {
       return undefined
     }
 
-    const targetId = window.location.hash.slice(1)
+    const hasPendingBookingScroll =
+      window.sessionStorage.getItem(bookingScrollStorageKey) === 'true'
+    const hashTargetId = window.location.hash.slice(1)
+    const targetId =
+      hasPendingBookingScroll || hashTargetId === 'booking' ? 'booking-form' : hashTargetId
+
+    if (!targetId) {
+      return undefined
+    }
+
+    window.sessionStorage.removeItem(bookingScrollStorageKey)
 
     const scrollTimer = window.setTimeout(() => {
       document.getElementById(targetId)?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
       })
+
+      if (hasPendingBookingScroll || window.location.hash === '#booking') {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search)
+      }
     }, 120)
 
     return () => window.clearTimeout(scrollTimer)

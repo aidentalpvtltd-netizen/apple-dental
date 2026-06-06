@@ -1,5 +1,10 @@
 import { useEffect } from 'react'
-import { defaultSeo, getCanonicalUrl, siteBaseUrl } from '../config/seoContent.js'
+import {
+  defaultSeo,
+  getCanonicalUrl,
+  seoBrandAliases,
+  siteBaseUrl,
+} from '../config/seoContent.js'
 
 const upsertMeta = (selector, attributes) => {
   let element = document.head.querySelector(selector)
@@ -68,7 +73,20 @@ export const useDocumentSeo = ({
     upsertLink('canonical', canonicalUrl)
 
     if (schema) {
-      upsertJsonLd('route-structured-data', schema)
+      const schemaWithBrandAliases = {
+        ...schema,
+        ...(schema.name === 'Apple International Dental' ? { alternateName: seoBrandAliases } : {}),
+        ...(schema.provider?.name === 'Apple International Dental'
+          ? {
+              provider: {
+                ...schema.provider,
+                alternateName: seoBrandAliases,
+              },
+            }
+          : {}),
+      }
+
+      upsertJsonLd('route-structured-data', schemaWithBrandAliases)
     }
   }, [description, image, path, schema, title])
 }

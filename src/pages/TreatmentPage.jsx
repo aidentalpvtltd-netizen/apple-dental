@@ -43,7 +43,7 @@ const getTreatmentSeoTitle = (page) => {
 const getTreatmentSeoDescription = (page) => {
   const summary = page.summary.replace(/\s+/g, ' ').trim()
 
-  return `Apple international dental ${clinicSeoCitiesDescription} offers ${page.title.toLowerCase()} consultations and treatment guidance. ${summary}`
+  return `Apple international dental ${clinicSeoCitiesDescription} helps patients searching Apple Dental or Apple Dental Care find ${page.title.toLowerCase()} consultations and treatment guidance. ${summary}`
 }
 
 export function TreatmentPage({ page, path }) {

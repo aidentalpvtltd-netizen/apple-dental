@@ -1,10 +1,11 @@
 export const siteBaseUrl = 'https://appleinternationaldental.com'
+export const seoBrandAliases = ['Apple Dental', 'Apple Dental Care']
 
 export const defaultSeo = {
   title:
     'Best Dental Clinic in Hyderabad, Vijayawada & Bangalore | Apple International Dental | Apple Dental',
   description:
-    "Apple International Dental is best dental hospital and implant center in Hyderabad Vijayawada Bangalore India and best dental clinic for dental implant, Aligners etc with India's best dentists with an avg 4.8 rating on Google.",
+    'Apple International Dental is best dental hospital and implant center in Hyderabad Vijayawada Bangalore India. Patients searching Apple Dental or Apple Dental Care can find dental implants, aligners, root canals, braces and more.',
   image: `${siteBaseUrl}/logo.png`,
 }
 
@@ -14,7 +15,7 @@ export const locationSeoPages = {
     eyebrow: 'Dental Clinic in Hyderabad',
     title: 'Dental Clinic in Hyderabad | Apple International Dental',
     description:
-      'Apple international dental provides dental consultations in Hyderabad, Vijayawada, and Bangalore for root canal treatment, dental implants, braces, clear aligners, kids dentistry, gum care, crowns, dentures, and emergency dental care.',
+      'Apple international dental helps patients searching Apple Dental or Apple Dental Care find dental consultations in Hyderabad, Vijayawada, and Bangalore for root canals, implants, braces, aligners, kids dentistry, gum care, crowns, dentures, and emergency care.',
     intro:
       'Patients in Hyderabad can visit Apple International Dental for preventive, restorative, cosmetic, orthodontic, implant, gum, kids, and emergency dental consultations across the clinic network.',
     highlights: [
@@ -28,7 +29,7 @@ export const locationSeoPages = {
     eyebrow: 'Dental Clinic in Vijayawada',
     title: 'Dental Clinic in Vijayawada | Apple International Dental',
     description:
-      'Apple international dental offers dental care in Hyderabad, Vijayawada, and Bangalore including root canal treatment, dental implants, braces, clear aligners, kids dentistry, gum care, crowns, dentures, and emergency dental consultations.',
+      'Apple international dental helps patients searching Apple Dental or Apple Dental Care find dental care in Hyderabad, Vijayawada, and Bangalore including root canals, implants, braces, aligners, kids dentistry, gum care, crowns, dentures, and emergency consultations.',
     intro:
       'Apple International Dental supports patients in Vijayawada with family dentistry, smile makeovers, implant dentistry, orthodontic care, dentures, gum treatment, and emergency dental consultations.',
     highlights: [
@@ -42,7 +43,7 @@ export const locationSeoPages = {
     eyebrow: 'Dental Clinic in Bangalore',
     title: 'Dental Clinic in Bangalore | Apple International Dental',
     description:
-      'Apple international dental offers consultations in Hyderabad, Vijayawada, and Bangalore for root canal treatment, dental implants, braces, clear aligners, kids dentistry, crowns, dentures, gum care, and emergency dental needs.',
+      'Apple international dental helps patients searching Apple Dental or Apple Dental Care find consultations in Hyderabad, Vijayawada, and Bangalore for root canals, implants, braces, aligners, kids dentistry, crowns, dentures, gum care, and emergency needs.',
     intro:
       'Patients searching for dental care in Bangalore can use Apple International Dental for treatment guidance across general dentistry, implants, orthodontics, pediatric dentistry, gum care, and restorative care.',
     highlights: [
@@ -56,7 +57,7 @@ export const locationSeoPages = {
     eyebrow: 'Dental Clinic in Bengaluru',
     title: 'Dental Clinic in Bengaluru | Apple International Dental',
     description:
-      'Apple international dental provides dental consultations in Hyderabad, Vijayawada, and Bangalore for implants, root canals, braces, clear aligners, kids dentistry, gum care, crowns, dentures, and emergency dental care.',
+      'Apple international dental helps patients searching Apple Dental or Apple Dental Care find dental consultations in Hyderabad, Vijayawada, and Bangalore for implants, root canals, braces, aligners, kids dentistry, gum care, crowns, dentures, and emergency care.',
     intro:
       'Apple International Dental helps Bengaluru patients find structured dental consultations for common, advanced, cosmetic, implant, orthodontic, pediatric, and emergency dental needs.',
     highlights: [
@@ -70,7 +71,7 @@ export const locationSeoPages = {
     eyebrow: 'Dental Clinics in Andhra Pradesh',
     title: 'Dental Clinics in Andhra Pradesh | Apple International Dental',
     description:
-      'Apple international dental supports patients in Hyderabad, Vijayawada, and Bangalore with root canal treatment, dental implants, braces, clear aligners, kids dentistry, gum care, crowns, dentures, and emergency dental consultations.',
+      'Apple international dental helps patients searching Apple Dental or Apple Dental Care across Andhra Pradesh, Hyderabad, Vijayawada, and Bangalore with root canals, implants, braces, aligners, kids dentistry, gum care, crowns, dentures, and emergency consultations.',
     intro:
       'Across Andhra Pradesh, Apple International Dental provides branch-based dental care guidance for preventive dentistry, restorative treatments, implants, orthodontics, kids dentistry, gum care, dentures, and emergency dental concerns.',
     highlights: [
