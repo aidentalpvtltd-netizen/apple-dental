@@ -27,6 +27,7 @@ export function BookingSection({
   bookingCooldown,
 }) {
   const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
+  const isOnlinePaymentAvailable = false
   const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
 
   return (
@@ -159,15 +160,22 @@ export function BookingSection({
 
             <fieldset className="consultation-fee-options booking-form-wide">
               <legend>Consultation Fee</legend>
-              <label className={!isPayAtClinic ? 'selected' : ''}>
+              <label
+                className={`${!isPayAtClinic ? 'selected' : ''} disabled-option`}
+                aria-disabled="true"
+              >
                 <input
                   checked={formState.paymentMethod === onlinePaymentMethod}
+                  disabled={!isOnlinePaymentAvailable}
                   name="paymentMethod"
                   type="radio"
                   value={onlinePaymentMethod}
                   onChange={handleChange}
                 />
-                <span>Pay Online</span>
+                <span>
+                  Pay Online
+                  <small>Available after Razorpay approval</small>
+                </span>
                 <strong>Rs {onlineConsultationFeeAmount}</strong>
               </label>
               <label className={isPayAtClinic ? 'selected' : ''}>

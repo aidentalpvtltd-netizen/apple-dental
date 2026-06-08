@@ -196,6 +196,24 @@
   box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.11);
 }
 
+.consultation-fee-options label.disabled-option {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: grayscale(0.75);
+  background: rgba(244, 247, 249, 0.92);
+  border-color: rgba(87, 96, 106, 0.22);
+  box-shadow: none;
+}
+
+.consultation-fee-options label.disabled-option small {
+  display: block;
+  margin-top: 2px;
+  color: #68737d;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
 .booking-form .consultation-fee-options input {
   width: 18px;
   height: 18px;
