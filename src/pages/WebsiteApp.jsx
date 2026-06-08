@@ -19,6 +19,7 @@ import {
   bookingEndpoint,
   formspreeEndpoint,
   consultationFeeAmount,
+  onlineConsultationFeeAmount,
   loaderMinimumDuration,
   loaderMaximumDuration,
   consultationTreatments,
@@ -32,6 +33,7 @@ import {
   getTodayDateValue,
   submitFormToFormspree,
   submitBookingToSheets,
+  collectConsultationPayment,
 } from '../config/siteContent.js'
 
 const bookingScrollStorageKey = 'appleDentalPendingBookingScroll'
@@ -357,6 +359,23 @@ export function WebsiteApp({ onLoadingChange }) {
       ...current,
       [name]: nextValue,
       ...(name === 'branch' || name === 'date' ? { timeSlot: '' } : {}),
+      ...(name === 'paymentMethod'
+        ? nextValue === payAtClinicPaymentMethod
+          ? {
+              paymentStatus: 'Payment due at clinic',
+              paymentAmount: consultationFeeAmount,
+              paymentId: '',
+              paymentOrderId: '',
+              paymentSignature: '',
+            }
+          : {
+              paymentStatus: 'Payment pending',
+              paymentAmount: onlineConsultationFeeAmount,
+              paymentId: '',
+              paymentOrderId: '',
+              paymentSignature: '',
+            }
+        : {}),
     }))
     setSubmitError('')
   }
@@ -413,8 +432,8 @@ export function WebsiteApp({ onLoadingChange }) {
 
     const treatmentName = selectedTreatment.name
     const branchName = formState.branch
-    const isPayAtClinic = true
-    const selectedFee = consultationFeeAmount
+    const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
+    const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
 
     if (requiresSlotSelection) {
       setSubmitError('Please choose a preferred date and time before sending the request.')
@@ -430,6 +449,17 @@ export function WebsiteApp({ onLoadingChange }) {
         paymentMethod: payAtClinicPaymentMethod,
         paymentStatus: 'Payment due at clinic',
         paymentAmount: selectedFee,
+      }
+
+      if (!isPayAtClinic) {
+        paymentDetails = await collectConsultationPayment({
+          name: formState.name,
+          phone: formState.phone,
+          email: '',
+          branch: branchName,
+          source: 'Apple International Dental website',
+          onProcessingPayment: () => setPaymentModalState('processing'),
+        })
       }
 
       if (bookingEndpoint) {
