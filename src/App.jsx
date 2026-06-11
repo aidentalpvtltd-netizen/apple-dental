@@ -128,7 +128,7 @@ function App() {
 
   useLenisSmoothScroll({ enabled: !isAdminPath })
 
-  useEffect(() => {
+  /* useEffect(() => {
     const handleImageDragStart = (event) => {
       if (event.target instanceof Element && event.target.closest('img')) {
         event.preventDefault()
@@ -140,7 +140,7 @@ function App() {
     return () => {
       window.removeEventListener('dragstart', handleImageDragStart, { capture: true })
     }
-  }, [])
+  }, []) */
 
   useEffect(() => {
     const scrollToBooking = () => {
@@ -195,6 +195,12 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const isContentProtectionEnabled = false
+
+    if (!isContentProtectionEnabled) {
+      return undefined
+    }
+
     const blockedKeys = new Set(['F12'])
     const allowedEditableTags = new Set(['INPUT', 'TEXTAREA', 'SELECT'])
     let noticeTimer

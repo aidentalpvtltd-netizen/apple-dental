@@ -3,6 +3,8 @@ import {
   getResponsiveSrcSet,
   heroImageAlts,
   heroImageDimensions,
+  heroMobileImageWidths,
+  heroMobileImages,
   heroImageWidths,
   heroImages,
 } from '../../config/siteContent.js'
@@ -93,20 +95,29 @@ export function HeroSection() {
         >
           {heroCarouselSlides.map((image, index) => {
             const dimensions = heroImageDimensions[image] ?? { width: 1920, height: 640 }
+            const mobileImage = heroMobileImages[index % heroImages.length]
 
             return (
               <div className="hero-slide" key={`${image}-${index}`}>
-                <img
-                  src={image}
-                  srcSet={getResponsiveSrcSet(image, heroImageWidths)}
-                  sizes="100vw"
-                  alt={heroImageAlts[index % heroImages.length]}
-                  width={dimensions.width}
-                  height={dimensions.height}
-                  decoding="async"
-                  fetchPriority={index === 0 ? 'high' : 'auto'}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                />
+                <picture>
+                  <source
+                    media="(max-width: 1024px)"
+                    srcSet={getResponsiveSrcSet(mobileImage, heroMobileImageWidths)}
+                    sizes="100vw"
+                    type="image/webp"
+                  />
+                  <img
+                    src={image}
+                    srcSet={getResponsiveSrcSet(image, heroImageWidths)}
+                    sizes="100vw"
+                    alt={heroImageAlts[index % heroImages.length]}
+                    width={dimensions.width}
+                    height={dimensions.height}
+                    decoding="async"
+                    fetchPriority={index === 0 ? 'high' : 'auto'}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                </picture>
               </div>
             )
           })}

@@ -2115,6 +2115,14 @@ export const heroImages = [
   '/hero/digital-analog-oral-scanning.webp',
 ]
 
+export const heroMobileImages = [
+  '/hero/root-canal-homepage-banner-mobile.webp',
+  '/hero/aligners-homepage-banner-mobile.webp',
+  '/hero/implants-homepage-banner-mobile.webp',
+  '/hero/teeth-whitening-homepage-banner-mobile.webp',
+  '/hero/digital-analog-oral-scanning-mobile.webp',
+]
+
 export const heroImageAlts = [
   'Apple International Dental root canal treatment consultation banner',
   'Apple International Dental clear aligners smile correction banner',
@@ -2129,6 +2137,26 @@ export const heroImageDimensions = {
   '/hero/implants-homepage-banner.webp': { width: 1920, height: 640 },
   '/hero/teeth-whitening-homepage-banner.webp': { width: 1920, height: 641 },
   '/hero/digital-analog-oral-scanning.webp': { width: 1920, height: 640 },
+  '/hero/root-canal-homepage-banner-mobile.webp': { width: 1024, height: 1024 },
+  '/hero/root-canal-homepage-banner-mobile-640w.webp': { width: 640, height: 640 },
+  '/hero/root-canal-homepage-banner-mobile-768w.webp': { width: 768, height: 768 },
+  '/hero/root-canal-homepage-banner-mobile-1024w.webp': { width: 1024, height: 1024 },
+  '/hero/aligners-homepage-banner-mobile.webp': { width: 1024, height: 1024 },
+  '/hero/aligners-homepage-banner-mobile-640w.webp': { width: 640, height: 640 },
+  '/hero/aligners-homepage-banner-mobile-768w.webp': { width: 768, height: 768 },
+  '/hero/aligners-homepage-banner-mobile-1024w.webp': { width: 1024, height: 1024 },
+  '/hero/implants-homepage-banner-mobile.webp': { width: 1024, height: 1024 },
+  '/hero/implants-homepage-banner-mobile-640w.webp': { width: 640, height: 640 },
+  '/hero/implants-homepage-banner-mobile-768w.webp': { width: 768, height: 768 },
+  '/hero/implants-homepage-banner-mobile-1024w.webp': { width: 1024, height: 1024 },
+  '/hero/teeth-whitening-homepage-banner-mobile.webp': { width: 1024, height: 1024 },
+  '/hero/teeth-whitening-homepage-banner-mobile-640w.webp': { width: 640, height: 640 },
+  '/hero/teeth-whitening-homepage-banner-mobile-768w.webp': { width: 768, height: 768 },
+  '/hero/teeth-whitening-homepage-banner-mobile-1024w.webp': { width: 1024, height: 1024 },
+  '/hero/digital-analog-oral-scanning-mobile.webp': { width: 1024, height: 1024 },
+  '/hero/digital-analog-oral-scanning-mobile-640w.webp': { width: 640, height: 640 },
+  '/hero/digital-analog-oral-scanning-mobile-768w.webp': { width: 768, height: 768 },
+  '/hero/digital-analog-oral-scanning-mobile-1024w.webp': { width: 1024, height: 1024 },
 }
 
 export const branchImageDimensions = {
@@ -2167,6 +2195,7 @@ export const getResponsiveSrcSet = (src, widths) =>
   widths.map((width) => `${getResponsiveImagePath(src, width)} ${width}w`).join(', ')
 
 export const heroImageWidths = [768, 1280, 1920]
+export const heroMobileImageWidths = [640, 768, 1024]
 export const branchImageWidths = [420, 720, 1000]
 
 export const heroCarouselImages = [...heroImages, heroImages[0]]
@@ -2328,11 +2357,15 @@ export const preloadImage = (src) =>
     image.src = src
   })
 
-export const getPreloadImages = () =>
-  [
-    '/logo.webp',
-    heroImages[0],
-  ].filter(Boolean)
+const getInitialHeroPreloadImage = () => {
+  if (typeof window !== 'undefined' && window.matchMedia('(max-width: 1024px)').matches) {
+    return heroMobileImages[0]
+  }
+
+  return heroImages[0]
+}
+
+export const getPreloadImages = () => ['/logo.webp', getInitialHeroPreloadImage()].filter(Boolean)
 
 export const getActiveBookingLock = () => {
   if (typeof window === 'undefined') {
