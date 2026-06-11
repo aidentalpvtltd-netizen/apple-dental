@@ -195,7 +195,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const isContentProtectionEnabled = false
+    const isContentProtectionEnabled = true
 
     if (!isContentProtectionEnabled) {
       return undefined
