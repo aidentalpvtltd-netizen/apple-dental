@@ -2,7 +2,7 @@
 
 import { Buffer } from 'node:buffer'
 
-const CONSULTATION_FEE_SUBUNITS = 25000
+const CONSULTATION_FEE_SUBUNITS = 30000
 
 const jsonResponse = (statusCode, body) => ({
   statusCode,

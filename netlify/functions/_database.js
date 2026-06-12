@@ -5,7 +5,7 @@ export const ACTIVE_STATUSES = new Set(['booked', 'visited', 'in treatment'])
 export const COMPLETED_STATUS = 'Treatment Complete'
 export const ADMIN_SESSION_DURATION_MS = 8 * 60 * 60 * 1000
 export const CONSULTATION_FEE_AMOUNT = 350
-export const ONLINE_CONSULTATION_FEE_AMOUNT = 250
+export const ONLINE_CONSULTATION_FEE_AMOUNT = 300
 
 let schemaReadyPromise
 

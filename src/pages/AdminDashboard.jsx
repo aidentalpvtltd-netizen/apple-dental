@@ -8,6 +8,7 @@ import {
   adminSessionKey,
   getTodayDateValue,
   postBookingEndpoint,
+  consultationFeeAmount,
   fetchAdminSupportChats,
   sendAdminSupportMessage,
   getStoredAdminSession,
@@ -406,7 +407,7 @@ export function AdminDashboard() {
         branch: sessionBranch,
         paymentMethod: 'Pay at clinic',
         paymentStatus,
-        paymentAmount: booking.paymentAmount || 300,
+        paymentAmount: booking.paymentAmount || consultationFeeAmount,
       })
       await fetchAdminBookings(session, filters)
     } catch (paymentError) {
