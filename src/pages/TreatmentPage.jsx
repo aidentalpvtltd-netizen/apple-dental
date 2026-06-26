@@ -84,6 +84,16 @@ export function TreatmentPage({ page, path }) {
   }
 
   useEffect(() => {
+    const revealVisibleSections = () => {
+      document.querySelectorAll('.reveal-section').forEach((element) => {
+        const rect = element.getBoundingClientRect()
+
+        if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+          element.classList.add('visible')
+        }
+      })
+    }
+
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal-section').forEach((element) => {
         element.classList.add('visible')
@@ -104,8 +114,12 @@ export function TreatmentPage({ page, path }) {
     )
 
     document.querySelectorAll('.reveal-section').forEach((element) => observer.observe(element))
+    const revealFrame = window.requestAnimationFrame(revealVisibleSections)
 
-    return () => observer.disconnect()
+    return () => {
+      window.cancelAnimationFrame(revealFrame)
+      observer.disconnect()
+    }
   }, [])
 
   useEffect(() => {
@@ -209,7 +223,13 @@ export function TreatmentPage({ page, path }) {
           </div>
         </div>
         <div className="treatment-detail-media">
-          <img src={page.image} alt={page.imageAlt} />
+          <img
+            src={page.image}
+            alt={page.imageAlt}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+          />
         </div>
       </section>
 
@@ -243,6 +263,7 @@ export function TreatmentPage({ page, path }) {
                   loop
                   muted
                   playsInline
+                  preload="none"
                 />
               </button>
             ) : page.sectionImage ? (
@@ -257,7 +278,12 @@ export function TreatmentPage({ page, path }) {
                   })
                 }
               >
-                <img src={page.sectionImage} alt={page.sectionImageAlt} loading="lazy" />
+                <img
+                  src={page.sectionImage}
+                  alt={page.sectionImageAlt}
+                  loading="eager"
+                  decoding="async"
+                />
               </button>
             ) : null}
           </div>
@@ -269,7 +295,7 @@ export function TreatmentPage({ page, path }) {
               return (
                 <article key={highlight}>
                   <span>
-                    <img src={icon} alt={`${highlight} icon`} loading="lazy" />
+                    <img src={icon} alt={`${highlight} icon`} loading="lazy" decoding="async" />
                   </span>
                   <p>{highlight}</p>
                 </article>
@@ -290,7 +316,12 @@ export function TreatmentPage({ page, path }) {
                 >
                   {renderedCaseCarousel.map((caseItem, index) => (
                     <article className="treatment-case-slide" key={`${caseItem.label}-${caseItem.title}-${index}`}>
-                      <img src={caseItem.image} alt={`${caseItem.label} ${caseItem.title} before and after`} />
+                      <img
+                        src={caseItem.image}
+                        alt={`${caseItem.label} ${caseItem.title} before and after`}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        decoding="async"
+                      />
                       <div>
                         <span>{caseItem.label}</span>
                         <strong>{caseItem.title}</strong>
