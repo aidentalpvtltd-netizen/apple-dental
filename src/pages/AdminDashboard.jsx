@@ -9,6 +9,7 @@ import {
   getTodayDateValue,
   postBookingEndpoint,
   consultationFeeAmount,
+  getConsultationFeesForBranch,
   fetchAdminSupportChats,
   sendAdminSupportMessage,
   getStoredAdminSession,
@@ -397,6 +398,7 @@ export function AdminDashboard() {
   const handleBookingPaymentStatusChange = async (booking, paymentStatus) => {
     setIsLoading(true)
     setError('')
+    const branchFees = getConsultationFeesForBranch(booking.branch)
 
     try {
       await postBookingEndpoint({
@@ -407,7 +409,7 @@ export function AdminDashboard() {
         branch: sessionBranch,
         paymentMethod: 'Pay at clinic',
         paymentStatus,
-        paymentAmount: booking.paymentAmount || consultationFeeAmount,
+        paymentAmount: booking.paymentAmount || branchFees.payAtClinic || consultationFeeAmount,
       })
       await fetchAdminBookings(session, filters)
     } catch (paymentError) {

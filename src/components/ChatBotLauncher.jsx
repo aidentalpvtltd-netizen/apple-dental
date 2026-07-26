@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import {
   branchContacts,
   branches,
+  bengaluruConsultationFeeAmount,
   consultationFeeAmount,
   createSupportChat,
   fetchSupportChat,
@@ -40,7 +41,7 @@ const chatTopics = {
   },
   booking: {
     title: 'Booking',
-    text: `The consultation fee is Rs ${consultationFeeAmount} at the clinic. Choose a treatment, branch, date, and slot to request an appointment.`,
+    text: `The consultation fee is Rs ${consultationFeeAmount} at most clinics and Rs ${bengaluruConsultationFeeAmount} at the Bengaluru branch. Choose a treatment, branch, date, and slot to request an appointment.`,
     actions: [{ label: 'Book now', href: '/#booking' }],
   },
   emergency: {

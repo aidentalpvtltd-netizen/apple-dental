@@ -2,8 +2,7 @@ import {
   consultationTreatments,
   branches,
   formspreeEndpoint,
-  consultationFeeAmount,
-  onlineConsultationFeeAmount,
+  getConsultationFeesForBranch,
   onlinePaymentMethod,
   payAtClinicPaymentMethod,
   appointmentSlots,
@@ -27,7 +26,8 @@ export function BookingSection({
   bookingCooldown,
 }) {
   const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
-  const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
+  const branchFees = getConsultationFeesForBranch(formState.branch)
+  const selectedFee = isPayAtClinic ? branchFees.payAtClinic : branchFees.online
 
   return (
     <section className="booking-section reveal-section" id="booking-form">
@@ -168,7 +168,7 @@ export function BookingSection({
                   onChange={handleChange}
                 />
                 <span>Pay Online</span>
-                <strong>Rs {onlineConsultationFeeAmount}</strong>
+                <strong>Rs {branchFees.online}</strong>
               </label>
               <label className={isPayAtClinic ? 'selected' : ''}>
                 <input
@@ -179,7 +179,7 @@ export function BookingSection({
                   onChange={handleChange}
                 />
                 <span>Pay at Clinic</span>
-                <strong>Rs {consultationFeeAmount}</strong>
+                <strong>Rs {branchFees.payAtClinic}</strong>
               </label>
             </fieldset>
 

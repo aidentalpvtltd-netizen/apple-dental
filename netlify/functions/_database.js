@@ -6,6 +6,28 @@ export const COMPLETED_STATUS = 'Treatment Complete'
 export const ADMIN_SESSION_DURATION_MS = 8 * 60 * 60 * 1000
 export const CONSULTATION_FEE_AMOUNT = 350
 export const ONLINE_CONSULTATION_FEE_AMOUNT = 300
+export const BENGALURU_CONSULTATION_FEE_AMOUNT = 500
+export const BENGALURU_ONLINE_CONSULTATION_FEE_AMOUNT = 450
+
+export const isBengaluruBranch = (branch = '') => {
+  const branchName = String(branch).toLowerCase()
+
+  return branchName.includes('bengaluru') || branchName.includes('bangalore')
+}
+
+export const getConsultationFeesForBranch = (branch) => {
+  if (isBengaluruBranch(branch)) {
+    return {
+      payAtClinic: BENGALURU_CONSULTATION_FEE_AMOUNT,
+      online: BENGALURU_ONLINE_CONSULTATION_FEE_AMOUNT,
+    }
+  }
+
+  return {
+    payAtClinic: CONSULTATION_FEE_AMOUNT,
+    online: ONLINE_CONSULTATION_FEE_AMOUNT,
+  }
+}
 
 let schemaReadyPromise
 

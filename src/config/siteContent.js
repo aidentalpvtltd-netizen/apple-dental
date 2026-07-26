@@ -2287,6 +2287,8 @@ export const bookingLockDuration = 24 * 60 * 60 * 1000
 export const bookingLockSubmissionLimit = 4
 export const consultationFeeAmount = 350
 export const onlineConsultationFeeAmount = 300
+export const bengaluruConsultationFeeAmount = 500
+export const bengaluruOnlineConsultationFeeAmount = 450
 export const onlineConsultationFeeSubunits = onlineConsultationFeeAmount * 100
 export const loaderMinimumDuration = 500
 export const loaderMaximumDuration = 1800
@@ -2294,6 +2296,28 @@ export const concernWordLimit = 100
 export const availabilityRefreshMs = 30 * 1000
 export const onlinePaymentMethod = 'Online payment'
 export const payAtClinicPaymentMethod = 'Pay at clinic'
+
+export const isBengaluruBranch = (branch = '') => {
+  const branchName = String(branch).toLowerCase()
+
+  return branchName.includes('bengaluru') || branchName.includes('bangalore')
+}
+
+export const getConsultationFeesForBranch = (branch) => {
+  if (isBengaluruBranch(branch)) {
+    return {
+      payAtClinic: bengaluruConsultationFeeAmount,
+      online: bengaluruOnlineConsultationFeeAmount,
+      onlineSubunits: bengaluruOnlineConsultationFeeAmount * 100,
+    }
+  }
+
+  return {
+    payAtClinic: consultationFeeAmount,
+    online: onlineConsultationFeeAmount,
+    onlineSubunits: onlineConsultationFeeSubunits,
+  }
+}
 
 export const generalConsultationTreatment = {
   id: 'general-consultation',
@@ -2770,9 +2794,14 @@ export const postPaymentEndpoint = async (endpoint, payload) => {
   return result
 }
 
-export const createConsultationPaymentOrder = async ({ name, phone, email, branch, source }) =>
-  postPaymentEndpoint(createRazorpayOrderEndpoint, {
-    amount: onlineConsultationFeeSubunits,
+export const createConsultationPaymentOrder = async ({ name, phone, email, branch, amount, source }) => {
+  const branchFees = getConsultationFeesForBranch(branch)
+  const requestedAmount = Number(amount || branchFees.online)
+  const paymentAmount = Number.isFinite(requestedAmount) ? requestedAmount : branchFees.online
+  const paymentSubunits = paymentAmount * 100
+
+  return postPaymentEndpoint(createRazorpayOrderEndpoint, {
+    amount: paymentSubunits,
     currency: 'INR',
     name,
     phone,
@@ -2780,6 +2809,7 @@ export const createConsultationPaymentOrder = async ({ name, phone, email, branc
     branch,
     source,
   })
+}
 
 export const verifyConsultationPayment = async ({ orderId, paymentId, signature }) =>
   postPaymentEndpoint(verifyRazorpayPaymentEndpoint, {
@@ -2793,14 +2823,20 @@ export const collectConsultationPayment = async ({
   phone,
   email,
   branch,
+  amount,
   source,
   onProcessingPayment,
 }) => {
+  const branchFees = getConsultationFeesForBranch(branch)
+  const requestedAmount = Number(amount || branchFees.online)
+  const paymentAmount = Number.isFinite(requestedAmount) ? requestedAmount : branchFees.online
+  const paymentSubunits = paymentAmount * 100
   const order = await createConsultationPaymentOrder({
     name,
     phone,
     email,
     branch,
+    amount: paymentAmount,
     source,
   })
 
@@ -2813,7 +2849,7 @@ export const collectConsultationPayment = async ({
   const payment = await new Promise((resolve, reject) => {
     const checkout = new window.Razorpay({
       key: order.keyId,
-      amount: order.amount || onlineConsultationFeeSubunits,
+      amount: order.amount || paymentSubunits,
       currency: order.currency || 'INR',
       name: 'Apple International Dental',
       description: 'Consultation fee',
@@ -2850,7 +2886,7 @@ export const collectConsultationPayment = async ({
   return {
     paymentMethod: onlinePaymentMethod,
     paymentStatus: 'Paid',
-    paymentAmount: onlineConsultationFeeAmount,
+    paymentAmount,
     paymentId: payment.razorpay_payment_id,
     paymentOrderId: payment.razorpay_order_id,
     paymentSignature: payment.razorpay_signature,

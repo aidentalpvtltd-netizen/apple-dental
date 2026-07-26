@@ -5,12 +5,11 @@ import {
   ACTIVE_STATUSES,
   ADMIN_SESSION_DURATION_MS,
   COMPLETED_STATUS,
-  CONSULTATION_FEE_AMOUNT,
-  ONLINE_CONSULTATION_FEE_AMOUNT,
   archiveCompletedTreatment,
   createId,
   ensureSchema,
   getBranchFilter,
+  getConsultationFeesForBranch,
   jsonResponse,
   mapBookingRow,
   mapHistoryRow,
@@ -150,13 +149,12 @@ const createBooking = async (payload) => {
   const bookingId = createId('AID')
   const status = normalizeStatus(payload.status)
   const paymentMethod = String(payload.paymentMethod || 'Pay at clinic').trim()
+  const paymentMode = paymentMethod.toLowerCase().includes('online') ? 'online' : 'payAtClinic'
+  const branchFees = getConsultationFeesForBranch(branch)
   const paymentStatus =
     String(payload.paymentStatus || '').trim() ||
-    (paymentMethod.toLowerCase().includes('online') ? 'Paid online' : 'Payment due at clinic')
-  const paymentAmount =
-    payload.paymentAmount || (paymentMethod.toLowerCase().includes('online')
-      ? ONLINE_CONSULTATION_FEE_AMOUNT
-      : CONSULTATION_FEE_AMOUNT)
+    (paymentMode === 'online' ? 'Paid online' : 'Payment due at clinic')
+  const paymentAmount = paymentMode === 'online' ? branchFees.online : branchFees.payAtClinic
   const patientId = await upsertPatient({
     bookingId,
     patientName,
@@ -360,7 +358,8 @@ const handleAdminUpdateBooking = async (payload) => {
 
   const paymentMethod = String(payload.paymentMethod || existing.payment_method || '').trim()
   const paymentStatus = String(payload.paymentStatus || existing.payment_status || '').trim()
-  const paymentAmount = payload.paymentAmount || existing.payment_amount
+  const fallbackFees = getConsultationFeesForBranch(existing.branch)
+  const paymentAmount = payload.paymentAmount || existing.payment_amount || fallbackFees.payAtClinic
   const notes = String(payload.notes || existing.concern || '').trim()
 
   await query(
@@ -622,4 +621,3 @@ export const handler = async (event) => {
     return jsonError(500, error.message || 'Unable to reach the booking system.')
   }
 }
-

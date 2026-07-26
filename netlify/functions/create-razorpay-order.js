@@ -3,6 +3,16 @@
 import { Buffer } from 'node:buffer'
 
 const CONSULTATION_FEE_SUBUNITS = 30000
+const BENGALURU_CONSULTATION_FEE_SUBUNITS = 45000
+
+const isBengaluruBranch = (branch = '') => {
+  const branchName = String(branch).toLowerCase()
+
+  return branchName.includes('bengaluru') || branchName.includes('bangalore')
+}
+
+const getExpectedConsultationFeeSubunits = (branch) =>
+  isBengaluruBranch(branch) ? BENGALURU_CONSULTATION_FEE_SUBUNITS : CONSULTATION_FEE_SUBUNITS
 
 const jsonResponse = (statusCode, body) => ({
   statusCode,
@@ -38,9 +48,10 @@ export const handler = async (event) => {
     return jsonResponse(400, { ok: false, message: 'Invalid payment request.' })
   }
 
-  const amount = Number(payload.amount || CONSULTATION_FEE_SUBUNITS)
+  const expectedAmount = getExpectedConsultationFeeSubunits(payload.branch)
+  const amount = Number(payload.amount || expectedAmount)
 
-  if (amount !== CONSULTATION_FEE_SUBUNITS) {
+  if (amount !== expectedAmount) {
     return jsonResponse(400, { ok: false, message: 'Invalid consultation fee amount.' })
   }
 

@@ -18,8 +18,7 @@ import {
   videoTestimonials,
   bookingEndpoint,
   formspreeEndpoint,
-  consultationFeeAmount,
-  onlineConsultationFeeAmount,
+  getConsultationFeesForBranch,
   loaderMinimumDuration,
   loaderMaximumDuration,
   consultationTreatments,
@@ -355,28 +354,32 @@ export function WebsiteApp({ onLoadingChange }) {
         ? value.replace(/\D/g, '').slice(0, 10)
           : value
 
-    setFormState((current) => ({
-      ...current,
-      [name]: nextValue,
-      ...(name === 'branch' || name === 'date' ? { timeSlot: '' } : {}),
-      ...(name === 'paymentMethod'
-        ? nextValue === payAtClinicPaymentMethod
+    setFormState((current) => {
+      const branchName = name === 'branch' ? nextValue : current.branch
+      const paymentMethod = name === 'paymentMethod' ? nextValue : current.paymentMethod
+      const branchFees = getConsultationFeesForBranch(branchName)
+      const paymentAmount =
+        paymentMethod === payAtClinicPaymentMethod ? branchFees.payAtClinic : branchFees.online
+      const shouldRefreshPaymentDetails = name === 'branch' || name === 'paymentMethod'
+
+      return {
+        ...current,
+        [name]: nextValue,
+        ...(name === 'branch' || name === 'date' ? { timeSlot: '' } : {}),
+        ...(shouldRefreshPaymentDetails
           ? {
-              paymentStatus: 'Payment due at clinic',
-              paymentAmount: consultationFeeAmount,
+              paymentStatus:
+                paymentMethod === payAtClinicPaymentMethod
+                  ? 'Payment due at clinic'
+                  : 'Payment pending',
+              paymentAmount,
               paymentId: '',
               paymentOrderId: '',
               paymentSignature: '',
             }
-          : {
-              paymentStatus: 'Payment pending',
-              paymentAmount: onlineConsultationFeeAmount,
-              paymentId: '',
-              paymentOrderId: '',
-              paymentSignature: '',
-            }
-        : {}),
-    }))
+          : {}),
+      }
+    })
     setSubmitError('')
   }
 
@@ -433,7 +436,8 @@ export function WebsiteApp({ onLoadingChange }) {
     const treatmentName = selectedTreatment.name
     const branchName = formState.branch
     const isPayAtClinic = formState.paymentMethod === payAtClinicPaymentMethod
-    const selectedFee = isPayAtClinic ? consultationFeeAmount : onlineConsultationFeeAmount
+    const branchFees = getConsultationFeesForBranch(branchName)
+    const selectedFee = isPayAtClinic ? branchFees.payAtClinic : branchFees.online
 
     if (requiresSlotSelection) {
       setSubmitError('Please choose a preferred date and time before sending the request.')
@@ -457,6 +461,7 @@ export function WebsiteApp({ onLoadingChange }) {
           phone: formState.phone,
           email: '',
           branch: branchName,
+          amount: selectedFee,
           source: 'Apple International Dental website',
           onProcessingPayment: () => setPaymentModalState('processing'),
         })
